@@ -1,0 +1,22 @@
+Tico - an application to create and perform interactive communication
+       boards to be used by people with severe motor disabilities.
+
+Change-log file
+
+1.0.0 11-2005 
+    * First complete version.
+
+2.0.0 11-2006
+    * Full revision of previous version.
+    * Major code substitution.
+    * Interpreter still beta.
+
+2.1.0 06-2007
+    * Interpreter complete.
+    
+2.2.0 11-2007
+    * Added accessibility checking patterns.
+
+2.3.0 11-2008
+    * Added plug-ins interface.
+    * Added image gallery plug-in.

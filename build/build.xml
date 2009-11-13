@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+
+<project name="tico" basedir=".." default="compile">  
+	
+	<property name="dist.version" value="beta1"/>
+		
+	<property name="dir.src" value="src"/>
+    <property name="dir.lib" value="libs"/>
+	<property name="dir.bin" value="bin"/>
+	<property name="dir.javadoc" value="doc/api"/>
+	<property name="dir.dist" value="dist"/>
+	<property name="dir.build" value="build"/>
+		 
+	<taskdef name="nsis" classname="net.sf.nsisant.Task">
+	    <classpath location="build/libs/nsisant-1.2.jar"/>
+    </taskdef>
+		
+	<path id="libraries">
+	    <fileset dir="${dir.lib}">
+	        <include name="**/*.jar" />
+	    </fileset>
+	</path>
+	        
+	<property name="jar.file" value="${dir.build}/tico.jar"/>
+
+	<pathconvert property="jar.classpath" pathsep=" ">
+	    <mapper>
+	        <chainedmapper>
+	    	  <globmapper from="${basedir}/" to="*"/>
+	        </chainedmapper>
+	    </mapper>
+        <path refid="libraries"/>
+	</pathconvert>
+		
+    <target name="compile" description="Compilation target">
+        <javac srcdir="${dir.src}" destdir="${dir.bin}">
+        	<classpath refid="libraries"/>
+        </javac>
+    </target>
+  
+	<target name="clean">
+		<delete dir="${dir.bin}"/>
+	</target>
+
+    <target name="jar" depends="compile" description="Generate jar file">
+        <jar basedir="${dir.bin}" destfile="${jar.file}">
+    	   <manifest>
+              <attribute name="Main-Class" value="tico.TLauncher"/>
+              <attribute name="Class-Path" value="${jar.classpath}"/>
+    	   </manifest>
+        </jar>
+    </target>
+
+	<target name="doc">
+	    <javadoc access="public"
+	             destdir="${dir.javadoc}"
+	             author="true"
+	             version="true"
+	             use="true"
+	             windowtitle="tico">
+        	<fileset dir="${dir.src}" defaultexcludes="yes">
+        		<include name="**/*.java"/>
+	        </fileset>
+        	<classpath refid="libraries"/>
+        </javadoc>
+    </target>
+
+    <target name="src-zip">
+        <zip destfile="${dir.dist}/tico-src-${dist.version}.zip"
+             basedir="."
+             excludes="${dir.dist}/**,${jar.file},${dir.bin}/**,.*,.*/**"/>
+    </target>
+
+    <target name="bin-zip" depends="jar">
+        <zip destfile="${dir.dist}/tico-bin-other-${dist.version}.zip">
+			<fileset dir="." excludes="${dir.dist}/**,${dir.src}/**,${dir.build}/**,${dir.javadoc}/**,.*,.*/**"/>
+			<fileset file="${jar.file}"/>
+            <fileset file="${dir.build}/launch-scripts/*"/>
+        </zip>
+	</target>
+  
+    <target name="bin-msi" depends="jar">
+        <nsis script="${dir.build}/installer/setup.nsi" verbosity="4" out="${dir.build}/installer/build.log" noconfig="yes">
+            <define name="VERSION" value="${dist.version}"/>
+            <scriptcmd cmd="AutoCloseWindow true"/>
+        </nsis>
+	</target>
+	
+    <target name="dist" depends="src-zip,bin-zip,bin-msi"/>
+</project>
