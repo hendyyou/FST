@@ -28,7 +28,7 @@
 package tico.rules;
 
 /**
- * The <code>TExist</code> is a structure to comunicate Java Beans with Jess
+ * The <code>TExist</code> is a structure to comunicate Java Beans with Jess.
  *
  * @author Beatriz Mateo
  * @version 1.0 Oct 1, 2007
@@ -61,8 +61,8 @@ public class TExist {
 	 * 
 	 * @param name The specified initial <code>name</code>
 	 * @param of The specified initial <code>of</code>
-	 * @param attribute The specified initial <code>attribute</code>
-	 * @param parameter The specified initial <code>parameter</code>
+	 * @param atr The specified initial <code>attribute</code>
+	 * @param par The specified initial <code>parameter</code>
 	 * @param message The specified initial <code>message</code>
 	 */
 	public TExist(String name, String of, Object atr, Object par, String message) {
@@ -122,7 +122,7 @@ public class TExist {
 	/**
 	 * Sets the TExist <code>attribute</code>.
 	 * 
-	 * @param attribute The TExist <code>attribute</code> to set
+	 * @param atr The TExist <code>attribute</code> to set
 	 */
 	public void setAttribute(Object atr) {
 		this.attribute = atr;
@@ -140,7 +140,7 @@ public class TExist {
 	/**
 	 * Sets the TExist <code>parameter</code>.
 	 * 
-	 * @param parameter The TExist <code>parameter</code> to set
+	 * @param par The TExist <code>parameter</code> to set
 	 */
 	public void setParameter(Object par) {
 		this.parameter = par;

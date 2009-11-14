@@ -8,11 +8,19 @@
     <property name="dir.lib" value="libs"/>
 	<property name="dir.bin" value="bin"/>
 	<property name="dir.javadoc" value="doc/api"/>
+    <property name="dir.current" value="current"/>
 	<property name="dir.dist" value="dist"/>
 	<property name="dir.build" value="build"/>
-		 
+	<property name="dir.resources" value="tico/components/resources"/>
+	
+	<property name="nsis.library" value="${dir.build}/libs/nsisant-1.2.jar"/>
+	<property name="nsis.script" value="${dir.build}/installer/setup.nsi"/>
+	<property name="nsis.log" value="${dir.build}/installer/build.log"/>
+
+	<property name="zip.excludes" value="${dir.dist}/**,${dir.current}/**,.*,.*/**"/>
+	
 	<taskdef name="nsis" classname="net.sf.nsisant.Task">
-	    <classpath location="build/libs/nsisant-1.2.jar"/>
+	    <classpath location="${nsis.library}"/>
     </taskdef>
 		
 	<path id="libraries">
@@ -26,7 +34,7 @@
 	<pathconvert property="jar.classpath" pathsep=" ">
 	    <mapper>
 	        <chainedmapper>
-	    	  <globmapper from="${basedir}/" to="*"/>
+	    	    <globmapper from="${basedir}/" to="*"/>
 	        </chainedmapper>
 	    </mapper>
         <path refid="libraries"/>
@@ -36,11 +44,20 @@
         <javac srcdir="${dir.src}" destdir="${dir.bin}">
         	<classpath refid="libraries"/>
         </javac>
+    	<copy todir="${dir.bin}/${dir.resources}">
+    	    <fileset dir="${dir.src}/${dir.resources}"/>
+    	</copy>
     </target>
   
+	<!-- Disabled because it causes problems with svn.
+	\\TODO Use svn ant to solve this
 	<target name="clean">
 		<delete dir="${dir.bin}"/>
-	</target>
+		<delete dir="${dir.current}"/>
+		<delete dir="${dir.dist}"/>
+		<delete file="${jar.file}"/>
+		<delete file="${nsis.log}"/>
+	</target>-->
 
     <target name="jar" depends="compile" description="Generate jar file">
         <jar basedir="${dir.bin}" destfile="${jar.file}">
@@ -65,22 +82,30 @@
         </javadoc>
     </target>
 
-    <target name="src-zip">
+	<target name="dist-dir">
+	    <!-- Disabled because it causes problems with svn.
+        \\TODO Use svn ant to solve this
+	    <mkdir dir="${dir.dist}"/>
+	    -->
+	</target>
+
+    <target name="src-zip" depends="dist-dir, doc">
         <zip destfile="${dir.dist}/tico-src-${dist.version}.zip"
              basedir="."
-             excludes="${dir.dist}/**,${jar.file},${dir.bin}/**,.*,.*/**"/>
+             excludes="${zip.excludes},${jar.file},${dir.bin}/**,${nsis.log}"/>
     </target>
 
-    <target name="bin-zip" depends="jar">
+    <target name="bin-zip" depends="dist-dir, jar">
         <zip destfile="${dir.dist}/tico-bin-other-${dist.version}.zip">
-			<fileset dir="." excludes="${dir.dist}/**,${dir.src}/**,${dir.build}/**,${dir.javadoc}/**,.*,.*/**"/>
+			<fileset dir="."
+				     excludes="${zip.excludes},${dir.src}/**,${dir.build}/**,${dir.javadoc}"/>
 			<fileset file="${jar.file}"/>
             <fileset file="${dir.build}/launch-scripts/*"/>
         </zip>
 	</target>
   
-    <target name="bin-msi" depends="jar">
-        <nsis script="${dir.build}/installer/setup.nsi" verbosity="4" out="${dir.build}/installer/build.log" noconfig="yes">
+    <target name="bin-msi" depends="dist-dir, jar">
+        <nsis script="${nsis.script}" verbosity="4" out="${nsis.log}" noconfig="yes">
             <define name="VERSION" value="${dist.version}"/>
             <scriptcmd cmd="AutoCloseWindow true"/>
         </nsis>

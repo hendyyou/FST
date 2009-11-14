@@ -61,8 +61,8 @@ public class TComparationMin {
 	 * 
 	 * @param name The specified initial <code>name</code>
 	 * @param of The specified initial <code>of</code>
-	 * @param attribute The specified initial <code>attribute</code>
-	 * @param parameter The specified initial <code>parameter</code>
+	 * @param atr The specified initial <code>attribute</code>
+	 * @param par The specified initial <code>parameter</code>
 	 * @param message The specified initial <code>message</code>
 	 */
 	public TComparationMin(String name, String of, Object atr, Object par, String message) {
@@ -122,7 +122,7 @@ public class TComparationMin {
 	/**
 	 * Sets the TComparationMin <code>attribute</code>.
 	 * 
-	 * @param attribute The TComparationMin <code>attribute</code> to set
+	 * @param atr The TComparationMin <code>attribute</code> to set
 	 */
 	public void setAttribute(Object atr) {
 		this.attribute = atr;
@@ -140,7 +140,7 @@ public class TComparationMin {
 	/**
 	 * Sets the TComparationMin <code>parameter</code>.
 	 * 
-	 * @param parameter The TComparationMin <code>parameter</code> to set
+	 * @param par The TComparationMin <code>parameter</code> to set
 	 */
 	public void setParameter(Object par) {
 		this.parameter = par;

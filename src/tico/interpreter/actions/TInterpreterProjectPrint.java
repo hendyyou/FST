@@ -47,7 +47,7 @@ import tico.interpreter.TInterpreter;
  * Action wich prints the current editor project. Each board of the editor
  * is printed in a different page.
  * 
- * @author Pablo Muñoz
+ * @author Antonio Rodriguez
  * @version 1.0 Nov 20, 2006
  */
 public class TInterpreterProjectPrint extends TInterpreterAbstractAction{
@@ -55,7 +55,7 @@ public class TInterpreterProjectPrint extends TInterpreterAbstractAction{
 	/**
 	 * Constructor for TProjectPrintAction.
 	 * 
-	 * @param editor The boards' editor
+	 * @param interpreter The boards' interpreter
 	 */
 	public TInterpreterProjectPrint(TInterpreter interpreter) {
 		super(interpreter, TLanguage.getString("TProjectPrintAction.NAME"),

@@ -34,6 +34,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -47,6 +48,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import tico.board.TBoard;
 import tico.board.TBoardConstants;
@@ -239,6 +242,7 @@ public class TCellDialog extends TComponentDialog {
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		listScroll
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		// Create the list
 		Vector environmentAction=TEnvironment.getAllKeys();
 		

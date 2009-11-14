@@ -38,8 +38,8 @@ import tico.configuration.TLanguage;
 import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
-import tico.interpreter.TInterpreter;
 import tico.environment.TEnvironment;
+import tico.interpreter.TInterpreter;
 
 /**
  * TEditor launcher class. It shows the <code>TEditor</code> window. If the
@@ -57,27 +57,19 @@ public class TLauncher {
 	 * 
 	 * @param args TEditor arguments
 	 */
-	
-	
 	public static void main(String[] args) {
+		// Loads application setup
 		try {
 			TSetup.load();
 		} catch (Exception e) {
 			// If the configuration file fails show the message error
 			JOptionPane.showMessageDialog(null, "Se ha producido un error " +
 					"cargando el fichero de configuración. Se utilizará una " +
-					"por defecto.",
-					"Error!",
+					"por defecto.", "Error!",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		try {
-			TEnvironment.initEnvironment("environment");
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
+		
+		// Loads language file
 		try {
 			TLanguage.initLanguage(TSetup.getLanguage());
 		} catch (Exception e) {
@@ -88,6 +80,17 @@ public class TLauncher {
 					"ejecutar la aplicación.", "Error!",
 					JOptionPane.ERROR_MESSAGE);
 			System.exit(-1);
+		}
+
+		// Loads environment file
+		try {
+			TEnvironment.initEnvironment("environment");
+		} catch (IOException e) {
+			// If the import fails show an error message
+			JOptionPane.showMessageDialog(null, "Se ha producido un error " +
+					"cargando el fichero de control de entorno. Esta " +
+					"funcionalidad no estará disponible.", "Error!",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 		switch (args.length) {

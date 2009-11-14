@@ -51,7 +51,7 @@ public class TLanguage {
 	private static String LANGUAGE_DIRECTORY = "lang";
 	
 	protected static String currentLanguage = TSetup.getLanguage();
-		// Languages map between its names and its file
+	// Languages map between its names and its file
 	protected static Map languagesMap = getLanguages();
 	// ResourceBundle with the currentLanguage file
 	protected static TResourceBundle LANGUAGE_BUNDLE = null;

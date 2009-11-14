@@ -44,9 +44,7 @@ import javax.swing.border.TitledBorder;
 import tico.components.TLanguageComboBox;
 import tico.configuration.TLanguage;
 import tico.configuration.TSetup;
-import tico.editor.TEditor;
-import tico.editor.dialogs.*;
-import tico.interpreter.*;
+import tico.interpreter.TInterpreter;
 
 
 
@@ -57,11 +55,11 @@ public class TInterpreterDialog extends TProyectInterpreterDialog {
 		private TLanguageComboBox languageComboBox;
 
 		/**
-		 * Creates a new <code>TEditorDialog</code> to edit the
-		 * <code>editor</code> preferences.
+		 * Creates a new <code>TInterpreterDialog</code> to edit the
+		 * <code>interpreter</code> preferences.
 		 * 
-		 * @param editor
-		 *            The <code>editor</code> to edit
+		 * @param interpreter
+		 *            The <code>interpreter</code> to edit
 		 */
 		public TInterpreterDialog (TInterpreter interpreter) {
 			super(interpreter);

@@ -31,9 +31,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.BasicMarqueeHandler;
@@ -42,10 +44,25 @@ import org.jgraph.graph.VertexView;
 
 import tico.board.TBoard;
 import tico.board.TBoardConstants;
+import tico.board.components.TCell;
 import tico.board.components.TComponent;
+import tico.board.components.TGridCell;
+import tico.board.components.TLabel;
+import tico.board.components.TLine;
+import tico.board.components.TOval;
+import tico.board.components.TRectangle;
+import tico.board.components.TRoundRect;
+import tico.board.components.TTextArea;
 import tico.environment.TEnvironmentExecution;
 import tico.interpreter.actions.TInterpreterRun;
 import tico.interpreter.board.TInterpreterCellRenderer;
+import tico.interpreter.board.TInterpreterCellView;
+import tico.interpreter.board.TInterpreterGridCellView;
+import tico.interpreter.board.TInterpreterLabelView;
+import tico.interpreter.board.TInterpreterLineView;
+import tico.interpreter.board.TInterpreterOvalView;
+import tico.interpreter.board.TInterpreterRectangleView;
+import tico.interpreter.board.TInterpreterRoundRectView;
 import tico.interpreter.board.TInterpreterTextAreaRenderer;
 import tico.interpreter.board.TInterpreterTextAreaView;
 import tico.interpreter.threads.TThreads;
@@ -82,10 +99,9 @@ public class TInterpreterMarqueeHandler extends BasicMarqueeHandler {
 
 	/**
 	 * Creates a new <code>TInterpreterMarqueeHandler</code> for the specified
-	 * <code>boardContainer</code>.
+	 * <code>interpreter</code>.
 	 * 
-	 * @param boardContainer
-	 *            The specified <code>boardContainer</code>
+	 * @param interpreter The specified <code>interpreter</code>
 	 */
 	public TInterpreterMarqueeHandler(TInterpreter interpreter) {
 		super();

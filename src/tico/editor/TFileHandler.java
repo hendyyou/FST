@@ -38,7 +38,7 @@ import tico.components.resources.TFileUtils;
 /**
  * Static class that manages the current editing project internal files.
  * 
- * @author Pablo Muñoz
+ * @author Pablo MuÃ±oz
  * @version 1.0 Nov 20, 2006
  */
 public class TFileHandler {

@@ -117,7 +117,7 @@ public class TAttribute {
 	/**
 	 * Sets the attribute <code>nameXML</code>.
 	 * 
-	 * @param name The attribute <code>nameXML</code> to set
+	 * @param nameXML The attribute <code>nameXML</code> to set
 	 */
 	public void setNameXML(String nameXML) {
 		this.nameXML = nameXML;
@@ -135,16 +135,16 @@ public class TAttribute {
 	/**
 	 * Sets the attribute <code>value</code>.
 	 * 
-	 * @param name The attribute <code>value</code> to set
+	 * @param value The attribute <code>value</code> to set
 	 */
 	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	/**
-	 * Sets the attribute <code>limitation type</code>.
+	 * Returns the attribute <code>limitation type</code>.
 	 * 
-	 * @param name The attribute <code>limitation type</code> to set
+	 * @return The attribute <code>limitation type</code>
 	 */
 	public String getLimitType() {
 		return limitType;
@@ -153,7 +153,7 @@ public class TAttribute {
 	/**
 	 * Sets the attribute <code>limitation type</code>.
 	 * 
-	 * @param name The attribute <code>limitation type</code> to set
+	 * @param limitType The attribute <code>limitation type</code> to set
 	 */
 	public void setLimitType(String limitType) {
 		this.limitType = limitType;

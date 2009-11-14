@@ -68,12 +68,6 @@ import tico.rules.database.TWriteLanguageFile;
  * @version 0.1 Oct 22, 2007
  */
 public class TAddRuleDialog extends TDialog implements ActionListener {
-	/**
-	 * Creates a new <code>TValidationDialog</code> for the specified
-	 * <code>editor</code>.
-	 * 
-	 * @param editor The specified <code>editor</code>
-	 */
 	
 	private TComboBox functionCombo;
 	private TComboBox attributeCombo;
@@ -87,8 +81,12 @@ public class TAddRuleDialog extends TDialog implements ActionListener {
 	private Vector<TAttribute> attributeList = new Vector<TAttribute>();
 	private Vector<TAttribute> parameterList = new Vector<TAttribute>();
 	
-
-	// Creates the dialog
+	/**
+	 * Creates a new <code>TValidationDialog</code> for the specified
+	 * <code>editor</code>.
+	 * 
+	 * @param editor The specified <code>editor</code>
+	 */
 	public TAddRuleDialog(TEditor editor) {
 		super(editor, TLanguage.getString("TAddRule.TITLE"), true);
 		createComponents(editor);

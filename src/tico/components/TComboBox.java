@@ -184,8 +184,8 @@ public class TComboBox extends JComboBox implements JComboBox.KeySelectionManage
 	}
 	
 	private String replace(String word){
-		String result = word.replace(' ', '_').replace(',', '-').replace('·', 'a').replace('È', 'e').replace('Ì', 'i').replace('Û', 'o').replace('˙', 'u').
-		replace('¡', 'A').replace('…', 'E').replace('Õ', 'I').replace('”', 'O').replace('⁄', 'U').toLowerCase();
+		String result = word.replace(' ', '_').replace(',', '-').replace('√°', 'a').replace('√©', 'e').replace('√≠', 'i').replace('√≥', 'o').replace('√∫', 'u').
+		replace('√Å', 'A').replace('√â', 'E').replace('√ç', 'I').replace('√ì', 'O').replace('√ö', 'U').toLowerCase();
 		return result;
 	}
 }

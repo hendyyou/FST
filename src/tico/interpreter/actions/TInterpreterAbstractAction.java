@@ -64,7 +64,7 @@ public abstract class TInterpreterAbstractAction extends AbstractAction {
 	 * Constructor for TInterpreterAbstractAction. The Abstract action uses the class
 	 * name without package prefix as action name.
 	 * 
-	 * @param editor The reference to the TInterpreter for this action
+	 * @param interpreter The reference to the TInterpreter for this action
 	 * @see Action#NAME
 	 * 
 	 */
@@ -107,7 +107,7 @@ public abstract class TInterpreterAbstractAction extends AbstractAction {
 	/** 
 	 * Sets the TInterpreter.
 	 * 
-	 * @param editor The TInterpreter to set
+	 * @param interpreter The TInterpreter to set
 	 */
 	public void setInterpreter(TInterpreter interpreter) {
 		this.interpreter = interpreter;

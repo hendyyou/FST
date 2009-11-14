@@ -60,20 +60,18 @@ import tico.rules.database.TSaveUser;
  * @version 0.1 Jul 18, 2007
  */
 public class TUsersAdminDialog extends TValidationDialog {
-	/**
-	 * Creates a new <code>TUsersAdminDialog</code> for the specified
-	 * <code>editor</code>.
-	 * 
-	 * @param editor The specified <code>editor</code>
-	 */
 
 	private TComboBox loadCombo;
 	private TComboBox saveCombo;	
 	
 	private Vector<String> nameList;
 	
-	
-	// Creates the user administration dialog
+	/**
+	 * Creates a new <code>TUsersAdminDialog</code> for the specified
+	 * <code>editor</code>.
+	 * 
+	 * @param editor The specified <code>editor</code>
+	 */
 	public TUsersAdminDialog(TEditor editor) {
 		super(editor, TLanguage.getString("TUsersAdminDialog.TITLE"), true);
 		createComponents(editor);

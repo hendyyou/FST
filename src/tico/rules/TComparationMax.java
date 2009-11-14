@@ -62,8 +62,8 @@ public class TComparationMax {
 	 * 
 	 * @param name The specified initial <code>name</code>
 	 * @param of The specified initial <code>of</code>
-	 * @param attribute The specified initial <code>attribute</code>
-	 * @param parameter The specified initial <code>parameter</code>
+	 * @param atr The specified initial <code>attribute</code>
+	 * @param par The specified initial <code>parameter</code>
 	 * @param message The specified initial <code>message</code>
 	 */
 	public TComparationMax(String name, String of, Object atr, Object par, String message) {
@@ -123,7 +123,7 @@ public class TComparationMax {
 	/**
 	 * Sets the TComparationMax <code>attribute</code>.
 	 * 
-	 * @param attribute The TComparationMax <code>attribute</code> to set
+	 * @param atr The TComparationMax <code>attribute</code> to set
 	 */
 	public void setAttribute(Object atr) {
 		this.attribute = atr;
@@ -141,7 +141,7 @@ public class TComparationMax {
 	/**
 	 * Sets the TComparationMax <code>parameter</code>.
 	 * 
-	 * @param parameter The TComparationMax <code>parameter</code> to set
+	 * @param par The TComparationMax <code>parameter</code> to set
 	 */
 	public void setParameter(Object par) {
 		this.parameter = par;

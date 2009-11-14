@@ -28,6 +28,7 @@
 package tico.environment;
 
 import java.awt.AWTException;
+import java.lang.Character;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;

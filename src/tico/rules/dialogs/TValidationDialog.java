@@ -73,13 +73,6 @@ import tico.rules.database.TLoadUser;
  * @version 0.1 Jul 18, 2007
  */
 public class TValidationDialog extends TDialog {
-	/**
-	 * Creates a new <code>TValidationDialog</code> for the specified
-	 * <code>editor</code>.
-	 * 
-	 * @param editor The specified <code>editor</code>
-	 */
-	
 	private TProject theProject=null;
 	private TBoard theBoard=null;
 	private TInterpreter theInterpreter=null;
@@ -91,9 +84,14 @@ public class TValidationDialog extends TDialog {
 	public Vector<JSpinner> spinnerList = new Vector<JSpinner>();
 	private static Vector<JLabel> rangeLabelList = new Vector<JLabel>();
 	private static Vector<JLabel> labelList = new Vector<JLabel>();
-	
 
-	// The dialog for project validation
+	/**
+	 * Creates a new <code>TValidationDialog</code> for the specified
+	 * <code>editor</code> and <code>project</code>.
+	 * 
+	 * @param editor The specified <code>editor</code>
+	 * @param project The specified <code>project</code>
+	 */
 	public TValidationDialog(TEditor editor, TProject project) {
 		super(editor, TLanguage.getString("TValidationDialog.PROJECT_TITLE"), true);
 		theProject=project;
@@ -101,8 +99,13 @@ public class TValidationDialog extends TDialog {
 		createComponents(editor);
 	}
 	
-	
-	// The dialog for board validation
+	/**
+	 * Creates a new <code>TValidationDialog</code> for the specified
+	 * <code>editor</code> and <code>board</code>.
+	 * 
+	 * @param editor The specified <code>editor</code>
+	 * @param board The specified <code>board</code>
+	 */
 	public TValidationDialog(TEditor editor, TBoard board) {
 		super(editor, TLanguage.getString("TValidationDialog.BOARD_TITLE"), true);
 		theBoard=board;

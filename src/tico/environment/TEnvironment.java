@@ -33,23 +33,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
-
 import java.util.Vector;
 
 import tico.components.resources.TFileUtils;
 import tico.configuration.TResourceBundle;
 
 public class TEnvironment {
-
 	private static String ENVIRONMENT_DIRECTORY = "environment";
 
+	// FIXME This variable is not necessary at all in the current implementation
 	private static String currentEnvironment = "entorno";
 
 	// Languages map between its names and its file
@@ -59,11 +56,11 @@ public class TEnvironment {
 	private static TResourceBundle ENVIRONMENT_BUNDLE = null;
 
 	/**	
-	 * Inits the language file loading the file of the specified
-	 * <code>language</code> to the <code>LANGUAGE_BUNDLE</code>.
+	 * Inits the environment file loading the file of the specified
+	 * <code>environment</code> to the <code>ENVIRONMENT_BUNDLE</code>.
 	 * 
-	 * @param language
-	 *            The current <code>language</code>
+	 * @param environment
+	 *            The current <code>environment</code>
 	 * @throws IOException
 	 */
 	public static void initEnvironment(String environment) throws IOException {
@@ -86,11 +83,11 @@ public class TEnvironment {
 	}
 
 	/**
-	 * Determines if exists the <code>language</code> file.
+	 * Determines if exists the <code>environment</code> file.
 	 * 
-	 * @param language
-	 *            The <code>language</code> file to check
-	 * @return <i>true</i> if the <code>language</code> file exists
+	 * @param environment
+	 *            The <code>environment</code> file to check
+	 * @return <i>true</i> if the <code>environment</code> file exists
 	 */
 	public static boolean environmentExists(String environment) {
 		Map environmentMap = getEnvironment();
@@ -99,8 +96,8 @@ public class TEnvironment {
 	}
 
 	/**
-	 * Generates a <code>map</code> that contains all the language files of
-	 * <i>lang</i> directory and its corresponding language names.
+	 * Generates a <code>map</code> that contains all the environment files of
+	 * <i>entorno</i> directory and its corresponding language names.
 	 * 
 	 * @return The generated <code>map</code>
 	 */
@@ -127,7 +124,7 @@ public class TEnvironment {
 
 	/**
 	 * Returns the string of the specified <code>key</code> in the current
-	 * language resource bundle.
+	 * environment resource bundle.
 	 * 
 	 * @param key
 	 *            The specified <code>key</code>
@@ -148,17 +145,21 @@ public class TEnvironment {
 	}
 
 	public static Vector getAllKeys() {
-		Enumeration algo = ENVIRONMENT_BUNDLE.getKeys();
-		Vector keys = new Vector();
-		int i = 0;
-		while (algo.hasMoreElements()) {
-			String cadena = algo.nextElement().toString();
-			if (!cadena.equals("entorno")) {
-				keys.add(i, cadena);
-				i++;
-			}
-		}
+		try {
+			Enumeration algo = ENVIRONMENT_BUNDLE.getKeys();
 
-		return keys;
+			Vector keys = new Vector();
+			int i = 0;
+			while (algo.hasMoreElements()) {
+				String cadena = algo.nextElement().toString();
+				if (!cadena.equals("entorno")) {
+					keys.add(i, cadena);
+					i++;
+				}
+			}
+			return keys;
+		} catch (NullPointerException e) {
+			return new Vector();
+		}
 	}
 }

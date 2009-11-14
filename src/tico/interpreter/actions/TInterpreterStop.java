@@ -25,8 +25,10 @@
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package tico.interpreter.actions;
 
+
+package tico.interpreter.actions;
+import java.awt.AWTException;
 import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
@@ -34,9 +36,7 @@ import java.awt.event.ActionEvent;
 import tico.board.TBoardConstants;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-import tico.interpreter.TInterpreter;
-import tico.interpreter.TInterpreterConstants;
-import tico.interpreter.TInterpreterMarqueeHandler;
+import tico.interpreter.*;
 
 
 public class TInterpreterStop extends TInterpreterAbstractAction

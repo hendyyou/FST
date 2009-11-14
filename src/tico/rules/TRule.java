@@ -77,7 +77,7 @@ public class TRule {
 	 * @param nameXML The specified initial <code>nameXML</code>
 	 * @param attribute The specified initial <code>attribute</code>
 	 * @param attribute2 The specified initial <code>attribute2</code>
-	 * @param paramter The specified initial <code>parameter</code>
+	 * @param parameter The specified initial <code>parameter</code>
 	 * @param function The specified initial <code>function</code>
 	 * @param functionXML The specified initial <code>functionXML</code>
 	 * @param message The specified initial <code>message</code>

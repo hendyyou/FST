@@ -41,7 +41,7 @@ import tico.board.TBoard;
  * The object that implements the <code>ProjectChangeListener</code> interface gets
  * this <code>ProjectChangeEvent</code> when the event occurs.
  * 
- * @author Pablo Muñoz
+ * @author Pablo MuÃ±oz
  * @version 1.0 Nov 20, 2006
  */
 public class ProjectChangeEvent extends EventObject {

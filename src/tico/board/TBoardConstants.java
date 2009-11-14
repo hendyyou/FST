@@ -59,56 +59,56 @@ public class TBoardConstants extends GraphConstants {
 	/**
 	 * Represents the fit imageResizeStyle.
 	 * 
-	 * @see #getImageResizeStyle(Map, int)
-	 * @see #setImageResizeStyle(Map)
+	 * @see #getImageResizeStyle(Map)
+	 * @see #setImageResizeStyle(Map, int)
 	 */
 	public final static int IMAGE_FIT = 0;
 
 	/**
 	 * Represents the scale imageResizeStyle.
 	 * 
-	 * @see #getImageResizeStyle(Map, int)
-	 * @see #setImageResizeStyle(Map)
+	 * @see #getImageResizeStyle(Map)
+	 * @see #setImageResizeStyle(Map, int)
 	 */
 	public final static int IMAGE_SCALE = 1;
 
 	/**
 	 * Represents the center imageResizeStyle.
 	 * 
-	 * @see #getImageResizeStyle(Map, int)
-	 * @see #setImageResizeStyle(Map)
+	 * @see #getImageResizeStyle(Map)
+	 * @see #setImageResizeStyle(Map, int)
 	 */
 	public final static int IMAGE_CENTER = 2;
 	
 	/**
 	 * Represents the begin corner of a TLine.
 	 * 
-	 * @see #setStartCorner(Map, int)
 	 * @see #getStartCorner(Map)
+	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int TOP_LEFT_CORNER = 0;
 
 	/**
 	 * Represents the begin corner of a TLine.
 	 * 
-	 * @see #setStartCorner(Map, int)
 	 * @see #getStartCorner(Map)
+	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int TOP_RIGHT_CORNER = 2;
 
 	/**
 	 * Represents the begin corner of a TLine.
 	 * 
-	 * @see #setStartCorner(Map, int)
 	 * @see #getStartCorner(Map)
+	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int BOTTOM_LEFT_CORNER = 5;
 
 	/**
 	 * Represents the begin corner of a TLine.
 	 * 
-	 * @see #setStartCorner(Map, int)
 	 * @see #getStartCorner(Map)
+	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int BOTTOM_RIGHT_CORNER = 7;
 
@@ -116,7 +116,6 @@ public class TBoardConstants extends GraphConstants {
 	 * Key for the <code>text</code> attribute. Use instances of String as
 	 * values for this key.
 	 */
-
 	public final static String TEXT = "text";
 
 	/**
@@ -240,25 +239,41 @@ public class TBoardConstants extends GraphConstants {
 	 */	
 	public final static String FOLLOWING_BOARD = "followingBoard";
 	
-	/*
-	 * Key for the <code>changeLineWidth</code>attribute.Use instances of Integer as 
+	/**
+	 * Key for the <code>changeLineWidth</code> attribute. Use instances of Integer as 
 	 * values for this key.
 	 */
 	
 	public final static String CHANGE_LINE_WIDTH="LineChangeWidth";
 	
-	/*
-	 * Key for the <code>ChangeColor</code>attribute.Use instances of Color as 
+	/**
+	 * Key for the <code>ChangeColor</code> attribute. Use instances of Color as 
 	 * values for this key.
 	 */
 	public final static String CHANGE_COLOR="ChangeColor";
 	
+	/**
+	 * Key for the <code>ChangeColorGrid</code> attribute. Use instances of Color as 
+	 * values for this key.
+	 */
 	public final static String CHANGE_COLOR_GRID="ChangeColorGrid";
-	
+
+	/**
+	 * Key for the <code>ChangeLineGrid</code> attribute. Use instances of Integer as 
+	 * values for this key.
+	 */
 	public final static String CHANGE_LINE_GRID="ChangeLineGrid";
 	
+	/**
+	 * Key for the <code>EnvironmentAction</code> attribute. Use instances of String as 
+	 * values for this key.
+	 */
 	public final static String ENVIRONMENT_ACTION="EnvironmentAction";
 	
+	/**
+	 * Key for the <code>ActionPosition</code> attribute. Use instances of Integer as 
+	 * values for this key.
+	 */
 	public final static String ACTION_POSITION="ActionPosition";
 	
 
@@ -616,13 +631,8 @@ public class TBoardConstants extends GraphConstants {
 			return intObj.intValue();
 		return 0;
 	}
-	
-	
-	
-	
-	
-	public static final void setChangeColor(Map map, Color value)
-	{
+
+	public static final void setChangeColor(Map map, Color value) {
 		map.put(CHANGE_COLOR, value);
 	}
 	
@@ -634,20 +644,19 @@ public class TBoardConstants extends GraphConstants {
 		return Color.red;
 	} 
 	
-	public static final int getChangeLineWidthGrid(Map map){
+	public static final int getChangeLineWidthGrid(Map map) {
 		Integer intObj = (Integer)map.get(CHANGE_LINE_GRID);
 		
 		if (intObj != null)
 			return intObj.intValue();
 		return 0;
 	}
-	public static final void setChangeLineWidthGrid(Map map,int value){
+	public static final void setChangeLineWidthGrid(Map map,int value) {
 		map.put(CHANGE_LINE_GRID, new Integer(value));
 	}
 	
 	
-	public static final void setChangeColorGrid(Map map, Color value)
-	{
+	public static final void setChangeColorGrid(Map map, Color value) {
 		map.put(CHANGE_COLOR_GRID,value);
 	}
 	
@@ -657,9 +666,7 @@ public class TBoardConstants extends GraphConstants {
 		if (colObj != null)
 			return colObj;
 		return Color.red;
-	}
-	
-	
+	}	
 	
 	public static final void setEnvironmentAction(Map map, String value) {
 		map.put(ENVIRONMENT_ACTION, value);
@@ -672,15 +679,15 @@ public class TBoardConstants extends GraphConstants {
 		return (String)map.get(ENVIRONMENT_ACTION);
 	}
 	
-	public static final int getPositionAction(Map map){
+	public static final int getPositionAction(Map map) {
 		Integer intObj = (Integer)map.get(ACTION_POSITION);
 		
 		if (intObj != null)
 			return intObj.intValue();
 		return -1;
 	}
+	
 	public static final void setPositionAction(Map map,int value){
 		map.put(ACTION_POSITION, new Integer(value));
 	}
-	
 }

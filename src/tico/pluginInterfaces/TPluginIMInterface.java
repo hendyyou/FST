@@ -42,7 +42,6 @@ public interface TPluginIMInterface {
     /**
      * This method is called once during application life cycle to allow
      * tool to initialize and show itself.
-     * @param rootContainer parent container for tool visual components
      */
     TButton init(TEditor editor, TImageChooser chooser);
     
