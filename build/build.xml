@@ -1,9 +1,10 @@
 <?xml version="1.0" ?>
 
 <project name="tico" basedir=".." default="compile">  
-	
+	<!-- Current version -->
 	<property name="dist.version" value="beta1"/>
-		
+	
+	<!-- Used dirs -->
 	<property name="dir.src" value="src"/>
     <property name="dir.lib" value="libs"/>
 	<property name="dir.bin" value="bin"/>
@@ -12,24 +13,40 @@
 	<property name="dir.dist" value="dist"/>
 	<property name="dir.build" value="build"/>
 	<property name="dir.resources" value="tico/components/resources"/>
+
+    <!-- Jar properties -->
+    <property name="jar.file" value="${dir.build}/tico.jar"/>
 	
+    <!-- Zip properties -->
+    <property name="zip.excludes" value="${dir.dist}/**,${dir.current}/**,.*,.*/**"/>
+	
+	<!-- Nsis files -->
 	<property name="nsis.library" value="${dir.build}/libs/nsisant-1.2.jar"/>
 	<property name="nsis.script" value="${dir.build}/installer/setup.nsi"/>
 	<property name="nsis.log" value="${dir.build}/installer/build.log"/>
 
-	<property name="zip.excludes" value="${dir.dist}/**,${dir.current}/**,.*,.*/**"/>
-	
+	<!-- SVN files -->
+	<property name="svn.library" value="${dir.build}/libs/svnant.jar"/>
+	<property name="svn.client-adapter" value="${dir.build}/libs/svnClientAdapter.jar"/>
+
+	<!-- Aditional tasks declaration -->
 	<taskdef name="nsis" classname="net.sf.nsisant.Task">
 	    <classpath location="${nsis.library}"/>
     </taskdef>
-		
+	
+	<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask">
+		<classpath>
+		    <pathelement path="${svn.library}"/>
+		    <pathelement location="${svn.client-adapter}"/>
+		</classpath>
+	</taskdef>	
+	
+	<!-- Classpath creation -->
 	<path id="libraries">
 	    <fileset dir="${dir.lib}">
 	        <include name="**/*.jar" />
 	    </fileset>
 	</path>
-	        
-	<property name="jar.file" value="${dir.build}/tico.jar"/>
 
 	<pathconvert property="jar.classpath" pathsep=" ">
 	    <mapper>
@@ -40,6 +57,7 @@
         <path refid="libraries"/>
 	</pathconvert>
 		
+	<!-- Targets -->
     <target name="compile" description="Compilation target">
         <javac srcdir="${dir.src}" destdir="${dir.bin}">
         	<classpath refid="libraries"/>
@@ -49,15 +67,13 @@
     	</copy>
     </target>
   
-	<!-- Disabled because it causes problems with svn.
-	\\TODO Use svn ant to solve this
 	<target name="clean">
 		<delete dir="${dir.bin}"/>
-		<delete dir="${dir.current}"/>
-		<delete dir="${dir.dist}"/>
-		<delete file="${jar.file}"/>
+        <delete dir="${dir.current}"/>
+        <delete dir="${dir.dist}" excludes="${dir.dist}"/>
+	    <delete file="${jar.file}"/>
 		<delete file="${nsis.log}"/>
-	</target>-->
+	</target>
 
     <target name="jar" depends="compile" description="Generate jar file">
         <jar basedir="${dir.bin}" destfile="${jar.file}">
@@ -82,20 +98,13 @@
         </javadoc>
     </target>
 
-	<target name="dist-dir">
-	    <!-- Disabled because it causes problems with svn.
-        \\TODO Use svn ant to solve this
-	    <mkdir dir="${dir.dist}"/>
-	    -->
-	</target>
-
-    <target name="src-zip" depends="dist-dir, doc">
+    <target name="src-zip" depends="doc">
         <zip destfile="${dir.dist}/tico-src-${dist.version}.zip"
              basedir="."
              excludes="${zip.excludes},${jar.file},${dir.bin}/**,${nsis.log}"/>
     </target>
 
-    <target name="bin-zip" depends="dist-dir, jar">
+    <target name="bin-zip" depends="jar">
         <zip destfile="${dir.dist}/tico-bin-other-${dist.version}.zip">
 			<fileset dir="."
 				     excludes="${zip.excludes},${dir.src}/**,${dir.build}/**,${dir.javadoc}"/>
@@ -104,7 +113,7 @@
         </zip>
 	</target>
   
-    <target name="bin-msi" depends="dist-dir, jar">
+    <target name="bin-msi" depends="jar">
         <nsis script="${nsis.script}" verbosity="4" out="${nsis.log}" noconfig="yes">
             <define name="VERSION" value="${dist.version}"/>
             <scriptcmd cmd="AutoCloseWindow true"/>
