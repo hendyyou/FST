@@ -104,7 +104,7 @@ Section -Main SEC0000
     File /r /x .svn ..\..\lang\*
     SetOutPath $INSTDIR\plugins
     File /r /x .svn ..\..\plugins\*
-    SetOutPath $INSTDIR\entorno
+    SetOutPath $INSTDIR\environment
     File /r /x .svn ..\..\environment\*
     SetOutPath $INSTDIR\Images
     File /r /x .svn ..\..\Images\*
