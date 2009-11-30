@@ -157,6 +157,7 @@ public class TEditor extends JFrame {
 
 	// Sets the window attributes
 	protected void setWindowAtributes() {
+		setIconImage(TResourceManager.getImage("editor-icon-24.png"));
 		setLocation(initLocation.width, initLocation.height);
 		setSize(initSize.width, initSize.height);
 	}
