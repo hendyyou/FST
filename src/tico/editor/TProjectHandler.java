@@ -252,16 +252,23 @@ public class TProjectHandler {
 	 */
 	public static TProject loadProject(File zipFile) throws IOException,
 			ParserConfigurationException, InvalidFormatException, SAXException {
+		// Create XML Parsing objects
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
+		// Load project file contents
 		TProjectHandler.cleanTempDirectory();
 		TProjectHandler.loadZip(zipFile);
 
+		// Get project name
+		String projectName = zipFile.getName();
+		projectName = projectName.substring(0, projectName.lastIndexOf('.'));
+
+		// Load project
 		File file = new File(TProjectHandler.getTempDirectory(), "project.xml");
 		Document doc = docBuilder.parse(file);
-		TProject project = TProject.XMLDecode(doc.getDocumentElement());
+		TProject project = TProject.XMLDecode(doc.getDocumentElement(), projectName);
 		
 		TProjectHandler.cleanTempDirectory();
 		

@@ -155,7 +155,7 @@ public class TProject {
 
 	/**
 	 * Add all the boards of <code>project</code> to the project. If any of
-	 * the new board has a name alteady used by other board of the project, it
+	 * the new board has a name already used by other board of the project, it
 	 * is renamed. If this project was empty, the first board of <code>project</code>
 	 * is set as <code>initialBoard</code>.
 	 * 
@@ -195,7 +195,7 @@ public class TProject {
 	}
 	
 	/**
-	 * Returs the project board with the specified <code>name</code>.
+	 * Returns the project board with the specified <code>name</code>.
 	 * 
 	 * @param name The specified board <code>name</code>
 	 * @return The project board with the specified <code>name</code>. If the
@@ -206,7 +206,7 @@ public class TProject {
 	}
 
 	/**
-	 * Returs the project board in the specified <code>index</code>.
+	 * Returns the project board in the specified <code>index</code>.
 	 * 
 	 * @param index The specified board <code>index</code>
 	 * @return The project board with the specified <code>name</code>
@@ -337,7 +337,7 @@ public class TProject {
 		// Append project node
 		return projectElement;
 	}
-
+	
 	/**
 	 * Returns a <code>TProject</code> object from the data contained in
 	 * the XML <code>Element</code>.
@@ -348,13 +348,30 @@ public class TProject {
 	 */
 	public static TProject XMLDecode(Element element)
 			throws InvalidFormatException {
+		return XMLDecode(element, "");
+	}
+	
+	/**
+	 * Returns a <code>TProject</code> object from the data contained in
+	 * the XML <code>Element</code>.
+	 * 
+	 * @param element The XML <code>Element</code> that contains the project data
+	 * @param projectName The new <code>TProject</code> project name
+	 * @return The generated <code>TProject</code>
+	 * @throws InvalidFormatException If <code>Element</code> has an invalid format
+	 */
+	public static TProject XMLDecode(Element element, String projectName)
+			throws InvalidFormatException {
 		String initialBoardName = null;
 		
 		if (element.getTagName().equals("project")) {
 			// Create the new project
 			TProject project = new TProject();
 			// Get the project name
-			if (element.hasAttribute("name"))
+			// TUNE Find a better way of doing projectName usage
+			if (projectName != "")
+				project.setName(projectName);
+			else if (element.hasAttribute("name"))
 				project.setName(element.getAttribute("name"));
 			// Get child nodes
 			NodeList childNodes = element.getChildNodes();
