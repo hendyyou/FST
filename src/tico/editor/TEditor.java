@@ -29,6 +29,7 @@ package tico.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -563,8 +564,8 @@ public class TEditor extends JFrame {
 				projectExists);
 		actionSet.getAction(TActionSet.PROJECT_IMPORT_ACTION).setEnabled(
 				projectExists);
-		actionSet.getAction(TActionSet.PROJECT_INTERPRET_ACTION).setEnabled(
-				projectExists);
+		/*actionSet.getAction(TActionSet.PROJECT_INTERPRET_ACTION).setEnabled(
+				projectExists);*/
 		actionSet.getAction(TActionSet.PROJECT_PROPERTIES_ACTION).setEnabled(
 				projectExists);
 		actionSet.getAction(TActionSet.PROJECT_VALIDATION_ACTION).setEnabled(
@@ -585,7 +586,8 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.SELECTION_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.CELL_HANDLER).setEnabled(boardExists);
-		actionSet.getAction(TActionSet.GRID_HANDLER).setEnabled(boardExists);
+		actionSet.getAction(TActionSet.CELL_CONTROLLER_HANDLER).setEnabled(boardExists);
+		//actionSet.getAction(TActionSet.GRID_HANDLER).setEnabled(boardExists);
 		actionSet.getAction(TActionSet.TEXT_AREA_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.LABEL_HANDLER).setEnabled(boardExists);
@@ -606,8 +608,6 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.BOARD_PROPERTIES_ACTION).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.BOARD_DELETE_ACTION).setEnabled(
-				boardExists);
-		actionSet.getAction(TActionSet.BOARD_INTERPRET_ACTION).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.BOARD_EXPORT_ACTION).setEnabled(
 				boardExists);
@@ -657,6 +657,26 @@ public class TEditor extends JFrame {
 			cellOrderList.setSelectedValue(selectedObject);
 		}
 	}
+	
+	/**
+	 * Change Editor's Cursor into a waiting clock
+	 * 
+	 */
+	
+	public void changeToWaitingCursor(){			
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  	}
+	
+	/**
+	 * Restore Default Cursor. 
+	 * 
+	 */
+	
+	public void restoreCursor(){
+		Cursor cursorBar = new Cursor(Cursor.DEFAULT_CURSOR);
+		this.setCursor(cursorBar);
+	}
+	
 
 	/**
 	 * Enables and disables the selection depending actions.

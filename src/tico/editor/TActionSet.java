@@ -45,12 +45,12 @@ import tico.editor.actions.TBackAction;
 import tico.editor.actions.TBoardDeleteAction;
 import tico.editor.actions.TBoardExportAction;
 import tico.editor.actions.TBoardExportImageAction;
-import tico.editor.actions.TBoardInterpretAction;
+
 
 import tico.editor.actions.TEditorAboutAction;
 import tico.editor.actions.TEditorPreferencesAction;
 import tico.editor.actions.TEditorExitAction;
-import tico.editor.actions.TProjectInterpretAction;
+import tico.editor.actions.THandlerControllerCellAction;
 import tico.editor.actions.TProjectPrintAction;
 import tico.editor.actions.TBoardPropertiesAction;
 import tico.editor.actions.TBoardNewAction;
@@ -292,6 +292,11 @@ public class TActionSet {
 	 * The <code>TCellHandlerAction</code> id
 	 */
 	public final static String CELL_HANDLER = "cellHandlerAction";
+	
+	/**
+	 * The <code>TControllerCellHandlerAction</code> id
+	 */
+	public final static String CELL_CONTROLLER_HANDLER = "controllerCellHandlerAction";
 
 	/**
 	 * The <code>TGridHandlerAction</code> id
@@ -355,7 +360,7 @@ public class TActionSet {
 
 	/**
 	 * Creates a new <code>TActionSet</code> for the specified <code>editor</code>
-	 * with all the posible actions.
+	 * with all the possible actions.
 	 * 
 	 * @param editor The specified <code>editor</code>
 	 */
@@ -372,8 +377,6 @@ public class TActionSet {
 		actionSet.put(PROJECT_SAVE_ACTION, new TProjectSaveAction(editor));
 		actionSet.put(PROJECT_SAVE_AS_ACTION, new TProjectSaveAsAction(editor));
 		actionSet.put(PROJECT_IMPORT_ACTION, new TProjectImportAction(editor));
-		actionSet.put(PROJECT_INTERPRET_ACTION, new TProjectInterpretAction(
-				editor));
 		actionSet.put(PROJECT_PROPERTIES_ACTION, new TProjectPropertiesAction(
 				editor));
 		actionSet.put(PROJECT_PRINT_ACTION, new TProjectPrintAction(editor));
@@ -390,7 +393,6 @@ public class TActionSet {
 				editor, TFileUtils.JPG));
 		actionSet.put(BOARD_EXPORT_PNG_ACTION, new TBoardExportImageAction(
 				editor, TFileUtils.PNG));
-		actionSet.put(BOARD_INTERPRET_ACTION, new TBoardInterpretAction(editor));
 		actionSet.put(BOARD_VALIDATION_ACTION, new TBoardValidationAction(editor));
 		
 		// Adjust, align and fit actions
@@ -422,7 +424,8 @@ public class TActionSet {
 		actionSet.put(FRONT_ACTION, new TFrontAction(editor));
 		// Painter actions
 		actionSet.put(CELL_HANDLER, new THandlerCellAction(editor));
-		actionSet.put(GRID_HANDLER, new THandlerGridAction(editor));
+		actionSet.put(CELL_CONTROLLER_HANDLER, new THandlerControllerCellAction(editor));
+		//actionSet.put(GRID_HANDLER, new THandlerGridAction(editor));
 		actionSet.put(LABEL_HANDLER, new THandlerLabelAction(editor));
 		actionSet.put(LINE_HANDLER, new THandlerLineAction(editor));
 		actionSet.put(RECTANGLE_HANDLER, new THandlerRectangleAction(editor));

@@ -119,7 +119,7 @@ public class TLanguage {
 		}
 
 		return languagesMap;
-	}
+	}	
 
 	/**
 	 * Returns the string of the specified <code>key</code> in the current
@@ -136,5 +136,28 @@ public class TLanguage {
 		} catch (NullPointerException e) {
 			return '!' + key + '!';
 		}
+	}
+	
+	public static String getString(String language, String key){
+		
+		String keyValue = null;
+		
+		File languageDirectory = new File(LANGUAGE_DIRECTORY);
+		File[] fileList = languageDirectory.listFiles();
+		
+		for (int i = 0; i < fileList.length; i++) {
+			try {
+				if (TFileUtils.getExtension(fileList[i]).equals("lang")) {
+					TResourceBundle currentLanguageBundle = new TResourceBundle(
+							new FileInputStream(fileList[i]));
+					if (language.equals(currentLanguageBundle.getString("LANG_NAME"))){
+						keyValue = currentLanguageBundle.getString(key);
+					}
+				}
+			} catch (IOException e) {
+			}
+		}
+		return keyValue;
+		
 	}
 }

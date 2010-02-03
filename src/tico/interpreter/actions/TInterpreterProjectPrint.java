@@ -35,6 +35,7 @@ import java.awt.event.ActionEvent;
 
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -78,7 +79,7 @@ public class TInterpreterProjectPrint extends TInterpreterAbstractAction{
 			
 			format.setPaper(papel);
 			format.setOrientation(PageFormat.LANDSCAPE);
-			job.setPrintable(interpreter.interpretArea, format);
+			job.setPrintable((Printable) interpreter.interpretArea, format);
 			
 			try{
 			job.print();

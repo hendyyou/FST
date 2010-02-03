@@ -1,7 +1,7 @@
 /*
  * File: TLauncher.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -29,10 +29,16 @@ package tico;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.swing.JOptionPane;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import tico.board.TProject;
+import tico.board.encoding.InvalidFormatException;
 import tico.components.resources.TFileUtils;
 import tico.configuration.TLanguage;
 import tico.configuration.TSetup;
@@ -40,13 +46,14 @@ import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 import tico.environment.TEnvironment;
 import tico.interpreter.TInterpreter;
+import tico.interpreter.TInterpreterProject;
 
 /**
  * TEditor launcher class. It shows the <code>TEditor</code> window. If the
  * path of a Tico project file is set as the first argument, it loads the
  * project.
  * 
- * @author Pablo Muñoz
+ * @author Pablo Mu�oz
  * @version 1.0 Nov 20, 2006
  */
 public class TLauncher {
@@ -57,6 +64,7 @@ public class TLauncher {
 	 * 
 	 * @param args TEditor arguments
 	 */
+	static File  selectedFile;
 	public static void main(String[] args) {
 		// Loads application setup
 		try {
@@ -96,6 +104,7 @@ public class TLauncher {
 		switch (args.length) {
 		case 0:
 			new TEditor();
+			new TInterpreter();
 			break;
 		case 1:
 			if (args[0].equals("-i"))
@@ -110,9 +119,10 @@ public class TLauncher {
 			break;
 		case 2:
 			TProject initialProject = null;
+			TInterpreterProject initialInterpreterProject = null;
 			try {
 				// Get the initial project file
-				File selectedFile = new File(args[1]);
+				selectedFile = new File(args[1]);
 				// If selectedFile do not exists
 				if (!selectedFile.exists())
 					JOptionPane.showMessageDialog(null,
@@ -126,14 +136,47 @@ public class TLauncher {
 							TLanguage.getString("ERROR") + "!",
 							JOptionPane.ERROR_MESSAGE);
 				// Load the project
-				initialProject = TProjectHandler.loadProject(selectedFile);
+				
+				
 			} catch (Exception e) {
 			}
 			// Run the corresponding application
-			if (args[0].equals("-i"))
-				new TInterpreter(initialProject);
-			else if (args[0].equals("-e"))
+			if (args[0].equals("-i")){
+				try {
+					initialInterpreterProject= TProjectHandler.loadProjectInterpreter(selectedFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				new TInterpreter(initialInterpreterProject);
+			}
+			else if (args[0].equals("-e")){
+				try {
+					initialProject = TProjectHandler.loadProject(selectedFile);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				new TEditor(initialProject);
+			}
 			else {
 				displayUsage();
 				System.exit(-1);

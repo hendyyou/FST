@@ -141,12 +141,13 @@ public class TEditorDialog extends TPropertiesDialog {
 		if (!TSetup.getLanguage().equals(languageComboBox.getLanguage())) {
 			TSetup.setLanguage(languageComboBox.getLanguage());
 			
-			JOptionPane.showMessageDialog(null,
-					TLanguage.getString("TEditorDialog.LANGUAGE_CHANGE_ADVICE"),
-					TLanguage.getString("TEditorDialog.LANGUAGE_CHANGE"),
-					JOptionPane.INFORMATION_MESSAGE);
+			String language = languageComboBox.getLanguage();
+			String languageChangeAdvice = TLanguage.getString(language, "TEditorDialog.LANGUAGE_CHANGE_ADVICE");
+			String languageChange = TLanguage.getString(language, "TEditorDialog.LANGUAGE_CHANGE");
+			
+			JOptionPane.showMessageDialog(null, languageChangeAdvice,
+			languageChange,	JOptionPane.INFORMATION_MESSAGE);
 		}
-
 		return true;
 	}
 }

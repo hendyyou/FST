@@ -13,6 +13,7 @@
     <property name="dir.bin" value="bin"/>
     <property name="dir.javadoc" value="doc/api"/>
     <property name="dir.current" value="current"/>
+	<property name="dir.controller-icons" value="controller-icons"/>
     <property name="dir.dist" value="dist"/>
     <property name="dir.build" value="build"/>
     <property name="dir.resources" value="tico/components/resources"/>
@@ -74,6 +75,7 @@
     <target name="clean">
         <delete dir="${dir.bin}"/>
         <delete dir="${dir.current}"/>
+    	<delete dir="${dir.controller-icons}"/>
         <delete dir="${dir.dist}" excludes="${dir.dist}"/>
         <delete file="${jar.file}"/>
         <delete file="${nsis.log}"/>

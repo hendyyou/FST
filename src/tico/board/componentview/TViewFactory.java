@@ -31,6 +31,7 @@ import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.VertexView;
 
 import tico.board.components.TCell;
+import tico.board.components.TControllerCell;
 import tico.board.components.TGridCell;
 import tico.board.components.TLabel;
 import tico.board.components.TLine;
@@ -57,6 +58,8 @@ public class TViewFactory extends DefaultCellViewFactory {
 	protected VertexView createVertexView(Object component) {
 		if (component instanceof TCell)
 			return new TCellView(component);
+		if (component instanceof TControllerCell)
+			return new TControllerCellView(component);
 		if (component instanceof TGridCell)
 			return new TGridCellView(component);
 		if (component instanceof TOval)

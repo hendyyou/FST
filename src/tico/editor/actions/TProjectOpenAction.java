@@ -90,6 +90,10 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 		// Checks if the user has chosen a file
 		int returnValue = fileChooser.showOpenDialog((Component)null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			
+			//Ponemos el cursor de espera
+			getEditor().changeToWaitingCursor();
+			
 			// Get the chosen file
 			File selectedFile = fileChooser.getSelectedFile();
 			// Set its directory as next first JFileChooser directory
@@ -101,6 +105,7 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 				getEditor().setProject(TProjectHandler.loadProject(selectedFile));
 				// Set selectedFile as the project file
 				getEditor().setProjectFile(selectedFile);
+				getEditor().restoreCursor();
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,

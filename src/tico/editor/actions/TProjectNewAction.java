@@ -75,7 +75,7 @@ public class TProjectNewAction extends TEditorAbstractAction {
 		// Create the new project
 		getEditor().setProjectFile(null);
 		TProject project = new TProject();
-		project.addBoard(new TBoard());
+		project.addBoard(new TBoard()); //videoFile
 		getEditor().setProject(project);
 	}
 }

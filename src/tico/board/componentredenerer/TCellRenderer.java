@@ -55,7 +55,7 @@ public class TCellRenderer extends TComponentRenderer {
 	private final static int VERTICAL_ICON_MARGIN = 15;
 	
 	private final static int HORIZONTAL_ICON_MARGIN = 10;
-	// Default distnace between the icon and the text
+	// Default distance between the icon and the text
 	private final static int GAP_ICON_TEXT = 5;
 
 	transient protected String id;
@@ -69,7 +69,7 @@ public class TCellRenderer extends TComponentRenderer {
 		// Get the cell attributes
 		Map map = view.getAllAttributes();
 
-		// Get the vairables needed in the paint function
+		// Get the variables needed in the paint function
 		id = ((TComponent)view.getCell()).getId();
 
 		// Apply all the component properties
@@ -112,7 +112,7 @@ public class TCellRenderer extends TComponentRenderer {
 		if (text == null)
 			text = "";
 		setText(text);
-
+		
 		// Save the icon to be painted in the paint function
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(map);
 

@@ -66,6 +66,8 @@ public class TClickCellActionsPanel extends JPanel {
 	private JPanel accumulatePanel;
 	// The accumulate check box
 	private JCheckBox accumulateCheckBox;
+	// The show controller check box
+	private JCheckBox showController;
 
 	/**
 	 * Creates a new <code>TClickCellActionsPanel</code> with the elements of
@@ -161,7 +163,7 @@ public class TClickCellActionsPanel extends JPanel {
 	public void setFollowingBoard(TBoard followingBoard) {
 		followingBoardComboBox.setSelectedItem(followingBoard);		
 	}
-
+//Acciones
 	/**
 	 * Returns the selected <code>accumulated</code> value.
 	 * 

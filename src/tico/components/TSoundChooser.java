@@ -64,7 +64,7 @@ import tico.configuration.TLanguage;
 import tico.editor.TFileHandler;
 
 import tico.editor.dialogs.TRecordSound;
-import tico.interpreter.threads.TMp3Sound;
+import tico.interpreter.threads.TInterpreterMp3Sound;
 
 /**
  * Components to a sound file.
@@ -85,7 +85,7 @@ public class TSoundChooser extends JPanel {
 	private AudioFormat audioFormat;
 	private AudioInputStream audioInputStream;
 	private AudioPlayThread audioPlayThread;
-	private TMp3Sound prueba=null;
+	private TInterpreterMp3Sound prueba=null;
 
 	// Sound name panel
 	private JPanel soundNamePane;
@@ -241,7 +241,7 @@ public class TSoundChooser extends JPanel {
 		String extension=TFileUtils.getExtension(soundFilePath);
 		if (extension.equals("mp3"))
 		{
-			 prueba= new TMp3Sound(soundFilePath);
+			 prueba= new TInterpreterMp3Sound(soundFilePath);
 			 prueba.TPlay();
 			 
 			 stopSoundButton.setEnabled(true);
@@ -356,26 +356,11 @@ public class TSoundChooser extends JPanel {
 	
 	private class RecordSoundButtonListener implements ActionListener {
 		
-
 		public void actionPerformed(ActionEvent e) {
 			
-				TRecordSound capturePlayback = new TRecordSound();
-				TRecordSound.text=null;
-		        capturePlayback.open();
-		        TDialog f = new TDialog(null,TLanguage.getString("TSoundChooser.RECORD"),true);
+				TRecordSound recordSoundWindow = new TRecordSound();
 		        
-		        f.setEnabled(true);
-		        f.getContentPane().add("Center", capturePlayback);
-		        
-		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		        int w = 720;
-		        int h = 340;
-		        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-		        f.setSize(w, h);
-		        f.setVisible(true);
-		        
-		        if (TRecordSound.text!=null)
-		        	
+		        if (TRecordSound.text!=null)		        	
 		        {
 		        	File selectedFile = TRecordSound.text;
 					// Set its directory as next first JFileChooser directory

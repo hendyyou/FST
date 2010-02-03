@@ -29,6 +29,7 @@ package tico.editor.dialogs;
 
 import tico.board.components.TCell;
 import tico.board.components.TComponent;
+import tico.board.components.TControllerCell;
 import tico.board.components.TGridCell;
 import tico.board.components.TLabel;
 import tico.board.components.TLine;
@@ -66,6 +67,8 @@ public class TComponentDialogFactory {
 	public void createComponentDialog(TComponent component) {
 		if (component instanceof TCell)
 			new TCellDialog(boardContainer, component);
+		if (component instanceof TControllerCell)
+			new TControllerCellDialog(boardContainer, component);
 		if (component instanceof TGridCell)
 			new TGridCellDialog(boardContainer, component);
 		if (component instanceof TTextArea)

@@ -111,7 +111,30 @@ public class TBoardConstants extends GraphConstants {
 	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int BOTTOM_RIGHT_CORNER = 7;
-
+	
+	/**
+	 * Represents the size of the image controller in the controller cell menu.
+	 */
+	public final static int CONTROLLER_IMAGE_SIZE = 70;
+	
+	/**
+	 * Represents the action of a controller cell.
+	 * 
+	 * @see #getActionCode(Map)
+	 * @see #setActionCode(Map, int)
+	 */
+	public final static int EXIT_ACTION_CODE = 1;
+	
+	public final static int UNDO_ACTION_CODE = 2;
+	
+	public final static int UNDO_ALL_ACTION_CODE = 3;
+	
+	public final static int READ_ACTION_CODE = 4;
+	
+	public final static int RETURN_ACTION_CODE = 5;
+	
+	public final static int STOP_ACTION_CODE = 6;
+	
 	/**
 	 * Key for the <code>text</code> attribute. Use instances of String as
 	 * values for this key.
@@ -150,10 +173,22 @@ public class TBoardConstants extends GraphConstants {
 	public final static String BROWSING_SOUND_FILE ="browsingSound";
 	
 	/**
+	 * Key for the <code>videoFile</code> attributes. Use instances of
+	 * String as values for this key.
+	 */
+	public final static String VIDEO_FILE = "videoFile";
+	
+	/**
 	 * Key for the <code>startCorner</code> attribute. Use instances of
 	 * Integer as values for this key.
 	 */
 	public final static String START_CORNER = "startCorner";
+	
+	/**
+	 * Key for the <code>actionCode</code> attribute. Use instances of
+	 * Integer as values for this key.
+	 */
+	public final static String ACTION_CODE = "actionCode";
 
 	/**
 	 * Key for the <code>column</code> attribute. Use instances of Integer as
@@ -268,13 +303,13 @@ public class TBoardConstants extends GraphConstants {
 	 * Key for the <code>EnvironmentAction</code> attribute. Use instances of String as 
 	 * values for this key.
 	 */
-	public final static String ENVIRONMENT_ACTION="EnvironmentAction";
+	public final static String ENVIRONMENT_ACTION="environmentAction";
 	
 	/**
 	 * Key for the <code>ActionPosition</code> attribute. Use instances of Integer as 
 	 * values for this key.
 	 */
-	public final static String ACTION_POSITION="ActionPosition";
+	public final static String ACTION_POSITION="actionPosition";
 	
 
 	/**
@@ -359,6 +394,26 @@ public class TBoardConstants extends GraphConstants {
 	{
 		map.put(BROWSING_SOUND_FILE, value);
 	}
+	
+	/**
+     * Returns the videoFile attribute from the specified map.
+     */
+    public static final String getVideoFile(Map map) {
+        File fichero=(File)map.get(VIDEO_FILE);
+        if (fichero!=null)
+        return fichero.getPath();
+        else return null;
+    }
+
+    /**
+     * Sets the videoFile attribute in the specified map to the specified
+     * value.
+     */
+    public static final void setVideoFile(Map map, String value) {
+   
+        map.put(VIDEO_FILE,new File(value));
+    }
+	
 	/**
 	 * Returns the alternateIcon attribute from the specified map.
 	 */
@@ -379,6 +434,24 @@ public class TBoardConstants extends GraphConstants {
 	 */
 	public static final int getStartCorner(Map map) {
 		Integer intObj = (Integer)map.get(START_CORNER);
+		if (intObj != null)
+			return intObj.intValue();
+		return 0;
+	}
+	
+	/**
+	 * Sets the actionCode attribute in the specified map to the specified
+	 * value.
+	 */
+	public static final void setActionCode(Map map, int value) {
+		map.put(ACTION_CODE, new Integer(value));
+	}
+
+	/**
+	 * Returns the actionCode attribute from the specified map.
+	 */
+	public static final int getActionCode(Map map) {
+		Integer intObj = (Integer)map.get(ACTION_CODE);
 		if (intObj != null)
 			return intObj.intValue();
 		return 0;

@@ -64,15 +64,6 @@ public class TInterpreterExitAction extends TInterpreterAbstractAction {
 		}
 		getInterpreter().dispose();
 		
-		if (TInterpreterConstants.WindowController==1)
-		{
-			//hide it;
-			
-			TInterpreterConstants.WindowController=0;
-			TInterpreterConstants.FinalWindow.setVisible(false);
-			
-		}
-		
 		if (interpreter.TStart!=null)
 		{
 			if (interpreter.TStart.isAlive())
@@ -83,8 +74,8 @@ public class TInterpreterExitAction extends TInterpreterAbstractAction {
 		}
 		
 		
-		if (interpreter.InterpreterRobot!=null)
-			interpreter.InterpreterRobot=null;
+		if (interpreter.interpreterRobot!=null)
+			interpreter.interpreterRobot=null;
 		
 		//
 		//Stop Current Sound

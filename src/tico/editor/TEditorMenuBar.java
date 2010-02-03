@@ -30,9 +30,6 @@ package tico.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.FileWriter;
-import java.util.Iterator;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -40,24 +37,18 @@ import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import org.java.plugin.PluginManager;
+
 import tico.components.TMenuItem;
 import tico.components.TToolBarContainer;
 import tico.configuration.TLanguage;
 import tico.editor.actions.THideToolBarAction;
-
-import tico.pluginInterfaces.TPluginMBInterface;
-import org.java.plugin.ObjectFactory;
-import org.java.plugin.PluginManager;
-import org.java.plugin.PluginManager.PluginLocation;
-import org.java.plugin.registry.Extension;
-import org.java.plugin.registry.ExtensionPoint;
-import org.java.plugin.registry.PluginDescriptor;
-import org.java.plugin.standard.StandardPluginLocation;
+import tico.imageGallery.TImageGalleryMenuBar;
 
 /**
  * Editor's menu bar.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TEditorMenuBar extends JMenuBar {
@@ -328,12 +319,18 @@ public class TEditorMenuBar extends JMenuBar {
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				ActionEvent.SHIFT_MASK));
 		menu.add(menuItem);
+		
+		menuItem = new TMenuItem(actionSet.getAction(TActionSet.CELL_CONTROLLER_HANDLER));
+		menuItem.setMnemonic(KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
 
-		menuItem = new TMenuItem(actionSet.getAction(TActionSet.GRID_HANDLER));
+		/*menuItem = new TMenuItem(actionSet.getAction(TActionSet.GRID_HANDLER));
 		menuItem.setMnemonic(KeyEvent.VK_U);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,
 				ActionEvent.SHIFT_MASK));
-		menu.add(menuItem);
+		menu.add(menuItem);*/
 
 		menu.add(new JSeparator());
 		menuItem = new TMenuItem(actionSet.getAction(TActionSet.LINE_HANDLER));
@@ -471,9 +468,14 @@ public class TEditorMenuBar extends JMenuBar {
 		//Define the extension point and add the existing plugins
 		
 		JMenu menuValidation = createValidationMenu();
-		JMenu menu = new JMenu();	
+		JMenu menu = new JMenu(TLanguage.getString("TEditorMenuBar.DYNAMIC_MENU"));
 		
-		try {
+		menu.add(menuValidation);
+		menu.add(new JSeparator());
+		
+		TImageGalleryMenuBar plugin = new TImageGalleryMenuBar();
+        menu.add(plugin.init(editor));	
+	/*	try {
 			
 			pluginManager = ObjectFactory.newInstance().createManager();
 
@@ -493,8 +495,8 @@ public class TEditorMenuBar extends JMenuBar {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		try {
+		}*/
+		/*try {
 			
 			menu = new JMenu(TLanguage.getString("TEditorMenuBar.DYNAMIC_MENU"));
 			menu.add(menuValidation);
@@ -518,7 +520,7 @@ public class TEditorMenuBar extends JMenuBar {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		this.add(menu);
 	}
 

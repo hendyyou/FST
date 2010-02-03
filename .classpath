@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="libs/images/jai_codec.jar"/>
 	<classpathentry kind="lib" path="libs/images/jai_core.jar"/>
-	<classpathentry kind="lib" path="libs/images/javazoom.jar"/>
-	<classpathentry kind="lib" path="libs/images/jdom.jar"/>
 	<classpathentry kind="lib" path="libs/images/jess.jar"/>
 	<classpathentry kind="lib" path="libs/images/jsr94.jar"/>
 	<classpathentry kind="lib" path="libs/plugins/lib/commons-logging.jar"/>
@@ -22,5 +19,9 @@
 	<classpathentry kind="lib" path="libs/sound/tritonus_share.jar"/>
 	<classpathentry kind="lib" path="libs/sqlite/sqlitejdbc-v054.jar"/>
 	<classpathentry kind="lib" path="libs/jgraph.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="lib" path="libs/dsj.jar"/>
+	<classpathentry kind="lib" path="libs/jdom.jar"/>
+	<classpathentry kind="lib" path="libs/images/javazoom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

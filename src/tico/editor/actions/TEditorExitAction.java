@@ -67,7 +67,7 @@ public class TEditorExitAction extends TEditorAbstractAction {
 					TLanguage.getString("TProjectExitAction.ASK_SAVE_QUESTION"),
 					TLanguage.getString("TProjectExitAction.MODIFIED_PROJECT"),
 					JOptionPane.YES_NO_CANCEL_OPTION);
-		// If cancel, exit
+		// If cancel, exit 
 		if (choosenOption == JOptionPane.CANCEL_OPTION) {
 			return;
 		}

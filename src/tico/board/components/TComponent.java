@@ -130,6 +130,8 @@ abstract public class TComponent extends DefaultGraphCell {
 			// Depending on the type, you have to return a different component
 			if (type.equals(TCell.TYPE)) {
 				return TCell.XMLDecode(element);
+			} else if (type.equals(TControllerCell.TYPE)) {
+				return TControllerCell.XMLDecode(element);
 			} else if (type.equals(TGrid.TYPE)) {
 				return TGrid.XMLDecode(element);
 			} else if (type.equals(TLabel.TYPE)) {

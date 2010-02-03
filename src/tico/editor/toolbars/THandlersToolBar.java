@@ -38,6 +38,7 @@ import tico.configuration.TLanguage;
 import tico.editor.TActionSet;
 import tico.editor.TEditor;
 import tico.editor.handler.TCellMarqueeHandler;
+import tico.editor.handler.TControllerCellMarqueeHandler;
 import tico.editor.handler.TGridMarqueeHandler;
 import tico.editor.handler.TLabelMarqueeHandler;
 import tico.editor.handler.TLineMarqueeHandler;
@@ -60,6 +61,7 @@ public class THandlersToolBar extends TToolBar {
 	// Handler buttons
 	private TToolBarToggleButton selectButton;
 	private TToolBarToggleButton cellButton;
+	private TToolBarToggleButton controllerCellButton;
 	private TToolBarToggleButton gridButton;
 	private TToolBarToggleButton textAreaButton;
 	private TToolBarToggleButton labelButton;
@@ -84,8 +86,10 @@ public class THandlersToolBar extends TToolBar {
 				.getAction(TActionSet.SELECTION_HANDLER));
 		cellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.CELL_HANDLER));
-		gridButton = new TToolBarToggleButton(editor.getActionSet().getAction(
-				TActionSet.GRID_HANDLER));
+		controllerCellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.CELL_CONTROLLER_HANDLER));
+		/*gridButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.GRID_HANDLER));*/
 		textAreaButton = new TToolBarToggleButton(editor.getActionSet()
 				.getAction(TActionSet.TEXT_AREA_HANDLER));
 		labelButton = new TToolBarToggleButton(editor.getActionSet().getAction(
@@ -101,7 +105,8 @@ public class THandlersToolBar extends TToolBar {
 
 		handlersButtonGroup.add(selectButton);
 		handlersButtonGroup.add(cellButton);
-		handlersButtonGroup.add(gridButton);
+		handlersButtonGroup.add(controllerCellButton);
+		//handlersButtonGroup.add(gridButton);
 		handlersButtonGroup.add(textAreaButton);
 		handlersButtonGroup.add(labelButton);
 		handlersButtonGroup.add(lineButton);
@@ -112,7 +117,8 @@ public class THandlersToolBar extends TToolBar {
 		add(selectButton);
 		addSeparator();
 		add(cellButton);
-		add(gridButton);
+		add(controllerCellButton);
+		//add(gridButton);
 		addSeparator();
 		add(textAreaButton);
 		add(labelButton);
@@ -139,8 +145,10 @@ public class THandlersToolBar extends TToolBar {
 
 			if (handler instanceof TCellMarqueeHandler)
 				cellButton.setSelected(true);
-			else if (handler instanceof TGridMarqueeHandler)
-				gridButton.setSelected(true);
+			else if (handler instanceof TControllerCellMarqueeHandler)
+				controllerCellButton.setSelected(true);
+		/*	else if (handler instanceof TGridMarqueeHandler)
+				gridButton.setSelected(true);*/
 			else if (handler instanceof TTextAreaMarqueeHandler)
 				textAreaButton.setSelected(true);
 			else if (handler instanceof TLabelMarqueeHandler)

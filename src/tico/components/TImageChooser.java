@@ -38,8 +38,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Iterator;
 
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
@@ -56,26 +54,20 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
+import org.java.plugin.PluginManager;
+
 import tico.board.TBoardConstants;
 import tico.components.resources.ImageFilter;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-import tico.editor.TFileHandler;
 import tico.editor.TEditor;
-
-import tico.pluginInterfaces.TPluginIMInterface;
-import org.java.plugin.ObjectFactory;
-import org.java.plugin.PluginManager;
-import org.java.plugin.PluginManager.PluginLocation;
-import org.java.plugin.registry.Extension;
-import org.java.plugin.registry.ExtensionPoint;
-import org.java.plugin.registry.PluginDescriptor;
-import org.java.plugin.standard.StandardPluginLocation;
+import tico.editor.TFileHandler;
+import tico.imageGallery.TImageGalleryButton;
 
 
 /**
- * Components to to choose an image file.
+ * Components to choose an image file.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
@@ -145,7 +137,7 @@ public class TImageChooser extends JPanel {
 	
 	// Open Image Gallery button
 	//private TButton openGalleryButton;
-
+	private TImageGalleryButton galleryButton;
 	// Open image chooser dialog button
 	private TButton openChooserDialogButton;
 	
@@ -156,7 +148,7 @@ public class TImageChooser extends JPanel {
 	
 	public static String ruta = null;
 	
-	public static final File pluginsDir = new File("./plugins");
+	//public static final File pluginsDir = new File("./plugins");
 	
 	private PluginManager pluginManager;
 
@@ -205,7 +197,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 * 			  <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(int type, TEditor editor) {
 		this(DEFAULT_TITLE, type, editor);
@@ -218,7 +210,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 *            <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(int type) {
 		this(DEFAULT_TITLE, type);
@@ -233,7 +225,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 *            <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(String title, int type, TEditor editor) {
 		super();
@@ -278,6 +270,7 @@ public class TImageChooser extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		add(buttonPanel, c);
+
 	}
 	
 	/**
@@ -289,7 +282,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 * 			  <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(String title, int type) {
 		super();
@@ -332,6 +325,7 @@ public class TImageChooser extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		add(buttonPanel, c);
+
 	}
 
 	// Create preview icon label
@@ -423,10 +417,11 @@ public class TImageChooser extends JPanel {
 	private void createButtonPanel() {
 		
 		buttonPanel = new JPanel();
-
-		// Define the extension point and add the existing plugins
+		galleryButton = new TImageGalleryButton();
+		buttonPanel.add(galleryButton.init(editor,this));
+		//Define the extension point and add the existing plugins
 		
-		try {
+		/*try {
 
 	    	pluginManager = ObjectFactory.newInstance().createManager();
 	    	
@@ -469,7 +464,7 @@ public class TImageChooser extends JPanel {
 		} catch (Exception e) {
 			System.out.println("Error");
 			e.printStackTrace();
-		}
+		}*/
 		
 		openChooserDialogButton = new TButton(TLanguage.getString("TImageChooser.BUTTON_SELECT"));
 		openChooserDialogButton
@@ -498,6 +493,7 @@ public class TImageChooser extends JPanel {
 	 * Update all the components. Updates the preview icon label and enables or
 	 * disables the buttons.
 	 */
+	
 	public void updateComponents() {
 		if (icon != null) {
 			clearIconButton.setEnabled(true);
@@ -634,6 +630,10 @@ public class TImageChooser extends JPanel {
 			fitResizeStyleToggleButton.setSelected(true);
 		else
 			scaleResizeStyleToggleButton.setSelected(true);
+	}
+	
+	public TImageGalleryButton getImageGalleryButton(){
+		return galleryButton;
 	}
 
 	// Action listener for the openChooserDialogButton

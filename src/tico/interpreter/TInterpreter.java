@@ -1,12 +1,12 @@
 /*
  * File: TInterpreter.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Pablo Muñoz
+ * Authors: Antonio Rodriguez
  * 
- * Date: Oct 5, 2006
+ * Date: Nov 20, 2006
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
@@ -26,8 +26,6 @@
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-/*Author Antonio*/
-
 package tico.interpreter;
 
 import java.awt.AWTException;
@@ -36,16 +34,17 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.*;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -56,23 +55,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
-import org.jgraph.graph.GraphLayoutCache;
-import org.jgraph.graph.VertexView;
-
-import tico.board.TBoard;
-import tico.board.TBoardModel;
-import tico.board.TProject;
-import tico.components.*;
+import tico.components.TMenuItem;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-import tico.editor.TActionSet;
 import tico.interpreter.actions.TInterpreterExitAction;
-import tico.interpreter.actions.TInterpreterMouseActions;
-import tico.interpreter.board.TInterpreterBoardLayoutCache;
+import tico.interpreter.components.TInterpreterCell;
 import tico.interpreter.threads.TThreads;
-
 
 /**
  * The main window of the Tico interpreter application.
@@ -82,54 +72,65 @@ import tico.interpreter.threads.TThreads;
  */
 
 public class TInterpreter extends JFrame {
-	private static String DEFAULT_TITLE = TLanguage.getString("TInterpreter.INTERPRETER_WINDOW_TITLE");
+
+	public static String DEFAULT_TITLE = TLanguage.getString("TInterpreter.INTERPRETER_WINDOW_TITLE");
 
 	// Editing project
-	private TProject project;
-		
-	public int BoardChange=0;
-	public int BrowseGrid=0;
-	public int Grid;
+	private TInterpreterProject project;
 	
-	private TBoard InterpreterBoard;	
+	// Current board of the editing project
+	private static TInterpreterBoard currentBoard = null;
+		
+	//private TBoard InterpreterBoard;
 	public static TThreads TStart;	
-	public Robot InterpreterRobot;	
-	JMenuBar menuBar = new JMenuBar();	
+	public Robot interpreterRobot;	
+	
 	// TUNE Should be gotten from setup class
 	private Dimension initLocation = new Dimension(0,0);
 	private Dimension initSize = new Dimension(1204,800);
+	
+	private int activateBrowsingMouse=0;
+	private int activateDirectSelection=1;
+	
+	public static ArrayList accumulatedCellsList=null;
+	
+	public int run = 0;
+
+	private static TMenuItem menuItemStart;
+	private static TMenuItem menuItemStop;
+	private static TMenuItem menuItemRead;
+	private static TMenuItem menuItemUndo;
+	private static TMenuItem menuItemUndoAll;
+	
+	//Mouse mode
+	private JRadioButtonMenuItem browsingMode;
+	private JRadioButtonMenuItem directSelectionMode;
+	private static JMenu mouseMode;	
+	
+	//Panels
+	public JPanel backgroundPanel;
+	public static JPanel interpretArea;
+	public static JPanel interpretAreaBackground;
+	public static JPanel accumulatedCells;
+	
 	private TInterpreterActionSet actionSet;
-	private int ActivateBar=0;
-	private int ActivateSelect=1;
-	private JRadioButtonMenuItem Barrido;
-	private JRadioButtonMenuItem Seleccion;
-	private TProject CurrentProyect;
-	public static ArrayList AccumulatedList=null;
-	public int run=0;
-	public TButton Controller;
-	public  JPanel ControllerPane;
-	public JPanel BackPanel;
-	public TPanel interpretArea;
-	public JPanel accumulatedArea;
-	public static String defaultCursor = null;
-	public JPanel Fondo;
-    /**
+   
+	
+	/**
 	 * Creates a new <code>TInterpreter</code> main application window.
 	 */
-	
-	public TInterpreter() {	
+	public TInterpreter() {
+		super(DEFAULT_TITLE);		
 		
-		super(DEFAULT_TITLE);
 		initSize=java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		AccumulatedList=new ArrayList();
+		
+		accumulatedCellsList = new ArrayList();
 		try {
-			InterpreterRobot=new Robot();
+			interpreterRobot = new Robot();
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		/*DEfinimos el tama�o de la ventana.*/
 		setWindowAtributes();
 
 		createActions();
@@ -138,13 +139,24 @@ public class TInterpreter extends JFrame {
 		createInterpreterArea();
 	    createWindowListener();
 	    
-	    updateMenuButtons();
-	    
-		if (project != null)
-			setProject(project);
-		
+	    updateMenuButtons();	    
+			
 		setResizable(false);
 		setVisible(true);
+		TInterpreterConstants.interpreter = this;	
+	}	
+	
+	/**
+	 * Creates a new <code>TInterpreter</code> main application window with the
+	 * specified initial <code>project</code>.
+	 * 
+	 * @param project The specified initial <code>project</code>
+	 */		
+	public TInterpreter(TInterpreterProject project) {	
+		this();
+		setProject(project);
+		
+		this.setTitle(TInterpreter.DEFAULT_TITLE + " - " + project.getName());		
 	}
 	
 	/**
@@ -152,35 +164,52 @@ public class TInterpreter extends JFrame {
 	 * specified initial <code>project</code>.
 	 * 
 	 * @param project The specified initial <code>project</code>
-	 */	
-	
-	public TInterpreter(TProject project) {	
-		this();
-		setProject(project);
-		
-		this.setTitle(TInterpreter.DEFAULT_TITLE + " - " + project.getName());
-	
-		CurrentProyect=project;
+	 */		
+	public static TInterpreterBoard getCurrentBoard() {
+		return currentBoard;
+	}
+
+	public static void setCurrentBoard(TInterpreterBoard currentBoard) {
+		TInterpreter.currentBoard = currentBoard;
 	}
 	
 	/**
-	 * Creates a new <code>TInterpreter</code> main application window with the
-	 * specified initial <code>board</code>.
+	 * Changes the board displayed on the interpreter window with the
+	 * specified <code>board</code>.
 	 * 
-	 * @param board The specified initial <code>board</code>
-	 */		
+	 * @param boardName The name of the specified <code>board</code>
+	 */
+	public void changeBoard(String boardName){
+		  TInterpreterBoard board= project.getBoard(boardName);
+		  interpretArea.removeAll();
+		  this.setVisible(true);
+		  board.loadBoard(interpretArea);
+		  interpretArea.repaint();
+	  }	
 	
-	public TInterpreter(TBoard board) {
-		this();
-		
-		TProject project = new TProject(board.getBoardName());
-		CurrentProyect=project;
-		project.addBoard(board);
-		setProject(project);
+	public void repaintCurrentBoard(){
+		TInterpreterCell cell;
+		ArrayList<TInterpreterCell> cellList = currentBoard.getCellList();
+		for (int i=0; i<cellList.size(); i++){
+			cell = cellList.get(i);
+			
+			if (cell.isTransparentBorder()){
+				cell.setBorderPainted(false);
+			}
+			cell.setBorder(new LineBorder(cell.getBorderColor(), (int)cell.getBorderSize()));
+			
+			if (cell.getBackground()!= null){
+				cell.setBackground(cell.getBackground());
+			}
+			if (cell.getIcon()!= null){	
+				cell.setIcon(cell.getIcon());
+			}			
+		}
 	}
 	
-	public TProject getIntepreterProject() {
-		return CurrentProyect;
+	
+	public TInterpreterProject getIntepreterProject() {
+		return project;
 	}
 
 	// Sets the window attributes
@@ -191,27 +220,28 @@ public class TInterpreter extends JFrame {
 		
 	}
 
-	// Creates the editor actions
+	// Creates the interpreter actions
 	private void createActions() {
 		actionSet = new TInterpreterActionSet(this);
 	}
-
 	
-	// Creates the editor main menu
+	// Creates the interpreter main menu
 	private void createMenu() {
+		JMenuBar menuBar = new JMenuBar();	
 		
-		JMenu menu = new JMenu(TLanguage.getString("TInterpreter.FILE_MENU"));
-		menu.setMnemonic(KeyEvent.VK_A);
+		// Menu File		
+		JMenu menuFile = new JMenu(TLanguage.getString("TInterpreter.FILE_MENU"));
+		menuFile.setMnemonic(KeyEvent.VK_A);
 
 		// Create the menu items
 		TMenuItem menuItem;
-		/*Creamos Menu para elegir Proyecto*/
 		menuItem = new TMenuItem(actionSet
 				.getAction(TInterpreterActionSet.PROJECT_OPEN_ACTION));
 		menuItem.setMnemonic(KeyEvent.VK_A);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
 				ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
+		
+		menuFile.add(menuItem);
 		
 //		menuItem = new TMenuItem(actionSet
 //				.getAction(TInterpreterActionSet.INTERPRETER_PRINT_ACTION));
@@ -220,19 +250,16 @@ public class TInterpreter extends JFrame {
 //				ActionEvent.CTRL_MASK));
 //		menu.add(menuItem);
 		
-		
-		menu.add(new JSeparator());
+		menuFile.add(new JSeparator());
 		menuItem = new TMenuItem(actionSet
 				.getAction(TInterpreterActionSet.INTERPRETER_EXIT_ACTION));
 		menuItem.setMnemonic(KeyEvent.VK_S);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				ActionEvent.CTRL_MASK));
-		menu.add(menuItem);
-		/*Menu para mostrar quienes somos*/
+		menuFile.add(menuItem);
 		
-		
-		// Add the menu
-		menuBar.add(menu);
+		// Menu Help
+		menuBar.add(menuFile);
 		JMenu menuHelp = new JMenu(TLanguage.getString("TEditorMenuBar.HELP_MENU"));
 		
 		menuHelp.setMnemonic(KeyEvent.VK_Y);
@@ -242,149 +269,133 @@ public class TInterpreter extends JFrame {
 				ActionEvent.CTRL_MASK));
 		menuHelp.add(menuItem);
 		
-		JMenu  menu2 = new JMenu(TLanguage.getString("TInterpreterMenuBar.ACTION_MENU"));
-		menuItem = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_RUN));
+		// Menu Actions
+		JMenu menuActions = new JMenu(TLanguage.getString("TInterpreterMenuBar.ACTION_MENU"));
 		
-		menuItem.setMnemonic(KeyEvent.VK_F5);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5,
-				ActionEvent.CTRL_MASK));
-		menu2.add(menuItem);
+		menuItemStart = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_RUN));		
+		menuItemStart.setMnemonic(KeyEvent.VK_F5);
+		menuItemStart.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));		
+		menuActions.add(menuItemStart);
 		
-		menuItem = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_STOP));
+		menuItemStop = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_STOP));		
+		menuItemStop.setMnemonic(KeyEvent.VK_ESCAPE);
+		menuItemStop.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+		menuActions.add(menuItemStop);
+				
+		menuItemRead = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_READ));
+		menuItemRead.setMnemonic(KeyEvent.VK_F7);
+		menuItemRead.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, ActionEvent.CTRL_MASK));		
+		menuActions.add(menuItemRead);
 		
-		menuItem.setMnemonic((char)KeyEvent.VK_ESCAPE);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke((char) KeyEvent.VK_ESCAPE));
-		menu2.add(menuItem);
+		menuItemUndo = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_UNDO));
+		menuItemUndo.setMnemonic(KeyEvent.VK_Z);
+		menuItemUndo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+		menuActions.add(menuItemUndo);
 		
-		//MenuItem to Read the Cells of the Accumulated Panel
+		menuItemUndoAll = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_UNDO_ALL));
+		menuItemUndoAll.setMnemonic(KeyEvent.VK_F8);
+		menuItemUndoAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, ActionEvent.CTRL_MASK));
+		menuActions.add(menuItemUndoAll);
 		
-		TMenuItem menuItem2 = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_READ));
-		menuItem2.setMnemonic(KeyEvent.VK_F7);
-		menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7,
-				ActionEvent.CTRL_MASK));
-		menu2.add(menuItem2);
+		mouseMode = new JMenu(TLanguage.getString("TInterpreterMenuBar.MODE"));
 		
+		browsingMode = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_BARRIDO));
+		directSelectionMode = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_DIRECT_SELECTION));
+		browsingMode.setSelected(false);
+		directSelectionMode.setSelected(true);
 		
-		menuItem2 = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_UNDO));
-		menuItem2.setMnemonic(KeyEvent.VK_F7);
-		menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-				ActionEvent.CTRL_MASK));
-		menu2.add(menuItem2);
+		activateDirectSelection=1;
+		activateBrowsingMouse=0;
 		
-		
-		
-		
-		JMenu tipoBarrido = new JMenu(TLanguage.getString("TInterpreterMenuBar.MODE"));
-		
-		//Initial Situation JRadioBUtton;
-		Barrido = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_BARRIDO));
-		Seleccion = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_DIRECT_SELECTION));
-		Barrido.setSelected(false);
-		Seleccion.setSelected(true);
-		
-		ActivateSelect=1;
-		ActivateBar=0;
-		
-		
-		
-		tipoBarrido.add(Barrido);
-        tipoBarrido.add(Seleccion);
-        menu2.add(tipoBarrido);
+		mouseMode.add(browsingMode);
+		mouseMode.add(directSelectionMode);
+        menuActions.add(mouseMode); 
         
+        //Menu View        
 		JMenu menuView = new JMenu(TLanguage.getString("TInterpreterMenuBar.VIEW_MENU"));
 		menuItem= new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_OPTIONS));
 		menuView.add(menuItem);
 		menuItem = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_LANGUAJES));
 		menuView.add(menuItem);
+		
 		menuBar.add(menuView);
-		menuBar.add(menu2);
+		menuBar.add(menuActions);
 		menuBar.add(createValidationMenu());
 		menuBar.add(menuHelp);
+		
 		setJMenuBar(menuBar);
-		
+		setEnabledActions(false);
 	}
 	
-	public int getActivateSelect (){
-		
-		return this.ActivateSelect;
-	}
-	public int getActivateBar () {
-		
-		return this.ActivateBar;
-	}
-	
-	public void setActivateSelect (int value){
-		this.ActivateSelect=value;
+	public static void setEnabledActions(boolean enabled){
+		mouseMode.setEnabled(enabled);
+        menuItemStart.setEnabled(enabled);
+        menuItemUndo.setEnabled(enabled);
+        menuItemUndoAll.setEnabled(enabled);
+        menuItemRead.setEnabled(enabled);
+        menuItemStop.setEnabled(enabled);
 	}
 	
-	public void setActivateBar (int value){
+	public int getActivateBrowsingMode () {
 		
-		this.ActivateBar=value;
+		return this.activateBrowsingMouse;
 	}
 	
-	public void setRadioBar (boolean value){
-		Barrido.setSelected(value);
+	public void setActivateDirectSelection (int value){
+		this.activateDirectSelection=value;
 	}
 	
-	public void setRadioSelect (boolean value){
+	public void setActivateBrowsingMode (int value){
 		
-		Seleccion.setSelected(value);
+		this.activateBrowsingMouse=value;
+	}
+	
+	public void setBrowsingMode (boolean value){
+		browsingMode.setSelected(value);
+	}
+	
+	public void setDirectSelection (boolean value){		
+		directSelectionMode.setSelected(value);
 	}
 	public TInterpreter getInterpreter() {
 		return this;
 	}
 	
-	// Creates de board interpreting area
+	// Creates the board interpreting area
 	private void createInterpreterArea() {
+		backgroundPanel= new JPanel(new BorderLayout());
 		
 		interpretArea = new TPanel();
-		interpretArea.setLayout(new FlowLayout(FlowLayout.LEADING));
-	
-		accumulatedArea = new JPanel();
-		 Fondo= new JPanel(new BorderLayout());
+		interpretArea.setLayout(null);
+
+		Dimension d = new Dimension(800,600);
+		interpretArea.setPreferredSize(d);
+		interpretArea.setBackground(Color.white);
+		interpretArea.setVisible(true);
+		interpretArea.setBorder(new LineBorder(Color.black,1));
 		
-		Fondo.add(accumulatedArea,BorderLayout.CENTER);
-		accumulatedArea.setLayout(new FlowLayout(FlowLayout.LEFT));
-		accumulatedArea.setBackground(Color.WHITE);
-		JScrollPane accumulatedScrollPane = new JScrollPane(
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		accumulatedScrollPane.setViewportView(Fondo);
+		interpretAreaBackground = new JPanel();
+		interpretAreaBackground.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor= GridBagConstraints.CENTER;
+		interpretAreaBackground.add(interpretArea,c);
+		
+		accumulatedCells = new JPanel();
+		accumulatedCells.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-				new JScrollPane(interpretArea), Fondo);
+				new JScrollPane(interpretAreaBackground), accumulatedCells);
 		
 		splitPane.setResizeWeight(0.5);
 		splitPane.setEnabled(false);
 		splitPane.setDividerSize(10);
 		splitPane.setDividerLocation(java.awt.Toolkit.getDefaultToolkit().getScreenSize().height-157);
 		
-	    ImageIcon imageController=TResourceManager.getImageIcon("jump22.png");
-	    
-	    	
-	    ControllerPane= new JPanel();
-		Controller= new TButton(actionSet.getAction(TInterpreterActionSet.CONTROLLER_BUTTON_ACTION));
-		
-		//Install Features to Controller.
-		
-		Controller.setVerticalTextPosition(SwingConstants.BOTTOM);
-		Controller.setHorizontalTextPosition(SwingConstants.CENTER);
-		Controller.setFocusPainted(false);
-		Controller.setIcon(imageController);
-	   		
-		Controller.setBackground(Color.green);
-		
-		Controller.addMouseListener(new TInterpreterMouseActions(Controller));
-		
-		ControllerPane.add(Controller);
-		ControllerPane.setBackground(Color.cyan);
-		
-		Fondo.add(ControllerPane,BorderLayout.EAST);
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(splitPane, BorderLayout.CENTER);
-				
+		backgroundPanel.add(splitPane, BorderLayout.CENTER);				
+			
+		this.add(backgroundPanel);
 	}
-	
+
 	// Creates the window listener
 	private void createWindowListener() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -400,7 +411,7 @@ public class TInterpreter extends JFrame {
 	 * 
 	 * @return The current <code>project</code>
 	 */
-	public TProject getProject() {
+	public TInterpreterProject getProject() {
 		return project;
 	}
 
@@ -409,60 +420,22 @@ public class TInterpreter extends JFrame {
 	 * 
 	 * @param project The new <code>project</code>
 	 */
-	public void setProject(TProject project) {
+	public void setProject(TInterpreterProject myproject) {
 		if (getProject() != null)
 			deleteProject();
-		this.setTitle(TInterpreter.DEFAULT_TITLE + " - " + project.getName());
-		TBoard board = project.getInitialBoard();
-		this.project = project;
-		
-		changeBoard(board);
+		this.project = myproject;
+		this.setTitle(TInterpreter.DEFAULT_TITLE + " - " + myproject.getName());
+		changeBoard(project.getinitialBoardname());
 		updateMenuButtons();
 	}
-	/*
-	 * Return the current Board of the Interpreter
-	 * 
-	 */
-	public TBoard getBoard (){
-		
-		return this.InterpreterBoard;
-	}
 	
-	public void changeBoard(TBoard board) {
-		
-		interpretArea.removeAll();
-		InterpreterBoard=board;
-		TBoardModel boardModel = (TBoardModel)board.getModel();		
-		TBoard nBoard = new TBoard(boardModel);
-		GraphLayoutCache boardLayoutCache = new TInterpreterBoardLayoutCache();
-		boardLayoutCache.setModel(boardModel);
-		nBoard.setGraphLayoutCache(boardLayoutCache);
-		nBoard.setSelectionEnabled(false);
-		nBoard.setMarqueeHandler(new TInterpreterMarqueeHandler(this));
-		nBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		interpretArea.add(nBoard);
-		interpretArea.updateUI();
-	}
-	
-	
-	
-	/*Procedimiento mediante el cual acumulamos elementos en el panel accumulated Area*/
-	
-	public void addAccumulated(VertexView view) {
-		
-		
-		
-		if (AccumulatedList.size() < TInterpreterConstants.interpreterAcumulatedCells)
-		{
-		accumulatedArea.add(new TInterpreterAccumulatedRenderer(view));
-		accumulatedArea.updateUI();
-		}
-	}	
 	/**
 	 * Deletes from the application the current <code>project</code>.
 	 */	
 	public void deleteProject() {
 		project = null;
+		accumulatedCellsList.removeAll(accumulatedCellsList);
+		accumulatedCells.removeAll();
 		updateMenuButtons();
 	}
 
@@ -476,12 +449,11 @@ public class TInterpreter extends JFrame {
 	}
 	
 	/**
-	 * Change Interpreter's Cursor into a predefinied image 
+	 * Change Interpreter's Cursor into a predefined image 
 	 * 
 	 */
 	
 	public void TIntepreterChangeCursor(){			
-		
 		
 		if (TInterpreterConstants.interpreterCursor==null)
 		{
@@ -508,17 +480,24 @@ public class TInterpreter extends JFrame {
 			Cursor customCursor=getToolkit().createCustomCursor(imageCursor,new Point(),"MyCursor");
 			this.setCursor(customCursor);
 		}
-		
-		
   	}
 	
-	/*
+	/**
+	 * Change Interpreter's Cursor into a waiting clock
+	 * 
+	 */
+	
+	public void TIntepreterWaitingCursor(){			
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  	}
+	
+	
+	/**
 	 * Restore Default Cursor. 
 	 * 
 	 */
 	
 	public void TInterpreterRestoreCursor(){
-				
 		Cursor cursorBar = new Cursor(Cursor.DEFAULT_CURSOR);
 		this.setCursor(cursorBar);
 	}
@@ -542,8 +521,9 @@ public class TInterpreter extends JFrame {
 		boolean projectExists = (project != null);
 
 		// Action handlers
-		actionSet.getAction(TInterpreterActionSet.INTERPRETER_VALIDATION).setEnabled(
-				projectExists);
+		actionSet.getAction(TInterpreterActionSet.INTERPRETER_VALIDATION).setEnabled(projectExists);
 	}
+	 
+	
 }
 

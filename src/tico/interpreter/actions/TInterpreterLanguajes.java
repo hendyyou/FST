@@ -31,9 +31,8 @@ package tico.interpreter.actions;
 import java.awt.event.ActionEvent;
 
 import tico.configuration.TLanguage;
-import tico.editor.dialogs.TEditorDialog;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.dialog.TInterpreterDialog;
+import tico.interpreter.dialogs.TInterpreterDialog;
 
 
 
@@ -55,7 +54,6 @@ public class TInterpreterLanguajes extends TInterpreterAbstractAction
 
 
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		new TInterpreterDialog(getInterpreter());
 	}
 }

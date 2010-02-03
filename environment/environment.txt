@@ -1,48 +1,13 @@
 entorno=Environment
 
-Alarma_Numero_1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B01
-Alarma_Numero_2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B02
-Alarma_Numero_3=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B03
-Alarma_Numero_4=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B04
+arrancar_firefox=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
+arrancar_firefox_2=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
 
-Luz_Numero_1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B05
-Luz_Numero_2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B06
-Luz_Numero_3=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B07
-Luz_Numero_4=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B08
-Luz_Numero_5=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B09
-Luz_Numero_6=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B10
-Luz_Numero_7=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E01B11
+Prueba1=prueba1
+_aaa=aaa
 
-Enchufe_Numero_1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B01
-Enchufe_Numero_2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B02
-Enchufe_Numero_3=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B03
-Enchufe_Numero_4=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B04
-Enchufe_Numero_5=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B05
-Enchufe_Numero_6=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B06
-Enchufe_Numero_7=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B07
-Enchufe_Numero_8=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E02B08
+  b=jjjk
 
-Persiana_Subir1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B01
-Persiana_Bajar1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B02
-Persiana_Subir2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B03
-Persiana_Bajar2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B04
-Persiana_Subir3=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B05
-Persiana_Bajar3=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B06
-Persiana_Subir4=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B07
-Persiana_Bajar4=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E03B08
+árbol=arbol
 
-Juguete_1=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E04B01
-Juguete_2=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E04B02
-
-Television_Apagar = C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E05B01
-Television_Canal+= C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E05B02
-Television_Canal-= C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E05B03
-Television_Volumen+= C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E05B04
-Television_Voluemen-= C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E05B05
-
-Mini_cadena_on_off= C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E06B01
-Mini_cadena_canal+=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E06B02
-Mini_cadena_canal-=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E06B03
-Mini_cadena_volumen+=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E06B04
-Mini_cadena_volumen-=C:\\Archivos de programa\\B&J Adaptaciones\\B&J Perseo\\PerseoMini.exe  <> E06B05
-
+2jjj=iiii

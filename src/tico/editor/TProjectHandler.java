@@ -57,6 +57,7 @@ import tico.board.TBoard;
 import tico.board.TProject;
 import tico.board.encoding.InvalidFormatException;
 import tico.board.encoding.TAttributeEncoder;
+import tico.interpreter.TInterpreterProject;
 
 /**
  * Static class that manages the current editing project files.
@@ -64,6 +65,7 @@ import tico.board.encoding.TAttributeEncoder;
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
+
 public class TProjectHandler {
 	private final static int ZIP_BUFFER_SIZE = 2048;
 
@@ -238,7 +240,7 @@ public class TProjectHandler {
 	}
 
 	/**
-	 * Creates a <code>project</code> using the information contained in a
+	 * Creates an <code>editor project</code> using the information contained in a
 	 * <code>zipFile</code>.
 	 * 
 	 * @param zipFile The source <code>zipFile</code>
@@ -251,20 +253,18 @@ public class TProjectHandler {
 	 * text to a XML document
 	 */
 	public static TProject loadProject(File zipFile) throws IOException,
-			ParserConfigurationException, InvalidFormatException, SAXException {
+		ParserConfigurationException, InvalidFormatException, SAXException {
 		// Create XML Parsing objects
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-
 		// Load project file contents
 		TProjectHandler.cleanTempDirectory();
 		TProjectHandler.loadZip(zipFile);
-
 		// Get project name
 		String projectName = zipFile.getName();
 		projectName = projectName.substring(0, projectName.lastIndexOf('.'));
-
+		
 		// Load project
 		File file = new File(TProjectHandler.getTempDirectory(), "project.xml");
 		Document doc = docBuilder.parse(file);
@@ -272,6 +272,37 @@ public class TProjectHandler {
 		
 		TProjectHandler.cleanTempDirectory();
 		
+		return project;
+	}
+	
+	/**
+	 * Creates an <code>interpreter project</code> using the information contained in a
+	 * <code>zipFile</code>.
+	 * 
+	 * @param zipFile The source <code>zipFile</code>
+	 * @return The created <code>project</code>
+	 * @throws IOException If there are file problems with the <code>zipFile</code>
+	 * @throws ParserConfigurationException If there are syntactic error
+	 * in the XML document
+	 * @throws InvalidFormatException If the XML document has an invalid format
+	 * @throws SAXException If there are problems transforming the
+	 * text to a XML document
+	 */
+	public static TInterpreterProject loadProjectInterpreter(File zipFile) throws IOException,
+	ParserConfigurationException, InvalidFormatException, SAXException {
+		
+		TProjectHandler.cleanTempDirectory();
+		TProjectHandler.loadZip(zipFile);
+		
+		// Get project name
+		String projectName = zipFile.getName();
+		projectName = projectName.substring(0, projectName.lastIndexOf('.'));
+
+		// Load project
+		File file = new File(TProjectHandler.getTempDirectory(), "project.xml");
+		TInterpreterProject project= TInterpreterProject.XMLDecode(file, projectName);
+		
+		TProjectHandler.cleanTempDirectory();
 		return project;
 	}
 

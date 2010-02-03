@@ -1,8 +1,9 @@
 /*
  * File: TInterpreterDirectSelection.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
+ * 
  * Authors: Antonio Rodríguez
  * 
  * Date:	May-2006 
@@ -34,37 +35,20 @@ import tico.interpreter.TInterpreter;
 
 /**
  * 
- * @author Antonio Rodriguez
+ * @author Antonio Rodríguez
  *
  */
 public class TInterpreterDirectSelection extends TInterpreterAbstractAction{
 
-	
 	public TInterpreterDirectSelection(TInterpreter interpreter){
-		
 		super(interpreter,TLanguage.getString("TInterpreterMouseMode.DIRECTSELECTION"));
-		
-		
 	}
+	
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		interpreter=getInterpreter();
-		int estado=interpreter.getActivateSelect();
-		if (estado==0) {
-			interpreter.setActivateSelect(1);
-			interpreter.setActivateBar(0);
-			interpreter.setRadioBar(false);
-			interpreter.setRadioSelect(true);
-
-		}
-		else {
-			interpreter.setActivateSelect(0);
-			interpreter.setActivateBar(1);
-			interpreter.setRadioBar(true);
-			interpreter.setRadioSelect(false);
-			
-		}
-		
+		interpreter.setActivateDirectSelection(1);
+		interpreter.setActivateBrowsingMode(0);
+		interpreter.setBrowsingMode(false);
+		interpreter.setDirectSelection(true);
 	}
-
 }

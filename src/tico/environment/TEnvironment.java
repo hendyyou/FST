@@ -33,6 +33,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -43,7 +45,7 @@ import java.util.Vector;
 import tico.components.resources.TFileUtils;
 import tico.configuration.TResourceBundle;
 
-public class TEnvironment {
+public class TEnvironment implements Comparator{
 	private static String ENVIRONMENT_DIRECTORY = "environment";
 
 	// FIXME This variable is not necessary at all in the current implementation
@@ -148,8 +150,10 @@ public class TEnvironment {
 		try {
 			Enumeration algo = ENVIRONMENT_BUNDLE.getKeys();
 
-			Vector keys = new Vector();
+			Vector<String> keys = new Vector<String>();
 			int i = 0;
+			keys.add(i," ");
+			i++;
 			while (algo.hasMoreElements()) {
 				String cadena = algo.nextElement().toString();
 				if (!cadena.equals("entorno")) {
@@ -157,9 +161,35 @@ public class TEnvironment {
 					i++;
 				}
 			}
+			//environmentComparator comparator = new environmentComparator();
+			Collections.sort(keys, new TEnvironment());
+			//Collections.sort(keys);
 			return keys;
 		} catch (NullPointerException e) {
-			return new Vector();
+			return new Vector<String>();
 		}
 	}
+
+	public int compare(Object o1, Object o2) {
+		
+		int result = 0;
+		
+		String name1 = o1.toString().trim().toLowerCase();
+		String name2 = o2.toString().trim().toLowerCase();
+		if (name1.length()>0 && name2.length()>0){
+			String firstName1 = name1.substring(0,1);
+			String firstName2 = name2.substring(0,1);
+			
+			if (firstName1.matches("[a-z]") && firstName2.matches("[a-z]")){
+				result = name1.compareTo(name2);
+			}else if(firstName1.matches("[a-z]") && !firstName2.matches("[a-z]")){
+				result = -1;
+			}else if(!firstName1.matches("[a-z]") && firstName2.matches("[a-z]")){
+				result = 1;
+			}
+		}
+		return result;
+	}	
+
 }
+

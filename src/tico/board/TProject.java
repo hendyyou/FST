@@ -347,8 +347,8 @@ public class TProject {
 	 * @throws InvalidFormatException If <code>Element</code> has an invalid format
 	 */
 	public static TProject XMLDecode(Element element)
-			throws InvalidFormatException {
-		return XMLDecode(element, "");
+		throws InvalidFormatException {
+		 return XMLDecode(element, "");
 	}
 	
 	/**

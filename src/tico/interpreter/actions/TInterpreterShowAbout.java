@@ -36,7 +36,7 @@ package tico.interpreter.actions;
 import java.awt.event.ActionEvent;
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.dialog.TAboutDialogInterpreter;
+import tico.interpreter.dialogs.TAboutDialogInterpreter;
 
 
 /**
@@ -54,7 +54,7 @@ public class TInterpreterShowAbout  extends  TInterpreterAbstractAction {
 
 	public TInterpreterShowAbout(TInterpreter interpreter) {
 		/*Name the menuItem*/
-		super(interpreter, TLanguage.getString("TEditorAboutAction.NAME"));
+		super(interpreter, TLanguage.getString("TAboutDialog.TITLE"));
 	}
 
 	public void actionPerformed(ActionEvent e) {

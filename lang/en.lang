@@ -28,14 +28,17 @@ TBoardOrderPanel.ADD_TO_ORDER_TOOLTIP=Add to browse order
 TBoardOrderPanel.REMOVE_FROM_ORDER_TOOLTIP=Delete from browse order
 
 TBorderSelectionPanel.TITLE=Border
+TAnotherBorderSelectionPanel.TITLE=Browsing Effects
 TBorderSelectionPanel.COLOR=Color
 TBorderSelectionPanel.SIZE=Size
-TAnotherBorderSelectionPanel.TITLE=Browsing Effects
 TBorderSelectionPanel.LIGHTNESS=Lightness range
 
 TClickCellActionsPanel.TITLE=Actions
 TClickCellActionsPanel.GO_TO=Go to
 TClickCellActionsPanel.ACCUMULATE_CELL=Accumulate cell
+
+TClickControllerCellActionsPanel.TITLE=Actions
+TClickControllerCellActionsPanel.ACTION=Action
 
 TColorComboBox.CHOOSE_BACKGROUND_COLOR=Choose a background color
 TColorComboBox.COLOR=Col
@@ -45,6 +48,7 @@ TColorComboBox.OTHER=Other
 TFontModelChooser.TITLE=Font
 TFontModelChooser.SAMPLE_TEXT=.;147AaCcEeGgIiKkMm
 TFontModelChooser.COLOR=Color
+TFontModelChooser.LIGHTNESS=Lightness range
 TFontModelChooser.SIZE=Size
 TFontModelChooser.BOLD=Bold
 TFontModelChooser.ITALIC=Italic
@@ -74,8 +78,8 @@ TInitialBoardSelectionPanel.INITIAL_BOARD=Initial board
 
 TLineSelectionPanel.TITLE=Line
 TLineSelectionPanel.COLOR=Color
-TLineSelectionPanel.SIZE=Size
 TLineSelectionPanel.LIGHTNESS=Lightness range
+TLineSelectionPanel.SIZE=Size
 
 TOrderList.UP_TOOLTIP=Move up
 TOrderList.DOWN_TOOLTIP=Move down
@@ -105,11 +109,17 @@ TSoundChooser.RECORD=Record
 
 TRecordSound.SAVE=Save Wave
 TRecordSound.PLAY=Play
-TRecordSound.RECORD=Record      
+TRecordSound.RECORD=Record
 TRecordSound.PAUSE=Pause
-TRecordSound.STOP=Stop        
-TRecordSound.RESUME=Resume 
+TRecordSound.STOP=Stop
+TRecordSound.RESUME=Resume
+TRecordSound.EXIT=Exit
 TRecordSound.TITLE=Save audio file
+
+TVideoChooser.TITLE=Video  
+TVideoChooser.NAME=Name
+TVideoChooser.OPEN_FILE_ERROR=Error while trying to play the video file.
+TVideoChooser.CHOOSE_VIDEO=Choose a video file
 
 TTextAlignSelectorPanel.TITLE=Alignment
 TTextAlignSelectorPanel.LEFT_HALIGN_TOOLTIP=Left
@@ -125,6 +135,7 @@ CustomFilter.DESCRIPTION=Files
 ImageFilter.DESCRIPTION=Image files
 ProjectFilter.DESCRIPTION=Tico project files
 SoundFilter.DESCRIPTION=Sound files
+VideoFilter.DESCRIPTION=Video files
 TicoFilter.DESCRIPTION=Tico files
 
 // tico.editor
@@ -151,8 +162,9 @@ TEditorMenuBar.ADMIN_MENU=Administration
 TEditorMenuBar.DYNAMIC_MENU=Utilities
 TEditorMenuBar.IMAGES_NEW=Insert new image
 TEditorMenuBar.IMAGES_MODIFY=Modify image
-TEditorMenuBar.LOAD_DB=Import images
-TEditorMenuBar.EXPORT_DB=Export images
+TEditorMenuBar.IMAGES_DELETE=Delete images
+TEditorMenuBar.LOAD_DB=Import Database
+TEditorMenuBar.EXPORT_DB=Export DataBase
 TEditorExitAction.NAME=Exit
 
 // tico.editor.actions
@@ -283,6 +295,7 @@ TFitHeightAction.NAME=Fit height
 TFitWidthAction.NAME=Fit width
 TFrontAction.NAME=To front
 THandlerCellAction.NAME=Cell
+THandlerControllerCellAction.NAME=Control cell
 THandlerGridAction.NAME=Grid
 THandlerLabelAction.NAME=Label
 THandlerLineAction.NAME=Line
@@ -300,12 +313,16 @@ TUndoAction.NAME=Undo
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=About
+TAboutDialog.EDITOR_VERSION=Tico Editor 1.0
+TAboutDialog.INTERPRETER_VERSION=Tico Interpreter 1.0
 TAboutDialog.DEVELOPERS=Developers
+TAboutDialog.OTHER_DEVELOPERS=Others...
 TAboutDialog.DIRECTOR=Director
 TAboutDialog.COLLABORATORS=Collaborators
 TAboutDialog.ORGANIZATIONS=Organizations
 TAboutDialog.YEAR=Year
 TAboutDialog.LICENSE=License
+TAboutDialog.BUTTON_ACCEPT=Accept
 
 TBoardDialog.TITLE=Board
 TBoardDialog.TAB_PROPERTIES=Properties
@@ -323,14 +340,21 @@ TCellDialog.TEXT_FILED=Text
 TCellDialog.ALTERNATIVE_IMAGE=Alternative image
 TCellDialog.ENVIRONMENT=Environment
 
+TControllerCellDialog.TITLE=Control cell
+TControllerCellDialog.ID=Identifier
+TControllerCellDialog.TAB_TEXT=Text
+TControllerCellDialog.TAB_ACTIONS=Actions
+TControllerCellDialog.TEXT_FILED=Text
+TControllerCellDialog.TEXT_DEFAULT=Exit
+
+TComponentDialog.ERROR_EMPTY_ID=You can not asign an empty id.
+TComponentDialog.ERROR_REPEATED_ID=You can not asign a repeated id.
+
 TEditorDialog.TITLE=Preferences
 TEditorDialog.TAB_PREFERENCES=Preferences
 TEditorDialog.LANGUAGE=Language
 TEditorDialog.LANGUAGE_CHANGE_ADVICE=In order to make effective the language change you have to restart the application.
 TEditorDialog.LANGUAGE_CHANGE=Language changed
-
-TComponentDialog.ERROR_EMPTY_ID=You can not asign an empty id.
-TComponentDialog.ERROR_REPEATED_ID=You can not asign a repeated id.
 
 TGridCellDialog.TITLE=Grid cell
 TGridCellDialog.TAB_GRID=Grid
@@ -353,8 +377,11 @@ TIGManageGallery.MODIFY=Modify image
 
 TIGManageGalleryDialog.NAME=Insert new image
 TIGManageGalleryDialog.IMAGE=Image
-TIGManageGalleryDialog.END=End
+TIGManageGalleryDialog.END=Accept
 TIGManageGalleryDialog.CANCEL=Cancel
+TIGManageGalleryDialog.REPEATED_IMAGES_TITLE=If the image already exists
+TIGManageGalleryDialog.REPLACE_IMAGE=Replace image
+TIGManageGalleryDialog.ADD_IMAGE=Add image
 
 TIGKeyWordManageGalleryDialog.NAME=Categories
 
@@ -370,23 +397,29 @@ TIGSearchImageDialog.MESSAGE=You must select an image
 TIGSearchImageDialog.ERROR=No image selected
 TIGSearchImageDialog.MODIFY=Modify image
 TIGSearchImageDialog.DELETE=Delete image
-TIGSearchImageDialog.END=End
+TIGSearchImageDialog.DELETE_ALL=Delete images
+TIGSearchImageDialog.END=Cancel
 TIGSearchImageDialog.ASK=Do you want to delete the selected image?
+TIGSearchImageDialog.DELETE_MESSAGE=Attention!, you will remove
+TIGSearchImageDialog.ENSURE_DELETE=image/s. Are you sure you want to delete?
+TIGSearchImageDialog.CANCEL=Cancel
+TIGSearchImageDialog.MESSAGE_NO_SEARCH=You must make a search
+TIGSearchImageDialog.MESSAGE_NO_IMAGES_FOUND=No images to delete
 
 TIGKeyWordGalleryDialog.NAME=Manage categories
-TIGKeyWordGalleryDialog.END=End
+TIGKeyWordGalleryDialog.END=Accept
 TIGKeyWordGalleryDialog.ADD=Add
 TIGKeyWordGalleryDialog.MODIFY=Modify
 TIGKeyWordGalleryDialog.DELETE=Delete
 
 TIGImageDataDialog.NAME=Modify name
 TIGImageDataDialog.DATANAME=Name
-TIGImageDataDialog.END=End
+TIGImageDataDialog.END=Accept
 TIGImageDataDialog.CANCEL=Cancel
 
 TIGNewImageDataDialog.NAME=Modify image
 TIGNewImageDataDialog.DATANAME=Name
-TIGNewImageDataDialog.NEXT=Acept
+TIGNewImageDataDialog.NEXT=Accept
 TIGNewImageDataDialog.CANCEL=Cancel
 TIGNewImageDataDialog.EXIT=Exit
 
@@ -410,13 +443,6 @@ TIGSearchNameDialog.TEXT=insert the word to search
 TIGSearchNameDialog.NO_RESULTS=There aren't any result
 TIGSearchNameDialog.NAME_RESULT=Search results
 
-TIGSQLSearchDialog.NAME_SEARCH=Consulta SQL
-TIGSQLSearchDialog.SEARCH=Consulta:
-TIGSQLSearchDialog.SEARCH_BUTTON=Buscar
-TIGSQLSearchDialog.TEXT=inserte la consulta SQL
-TIGSQLSearchDialog.NO_RESULTS=No se ha encontrado ninguna imagen
-TIGSQLSearchDialog.NAME_RESULT=Resultados de la búsqueda
-
 TIGManageImageAction.EMPTY=There aren't any image in the data base
 TIGManageImageAction.ERROR=Empty data base
 
@@ -426,30 +452,44 @@ TIGDeleteKeyWordAction.NAME=Delete category
 TIGModifyImageAction.ERROR=Error modifying image
 TIGModifyImageAction.NAME=Modify image
 
-TIGLoadDBDialog.NAME=Import Images 
+TIGLoadDBDialog.NAME=Import Database
 TIGLoadDBDialog.IMAGES=Select
-TIGLoadDBDialog.EXIT=Exit
-TIGLoadDBDialog.IMAGES_SEL=Select the directory with the images
+TIGLoadDBDialog.EXIT=Cancel
+TIGLoadDBDialog.IMAGES_SEL=Select the directory with the database
 TIGLoadDBDialog.TEXT=Select
-TIGLoadDBDialog.TEXT_FILE=Seleccione el fichero que contiene las categoría (opcional)
-TIGLoadDBDialog.DB=Import images
-TIGLoadDBDialog.IMAGES_DIRECTORY=Directory with the images
-TIGLoadDBDialog.ASSOCIATION_FILE=Fichero con las Asociaciones
+TIGLoadDBDialog.TEXT_FILE=Select the file that contains the categories (optional)
+TIGLoadDBDialog.IMPORT_BUTTON=Import
+TIGLoadDBDialog.DB=Import
+TIGLoadDBDialog.IMAGES_DIRECTORY=Directory with the Database
+TIGLoadDBDialog.ASSOCIATION_FILE=File with the Associations
 TIGLoadDBDialog.ERROR=Error loading images
-TIGLoadDBDialog.ERROR_IM=You must select a directory
-TIGLoadDBDialog.ERROR_FILE=Debe seleccionar un fichero
+TIGLoadDBDialog.ERROR_EMPTY_DIRECTORY=You must select a directory
+TIGLoadDBDialog.ERROR_FILE=You must select a file
 TIGLoadDBDialog.PROGRESS=Progress
+TIGLoadDBDialog.PROGRESS_TASK=Task Progress
+TIGLoadDBDialog.ERROR_FORMAT_DATABASE=Malformed Database
+TIGLoadDBDialog.REPEATED_IMAGES_TITLE=If there are repeated images...
+TIGLoadDBDialog.REPLACE_IMAGES=Replace images
+TIGLoadDBDialog.ADD_IMAGES=Add images
+TIGLoadDBDialog.IMPORT_COMPLETED=The database was imported correctly
+TIGLoadDBDialog.IMPORT_WITH_ERRORS=The database was imported with errors
+TIGLoadDBDialog.IMPORT_INFO=More information in the file
+TIGLoadDBDialog.IMPORT_WITH_ERRORS_MESSAGE=The following images were not imported:
 
-TIGExportDBDialog.NAME=Export Images
+TIGExportDBDialog.NAME=Export Database
 TIGExportDBDialog.IMAGES=Select
-TIGExportDBDialog.EXIT=Exit
+TIGExportDBDialog.EXIT=Cancel
 TIGExportDBDialog.IMAGES_SEL=Select the directory to export the images
 TIGExportDBDialog.TEXT=Select
-TIGExportDBDialog.DB=Export images
+TIGExportDBDialog.DB=Export
 TIGExportDBDialog.IMAGES_DIRECTORY=Directory with the images
-TIGExportDBDialog.ERROR=Error loading data base
+TIGExportDBDialog.ERROR=Error when exporting the database
 TIGExportDBDialog.ERROR_IM=You must select a directory
 TIGExportDBDialog.PROGRESS=Progress
+TIGExportDBDialog.MESSAGE_NO_IMAGES_FOUND=No images to export
+TIGExportDBDialog.EXPORT_COMPLETED=The database was exported correctly
+
+TIGDeleteImagesDialog.DELETE_COMPLETED=Deleted images correctly
 
 TIGModifyImageNameDialog.PREVIEW_EMPTY=Without image
 
@@ -460,9 +500,8 @@ TIGLoadingDialog.TEXT=This action should cost several minutes
 
 TIGThumbnailsDialog.PREVIOUS=Previous
 TIGThumbnailsDialog.NEXT=Next
-TIGThumbnailsDialog.IMAGE=Image
-TIGThumbnailsDialog.OF=from
-TIGThumbnailsDialog.RESULT=There aren't more results
+TIGThumbnailsDialog.ONE_IMAGE_FOUND=1 image found
+TIGThumbnailsDialog.IMAGES_FOUND=images found
 TIGThumbnailsDialog.NO_RESULTS=The search has not produced any results
 TIGThumbnailsDialog.NAME_RESULT=Results
 
@@ -507,28 +546,36 @@ TTextToolBar.BOLD=Bold
 TTextToolBar.ITALIC=Italic
 
 //tico.interpreter
-
 TInterpreter.INTERPRETER_WINDOW_TITLE=Tico Interpreter
 TInterpreter.FILE_MENU=File
 TInterpreterMenuBar.ACTION_MENU=Action
 TInterpreterProjectOpenAction.NAME=Open
 TInterpreterExitAction.NAME=Exit
 TInterpreterRunAction.NAME=Start
+TInterpreterReturnAction.NAME=Return
 TInterpreterStopAction.NAME=Stop
 TInterpreterMenuBar.VIEW_MENU=View
 TInterpreterLanguaje.NAME=Languages
 TInterpreterMenuBar.MODE=Mouse Mode
-TInterpreterMouseMode.MOUSEBAR=Browsing Mode
-TInterpreterMouseMode.DIRECTSELECTION=Direct Selection
-TInterpreterOptions.Name=Interpreter Options
-TInterpreterOptionDialog.NAME=Options Configurator
-TInterpreterRead.NAME=Read
-TInterpreterControllerAction.NAME=Controller
-TInterpreterUndo=Undo
 TInterpreter.VALIDATION_MENU=Validation
 TEditorMenuBar.VALIDATE=Validate interpreter options
+
+TInterpreterMouseMode.MOUSEBAR=Browsing Mode
+TInterpreterMouseMode.DIRECTSELECTION=Direct Selection
+TInterpreterOptions.NAME=Interpreter Options
+TInterpreterRead.NAME=Read
+TInterpreterReadAction.NAME=Read
+TInterpreterControllerAction.NAME=Controller
+TInterpreterUndoAction.NAME=Undo
+TInterpreterUndoAllAction.NAME=Undo all
 TInterpreterValidationAction.NAME=Interpreter
 
+TInterpreterOptionDialog.NAME=Options Configurator
+TInterpreterOptionDialog.CURSOR_IMAGE=Cursor image
+TInterpreterOptionDialog.MAX_ACCUMULATED_CELLS=Maximum number of accumulated cells
+TInterpreterOptionDialog.WAIT_CURSOR=Cursor timeout in seconds
+TInterpreterOptionDialog.BUTTON_ACCEPT=Accept
+TInterpreterOptionDialog.BUTTON_CANCEL=Cancel
 
 //tico.rules
 TValidationDialog.BOARD_TITLE=Validate board
@@ -660,8 +707,8 @@ TRulesAdminDialog.TAB=Rules
 TRulesAdminDialog.PROJECT=Project
 TRulesAdminDialog.BOARD=Board
 TRulesAdminDialog.CELL=Cell
-TRulesAdminDialog.INTERPRETER=Interpreter
 TRulesAdminDialog.ALL=All
+TRulesAdminDialog.INTERPRETER=Interpreter
 TRulesAdminDialog.CLOSE_BUTTON=Close
 TRulesAdminDialog.SELECT=Select rule:
 TRulesAdminDialog.RULE=Rule
@@ -716,6 +763,7 @@ TAddRule.INFO_BLANK_PAR=You must select a parameter
 TAddRule.INFO_BLANK_ES=You must write a message
 TAddRule.SAVE_OK_MESSAGE=Rule has been saved correctly. In order to make effective the message change you have to restart the application.
 TAddRule.SAVE_ERROR_MESSAGE=Rule has not been saved correctly.
+TAddRule.TEXT_TITLE=Add rule
 
 TBoardRules.ANALYZE=ANALYSIS OF BOARD
 TShowResults.TEXTAREA_VALIDATION_NAME=Validation results
@@ -777,4 +825,4 @@ TShowResults.SENSORY_LIGHTNESS=(Sensory lim.) Lightness range difference
 TShowResults.TEXTBACKGROUND=text/background:
 TShowResults.BORDERBACKGROUND=edge/background:
 TShowResults.BOARDCELL=board/cells:
-TShowResults.COLORTABLE=Suitable colour combinations:
+TShowResults.COLORTABLE=Suitable color combinations:

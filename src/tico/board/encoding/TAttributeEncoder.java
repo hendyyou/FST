@@ -58,7 +58,7 @@ import tico.editor.TProjectHandler;
  * Static class which implements functions to encode and decode attibute maps
  * to XML.
  * 
- * @author Pablo MuÃ±oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TAttributeEncoder {

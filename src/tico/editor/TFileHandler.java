@@ -87,14 +87,20 @@ public class TFileHandler {
 	 * @return The new internal file
 	 * @throws IOException If there is any problem importing the file
 	 */
+	
 	public static File importFile(File file) throws IOException {
 		String directoryPath = currentDirectoryPath;
 		
 		if (TFileUtils.isImageFile(file))
 		{
 			directoryPath += File.separator + "image";}
+		
 		if (TFileUtils.isSoundFile(file)){
 			directoryPath += File.separator + "sound";
+			}
+		
+		if (TFileUtils.isVideoFile(file)){
+			directoryPath += File.separator + "video";
 			}
 
 		File directory = new File(directoryPath);

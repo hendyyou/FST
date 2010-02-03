@@ -55,7 +55,6 @@ public class TEnvironmentExecution {
 	
 	private void executePerseo(String arguments2) {
 		// TODO Auto-generated method stub
-		//System.out.println("EJECUTANDO CON PERSEO"+ arguments2);
 		try {
 			Runtime.getRuntime().exec(Executable);
 		} catch (IOException e) {

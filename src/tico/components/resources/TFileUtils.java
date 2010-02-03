@@ -55,12 +55,12 @@ public class TFileUtils {
 	/**
 	 * TIFF image files extension.
 	 */
-	public final static String TIFF = "tiff";
+	//public final static String TIFF = "tiff";
 
 	/**
 	 * TIF image files extension.
 	 */
-	public final static String TIF = "tif";
+	//public final static String TIF = "tif";
 
 	/**
 	 * PNG image files extension.
@@ -70,7 +70,7 @@ public class TFileUtils {
 	/**
 	 * BMP image files extension.
 	 */
-	public final static String BMP = "bmp";
+	//public final static String BMP = "bmp";
 
 	// Sound extensions
 	/**
@@ -87,6 +87,27 @@ public class TFileUtils {
 	 * OGG sound files extension.
 	 */
 	public final static String OGG = "ogg";
+	
+	// Video extensions
+	/**
+	 * AVI sound files extension.
+	 */
+	public final static String AVI = "avi";
+	
+	/**
+	 * MPG sound files extension.
+	 */
+	public final static String MPG = "mpg";
+	
+	/**
+	 * MPEG sound files extension.
+	 */
+	public final static String MPEG = "mpeg";
+	
+	/**
+	 * WMV sound files extension.
+	 */
+	public final static String WMV = "wmv";
 
 	// Tico extensions
 	/**
@@ -224,13 +245,13 @@ public class TFileUtils {
 		String extension = TFileUtils.getExtension(filePath);
 
 		if (extension != null) {
-			if (extension.equals(TFileUtils.TIFF)
-					|| extension.equals(TFileUtils.TIF)
-					|| extension.equals(TFileUtils.GIF)
+			if (extension.equals(TFileUtils.GIF)
+					//|| extension.equals(TFileUtils.TIF)
+					//|| extension.equals(TFileUtils.TIFF)
 					|| extension.equals(TFileUtils.JPEG)
 					|| extension.equals(TFileUtils.JPG)
-					|| extension.equals(TFileUtils.PNG)
-					|| extension.equals(TFileUtils.BMP)) {
+					|| extension.equals(TFileUtils.PNG)){
+					//|| extension.equals(TFileUtils.BMP)) {
 				return true;
 			}
 		}
@@ -319,6 +340,43 @@ public class TFileUtils {
 		String filePath = file.getAbsolutePath();
 
 		return TFileUtils.isSoundFile(filePath);
+	}
+	
+	/**
+	 * Determines if the specified <code>filePath</code> extension is a video
+	 * file extension.
+	 * 
+	 * @param filePath The specified <code>filePath</code>
+	 * @return <i>true</i> if the specified <code>filePath</code> extension is
+	 * a video file extension
+	 */
+	public static boolean isVideoFile(String filePath) {
+		String extension = TFileUtils.getExtension(filePath);
+
+		if (extension != null) {
+			if (extension.equals(TFileUtils.AVI)
+					|| extension.equals(TFileUtils.MPG)
+					|| extension.equals(TFileUtils.MPEG)
+					|| extension.equals(TFileUtils.WMV)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Determines if the specified <code>file</code> extension is a video
+	 * file extension.
+	 * 
+	 * @param file The specified <code>file</code>
+	 * @return <i>true</i> if the specified <code>file</code> extension is
+	 * a video file extension
+	 */
+	public static boolean isVideoFile(File file) {
+		String filePath = file.getAbsolutePath();
+
+		return TFileUtils.isVideoFile(filePath);
 	}
 
 	/**
