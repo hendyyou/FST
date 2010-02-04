@@ -45,6 +45,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 
 import tico.editor.TFileHandler;
 import tico.interpreter.components.TInterpreterCell;
@@ -251,7 +252,26 @@ public class TInterpreterBoard {
 		orderedCellListNames = newOrderedCellListNames;
 	}
 	
-	public void loadBoard(JPanel interpreterArea){
+	public void goToInitialState(){
+		TInterpreterCell cell;
+		ArrayList<TInterpreterCell> cellList = TInterpreter.getCurrentBoard().getCellList();
+		for (int i=0; i<cellList.size(); i++){
+			cell = cellList.get(i);
+			if (cell.isTransparentBorder()){
+				cell.setBorderPainted(false);
+			}
+			cell.setBorder(new LineBorder(cell.getBorderColor(), (int)cell.getBorderSize()));
+			
+			if (cell.getBackground()!= null){
+				cell.setBackground(cell.getBackground());
+			}
+			if (cell.getIcon()!= null){	
+				cell.setIcon(cell.getIcon());
+			}		
+		}
+	}
+	
+	public void paintBoard(JPanel interpreterArea){
 		TInterpreter.setCurrentBoard(this);
 		
 		//load board components
