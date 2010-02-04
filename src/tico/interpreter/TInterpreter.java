@@ -31,6 +31,7 @@ package tico.interpreter;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -183,28 +184,15 @@ public class TInterpreter extends JFrame {
 		  TInterpreterBoard board= project.getBoard(boardName);
 		  interpretArea.removeAll();
 		  this.setVisible(true);
-		  board.loadBoard(interpretArea);
+		  board.paintBoard(interpretArea);
 		  interpretArea.repaint();
 	  }	
 	
 	public void repaintCurrentBoard(){
-		TInterpreterCell cell;
-		ArrayList<TInterpreterCell> cellList = currentBoard.getCellList();
-		for (int i=0; i<cellList.size(); i++){
-			cell = cellList.get(i);
-			
-			if (cell.isTransparentBorder()){
-				cell.setBorderPainted(false);
-			}
-			cell.setBorder(new LineBorder(cell.getBorderColor(), (int)cell.getBorderSize()));
-			
-			if (cell.getBackground()!= null){
-				cell.setBackground(cell.getBackground());
-			}
-			if (cell.getIcon()!= null){	
-				cell.setIcon(cell.getIcon());
-			}			
-		}
+		interpretArea.removeAll();
+		getCurrentBoard().goToInitialState();
+		getCurrentBoard().paintBoard(interpretArea);
+		interpretArea.repaint();
 	}
 	
 	
