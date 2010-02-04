@@ -143,6 +143,10 @@ public class TCellListener implements MouseListener {
 						e.printStackTrace();
 					}
 					textArea.setText(originalText);
+					TInterpreter.interpretArea.removeAll();
+					//No vuelvo al estado inicial para que la celda que envía texto permanezca seleccionada
+					TInterpreter.getCurrentBoard().paintBoard(TInterpreter.interpretArea);
+					TInterpreter.interpretArea.repaint();
 				}
 			}
 		
