@@ -549,7 +549,7 @@ public class TBoardModel extends DefaultGraphModel {
 
 			TBoardConstants.setId(attributeMap, newId);
 		}
-
+		
 		// Implements resizeToText component property
 		if (TBoardConstants.isResizeToText(attributeMap)) {
 			TBoardConstants.setBounds(attributeMap,
@@ -560,6 +560,7 @@ public class TBoardModel extends DefaultGraphModel {
 											.getLineWidth(attributeMap)))));
 		}
 
+		// TUNE Apply these following methods directly to needed attributes without using TBoardConstants
 		// Import an icon or file when copying a component
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(attributeMap);
 		if (icon != null) {
@@ -605,7 +606,7 @@ public class TBoardModel extends DefaultGraphModel {
 							imageFile.getAbsolutePath(), imageFile
 									.getAbsolutePath());
 				}
-				TBoardConstants.setIcon(attributeMap, alternativeIcon);
+				TBoardConstants.setAlternativeIcon(attributeMap, alternativeIcon);
 			} catch (Exception e) {
 			}
 		}
