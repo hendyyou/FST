@@ -67,14 +67,6 @@ public class TIGModifyImageDialog extends TDialog{
 	private TIGThumbnailsDialog thumbnailsDialog;
 	
 	private JPanel thumbnailsPanel;
-	
-	public JPanel getThumbnailsPanel() {
-		return thumbnailsPanel;
-	}
-
-	public void setThumbnailsPanel(JPanel thumbnailsPanel) {
-		this.thumbnailsPanel = thumbnailsPanel;
-	}
 
 	private TIGDataBase myDataBase;
 	
@@ -110,23 +102,24 @@ public class TIGModifyImageDialog extends TDialog{
 		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
 		searchNamePanel = searchNameDialog.createSearchNamePanel(editor,myDataBase,this);
 		
-		// Second, create the component that search the images from its associations
-		JPanel keyWordSearchPanel = new JPanel();
-		TIGKeyWordSearchDialog keyWordSearchDialog = new TIGKeyWordSearchDialog(this.myEditor,this.myDataBase);
-		images = new Vector();
-		keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
-		
-		String keyWord1 = keyWordSearchDialog.KeyWord1();
-		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
 		
-		// Third, create the component that shows all the images
+		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
 		thumbnailsDialog = new TIGThumbnailsDialog(true);
 		// Create thumbnails panel with selection of images
 		thumbnailsPanel = thumbnailsDialog.createThumbnailsPanel(images, true);
+		
+		// Third, create the component that search the images from its associations
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
+		images = new Vector();
+		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
+		
+		//String keyWord1 = keyWordSearchDialog.KeyWord1();
+			
 				
 		// Fourth, create three buttons, the first one to modify the image, the second one to
 		//delete it, and the last one to exit the window

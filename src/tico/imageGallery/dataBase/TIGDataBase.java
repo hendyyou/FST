@@ -433,7 +433,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the key words
 	 */
-	public Vector getKeyWords(){
+	public static Vector getKeyWords(){
 		Vector data = new Vector();
 		try{
 			//Creamos un objeto Statement que se conectara a la BD
@@ -458,7 +458,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the string
 	 */
-	public String imageNameSearch(String path){
+	public static String imageNameSearch(String path){
 		String result = "";
 		
 		try{
@@ -485,7 +485,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the int
 	 */
-	public int numberOfImages(){
+	public static int numberOfImages(){
 		Vector result = new Vector();
 		
 		try{
@@ -775,7 +775,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the vector
 	 */
-	public Vector search(String keyWord1,int searchOptions1,String keyWord2,
+	public static Vector search(String keyWord1,int searchOptions1,String keyWord2,
 									int searchOptions2,String keyWord3){
 		
 		Vector data = new Vector();

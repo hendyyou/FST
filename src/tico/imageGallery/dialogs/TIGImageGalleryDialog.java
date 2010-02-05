@@ -69,14 +69,6 @@ public class TIGImageGalleryDialog extends TDialog{
 	private GridBagConstraints c;
 	
 	private TIGThumbnailsDialog thumbnailsDialog;
-	
-	public TIGThumbnailsDialog getThumbnailsDialog() {
-		return thumbnailsDialog;
-	}
-
-	public void setThumbnailsDialog(TIGThumbnailsDialog thumbnailsDialog) {
-		this.thumbnailsDialog = thumbnailsDialog;
-	}
 
 	private JPanel thumbnailsPanel;
 	
@@ -93,7 +85,6 @@ public class TIGImageGalleryDialog extends TDialog{
 			public void windowClosing(java.awt.event.WindowEvent e){
 				dispose();
 			}
-			
 			public void windowActivated(java.awt.event.WindowEvent e){}	  
 			public void windowDeactivated(java.awt.event.WindowEvent e){}
 			public void windowDeiconified(java.awt.event.WindowEvent e){}
@@ -112,18 +103,11 @@ public class TIGImageGalleryDialog extends TDialog{
 		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
 		searchNamePanel = searchNameDialog.createSearchNamePanel(this.editor,dataBase,this);
 		
-		// Second, create the component that search from the words
-		//that are associated to the images
-		JPanel keyWordSearchPanel = new JPanel();
-		TIGKeyWordSearchDialog keyWordSearchDialog = new TIGKeyWordSearchDialog(this.editor,dataBase);
-		keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
-		String keyWord1 = keyWordSearchDialog.KeyWord1();		
-		
 		//The images associated to the first key word in the Data Base are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
 		
-		// Third, create the component that shows all the images
+		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();
 		thumbnailsDialog = new TIGThumbnailsDialog(false);
 		// Create thumbnails panel with selection of images
@@ -148,6 +132,14 @@ public class TIGImageGalleryDialog extends TDialog{
 				}
 			}
 		});
+		
+		// Third, create the component that search from the words
+		//that are associated to the images
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.editor,dataBase);
+		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
+		//String keyWord1 = keyWordSearchDialog.KeyWord1();		
+		
 				
 		// Fourth, create two buttons. The first one insert the selected image
 		// in the current board, and the second one closes the windows without changes

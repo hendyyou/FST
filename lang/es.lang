@@ -429,6 +429,7 @@ TIGInsertImageAction.NAME=Error
 TIGInsertImageAction.MESSAGE=Error al cargar la imagen
 
 TIGKeyWordSearchDialog.NO_RESULTS=No se ha encontrado ninguna imagen asociada
+TIGKeyWordSearchDialog.NO_CATEGORIES=No se han insertado categorías para la búsqueda
 TIGKeyWordSearchDialog.NAME=Resultados de la búsqueda
 TIGKeyWordSearchDialog.CATEGORY_SEARCH=Por Categoría
 TIGKeyWordSearchDialog.SEARCH=Buscar

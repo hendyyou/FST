@@ -69,12 +69,12 @@ public class TIGSearchNameDialog extends TFrame{
 	private TIGExportDBDialog mySearchDialogExport;
 	
 	private TIGImageGalleryDialog myDialog;
-
 	
 	
 	public TIGSearchNameDialog(){
 		
 	}
+	
 	protected JPanel createSearchNamePanelDelete(TEditor editor, TIGDataBase dataBase, TIGDeleteImagesDialog dialog){ 
 		
 		this.editor = editor;
@@ -97,9 +97,8 @@ public class TIGSearchNameDialog extends TFrame{
 			}
 		});		
 		texto.addKeyListener(new java.awt.event.KeyAdapter(){
-			@Override
 			public void keyReleased(java.awt.event.KeyEvent e){
-				System.out.println("**Buscar1** delete busca la 1º vez");
+				System.out.println("Code"+e.getKeyChar());
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)
 					&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	

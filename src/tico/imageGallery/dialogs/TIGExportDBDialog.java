@@ -107,14 +107,6 @@ public class TIGExportDBDialog extends TDialog {
 	private TIGThumbnailsDialog thumbnailsDialog;
 	
 	private JPanel thumbnailsPanel;
-	
-	public JPanel getThumbnailsPanel() {
-		return thumbnailsPanel;
-	}
-
-	public void setThumbnailsPanel(JPanel thumbnailsPanel) {
-		this.thumbnailsPanel = thumbnailsPanel;
-	}
 
 	public TIGExportDBDialog(TEditor editor,TIGDataBase dataBase) {
 		super(editor, TLanguage.getString("TIGExportDBDialog.NAME"),true);
@@ -156,27 +148,27 @@ public class TIGExportDBDialog extends TDialog {
 		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
 		searchNamePanel = searchNameDialog.createSearchNamePanelExport(editor,myDataBase,this);
 		
-		// Second, create the component that search the images from its associations
-		JPanel keyWordSearchPanel = new JPanel();
-		TIGKeyWordSearchDialog keyWordSearchDialog = new TIGKeyWordSearchDialog(this.myEditor,this.myDataBase);
-		images = new Vector();
-		myResults= null;
-		
-		keyWordSearchPanel = keyWordSearchDialog.createKeyWordExportPanel(this);
-		
-		String keyWord1 = keyWordSearchDialog.KeyWord1();
-		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
-				
-		// Third, create the component that shows all the images
+		
+		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
 		thumbnailsDialog = new TIGThumbnailsDialog(true);
 		// Create thumbnails panel with no selection of images
 		thumbnailsPanel = thumbnailsDialog.createThumbnailsPanel(images, false);
 		
-		//First, create the panel that contains the file chooser for the directory
+		// Third, create the component that search the images from its associations
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
+		images = new Vector();
+		myResults= null;
+		
+		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);		
+		//String keyWord1 = keyWordSearchDialog.getKeyWord1();		
+		
+		
+		//Fourth, create the panel that contains the file chooser for the directory
 		//that contains the images
 			
 		directory = new JTextField(40);

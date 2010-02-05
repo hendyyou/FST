@@ -96,14 +96,6 @@ public class TIGDeleteImagesDialog extends TDialog{
 	private TIGThumbnailsDialog thumbnailsDialog;
 	
 	private JPanel thumbnailsPanel;
-	
-	public JPanel getThumbnailsPanel() {
-		return thumbnailsPanel;
-	}
-
-	public void setThumbnailsPanel(JPanel thumbnailsPanel) {
-		this.thumbnailsPanel = thumbnailsPanel;
-	}
 
 	private TIGDataBase myDataBase;
 	
@@ -139,30 +131,21 @@ public class TIGDeleteImagesDialog extends TDialog{
 		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
 		searchNamePanel = searchNameDialog.createSearchNamePanelDelete(editor,myDataBase,this);
 		
-		// Second, create the component that search the images from its associations
-		JPanel keyWordSearchPanel = new JPanel();
-		TIGKeyWordSearchDialog keyWordSearchDialog = new TIGKeyWordSearchDialog(this.myEditor,this.myDataBase);
-		images = new Vector();
-		myResults = null;
-		
-		keyWordSearchPanel = keyWordSearchDialog.createKeyWordDeletePanel(this);
-		
-		String keyWord1 = keyWordSearchDialog.KeyWord1();
-		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
-		/*for (int i=0; i< images.size(); i++){
-			System.out.println("images: " + i + ": " + images.get(i));
-			myResults.add(i, images.get(i));
-		}*/
-		//myResults= images;
 		
-		// Third, create the component that shows all the images
+		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
 		thumbnailsDialog = new TIGThumbnailsDialog(true);
 		// Create thumbnails panel with no selection of images
 		thumbnailsPanel = thumbnailsDialog.createThumbnailsPanel(images, false);
+		
+		// Third, create the component that search the images from its associations
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
+		images = new Vector();
+		myResults = null;		
 				
 		// Fourth, create three buttons, the first one to modify the image, the second one to
 		//delete it, and the last one to exit the window
