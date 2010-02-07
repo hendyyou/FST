@@ -559,7 +559,7 @@ public class TBoardModel extends DefaultGraphModel {
 									Math.round(TBoardConstants
 											.getLineWidth(attributeMap)))));
 		}
-
+		
 		// TUNE Apply these following methods directly to needed attributes without using TBoardConstants
 		// Import an icon or file when copying a component
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(attributeMap);
@@ -618,6 +618,13 @@ public class TBoardModel extends DefaultGraphModel {
 						.importFile(soundFilePath).getAbsolutePath());
 			} catch (Exception e) {
 			}
+
+		// Delete following board property if it refers to current board
+		if (TBoardConstants.getFollowingBoard(attributeMap) != null) {
+			if ((TBoardModel) TBoardConstants.getFollowingBoard(attributeMap).getModel() == this) {
+				TBoardConstants.setRemoveAttributes(attributeMap, new Object[] { TBoardConstants.FOLLOWING_BOARD });
+			}
+		}
 
 		nested.put(component, attributeMap);
 
