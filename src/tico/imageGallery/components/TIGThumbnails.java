@@ -25,7 +25,7 @@
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package tico.imageGallery.dialogs;
+package tico.imageGallery.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -149,7 +149,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	/*
 	 * Creates the thumbnail panel and all its components
 	 */
-	protected JPanel createThumbnailsPanel(Vector result, Boolean enabled){
+	public JPanel createThumbnailsPanel(Vector result, Boolean enabled){
 		this.enabledSelection = enabled;
 		this.result = result;
 		total = result.size();
@@ -289,12 +289,12 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	/*
 	 * Update the thumbnails panel after modifying an image in order to delete the previous selection
 	 */
-	protected JPanel updateThumbnailsPanel(){
+	public JPanel updateThumbnailsPanel(){
 		path = null;
 		return updateThumbnailsPanel(result,index);
 	}
 	
-	protected JPanel updateThumbnailsPanel(int first){
+	public JPanel updateThumbnailsPanel(int first){
 		return updateThumbnailsPanel(result,first);
 	}
 	
@@ -303,7 +303,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	 * or right arrows have been clicked. Second, a search has been made and third, 
 	 * an image has been deleted.
 	 */
-	protected JPanel updateThumbnailsPanel(Vector result, int first){
+	public JPanel updateThumbnailsPanel(Vector result, int first){
 		this.result = result;
 		total = result.size();
 		String thumbName;
@@ -457,7 +457,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	 * and paint a red border around the actual selected image. Update the
 	 * information about the actual selected image.
 	 */
-	protected void selectThumbnail(int imageClicked){
+	public void selectThumbnail(int imageClicked){
 		System.out.println("Imagen seleccionada: "+imageClicked);
 		System.out.println("Vector de booleanos: ");
 		
@@ -485,7 +485,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	/*
 	 * Returns the ImageIcon of the selected image
 	 */
-	protected ImageIcon imageSelected(){
+	public ImageIcon imageSelected(){
 		if (path != null){
 			TIGThumbImage image = new TIGThumbImage();
 			image.createImageLabel(path);
@@ -503,7 +503,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	/*
 	 * Returns the text of the indicated thumbnail
 	 */
-	protected String imageClickedText(int imageClicked){
+	public String imageClickedText(int imageClicked){
 		switch (imageClicked)
 		{		
 			case 1: return thum1.returnText();
@@ -534,7 +534,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		return this;
 	}
 	
-	protected int getVectorIndex(char letter){
+	public int getVectorIndex(char letter){
 		int i = 0;
 		boolean founded = false;
 		while ((i < result.size()) && (!founded)){
@@ -693,7 +693,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
         	 }
 	    }
 	
-	protected int indexImageSelected(){
+	public int indexImageSelected(){
 		int i = 0;
 		boolean found = false;
 		String pathImage;

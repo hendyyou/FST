@@ -26,7 +26,7 @@
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package tico.imageGallery.dialogs;
+package tico.imageGallery.components;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -199,7 +199,7 @@ public class TIGSelectNewImage extends JPanel {
 		buttonPanel.add(clearIconButton);
 	}
 	
-	protected String returnImage(){
+	public String returnImage(){
 		return ruta;
 	}
 
@@ -208,7 +208,7 @@ public class TIGSelectNewImage extends JPanel {
 	 * disables the buttons.
 	 */
 	
-	protected void updateComponents() {
+	public void updateComponents() {
 		if (icon != null) {
 			clearIconButton.setEnabled(true);
 

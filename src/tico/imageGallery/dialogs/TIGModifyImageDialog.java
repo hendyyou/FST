@@ -48,6 +48,9 @@ import tico.components.TButton;
 import tico.components.TDialog;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
+import tico.imageGallery.components.TIGSearchKeyWord;
+import tico.imageGallery.components.TIGSearchName;
+import tico.imageGallery.components.TIGThumbnails;
 import tico.imageGallery.dataBase.TIGDataBase;
 
 /*

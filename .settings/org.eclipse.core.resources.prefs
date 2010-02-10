@@ -1,4 +1,4 @@
-#Wed Feb 10 15:56:03 CET 2010
+#Wed Feb 10 19:01:50 CET 2010
 eclipse.preferences.version=1
 encoding//conf/tico.conf=UTF-8
 encoding//lang/de.lang=UTF-8
@@ -26,9 +26,9 @@ encoding//src/tico/editor/dialogs/TCellDialog.java=UTF-8
 encoding//src/tico/imageGallery/TIGActionSet.java=UTF-8
 encoding//src/tico/imageGallery/actions/TIGImportDBAction.java=UTF-8
 encoding//src/tico/imageGallery/actions/TIGManageGallery.java=UTF-8
+encoding//src/tico/imageGallery/components/TIGThumbnails.java=UTF-8
 encoding//src/tico/imageGallery/dataBase/TIGDataBase.java=UTF-8
 encoding//src/tico/imageGallery/dialogs/TIGKeyWordGalleryDialog.java=UTF-8
-encoding//src/tico/imageGallery/dialogs/TIGThumbnails.java=UTF-8
 encoding//src/tico/imageGallery/tasks/TIGImportTask.java=UTF-8
 encoding//src/tico/imageGallery/tasks/TIGTableModel.java=UTF-8
 encoding//src/tico/imageGallery/tasks/TIGTableModelOneColumn.java=UTF-8

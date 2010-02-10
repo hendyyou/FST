@@ -26,7 +26,7 @@
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package tico.imageGallery.dialogs;
+package tico.imageGallery.components;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -47,8 +47,7 @@ import javax.swing.border.TitledBorder;
 import tico.configuration.TLanguage;
 
 /*
- * This class displays the panel that contains the image and its name, so that the
- * name of the image can be changed
+ * This class displays the panel that contains the image and its name
  */
 
 public class TIGImageInformation extends JPanel {

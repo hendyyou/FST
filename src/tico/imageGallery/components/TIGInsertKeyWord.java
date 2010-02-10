@@ -26,7 +26,7 @@
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package tico.imageGallery.dialogs;
+package tico.imageGallery.components;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -59,7 +59,7 @@ import tico.imageGallery.tasks.TIGTableModel;
  * This class manages the association between one image and the words in the Data Base.
  * It allows to add new words to the Data Base if necessary
  */
-public class TIGKeyWordInsertDialog extends JPanel{
+public class TIGInsertKeyWord extends JPanel{
 
 	private GridBagConstraints c;
 	
@@ -85,7 +85,7 @@ public class TIGKeyWordInsertDialog extends JPanel{
 	 * the Data Base and to insert new words if necessary.
 	 */
 	
-	public TIGKeyWordInsertDialog(){
+	public TIGInsertKeyWord(){
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
@@ -160,7 +160,7 @@ public class TIGKeyWordInsertDialog extends JPanel{
 	 * This constructor displays a panel in the window that allows to manage the 
 	 * associations between an image from the Data Base and the words associated to it. 
 	 */
-	public TIGKeyWordInsertDialog(String path) {
+	public TIGInsertKeyWord(String path) {
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
@@ -333,7 +333,7 @@ public class TIGKeyWordInsertDialog extends JPanel{
 	 * Returns the key words selected in the table
 	 */
 	
-	protected Vector returnKeyWords(){
+	public Vector returnKeyWords(){
 		Vector keyWords = new Vector();
 		Vector data = myModel.returnData();
 		

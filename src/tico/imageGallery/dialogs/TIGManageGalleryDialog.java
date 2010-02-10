@@ -53,8 +53,9 @@ import tico.components.TDialog;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
 import tico.imageGallery.actions.TIGInsertImageAction;
+import tico.imageGallery.components.TIGInsertKeyWord;
+import tico.imageGallery.components.TIGSelectNewImage;
 import tico.imageGallery.dataBase.TIGDataBase;
-import tico.imageGallery.dialogs.TIGSelectNewImage;
 
 /*
  * This class displays the window for inserting new images to the Data Base
@@ -75,7 +76,7 @@ public class TIGManageGalleryDialog extends TDialog{
 	
 	protected ButtonGroup imagesBehaviour;
 	
-	protected TIGKeyWordInsertDialog keyWordPanel;
+	protected TIGInsertKeyWord keyWordPanel;
 	
 	protected TIGDataBase myDataBase;
 	
@@ -124,7 +125,7 @@ public class TIGManageGalleryDialog extends TDialog{
 		repeatedImages.add(renameImages);
 		
 		// Third, create key word component
-		keyWordPanel = new TIGKeyWordInsertDialog();
+		keyWordPanel = new TIGInsertKeyWord();
 		
 				
 		// Fourth, create buttons

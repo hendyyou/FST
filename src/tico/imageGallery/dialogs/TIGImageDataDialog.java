@@ -46,6 +46,8 @@ import tico.components.TDialog;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
 import tico.imageGallery.actions.TIGModifyImageAction;
+import tico.imageGallery.components.TIGImageInformation;
+import tico.imageGallery.components.TIGInsertKeyWord;
 import tico.imageGallery.dataBase.TIGDataBase;
 
 /*
@@ -62,7 +64,7 @@ public class TIGImageDataDialog extends TDialog{
 	
 	private TIGDataBase myDataBase;
 	
-	private TIGKeyWordInsertDialog keyWordPanel;
+	private TIGInsertKeyWord keyWordPanel;
 	
 	private TIGImageInformation imagePanel;
 	
@@ -95,7 +97,7 @@ public class TIGImageDataDialog extends TDialog{
 		
 		// Second, create the key word component that shows the concepts asociated
 		//or not to the image
-		keyWordPanel = new TIGKeyWordInsertDialog(path);
+		keyWordPanel = new TIGInsertKeyWord(path);
 				
 		// Third, create two buttons, the first for modifying the image, and the second
 		//for closing without changes
