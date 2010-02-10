@@ -4,7 +4,7 @@
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Patricia M. Jaray
+ * Authors: Patricia M. Jaray, Carolina Palacio (2010)
  * 
  * Date: Feb 20, 2008
  * 
@@ -28,6 +28,7 @@
 package tico.imageGallery.dialogs;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,10 +40,10 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.awt.Dimension;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Vector;
 
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
@@ -50,30 +51,24 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
-
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
-import java.util.Vector;
 
 import tico.components.TButton;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 /*
  * This class displays the panel that contains the four images that are part of the
  * result of a search and has buttons so that its possible to see all the images selected.
  * It also displays information about the images.
  */ 
-public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseListener {
+public class TIGThumbnails extends JPanel implements KeyListener, MouseListener {
 	
 	//1 <= index <= 4
 	//Index point to the image selected between the four displayed
@@ -109,17 +104,9 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 	//Those Strings contain the path of the four displayed images
 	//private String pathImage;
 	private String pathImage[] = new String [IMAGES_DISPLAYED];
-	private String path1;
-	private String path2;
-	private String path3;
-	private String path4;
 	
 	//Those Strings contain the name of the four displayed images
 	private String imageName;
-	private String imageName1;
-	private String imageName2;
-	private String imageName3;
-	private String imageName4;
 		
 	JLabel nImagesTextField;
 	
@@ -146,7 +133,7 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 	
 	boolean select;
 		
-	public TIGThumbnailsDialog(boolean select){
+	public TIGThumbnails(boolean select){
 		
 		this. select = select;
 		
@@ -222,27 +209,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 		
 		//Create every panel that will contain an image
 		
-	/*	if (result.size()==0){
-			//Aqui nunca debería entrar, ya que si no hay imágenes sacará un error
-			for (int i=0; i<IMAGES_DISPLAYED; i++){
-				thumbnails[i] = thumbImages[i].createImageLabel(null);
-				thumbnails[i].setPreferredSize(new Dimension(125,125));
-				thumbnails[i].setText("");
-				thumbnails[i].setToolTipText(null);
-				thumbnails[i].setPreferredSize(new Dimension(130,130));
-				thumbImages[i].updateBorder(Color.WHITE);
-				
-				containsImage[i] = false;
-				
-				gridBag.fill = GridBagConstraints.BOTH;
-				gridBag.insets = new Insets(10, 10, 10, 10);
-				gridBag.gridx = i;
-				gridBag.gridy = 0;
-				this.add(thumbnail, gridBag);
-			}
-			leftButton.setEnabled(false);
-			rightButton.setEnabled(false);
-		}else{*/
 			if (result.size()<=IMAGES_DISPLAYED){
 				leftButton.setEnabled(false);
 				rightButton.setEnabled(false);
@@ -317,272 +283,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 		gridBag.gridy = 1;
 		this.add(rightButton, gridBag);
 		
-		
-		/*
-		this.result = result;
-		total = result.size();
-		String thumbName;
-						
-		thum = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
-		
-		//Create the arrows to navigate on the list of images
-		leftButton = new TButton(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		rigthButton = new TButton(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		leftButton.setIcon(TResourceManager
-				.getImageIcon("move-left-16.png"));
-		leftButton.setMargin(new Insets(2, 2, 2, 2));
-		leftButton.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.PREVIOUS"));
-		leftButton.addMouseListener(new java.awt.event.MouseAdapter(){
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e){
-				int i = groupIndex - 4;
-				if (total > 4){
-					if (i < 0){
-						if ( i > -4)
-							i = 0;
-						else{
-							if ((total - 4) > 0)
-								i = total - 4;					
-							else
-								i = 0;
-						}
-					}
-					updateThumbnailsPanel(i);
-				}
-			}
-		});
-		
-		rigthButton.setIcon(TResourceManager
-				.getImageIcon("move-right-16.png"));
-		rigthButton.setMargin(new Insets(2, 2, 2, 2));
-		rigthButton.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.NEXT"));
-		rigthButton.addMouseListener(new java.awt.event.MouseAdapter(){
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e){
-				int i = groupIndex + 4;
-				if (total > 4){
-					if ((i + 4) > total)
-						if (i < total) 
-							i = total - 4;
-						else 
-							i = 0;
-					updateThumbnailsPanel(i);
-				}
-			}
-		});
-		
-		//Create the test that will show how many images are and what name are being displayed
-		nImagesString = TLanguage.getString("TIGThumbnailsDialog.IMAGE") + " " + index + " " +
-						TLanguage.getString("TIGThumbnailsDialog.OF") + " " + result.size();
-		nImagesTextField = new JLabel(nImagesString);
-		
-		//Configure the background of the panel
-		Color blanco = new Color(255,255,255);
-		this.setOpaque(true);
-		this.setBackground(blanco);
-		
-		this.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
-				Color.WHITE, new Color(165, 163, 151))));
-		
-		//Create every panel that will contain an image
-		if (result.size() > 0){
-			Vector data1 = new Vector(2);
-			data1 = (Vector)result.elementAt((index%4)-1);
-		
-			path1 = (String)data1.elementAt(0);
-			thumbName = path1.substring(0, path1.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails1 = thum1.createImageLabel(thumbName);
-			//thumbnails1.setSize(new Dimension(100,100));		
-			imageName1 = (String)data1.elementAt(1);
-			thumbnails1.setToolTipText(imageName1);
-			thumbnails1.setSize(125,125);
-			thumbnails1.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-			thumbnails1.addMouseListener(new java.awt.event.MouseAdapter(){
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e){
-					selectThumbnail(1);
-				}
-			});
-			if ((index == 1) && 
-				(thum1.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) != 0)){
-				thumbnails1.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum1.returnIcon();
-				path = path1;
-				index = 1;
-			}
-		}else{
-			thumbnails1 = thum1.createImageLabel(null);
-			thumbnails1.setPreferredSize(new Dimension(125,125));
-			thumbnails1.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails1.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails1.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails1.setToolTipText(null);
-		}
-		
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 10, 10, 10);
-		thum.gridx = 0;
-		thum.gridy = 0;
-		this.add(thumbnails1,thum);
-				
-		if (result.size() >= 2){
-			Vector data2 = new Vector(2);
-			data2 = (Vector) result.elementAt(index%4);
-		
-			path2 = (String)data2.elementAt(0);
-			thumbName = path2.substring(0, path2.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails2 = thum2.createImageLabel(thumbName);
-			//thumbnails2.setSize(new Dimension(100,100));
-			imageName2 = (String)data2.elementAt(1);
-			thumbnails2.setToolTipText(imageName2);
-			thumbnails2.setSize(125,125);
-			thumbnails2.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-			thumbnails2.addMouseListener(new java.awt.event.MouseAdapter(){
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e){
-					selectThumbnail(2);
-				}
-			});	
-		
-			if ((index == 2) && 
-				(thum2.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) != 0)){
-				thumbnails2.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum2.returnIcon();
-				path = path2;
-				index = 2;
-			}			
-		}else{
-			thumbnails2 = thum2.createImageLabel(null);
-			thumbnails2.setPreferredSize(new Dimension(125,125));
-			thumbnails2.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails2.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails2.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails2.setToolTipText(null);
-		}
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 10, 10, 10);
-		thum.gridx = 1;
-		thum.gridy = 0;
-		this.add(thumbnails2, thum);
-		
-		if (result.size() >= 3){
-			Vector data3 = new Vector(2);
-			data3 = (Vector) result.elementAt((index%4)+1);
-		
-			path3 = (String)data3.elementAt(0);
-			thumbName = path3.substring(0, path3.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails3 = thum3.createImageLabel(thumbName);
-			//thumbnails3.setSize(new Dimension(100,100));
-			imageName3 = (String)data3.elementAt(1);
-			thumbnails3.setToolTipText(imageName3);
-			thumbnails3.setSize(125,125);
-			thumbnails3.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-			thumbnails3.addMouseListener(new java.awt.event.MouseAdapter(){
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e){
-					selectThumbnail(3);
-				}
-			});
-		
-			if ((index == 3) && 
-				(thum3.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) != 0)){
-				thumbnails3.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum3.returnIcon();
-				path = path3;
-				index = 3;
-			}
-			
-		}else{
-			thumbnails3 = thum3.createImageLabel(null);
-			thumbnails3.setPreferredSize(new Dimension(125,125));
-			thumbnails3.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails3.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails3.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails3.setToolTipText(null);
-		}
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 10, 10, 10);
-		thum.gridx = 2;
-		thum.gridy = 0;
-		this.add(thumbnails3, thum);
-		
-		if (result.size() >= 4){
-			Vector data4 = new Vector(2);
-			data4 = (Vector) result.elementAt((index%4)+2);
-		
-			path4 = (String)data4.elementAt(0);
-			thumbName = path4.substring(0, path4.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails4 = thum4.createImageLabel(thumbName);
-			//thumbnails4.setSize(new Dimension(100,100));
-			imageName4 = (String)data4.elementAt(1);
-			thumbnails4.setToolTipText(imageName4);
-			thumbnails4.setSize(125,125);
-			thumbnails4.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-			thumbnails4.addMouseListener(new java.awt.event.MouseAdapter(){
-				@Override
-				public void mouseClicked(java.awt.event.MouseEvent e){
-					selectThumbnail(4);
-				}
-			});
-		
-			if ((index == 4) && 
-				(thum4.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) != 0)){
-				thumbnails4.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum4.returnIcon();
-				path = path4;
-				index = 4;
-			}
-			
-		}else{
-			thumbnails4 = thum4.createImageLabel(null);
-			thumbnails4.setPreferredSize(new Dimension(125,125));
-			thumbnails4.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails4.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails4.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails4.setToolTipText(null);
-		}
-		
-		//Place all the components
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 10, 10, 10);
-		thum.gridx = 3;
-		thum.gridy = 0;
-		this.add(thumbnails4, thum);
-		
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 30, 10, 30);
-		thum.gridx = 0;
-		thum.gridy = 2;
-		this.add(leftButton, thum);
-		
-		thum.fill = GridBagConstraints.BOTH;
-		thum.insets = new Insets(10, 30, 10, 30);
-		thum.gridx = 3;
-		thum.gridy = 2;
-		this.add(rigthButton, thum);
-		
-		thum.fill = GridBagConstraints.CENTER;
-		thum.insets = new Insets(10, 30, 10, 30);
-		thum.gridwidth = 2;
-		thum.gridx = 1;
-		thum.gridy = 2;
-		this.add(nImagesTextField, thum);
-		*/
 		return this;
 	}
 	
@@ -597,18 +297,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 	protected JPanel updateThumbnailsPanel(int first){
 		return updateThumbnailsPanel(result,first);
 	}
-
-	/*
-	 * Update the thumbnails panel because of three reasons. First, because the left 
-	 * or right arrows have been clicked. Second, a search has been made and third, 
-	 * an image has been deleted.
-	 */
-	/*protected JPanel updateThumbnailsPanel(Vector result, String name){
-		this.result = result;
-		int i = getPosition(name);
-		index = 1;
-		return updateThumbnailsPanel(result, i);
-	}*/
 	
 	/*
 	 * Update the thumbnails panel because of three reasons. First, because the left 
@@ -761,174 +449,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 			
 		}
 
-		/*nImagesString = TLanguage.getString("TIGThumbnailsDialog.IMAGE") + " " + (first) + " " +
-			TLanguage.getString("TIGThumbnailsDialog.OF") + " " + result.size();		
-		nImagesTextField.setText(nImagesString);
-		
-		gridBag.fill = GridBagConstraints.BOTH;
-		gridBag.insets = new Insets(10, 30, 10, 30);
-		gridBag.gridx = 0;
-		gridBag.gridy = 1;
-		this.add(leftButton, gridBag);
-		
-		gridBag.fill = GridBagConstraints.CENTER;
-		gridBag.insets = new Insets(10, 30, 10, 30);
-		gridBag.gridwidth = 2;
-		gridBag.gridx = 1;
-		gridBag.gridy = 1;
-		this.add(nImagesTextField, gridBag);
-		
-		gridBag.fill = GridBagConstraints.BOTH;
-		gridBag.insets = new Insets(10, 30, 10, 30);
-		gridBag.gridx = 3;
-		gridBag.gridy = 1;
-		this.add(rigthButton, gridBag);*/
-		/*
-		String thumbName;
-		this.result = result;
-		total = result.size();
-		groupIndex = first;
-		
-		if (result.size()==0){
-			System.out.println("updateThumbnailsPanel");
-			System.out.println("FIRST: "+first);
-			// There are no results for that search
-			//JOptionPane.showConfirmDialog(null,
-			//		TLanguage.getString("TIGThumbnailsDialog.NO_RESULTS"),
-			//		TLanguage.getString("TIGThumbnailsDialog.NAME_RESULT"),
-			//		JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
-			index=0;
-			thumbnails1 = thum1.createImageLabel(null);
-			thumbnails1.setPreferredSize(new Dimension(125,125));
-			thumbnails1.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails1.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails1.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails1.setToolTipText(null);
-			
-		}else{
-			//Update every panel that will display the new images
-			Vector data1 = new Vector(2);
-			data1 = (Vector)result.elementAt(groupIndex);
-		
-			path1 = (String)data1.elementAt(0);
-			thumbName = path1.substring(0, path1.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails1 = thum1.createImageLabel(thumbName);
-			//thumbnails1.setSize(new Dimension(100,100));		
-			imageName1 = (String)data1.elementAt(1);
-			thumbnails1.setToolTipText(imageName1);
-			thumbnails1.setSize(125,125);
-			thumbnails1.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-		}
-		
-		if (index == 1){
-			thumbnails1.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-			imageSelected = thum1.returnIcon();
-			path = path1;
-			index = 1;
-		}
-
-		thumbnails1.repaint();
-				
-		Vector data2 = new Vector(2);
-		if (result.size() > (groupIndex + 1)){			
-			data2 = (Vector) result.elementAt(groupIndex + 1);
-			path2 = (String)data2.elementAt(0);
-			thumbName = path2.substring(0, path2.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails2 = thum2.createImageLabel(thumbName);
-			//thumbnails2.setSize(new Dimension(100,100));
-			imageName2 = (String)data2.elementAt(1);
-			thumbnails2.setToolTipText(imageName2);
-			thumbnails2.setSize(125,125);
-			thumbnails2.setBorder(new MatteBorder(
-					new Insets(2, 2, 2, 2), Color.WHITE));
-		
-			if (index == 2){
-				thumbnails2.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum2.returnIcon();
-				path = path2;
-				index = 2;
-			}			
-		}else{
-			thumbnails2 = thum2.createImageLabel(null);
-			thumbnails2.setPreferredSize(new Dimension(125,125));
-			thumbnails2.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails2.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails2.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails2.setToolTipText(null);
-		}
-		
-		thumbnails2.repaint();
-		
-		Vector data3 = new Vector(2);
-		if (result.size() > (groupIndex + 2)){	
-			data3 = (Vector) result.elementAt(groupIndex + 2);		
-			path3 = (String)data3.elementAt(0);
-			thumbName = path3.substring(0, path3.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails3 = thum3.createImageLabel(thumbName);
-			//thumbnails3.setSize(new Dimension(100,100));
-			imageName3 = (String)data3.elementAt(1);
-			thumbnails3.setToolTipText(imageName3);
-			thumbnails3.setSize(125,125);
-			thumbnails3.setBorder(new MatteBorder(
-					new Insets(2, 2, 2, 2), Color.WHITE));
-			
-			if (index == 3){
-				thumbnails3.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum3.returnIcon();
-				path = path3;
-				index = 3;
-			}			
-		}else{
-			thumbnails3 = thum3.createImageLabel(null);
-			thumbnails3.setPreferredSize(new Dimension(125,125));
-			thumbnails3.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails3.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails3.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails3.setToolTipText(null);
-		}
-		
-		thumbnails3.repaint();
-		
-		if (result.size() > (groupIndex + 3)){
-			Vector data4 = new Vector(2);
-			data4 = (Vector) result.elementAt(groupIndex + 3);
-		
-			path4 = (String)data4.elementAt(0);
-			thumbName = path4.substring(0, path4.lastIndexOf('.')) + "_th.jpg";
-
-			thumbnails4 = thum4.createImageLabel(thumbName);
-			//thumbnails4.setSize(new Dimension(100,100));
-			imageName4 = (String)data4.elementAt(1);
-			thumbnails4.setToolTipText(imageName4);
-			thumbnails4.setSize(125,125);
-			thumbnails4.setBorder(new MatteBorder(
-				new Insets(2, 2, 2, 2), Color.WHITE));
-	
-			if (index == 4){
-				thumbnails4.setBorder(new MatteBorder(new Insets(2, 2, 2, 2), Color.RED));
-				imageSelected = thum4.returnIcon();
-				path = path4;
-				index = 4;
-			}			
-		}else{
-			thumbnails4 = thum4.createImageLabel(null);
-			thumbnails4.setPreferredSize(new Dimension(125,125));
-			thumbnails4.setText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails4.setHorizontalAlignment(SwingConstants.CENTER);
-			//thumbnails4.setToolTipText(TLanguage.getString("TIGThumbnailsDialog.RESULT"));
-			thumbnails4.setToolTipText(null);
-		}
-		
-		thumbnails4.repaint();
-		
-		nImagesString = TLanguage.getString("TIGThumbnailsDialog.IMAGE") + " " + (index + groupIndex) + " " +
-						TLanguage.getString("TIGThumbnailsDialog.OF") + " " + result.size();		
-		nImagesTextField.setText(nImagesString);
-		*/
 		return this;
 	}
 	
@@ -960,91 +480,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 			}
 		}
 		
-		for (int i=0; i<4; i++){
-			System.out.println("----- pos: "+i+"  "+containsImage[i]);
-		}
-	/*	if (image_index_display_selected != imageClicked)
-		{
-			switch (image_index_display_selected)
-			{		
-				case 1: 
-					if ((imageClickedText(imageClicked).compareTo("") == 0) || (select &&
-						(imageClickedText(imageClicked).compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)))
-						thumbnails1.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.WHITE));
-					break;
-				case 2: 
-					if ((imageClickedText(imageClicked).compareTo("") == 0) || (select &&
-							(imageClickedText(imageClicked).compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)))
-						thumbnails2.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.WHITE));
-					break;
-				case 3: 
-					if ((imageClickedText(imageClicked).compareTo("") == 0) || (select &&
-							(imageClickedText(imageClicked).compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)))
-						thumbnails3.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.WHITE));
-					break;
-				case 4: 
-					if ((imageClickedText(imageClicked).compareTo("") == 0) || (select &&
-							(imageClickedText(imageClicked).compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)))
-						thumbnails4.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.WHITE));
-			}
-			switch (imageClicked)
-			{
-				case 1: 
-					if ((thum1.returnText().compareTo("") == 0) || 
-						((thum1.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)
-								&& select)){
-						thumbnails1.setBorder(new MatteBorder(				
-								new Insets(2, 2, 2, 2), Color.RED));
-						imageSelected = thum1.returnIcon();
-						path = path1;
-						index = 1;
-						image_index_display_selected = 1;
-					}
-					break;
-				case 2: 
-					if ((thum2.returnText().compareTo("") == 0) || 
-							((thum2.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)
-									&& select) && ((groupIndex + 2) <= result.size())){
-						thumbnails2.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.RED));
-						imageSelected = thum2.returnIcon();
-						path = path2;
-						index = 2;
-						image_index_display_selected = 2;
-					}
-					break;
-				case 3: 
-					if ((thum3.returnText().compareTo("") == 0) || 
-							((thum3.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)
-									&& select) && ((groupIndex + 3) <= result.size())){
-						thumbnails3.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.RED));
-						imageSelected = thum3.returnIcon();
-						path = path3;
-						index = 3;
-						image_index_display_selected = 3;
-					}
-					break;
-				case 4: 
-					if ((thum4.returnText().compareTo("") == 0) || 
-							((thum4.returnText().compareTo(TLanguage.getString("TIGThumbImageDialog.TEXT")) == 0)
-									&& select) && ((groupIndex + 4) <= result.size())){
-						thumbnails4.setBorder(new MatteBorder(
-								new Insets(2, 2, 2, 2), Color.RED));
-						imageSelected = thum4.returnIcon();
-						path = path4;
-						index = 4;
-						image_index_display_selected = 4;
-				}
-			}
-			nImagesString = TLanguage.getString("TIGThumbnailsDialog.IMAGE") + " " + (index + groupIndex) + " " +
-							TLanguage.getString("TIGThumbnailsDialog.OF") + " " + result.size();		
-			nImagesTextField.setText(nImagesString);
-		}*/
 	}
 	
 	/*
@@ -1257,21 +692,6 @@ public class TIGThumbnailsDialog extends JPanel implements KeyListener, MouseLis
 				}	
         	 }
 	    }
-	
-	/*private int getPosition(String name){
-		int i = 0;
-		boolean founded = false;
-		while ((i < result.size()) && (!founded)){
-			Vector data = new Vector(2);
-			data = (Vector) result.elementAt(i);
-			String element = (String) data.elementAt(1);
-			if (element.compareTo(name) == 0)
-				founded = true;
-			else i++;
-		}
-		if (!founded) i = 0;
-		return i;
-	}*/
 	
 	protected int indexImageSelected(){
 		int i = 0;

@@ -26,7 +26,7 @@
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package tico.imageGallery.components;
+package tico.imageGallery.tasks;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.event.*;

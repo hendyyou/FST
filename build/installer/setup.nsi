@@ -6,6 +6,7 @@ Name Tico
 !define REGKEY "SOFTWARE\$(^Name)"
 
 !define VERSION "1.0"
+!define TICO_HOME "C:\Tico"
 !define COMPANY "Universidad de Zaragoza - CPEE Alborada"
 !define URL ""
 
@@ -57,7 +58,8 @@ LicenseLangString MUILicense ${LANG_GERMAN} de\LICENSE.txt
 
 # Installer attributes
 OutFile ../../dist/tico-bin-w32-${VERSION}.exe
-InstallDir $PROGRAMFILES\Tico
+#InstallDir $PROGRAMFILES\Tico
+InstallDir ${TICO_HOME}
 CRCCheck on
 XPStyle on
 ShowInstDetails show
@@ -167,7 +169,7 @@ Section /o un.Main UNSEC0000
     RmDir /r /REBOOTOK $INSTDIR\current
     RmDir /r /REBOOTOK $INSTDIR\lang
     RmDir /r /REBOOTOK $INSTDIR\environment
-    RmDir /r /REBOOTOK $INSTDIR\images
+    #RmDir /r /REBOOTOK $INSTDIR\images
     RmDir /r /REBOOTOK $INSTDIR\controller-icons
     RmDir /r /REBOOTOK $INSTDIR\conf
     RmDir /r /REBOOTOK $INSTDIR\doc

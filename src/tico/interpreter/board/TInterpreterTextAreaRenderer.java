@@ -66,7 +66,7 @@ public class TInterpreterTextAreaRenderer extends TComponentRenderer {
 		// Get the text area attributes
 		Map map = view.getAllAttributes();
 
-		// Get the vairables needed in the paint function
+		// Get the variables needed in the paint function
 		id = ((TComponent)view.getCell()).getId();
 
 		height = (int)TBoardConstants.getBounds(map).getHeight();

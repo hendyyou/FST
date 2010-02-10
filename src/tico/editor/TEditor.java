@@ -194,7 +194,7 @@ public class TEditor extends JFrame {
 		setJMenuBar(new TEditorMenuBar(this, toolBarContainer));
 	}
 
-	// Creates de board edition area
+	// Creates the board edition area
 	private void createBoardEditor() {
 		// Create board list
 		JPanel boardListPanel = new JPanel();

@@ -27,29 +27,25 @@
  */
 package tico.interpreter.actions;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 
 import tico.components.resources.ProjectFilter;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TProjectHandler;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.TInterpreterProject;
 
 /**
- * Action wich opens a project from a file and set it to the interpreter.
+ * Action which opens a project from a file and set it to the interpreter.
  * 
- * @author Pablo Muñoz
+ * @author Antonio Rodríguez
  * @version 1.0 Nov 20, 2006
  */
 public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
@@ -70,6 +66,9 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectOpenAction.OPEN_PROJECT"));
+		if (!TSetup.getInterpreterHome().equals("")){
+			defaultDirectory = new File(TSetup.getInterpreterHome());
+		}
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.addChoosableFileFilter(new ProjectFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
@@ -77,17 +76,18 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 		// Checks if the user has chosen a file
 		int returnValue = fileChooser.showOpenDialog((Component)null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			// Change 
+			// Waiting cursor while the project is being opened
 			interpreter.TIntepreterWaitingCursor();
+			// Delete accumulated cells
+			TInterpreter.accumulatedCells.removeAll();
+			TInterpreter.accumulatedCells.updateUI();
 			// Get the chosen file			
 			// Set its directory as next first JFileChooser directory		
-			// Delete accumulated cells
-			TInterpreterConstants.interpreter.accumulatedCells.removeAll();
-			interpreter.accumulatedCells.updateUI();
-			
-			TInterpreterRun.fin=false;
+			TInterpreterRun.fin = false;
 			File selectedFile = fileChooser.getSelectedFile();
 			defaultDirectory = selectedFile.getParentFile();
+			// Set the editor home directory
+			TSetup.setInterpreterHome(selectedFile.getParent().toString());
 			try {
 				getInterpreter().deleteProject();
 				// Load the project				
@@ -95,6 +95,7 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 				getInterpreter().setProject(project);
 				TInterpreter.setEnabledActions(true);
 				getInterpreter().setTitle(TInterpreter.DEFAULT_TITLE + " - " + project.getName());
+				// Set the default cursor
 				interpreter.TInterpreterRestoreCursor();
 			} catch (Exception ex) {
 				// If the import fails show an error message

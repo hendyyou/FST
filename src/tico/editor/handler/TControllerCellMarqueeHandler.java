@@ -30,7 +30,6 @@ package tico.editor.handler;
 import java.awt.geom.Rectangle2D;
 
 import tico.board.TBoardConstants;
-import tico.board.components.TCell;
 import tico.board.components.TComponent;
 import tico.board.components.TControllerCell;
 import tico.editor.TBoardContainer;

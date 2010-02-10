@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import tico.components.resources.ProjectFilter;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 
@@ -81,8 +82,11 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 		// Open the project
 		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
-		// Customoze JFileChooser
+		// Customize JFileChooser
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectOpenAction.OPEN_PROJECT"));
+		if (!TSetup.getEditorHome().equals("")){
+			defaultDirectory = new File(TSetup.getEditorHome());
+		}
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.addChoosableFileFilter(new ProjectFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
@@ -91,13 +95,15 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 		int returnValue = fileChooser.showOpenDialog((Component)null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			
-			//Ponemos el cursor de espera
+			// Waiting cursor while the project is being opened
 			getEditor().changeToWaitingCursor();
 			
 			// Get the chosen file
 			File selectedFile = fileChooser.getSelectedFile();
 			// Set its directory as next first JFileChooser directory
 			defaultDirectory = selectedFile.getParentFile();
+			// Set the editor home directory
+			TSetup.setEditorHome(selectedFile.getParent().toString());
 
 			try {
 				getEditor().deleteProject();
@@ -105,6 +111,7 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 				getEditor().setProject(TProjectHandler.loadProject(selectedFile));
 				// Set selectedFile as the project file
 				getEditor().setProjectFile(selectedFile);
+				// Set the default cursor
 				getEditor().restoreCursor();
 			} catch (Exception ex) {
 				// If the import fails show an error message

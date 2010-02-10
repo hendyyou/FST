@@ -64,14 +64,14 @@ public class TIGImageDataDialog extends TDialog{
 	
 	private TIGKeyWordInsertDialog keyWordPanel;
 	
-	private TIGModifyImageNameDialog imagePanel;
+	private TIGImageInformation imagePanel;
 	
 	public TIGImageDataDialog(TEditor editor, TIGDataBase dataBase,ImageIcon icon, String path) {
 		super(editor, TLanguage.getString("TIGImageDataDialog.NAME"),true);	
 		this.myEditor = editor;
 		myDataBase = dataBase;
 		TIGDataBase.conectDB();
-		this.imageName = dataBase.imageNameSearch(path);
+		this.imageName = TIGDataBase.imageNameSearch(path);
 		this.imagePath = path;
 		
 		addWindowListener(new java.awt.event.WindowListener(){
@@ -90,12 +90,12 @@ public class TIGImageDataDialog extends TDialog{
 		
 		// Create components
 		// First, create component that shows the name of the image
-		imagePanel = new TIGModifyImageNameDialog(
+		imagePanel = new TIGImageInformation(
 				TLanguage.getString("TIGImageDataDialog.DATANAME"),icon,imageName);
 		
 		// Second, create the key word component that shows the concepts asociated
 		//or not to the image
-		keyWordPanel = new TIGKeyWordInsertDialog(editor,dataBase,path);
+		keyWordPanel = new TIGKeyWordInsertDialog(path);
 				
 		// Third, create two buttons, the first for modifying the image, and the second
 		//for closing without changes

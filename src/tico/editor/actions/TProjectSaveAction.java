@@ -39,6 +39,7 @@ import tico.components.resources.ProjectFilter;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 
@@ -66,11 +67,11 @@ public class TProjectSaveAction extends TEditorAbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		File selectedFile = getEditor().getProjectFile();
-		// If there is no a selected file
+		// If there is no a selected file (the project is new)
 		if (selectedFile == null) {
 			// Open a JFileChooser
 			JFileChooser fileChooser = new JFileChooser();
-			// Customoze JFileChooser
+			// Customize JFileChooser
 			fileChooser.setDialogTitle(TLanguage.getString("TProjectSaveAction.SAVE_PROJECT"));
 			fileChooser.setSelectedFile(new File(getEditor().getProject()
 					.getName() + "." + TFileUtils.TCO));
@@ -111,6 +112,8 @@ public class TProjectSaveAction extends TEditorAbstractAction {
 				getEditor().setModified(false);
 				// Set the selected file as the base file for the project
 				getEditor().setProjectFile(selectedFile);
+				// Set the editor home directory
+				TSetup.setEditorHome(selectedFile.getParent().toString());
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,

@@ -39,11 +39,12 @@ import tico.components.resources.ProjectFilter;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 
 /**
- * Action wich saves the current editor project into a file with the specified
+ * Action which saves the current editor project into a file with the specified
  * name.
  * 
  * @author Pablo Muñoz
@@ -55,8 +56,7 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 	/**
 	 * Constructor for TProjectSaveAsAction.
 	 * 
-	 * @param editor
-	 *            The boards' editor
+	 * @param editor The boards' editor
 	 */
 	public TProjectSaveAsAction(TEditor editor) {
 		super(editor, TLanguage.getString("TProjectSaveAsAction.NAME"),
@@ -69,7 +69,7 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
-		// Customoze JFileChooser
+		// Customize JFileChooser
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectSaveAsAction.SAVE_PROJECT"));
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.setSelectedFile(new File(getEditor().getProject()
@@ -107,6 +107,8 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 				getEditor().setModified(false);
 				// Set the selected file as the base file for the project
 				getEditor().setProjectFile(selectedFile);
+				// Set the editor home directory
+				TSetup.setEditorHome(selectedFile.getParent().toString());
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,

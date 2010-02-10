@@ -88,7 +88,7 @@ public class TBoardUI extends BasicGraphUI {
 			}
 		}
 
-		// Draw backgroun image
+		// Draw background image
 		ImageIcon image = (ImageIcon)TBoardConstants.getIcon(map);
 
 		if (image != null) {

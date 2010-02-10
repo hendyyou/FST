@@ -126,9 +126,19 @@ public class TFileHandler {
 	// Import an external file to an internal file
 	private static File importFile(File srcFile, File dstDir)
 			throws IOException {
-		File newFile = new File(dstDir, srcFile.getName());
-		String baseFilename = srcFile.getName();
-
+		String baseFilename;
+		File newFile;
+		
+		String name = getFilename(srcFile.getName());
+		String extension = getExtension(srcFile.getName());
+		String nameRenamed = replace(name);
+		if (!nameRenamed.equals(name)){
+			newFile = new File(dstDir,nameRenamed+"."+extension);
+			baseFilename = nameRenamed+"."+extension;
+		}else{
+			newFile = new File(dstDir, srcFile.getName());
+			baseFilename = srcFile.getName();
+		}
 		if ((!dstDir.exists()) || (!dstDir.canWrite()))
 			throw new IOException("Invalid destination directory");
 		if ((!srcFile.exists()) || (srcFile.isDirectory()))
@@ -266,5 +276,34 @@ public class TFileHandler {
 
 		sourceChannel.close();
 		destinationChannel.close();
+	}
+
+	private static String replace(String word){
+		String result = word.replace(' ', '_').replace(',', '-').replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').
+		replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U').replace("ñ", "ny").replace("Ñ", "NY").toLowerCase();
+		return result;
+	}
+	
+	public static String getFilename(String filePath) {
+		String fileName = null;
+		
+		int ini = -1;
+		int end = filePath.lastIndexOf('.');
+
+		if ((ini < end) && (ini >= -1 && ini < filePath.length() - 1)
+				&& (end >= 0 && end < filePath.length()))
+			fileName = filePath.substring(ini + 1, end);
+		
+		return fileName;
+	}
+	
+	public static String getExtension(String filePath) {
+		String extension = null;
+		int i = filePath.lastIndexOf('.');
+
+		if (i > 0 && i < filePath.length() - 1)
+			extension = filePath.substring(i + 1).toLowerCase();
+
+		return extension;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * File: TIGLoadDBDialog.java
+ * File: TIGImportDBDialog.java
  * 		This file is part of Tico, an application to create and	perform
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
@@ -64,8 +64,8 @@ import tico.components.TButton;
 import tico.components.TDialog;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
-import tico.imageGallery.components.TIGImportTask;
 import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.tasks.TIGImportTask;
 
 /*
  * This class load images from a directory and associations from a text file

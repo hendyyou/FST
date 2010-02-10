@@ -265,9 +265,8 @@ public class TInterpreterBoard {
 			if (cell.getBackground()!= null){
 				cell.setBackground(cell.getBackground());
 			}
-			if (cell.getIcon()!= null){	
-				cell.setIcon(cell.getIcon());
-			}		
+			
+			cell.setIcon(cell.getDefaultIcon());
 		}
 	}
 	

@@ -448,7 +448,7 @@ public class TBoardModel extends DefaultGraphModel {
 	 * @param insert The <code>components</code> to insert
 	 * @param removed The <code>components</code> to remove
 	 * @param attributes Pairs <code>component</code> - <code>attributeMap</code>
-	 * that determines wich objects will receive wich attribute map modifications
+	 * that determines which objects will receive which attribute map modifications
 	 */	
 	public void removeInsertAndEdit(Object[] insert, Object[] removed,
 			Map attributes) {
@@ -478,10 +478,10 @@ public class TBoardModel extends DefaultGraphModel {
 	}
 
 	//
-	// Colateral modification functions
+	// Collateral modification functions
 	//
 	
-	// Funtion executed when any component has been inserted
+	// Function executed when any component has been inserted
 	private Map insertUpdateAttributes(TComponent component, Map attributeMap, Map attributes) {
 		Map nested = new Hashtable();
 		
@@ -535,7 +535,7 @@ public class TBoardModel extends DefaultGraphModel {
 			TBoardConstants.setOrderedCellList(attributeMap, newOrderedCells);
 		}
 
-		// Asign an unused id to the component. This is not applicable to
+		// Assign an unused id to the component. This is not applicable to
 		// grid cells because its Id is made with its grid id and its
 		// position
 		if (!(component instanceof TGridCell)) {
@@ -618,6 +618,14 @@ public class TBoardModel extends DefaultGraphModel {
 						.importFile(soundFilePath).getAbsolutePath());
 			} catch (Exception e) {
 			}
+		
+		String videoFilePath = TBoardConstants.getVideoFile(attributeMap);
+		if (videoFilePath != null)
+			try {
+				TBoardConstants.setVideoFile(attributeMap, TFileHandler
+						.importFile(videoFilePath).getAbsolutePath());
+			} catch (Exception e) {
+			}
 
 		// Delete following board property if it refers to current board
 		if (TBoardConstants.getFollowingBoard(attributeMap) != null) {
@@ -631,7 +639,7 @@ public class TBoardModel extends DefaultGraphModel {
 		return nested;
 	}
 	
-	// Funtion executed when any component has change its parent
+	// Function executed when any component has change its parent
 	private Map parentUpdateAttributes(TGridCell child, TGrid parent,
 			Map parentAttributeMap) {
 		Map nested = new Hashtable();
@@ -659,7 +667,7 @@ public class TBoardModel extends DefaultGraphModel {
 		return nested;
 	}
 	
-	// Funtion executed when any component has been removed
+	// Function executed when any component has been removed
 	private Map removeUpdateAttributes(TComponent component, Map attributes) {
 		Map nested = new Hashtable();
 		
@@ -713,7 +721,7 @@ public class TBoardModel extends DefaultGraphModel {
 			nested.put(grid, attributeMap);
 		}
 
-		// If the component is a text receiver remove all the apearances of that
+		// If the component is a text receiver remove all the appearances of that
 		// component in text sender component attributes
 		if (TBoardConstants.isTextReceiver(component.getAttributes())) {
 			// For each text sender
@@ -743,7 +751,7 @@ public class TBoardModel extends DefaultGraphModel {
 		return nested;
 	}
 	
-	// Funtion executed when any component has been edited
+	// Function executed when any component has been edited
 	private Map editUpdateAttributes(TComponent component, Map attributeMap) {
 		// Create an empty component changes map
 		Map nested = new Hashtable();

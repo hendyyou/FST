@@ -27,7 +27,7 @@
  */
 
 
-package tico.imageGallery.components;
+package tico.imageGallery.tasks;
 
 import javax.swing.SwingUtilities;
 

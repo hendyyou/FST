@@ -54,7 +54,7 @@ import tico.configuration.TLanguage;
 import tico.editor.TEditor;
 import tico.imageGallery.actions.TIGInsertImageAction;
 import tico.imageGallery.dataBase.TIGDataBase;
-import tico.imageGallery.dialogs.TIGSelectNewImageDialog;
+import tico.imageGallery.dialogs.TIGSelectNewImage;
 
 /*
  * This class displays the window for inserting new images to the Data Base
@@ -69,7 +69,7 @@ public class TIGManageGalleryDialog extends TDialog{
 	
 	protected Vector concepts;
 	
-	protected TIGSelectNewImageDialog imagePanel;
+	protected TIGSelectNewImage imagePanel;
 	
 	protected JPanel repeatedImages;
 	
@@ -104,7 +104,7 @@ public class TIGManageGalleryDialog extends TDialog{
 		
 		// Create components
 		// First, create the File chooser that selects an image
-		imagePanel = new TIGSelectNewImageDialog(TLanguage.getString("TIGManageGalleryDialog.IMAGE"));
+		imagePanel = new TIGSelectNewImage(TLanguage.getString("TIGManageGalleryDialog.IMAGE"));
 		
 		//Second, create repeated images panel
 		repeatedImages = new JPanel(new GridLayout(1, 0));
@@ -124,7 +124,7 @@ public class TIGManageGalleryDialog extends TDialog{
 		repeatedImages.add(renameImages);
 		
 		// Third, create key word component
-		keyWordPanel = new TIGKeyWordInsertDialog(editor, dataBase);
+		keyWordPanel = new TIGKeyWordInsertDialog();
 		
 				
 		// Fourth, create buttons

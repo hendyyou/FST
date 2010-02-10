@@ -1,12 +1,12 @@
 /*
- * File: TIGKeyWordSearchDialog.java
+ * File: TIGSearchKeyWord.java
  * 		This file is part of Tico, an application to create and	perform
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Patricia M. Jaray
+ * Authors: Carolina Palacio
  * 
- * Date: Feb 19, 2008
+ * Date: Feb 5, 2010
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
@@ -36,7 +36,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -48,10 +47,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import tico.components.TButton;
-import tico.components.TComboBox;
-import tico.components.TDialog;
 import tico.configuration.TLanguage;
-import tico.editor.TEditor;
 import tico.imageGallery.dataBase.TIGDataBase;
 
 /*
@@ -86,11 +82,11 @@ public class TIGSearchKeyWord extends JPanel{
 	
 	private int searchOptions2;
 	
-	private TIGThumbnailsDialog thumbnails;
+	private TIGThumbnails thumbnails;
 	
 	public Vector result;
 	
-	public TIGSearchKeyWord(TIGThumbnailsDialog thumbnailsDialog){ 
+	public TIGSearchKeyWord(TIGThumbnails thumbnailsDialog){ 
 		
 		thumbnails = thumbnailsDialog;
 						
@@ -195,7 +191,30 @@ public class TIGSearchKeyWord extends JPanel{
 		//Create button
 		TButton searchButton = new TButton(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				searchAndUpdateImages(thumbnails);
+				result = new Vector();
+				keyWord1 = getKeyWord1();
+				if (!keyWord1.equals("")){
+					keyWord2 = getKeyWord2();
+					keyWord3 = getKeyWord3();;
+					searchOptions1 = getSearchOptions1();
+					searchOptions2 = getSearchOptions2();
+					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					if (result.size()==0){
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGKeyWordSearchDialog.NO_RESULTS"),
+								TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						thumbnails.updateThumbnailsPanel(result,0);
+				}else{
+					//There are no categories to search
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGKeyWordSearchDialog.NO_CATEGORIES"),
+							TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+							JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		});
 
@@ -282,30 +301,4 @@ public class TIGSearchKeyWord extends JPanel{
 		return searchOptions2;
 	}	
 
-	private void searchAndUpdateImages(TIGThumbnailsDialog thumbnails){
-		result = new Vector();
-		keyWord1 = getKeyWord1();
-		if (!keyWord1.equals("")){
-			keyWord2 = getKeyWord2();
-			keyWord3 = getKeyWord3();;
-			searchOptions1 = getSearchOptions1();
-			searchOptions2 = getSearchOptions2();
-			result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
-			if (result.size()==0){
-				// There are no results for that search
-				JOptionPane.showConfirmDialog(null,
-						TLanguage.getString("TIGKeyWordSearchDialog.NO_RESULTS"),
-						TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
-						JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
-			}
-			else
-				thumbnails.updateThumbnailsPanel(result,0);
-		}else{
-			//There are no categories to search
-			JOptionPane.showConfirmDialog(null,
-					TLanguage.getString("TIGKeyWordSearchDialog.NO_CATEGORIES"),
-					TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
-					JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
-		}
-	}
 }

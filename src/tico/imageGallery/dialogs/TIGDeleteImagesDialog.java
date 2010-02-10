@@ -57,10 +57,10 @@ import tico.components.TButton;
 import tico.components.TDialog;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
-import tico.imageGallery.components.TIGDeleteTask;
-import tico.imageGallery.components.TIGExportTask;
 import tico.imageGallery.dataBase.TIGDataBase;
 import tico.imageGallery.dialogs.TIGImportDBDialog.TimerListener;
+import tico.imageGallery.tasks.TIGDeleteTask;
+import tico.imageGallery.tasks.TIGExportTask;
 
 /*
  * This class displays the window for searching an image to modify any 
@@ -93,7 +93,7 @@ public class TIGDeleteImagesDialog extends TDialog{
     
     private boolean stop = false;
 	
-	private TIGThumbnailsDialog thumbnailsDialog;
+	private TIGThumbnails thumbnailsDialog;
 	
 	private JPanel thumbnailsPanel;
 
@@ -126,20 +126,21 @@ public class TIGDeleteImagesDialog extends TDialog{
 		setTitle(TLanguage.getString("TEditorMenuBar.IMAGES_DELETE"));
 				
 		// Create components
-		// First, create the component that search the names of the images
-		JPanel searchNamePanel = new JPanel();	
-		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
-		searchNamePanel = searchNameDialog.createSearchNamePanelDelete(editor,myDataBase,this);
 		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
 		
-		// Second, create the component that shows all the images
+		// First, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
-		thumbnailsDialog = new TIGThumbnailsDialog(true);
+		thumbnailsDialog = new TIGThumbnails(true);
 		// Create thumbnails panel with no selection of images
 		thumbnailsPanel = thumbnailsDialog.createThumbnailsPanel(images, false);
+		
+		// Second, create the component that search the names of the images
+		//JPanel searchNamePanel = new JPanel();	
+		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog);
+		//searchNamePanel = searchNameDialog.createSearchNamePanelDelete(this);
 		
 		// Third, create the component that search the images from its associations
 		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);

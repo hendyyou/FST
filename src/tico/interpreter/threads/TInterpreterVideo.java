@@ -53,7 +53,7 @@ import de.humatic.dsj.DSJException;
 import de.humatic.dsj.DSJUtils;
 
 /**
- * The video  thread (WAV format)
+ * The video thread (WMV, AVI, MPEG, MPG format)
  * 
  * @author Carolina Palacio
  * @version 1.0 Dec, 2009
@@ -70,14 +70,14 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
         	if (!ini){
         		System.loadLibrary("libs/dsj");
         		System.out.println("Video DLL loaded correctly");
+        		System.out.println(System.getProperty("sun.arch.data.model"));
         		ini=true;
         	}
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
             System.out.println("Video DLL not loaded");
         }	
-	}
-	
+	}	
 
 	private JAudioPlayer audioPlayer;
 	/**
@@ -192,7 +192,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 		switch(DSJUtils.getEventType(pe)) {
 			case DSFiltergraph.ACTIVATING: System.out.print("."); break;
 			case DSFiltergraph.MOUSE_EVENT:
-				System.out.println("Evento de ratón"); break;
+				System.out.println("Evento de ratï¿½n"); break;
 			case DSFiltergraph.DONE:
 			
 				try{

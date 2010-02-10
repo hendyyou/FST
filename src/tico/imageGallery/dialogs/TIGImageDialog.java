@@ -24,7 +24,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 
 package tico.imageGallery.dialogs;
 
@@ -41,9 +41,9 @@ import javax.swing.JLabel;
 import tico.components.resources.TFileUtils;
 import tico.configuration.TLanguage;
 
-/*
+
  * This class displays the panel that contains the thumbnail of an image
- */
+ 
 public class TIGImageDialog extends JLabel{
 	
 	// Component size constants
@@ -64,7 +64,8 @@ public class TIGImageDialog extends JLabel{
 	protected JLabel createImageLabel(String image_path){ 
 		
 		File image = new File("Image" + File.separator + image_path.substring(0,1).toUpperCase() + File.separator + image_path);
-			
+		
+		System.out.println("Image" + File.separator + image_path.substring(0,1).toUpperCase() + File.separator + image_path);
 		setImageFile(image);
 							
 		return this;
@@ -114,21 +115,22 @@ public class TIGImageDialog extends JLabel{
 		}		
 	}
 	
-	/**
+	*//**
 	 * Returns the selected <code>icon</code>.
 	 * 
 	 * @return The selected <code>icon</code>
-	 */
+	 *//*
 	public ImageIcon returnIcon() {
 		return image;
 	}
 	
-	/**
+	*//**
 	 * Returns the selected <code>icon</code>.
 	 * 
 	 * @return The selected <code>icon</code>
-	 */
+	 *//*
 	public ImageIcon returnIconResized() {
 		return image;
 	}
 }
+*/

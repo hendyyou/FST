@@ -52,22 +52,22 @@ import tico.components.TButton;
 import tico.components.TComboBox;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
-import tico.imageGallery.components.TIGTableModel;
 import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.tasks.TIGTableModel;
 
 /*
  * This class manages the association between one image and the words in the Data Base.
  * It allows to add new words to the Data Base if necessary
  */
-public class TIGKeyWordInsertDialog  extends JPanel{
+public class TIGKeyWordInsertDialog extends JPanel{
 
-private GridBagConstraints c;
+	private GridBagConstraints c;
 	
 	private JPanel buttonPanel;
 
 	private TButton addButton;	
 	
-	private TComboBox text;
+	private JTextField text;
 	
 	private JTable table;
 	
@@ -77,7 +77,7 @@ private GridBagConstraints c;
 	
 	protected Vector keyWordList;
 	
-	private TIGDataBase myDataBase; 
+	//private TIGDataBase myDataBase; 
 	
 	/*
 	 * This constructor displays a panel in the window that allows to introduce a new image 
@@ -85,7 +85,7 @@ private GridBagConstraints c;
 	 * the Data Base and to insert new words if necessary.
 	 */
 	
-	public TIGKeyWordInsertDialog(TEditor editor,TIGDataBase dataBase){
+	public TIGKeyWordInsertDialog(){
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
@@ -93,9 +93,9 @@ private GridBagConstraints c;
 				TLanguage.getString("TIGKeyWordInsertDialog.NAME")));
 		
 		keyWordList = new Vector();
-		myDataBase = dataBase;
+		//myDataBase = dataBase;
 		
-		keyWordList = (Vector)(myDataBase.getKeyWords()).clone();
+		keyWordList = (Vector)(TIGDataBase.getKeyWords()).clone();
 				
 		
 		//Create components
@@ -107,7 +107,7 @@ private GridBagConstraints c;
 		//Create button
 		createButtonsPanel();
 		//Create text field
-		text = new TComboBox(keyWordList);	
+		text = new JTextField();
 		text.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e){
 				if (e.getActionCommand().compareTo("comboBoxEdited") == 0) 
@@ -160,7 +160,7 @@ private GridBagConstraints c;
 	 * This constructor displays a panel in the window that allows to manage the 
 	 * associations between an image from the Data Base and the words associated to it. 
 	 */
-	public TIGKeyWordInsertDialog(TEditor editor, TIGDataBase dataBase, String path) {
+	public TIGKeyWordInsertDialog(String path) {
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
@@ -168,9 +168,9 @@ private GridBagConstraints c;
 			TLanguage.getString("TIGKeyWordInsertDialog.NAME")));
 	
 		keyWordList = new Vector();
-		myDataBase = dataBase;
+		//myDataBase = dataBase;
 		
-		keyWordList = (Vector)(myDataBase.getKeyWords()).clone();
+		keyWordList = (Vector)(TIGDataBase.getKeyWords()).clone();
 		Vector keyWordAsociated = TIGDataBase.asociatedConceptSearch(path);
 		
 		
@@ -183,7 +183,7 @@ private GridBagConstraints c;
 		//Create buttons
 		createButtonsPanel();
 		//Create text field
-		text = new TComboBox(keyWordList);	
+		text = new JTextField();	
 		text.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e){
 				if (e.getActionCommand().compareTo("comboBoxEdited") == 0) 
@@ -274,12 +274,12 @@ private GridBagConstraints c;
 		//This button adds a new word to the Data Base and associates the word to the image
 		addButton = new TButton(new AbstractAction(TLanguage.getString("TIGKeyWordInsertDialog.ADD")) {
 			public void actionPerformed(ActionEvent e) {
-				JTextField tf = (JTextField)text.getEditor().getEditorComponent();
-				String text = tf.getText();
+				//JTextField tf = (JTextField)text.getEditor().getEditorComponent();
+				String texto = text.getText();
 				int i;
-				if (text.contains(",")){
+				if (texto.contains(",")){
 					String [] temp = null;
-				    temp = text.split(",");
+				    temp = texto.split(",");
 				    for (int k = 0 ; k < temp.length ; k++) {
 				    	String item = temp[k].trim();
 				    	if (myModel.isElement(item)){
@@ -300,17 +300,17 @@ private GridBagConstraints c;
 						}
 				    }
 				}else{
-					if (myModel.isElement(text)){
-						i = myModel.whereIsElement(text);
+					if (myModel.isElement(texto)){
+						i = myModel.whereIsElement(texto);
 						myModel.setValueAt(new Boolean(true),i,1);
 						myModel.updateTable(i);
 						table.setRowSelectionInterval(i,i);
 						Rectangle r = table.getCellRect(i, 1, true);
 						scrollPaneList.getViewport().scrollRectToVisible(r);
 					}else{
-						if (text.trim().compareToIgnoreCase("")!=0){
-							myModel.addElement(text);
-							i = myModel.whereIsElement(text);
+						if (texto.trim().compareToIgnoreCase("")!=0){
+							myModel.addElement(texto);
+							i = myModel.whereIsElement(texto);
 							table.setRowSelectionInterval(i,i);
 							Rectangle r = table.getCellRect(i, 1, true);
 							scrollPaneList.getViewport().scrollRectToVisible(r);
@@ -322,7 +322,7 @@ private GridBagConstraints c;
 				Rectangle r = table.getCellRect(i, 1, true);
 				// Moves the scroll so that the selected cell is visible
 				scrollPaneList.getViewport().scrollRectToVisible(r);*/
-				tf.setText("");
+				text.setText("");
 			}
 		});
 				

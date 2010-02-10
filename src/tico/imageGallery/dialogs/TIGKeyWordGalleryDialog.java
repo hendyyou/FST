@@ -58,8 +58,8 @@ import tico.editor.TEditor;
 import tico.imageGallery.actions.TIGAddKeyWordAction;
 import tico.imageGallery.actions.TIGDeleteKeyWordAction;
 import tico.imageGallery.actions.TIGUpdateKeyWordAction;
-import tico.imageGallery.components.TIGTableModelOneColumn;
 import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.tasks.TIGTableModelOneColumn;
 
 public class TIGKeyWordGalleryDialog extends TDialog {
 	
@@ -75,7 +75,7 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 	
 	private TButton deleteButton;
 	
-	private TButton aceptButton;
+	private TButton acceptButton;
 	
 	private JTextField text;
 	
@@ -125,7 +125,7 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 		createWordPanel();	
 	
 		//Create the main button
-		aceptButton = new TButton(new AbstractAction(TLanguage.getString("TIGKeyWordGalleryDialog.END")) {
+		acceptButton = new TButton(new AbstractAction(TLanguage.getString("TIGKeyWordGalleryDialog.END")) {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
@@ -149,7 +149,7 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 		c.weighty = 0.0;
 		c.gridx = 0;
 		c.gridy = 2;
-		add(aceptButton, c);
+		add(acceptButton, c);
 	
 		// Display the dialog
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -171,7 +171,7 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 			
 		keyWordList = new Vector();
 		
-		keyWordList = myDataBase.getKeyWords();
+		keyWordList = TIGDataBase.getKeyWords();
 		
 		//Create components
 		//Create list of key words	

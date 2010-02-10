@@ -51,7 +51,7 @@ import tico.configuration.TLanguage;
  * name of the image can be changed
  */
 
-public class TIGModifyImageNameDialog extends JPanel {
+public class TIGImageInformation extends JPanel {
 
 	// Preview icon preview label size constants
 	private final static int ICON_LABEL_WIDTH = 100;
@@ -79,7 +79,7 @@ public class TIGModifyImageNameDialog extends JPanel {
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
 	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
-	public TIGModifyImageNameDialog(String title,ImageIcon icon,String name) {
+	public TIGImageInformation(String title,ImageIcon icon,String name) {
 		super();
 		
 		myIcon = icon;

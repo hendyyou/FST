@@ -78,13 +78,13 @@ public class TCellListener implements MouseListener {
 			
 			if (cell.isAccumulated()){
 					
-					if (interpreter.accumulatedCellsList.size() < TInterpreterConstants.interpreterAcumulatedCells){
+					if (TInterpreter.accumulatedCellsList.size() < TInterpreterConstants.interpreterAcumulatedCells){
 						TInterpreterAccumulatedCell accumulatedCell = new TInterpreterAccumulatedCell();
 						accumulatedCell.setAttributes(cell);
-						interpreter.accumulatedCellsList.add(accumulatedCell);
-						interpreter.accumulatedCells.add(accumulatedCell);
+						TInterpreter.accumulatedCellsList.add(accumulatedCell);
+						TInterpreter.accumulatedCells.add(accumulatedCell);
 						
-						interpreter.accumulatedCells.updateUI();
+						TInterpreter.accumulatedCells.updateUI();
 					}
 			}
 			
@@ -222,10 +222,10 @@ public class TCellListener implements MouseListener {
 		if ((interpreter.run==1)){
 			
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
-			
-			if (cell.getDefaultIcon() != null){
-				cell.setIcon(cell.getDefaultIcon());
-			}
+
+			// Sets the original icon
+			cell.setIcon(cell.getDefaultIcon());
+
 			
 			if (cell.isTransparentBorder()){
 				cell.setBorderPainted(false);

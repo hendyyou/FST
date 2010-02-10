@@ -63,7 +63,7 @@ import tico.configuration.TLanguage;
  * This class displays the panel that pops-up a file chooser to choose the image to insert
  * in the Data Base. 
  */
-public class TIGSelectNewImageDialog extends JPanel {
+public class TIGSelectNewImage extends JPanel {
 
 	// Preview icon preview label size constants
 	private final static int ICON_LABEL_WIDTH = 100;
@@ -120,7 +120,7 @@ public class TIGSelectNewImageDialog extends JPanel {
 	 * Creates a new <code>TImageChooser</code> with <i>NO_OPTIONS_TYPE</i>
 	 * <code>type</code>.
 	 */
-	public TIGSelectNewImageDialog() {
+	public TIGSelectNewImage() {
 		this(DEFAULT_TITLE);
 	}
 
@@ -135,7 +135,7 @@ public class TIGSelectNewImageDialog extends JPanel {
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
 	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
-	public TIGSelectNewImageDialog(String title) {
+	public TIGSelectNewImage(String title) {
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(

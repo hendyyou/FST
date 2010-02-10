@@ -24,7 +24,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 
 package tico.imageGallery.dialogs;
 
@@ -48,10 +48,10 @@ import tico.editor.TEditor;
 import tico.imageGallery.components.TIGImportTask;
 import tico.imageGallery.dataBase.TIGDataBase;
 
-/*
+
  * This class displays the dialog that contains all the data of an image
  * and allows to modify all that information 
- */
+ 
 public class TIGNewImageDataDialog extends TDialog{
 	
 	private TEditor myEditor;
@@ -85,7 +85,7 @@ public class TIGNewImageDataDialog extends TDialog{
 		
 		// Second, create the key word component that shows the concepts asociated
 		//or not to the image
-		keyWordPanel = new TIGKeyWordInsertDialog(editor,dataBase,path);
+		keyWordPanel = new TIGKeyWordInsertDialog(path);
 				
 		// Third, create two buttons, the first for modifying the image, and the second
 		//for closing without changes
@@ -176,3 +176,4 @@ public class TIGNewImageDataDialog extends TDialog{
 	}
 	
 }
+*/

@@ -68,7 +68,7 @@ public class TIGImageGalleryDialog extends TDialog{
 	
 	private GridBagConstraints c;
 	
-	private TIGThumbnailsDialog thumbnailsDialog;
+	private TIGThumbnails thumbnailsDialog;
 
 	private JPanel thumbnailsPanel;
 	
@@ -97,11 +97,6 @@ public class TIGImageGalleryDialog extends TDialog{
 		setTitle(TLanguage.getString("TImageGalleryDialog.TITLE"));
 				
 		// Create components
-		// First, create the component that search from the names of the images
-		JPanel searchNamePanel = new JPanel();
-		images = new Vector();
-		TIGSearchNameDialog searchNameDialog = new TIGSearchNameDialog();
-		searchNamePanel = searchNameDialog.createSearchNamePanel(this.editor,dataBase,this);
 		
 		//The images associated to the first key word in the Data Base are shown 
 		//when the window is displayed  
@@ -109,7 +104,7 @@ public class TIGImageGalleryDialog extends TDialog{
 		
 		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();
-		thumbnailsDialog = new TIGThumbnailsDialog(false);
+		thumbnailsDialog = new TIGThumbnails(false);
 		// Create thumbnails panel with selection of images
 		thumbnailsPanel = thumbnailsDialog.createThumbnailsPanel(images, true);
 		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(images,index);
@@ -132,6 +127,12 @@ public class TIGImageGalleryDialog extends TDialog{
 				}
 			}
 		});
+		
+		// First, create the component that search from the names of the images
+		//JPanel searchNamePanel = new JPanel();
+		images = new Vector();
+		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog);
+		//searchNamePanel = searchNameDialog.createSearchNamePanel(this);
 		
 		// Third, create the component that search from the words
 		//that are associated to the images

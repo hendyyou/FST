@@ -27,7 +27,7 @@
  */
 
 
-package tico.imageGallery.components;
+package tico.imageGallery.tasks;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -173,10 +173,10 @@ public class TIGImportTask {
 			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.REPLACE_IMAGES"))){
 		    			 //Remplace
 			        		 Vector aux = new Vector();
-				    		 aux = dataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
+				    		 aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
 		    			     if (aux.size()!=0){
-		    			    	 int idImage = dataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
-		    			    	 dataBase.deleteAsociatedOfImage(idImage);
+		    			    	 int idImage = TIGDataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
+		    			    	 TIGDataBase.deleteAsociatedOfImage(idImage);
 		    			     }
 		    			     pathDst = pathDst.concat(name);
 			        	 }
@@ -184,12 +184,12 @@ public class TIGImportTask {
 			        	 //Rename if image exists on data base
 			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.ADD_IMAGES"))){
 			        	    Vector aux = new Vector();
-		    				aux = dataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
+		    				aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
 		    				int fileCount = 0;
 		    				if (aux.size()!=0){
 			    				while (aux.size()!=0){
 			    					fileCount++;
-			    					aux = dataBase.imageSearch(name.substring(0, name.lastIndexOf('.'))+"_"+fileCount);			    					
+			    					aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.'))+"_"+fileCount);			    					
 			    				}
 			    				pathDst = pathDst + name.substring(0, name.lastIndexOf('.')) + '_' + fileCount + 
 	    							name.substring(name.lastIndexOf('.'),name.length());
@@ -228,14 +228,14 @@ public class TIGImportTask {
 						}
 						
 						//Insert in database
-						dataBase.insertImageDB(name.substring(0,name.lastIndexOf('.')), name);
-						int idImage = dataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
+						TIGDataBase.insertImageDB(name.substring(0,name.lastIndexOf('.')), name);
+						int idImage = TIGDataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
 						
 						//Insert Categories and associate to image
 						while (k.hasNext()){
 				        	 Element category = (Element)k.next();
-				        	 int idCategory = dataBase.insertConceptDB(category.getValue());
-				        	 dataBase.insertAsociatedDB(idCategory, idImage);
+				        	 int idCategory = TIGDataBase.insertConceptDB(category.getValue());
+				        	 TIGDataBase.insertAsociatedDB(idCategory, idImage);
 				         }
 						//Create thumbnail
 					/*	File srcImage = new File(pathSrc);
