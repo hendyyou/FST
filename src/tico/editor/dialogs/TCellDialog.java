@@ -75,7 +75,7 @@ import tico.environment.TEnvironment;
 /**
  * Dialog to change <code>TCellDialog</code> attributes.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TCellDialog extends TComponentDialog {
@@ -501,11 +501,6 @@ public class TCellDialog extends TComponentDialog {
 		videoChooser.setVideoFilePath(TBoardConstants.getVideoFile(map));
 	}
 	
-//	private void createAnotherSoundChooser(){
-//		Map map=getAttributeMap();
-//		browsingSoundChooser =new TAnotherSoundChooser();
-//		browsingSoundChooser.setSoundFilePath(TBoardConstants.getBrowsingSoundFile(map));
-//	}
 	// Creates the send text chooser panel
 	private void createSendTextChooser() {
 		Map map = getAttributeMap();

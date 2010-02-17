@@ -102,7 +102,7 @@ public class TIGImageDataDialog extends TDialog{
 		// Third, create two buttons, the first for modifying the image, and the second
 		//for closing without changes
 		JPanel buttons = new JPanel();
-		TButton insertButton = new TButton(new AbstractAction() {
+		TButton acceptButton = new TButton(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				Vector concepts = new Vector();
 				concepts = keyWordPanel.returnKeyWords();
@@ -111,7 +111,7 @@ public class TIGImageDataDialog extends TDialog{
 				dispose();
 			}
 		});
-		insertButton.setText(TLanguage.getString("TIGImageDataDialog.END"));
+		acceptButton.setText(TLanguage.getString("TIGImageDataDialog.END"));
 		
 		TButton cancelButton = new TButton(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -128,7 +128,7 @@ public class TIGImageDataDialog extends TDialog{
 		but.insets = new Insets(10, 5, 10, 5);
 		but.gridx = 1;
 		but.gridy = 0;
-		buttons.add(insertButton, but);		
+		buttons.add(acceptButton, but);		
 		
 		but.fill = GridBagConstraints.CENTER;
 		but.insets = new Insets(10, 5, 10, 5);

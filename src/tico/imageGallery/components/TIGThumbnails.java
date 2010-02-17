@@ -1,5 +1,5 @@
 /*
- * File: TIGThumbnailsDialog.java
+ * File: TIGThumbnails.java
  * 		This file is part of Tico, an application to create and	perform
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
@@ -74,18 +74,12 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	//Index point to the image selected between the four displayed
 	protected int index = 0;
 	
-	//This index points to the first image that is being displayed.
-	//E.g., if the images 11 to 14 are being displayed, groupIndex will be 11.
-	protected int groupIndex = 0;
-	
 	//Number of images displayed on the panel
 	private final int IMAGES_DISPLAYED = 4;
 	
 	//Number of images in the result vector
 	protected int total;
-	
-	protected int image_index_display_selected = 1;
-	
+		
 	protected String nImagesString;
 	
 	protected ImageIcon imageSelected;
@@ -94,8 +88,9 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	
 	private TButton rightButton;
 	
-	// Indicates if the selection of images is enabled
+	//Indicates if the selection of images is enabled
 	private Boolean enabledSelection;
+	
 	//Contains the path of the image selected
 	private String path;
 	
@@ -135,14 +130,14 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		
 	public TIGThumbnails(boolean select){
 		
-		this. select = select;
+		this.select = select;
 		
 		this.addMouseListener(this);
 		this.addKeyListener(this); 
 		
-		this.addKeyListener(new java.awt.event.KeyAdapter(){
+		/*this.addKeyListener(new java.awt.event.KeyAdapter(){
 			
-		});	
+		});	*/
 		
 	}
 	
@@ -310,7 +305,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		String pathSrc;
 		String pathTh;
 		
-		System.out.println("FIRST: "+first);
 		//Update every panel that will contain an image
 		
 		if (result.size()==0){ //No search results
@@ -479,7 +473,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 				}				
 			}
 		}
-		
 	}
 	
 	/*
@@ -529,6 +522,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 				}
 				i++;
 			}
+			path = null;
 		}
 		updateThumbnailsPanel(result, index);
 		return this;
@@ -544,7 +538,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 			if (letter == 'ñ'){
 				String aux = replace(name);
 				if ((aux.charAt(0) == 'n') && (aux.length() > 1))
-					if ((aux.charAt(1) == 'z'))
+					if ((aux.charAt(1) == 'y'))
 						founded = true;
 					else i++;
 				else i++;
@@ -555,15 +549,13 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		}
 		if (!founded)
 			return 0;
-		selectThumbnail(1);
+
 		if ((i >= result.size()) || (((result.size()-4) <= i)&& (i < result.size()))){
-			selectThumbnail(5-(result.size()-i));
 			return (result.size()-4);
 		}			
 		return i;
 	}	
 	
-	@Override
 	public boolean isFocusable(){
 		return true;
 	}
@@ -572,7 +564,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	public void mouseReleased(java.awt.event.MouseEvent e) {}
 	public void mouseClicked(java.awt.event.MouseEvent e) {}
 	public void mouseEntered(java.awt.event. MouseEvent e) {
-		System.out.println("ENTRO");
 		this.requestFocus();
 	}
 
@@ -585,41 +576,15 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 			updateThumbnailsPanel(i);
 		}
 		if (e.getKeyCode() == KeyEvent.	VK_RIGHT ){
-			if ((index + 1) <= 4)
-				selectThumbnail(index+1);
-			else{
-				int i = groupIndex + 4;
-				if (total > 4){
-					if ((i + 4) > total)
-						if (i < total) 
-							i = total - 4;
-						else 
-							i = 0;
-					updateThumbnailsPanel(i);
-					selectThumbnail((index+1)%4);
-				}
-			}
+			index = (index+IMAGES_DISPLAYED)%total;
+			updateThumbnailsPanel(index);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
-			if ((index - 1) >= 1)
-				selectThumbnail(index-1);
-			else{
-				int i = groupIndex - 4;
-				if (total > 4){
-					if (i < 0){
-						if ( i > -4)
-							i = 0;
-						else{
-							if ((total - 4) > 0)
-								i = total - 4;					
-							else
-								i = 0;
-						}
-					}
-					updateThumbnailsPanel(i);
-					selectThumbnail(4);
-				}
+			index=(index-IMAGES_DISPLAYED)%total;
+			if (index<0){
+				index = index + total;
 			}
+			updateThumbnailsPanel(index);
 		}
 	}
 
@@ -658,38 +623,36 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 					 }
         	 }
         	 File thum = new File (pathThumbnail);
-        	 if (thum.exists()){
-        		 System.out.println("Ya existe, no la creo");
-        	 }else{
-	    	try{
-				int thumbWidth = PREVIEW_WIDTH;
-				int thumbHeight = PREVIEW_HEIGHT;
-				double thumbRatio = (double)thumbWidth / (double)thumbHeight;
-				int imageWidth = imageIcon.getIconWidth();
-				int imageHeight = imageIcon.getIconHeight();
-				double imageRatio = (double)imageWidth / (double)imageHeight;
-				if (thumbRatio < imageRatio) {
-					thumbHeight = (int)(thumbWidth / imageRatio);
-				} else {
-					thumbWidth = (int)(thumbHeight * imageRatio);
-				}
-				BufferedImage thumbImage = new BufferedImage(thumbWidth, thumbHeight, BufferedImage.TYPE_INT_RGB);
-				Graphics2D graphics2D = thumbImage.createGraphics();
-				graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				graphics2D.drawImage(imageIcon.getImage(), 0, 0, thumbWidth, thumbHeight, null);
-				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(pathThumbnail));
-				JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-				JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(thumbImage);
-				int quality = 100;
-				quality = Math.max(0, Math.min(quality, 100));
-				param.setQuality((float)quality / 100.0f, false);
-				encoder.setJPEGEncodeParam(param);
-				encoder.encode(thumbImage);
-				out.close(); 
-				} catch (Exception ex) {
-					System.out.println("Error creating THUMBNAIL");
-					System.out.println(ex.toString());   
-				}	
+        	 if (!thum.exists()){
+		    	try{
+					int thumbWidth = PREVIEW_WIDTH;
+					int thumbHeight = PREVIEW_HEIGHT;
+					double thumbRatio = (double)thumbWidth / (double)thumbHeight;
+					int imageWidth = imageIcon.getIconWidth();
+					int imageHeight = imageIcon.getIconHeight();
+					double imageRatio = (double)imageWidth / (double)imageHeight;
+					if (thumbRatio < imageRatio) {
+						thumbHeight = (int)(thumbWidth / imageRatio);
+					} else {
+						thumbWidth = (int)(thumbHeight * imageRatio);
+					}
+					BufferedImage thumbImage = new BufferedImage(thumbWidth, thumbHeight, BufferedImage.TYPE_INT_RGB);
+					Graphics2D graphics2D = thumbImage.createGraphics();
+					graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+					graphics2D.drawImage(imageIcon.getImage(), 0, 0, thumbWidth, thumbHeight, null);
+					BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(pathThumbnail));
+					JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+					JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(thumbImage);
+					int quality = 100;
+					quality = Math.max(0, Math.min(quality, 100));
+					param.setQuality((float)quality / 100.0f, false);
+					encoder.setJPEGEncodeParam(param);
+					encoder.encode(thumbImage);
+					out.close(); 
+					} catch (Exception ex) {
+						System.out.println("Error creating THUMBNAIL");
+						System.out.println(ex.toString());   
+					}
         	 }
 	    }
 	

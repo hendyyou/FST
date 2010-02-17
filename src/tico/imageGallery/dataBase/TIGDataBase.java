@@ -52,11 +52,6 @@ public class TIGDataBase {
 	 */
 	private final static int SEARCH_OPTIONS_OR = 2;
 	
-	/**
-	 * The Constant SEARCH_OPTIONS_NOT.
-	 */
-	private final static int SEARCH_OPTIONS_NOT = 3;
-	
 	//Data base name
 	/**
 	 * The file name.
@@ -781,111 +776,91 @@ public class TIGDataBase {
 		Vector data = new Vector();
 		ResultSet res;
 		String query;
+		
+		String firstKeyWord = order(keyWord1.trim()).replace('*', '%');
+		String secondKeyWord = order(keyWord2.trim()).replace('*', '%');
+		String thirdKeyWord = order(keyWord3.trim()).replace('*', '%');
 	
 		try{
 			//Creamos un objeto Statement que se conectara a la BD
 			Statement stmt = conn.createStatement();
 			query = "SELECT DISTINCT I.path path, I.name name, I.noaccents noaccents FROM Concept C, Asociated A, Image I ";
-				    
-			switch (searchOptions1){
-			case  SEARCH_OPTIONS_AND: 
-				switch (searchOptions2){
-				case  SEARCH_OPTIONS_AND: 
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)" +
-										" AND I.name IN (SELECT DISTINCT I.name name " +
-												"FROM Concept C, Asociated A, Image I " +
-												"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)";
-					break;
-				case  SEARCH_OPTIONS_OR: //(keyWord1 AND keyWord2) OR keyWord3
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id) " +
-										"UNION SELECT DISTINCT I.path path, I.name name FROM Concept C, Asociated A, Image I "+
-										"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image ";
-					break;
-				case  SEARCH_OPTIONS_NOT: //(keyWord1 AND keyWord2) NOT keyWord3
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)" +
-										"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-												"FROM Concept C, Asociated A, Image I " +
-												"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)";
-					break;
-				default:
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)";
-				}		
+
+			if (searchOptions1==0 && searchOptions2==0){ //Search by keyWord1
+			
+				query = query + "WHERE C.noaccents LIKE \"" + firstKeyWord + "\" AND I.id = A.image AND A.concept = C.id";
+			
+			}else if (searchOptions2==0){ //Search by keyWord1, keyWord2
 				
-				break;
-			
-			case  SEARCH_OPTIONS_OR:
-				switch (searchOptions2){
-				case  SEARCH_OPTIONS_AND: //(keyWord1 OR keyWord2) AND keyWord3
-					query = query + "WHERE (C.word LIKE \"" + keyWord1.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord2.replace('*', '%') + "\") AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id) ";
+				switch (searchOptions1){
+				
+				case SEARCH_OPTIONS_AND:
+					
+					query = query + "WHERE C.noaccents LIKE \"" + firstKeyWord + "\" AND I.id = A.image AND A.concept = C.id " +
+							"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
+							"WHERE C.noaccents LIKE \"" + secondKeyWord + "\" AND I.id = A.image AND A.concept = C.id)";
 					break;
-				case  SEARCH_OPTIONS_OR: //keyWord1 OR keyWord2 OR keyWord3
-					query = query + "WHERE (C.word LIKE \"" + keyWord1.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord2.replace('*', '%') + 
-										"\" OR C.word LIKE \"" + keyWord3.replace('*', '%') + "\") " +
-									"AND C.id = A.concept AND I.id = A.image";
-					break;
-				case  SEARCH_OPTIONS_NOT: //(keyWord1 OR keyWord2) NOT keyWord3
-					query = query + "WHERE (C.word LIKE \"" + keyWord1.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord2.replace('*', '%') + "\") AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id) ";
-					break;
-				default:
-					query = query + "WHERE (C.word LIKE \"" + keyWord1.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord2.replace('*', '%') + "\") " +
-								"AND C.id = A.concept AND I.id = A.image";
+					
+				case SEARCH_OPTIONS_OR:
+					
+					query = query + "WHERE (C.noaccents LIKE \"" + firstKeyWord + "\" OR C.noaccents LIKE \"" + secondKeyWord + "\") AND I.id = A.image AND A.concept = C.id";
+					
 				}
-				break;
-			
-			case  SEARCH_OPTIONS_NOT:
-				switch (searchOptions2){
-				case  SEARCH_OPTIONS_AND: //(keyWord1 NOT keyWord2) AND keyWord3 
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-						"AND I.name IN (SELECT DISTINCT I.name name " +
-							"FROM Concept C, Asociated A, Image I " +
-							"WHERE C.word LIKE \"" + keyWord3.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)" +
-						"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-								"FROM Concept C, Asociated A, Image I " +
-								"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)";
+			}else{//Search by keyWord1, keyWord2, keyWord3
+				
+				switch (searchOptions1){
+				
+				case SEARCH_OPTIONS_AND:
+					
+					switch (searchOptions2){
+					
+					case  SEARCH_OPTIONS_AND: //keyWord1 AND keyWord2 AND keyWord3
+						
+						query = query + "WHERE C.noaccents LIKE \"" + firstKeyWord + "\" AND I.id = A.image AND A.concept = C.id " +
+								"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
+								"WHERE C.noaccents LIKE \"" + secondKeyWord + "\" AND I.id = A.image AND A.concept = C.id) " +
+										"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
+										"WHERE C.noaccents LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id)";
+						System.out.println("AND AND");
+						break;
+						
+					case  SEARCH_OPTIONS_OR:  //(keyWord1 AND keyWord2) OR keyWord3
+						
+						query = query + "WHERE C.noaccents LIKE \"" + firstKeyWord + "\" AND I.id = A.image AND A.concept = C.id " +
+								"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
+								"WHERE C.noaccents LIKE \"" + secondKeyWord + "\" AND I.id = A.image AND A.concept = C.id) " +
+										"UNION SELECT DISTINCT I.path path, I.name name, I.noaccents noaccents FROM Concept C, Asociated A, Image I " +
+										"WHERE C.noaccents LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id";
+						System.out.println("AND OR");
+						break;
+					}
 					break;
-				case  SEARCH_OPTIONS_OR: //(keyWord1 NOT keyWord2) OR keyWord3
-					query = query + "WHERE (C.word LIKE \"" + keyWord1.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord3.replace('*', '%') + "\") AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id) ";
+					
+				case SEARCH_OPTIONS_OR:
+					
+					switch (searchOptions2){
+					
+					case  SEARCH_OPTIONS_AND: //(keyWord1 OR keyWord2) AND keyWord3
+						
+						query = query + "WHERE (C.noaccents LIKE \"" + firstKeyWord + "\" OR C.noaccents LIKE \"" + secondKeyWord + "\") AND I.id = A.image AND A.concept = C.id " +
+								"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
+								"WHERE C.word LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id)";
+						System.out.println("OR AND");
+						break;
+						
+					case  SEARCH_OPTIONS_OR: //keyWord1 OR keyWord2 OR keyWord3
+						
+						query = query + "WHERE (C.noaccents LIKE \"" + firstKeyWord + "\" OR C.noaccents LIKE \"" + secondKeyWord + "\" OR C.noaccents LIKE \"" + thirdKeyWord + "\") AND I.id = A.image AND A.concept = C.id";
+						System.out.println("OR OR");
+						break;
+					}
 					break;
-				case  SEARCH_OPTIONS_NOT: //keyWord1 NOT keyWord2 NOT keyWord3
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-									"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-										"FROM Concept C, Asociated A, Image I " +
-										"WHERE (C.word LIKE \"" + keyWord2.replace('*', '%') + "\" OR C.word LIKE \"" + keyWord3.replace('*', '%') + "\") AND I.id = A.image AND A.concept = C.id) ";
-					break;
-				default:
-					query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND C.id = A.concept AND I.id = A.image " +
-								"AND I.name NOT IN (SELECT DISTINCT I.name name " +
-									"FROM Concept C, Asociated A, Image I " +
-									"WHERE C.word LIKE \"" + keyWord2.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id)";
 				}
-				break;
-			default: 
-				query = query + "WHERE C.word LIKE \"" + keyWord1.replace('*', '%') + "\" AND I.id = A.image AND A.concept = C.id";
-			
 			}
+			
 			query = query + " ORDER BY I.noaccents";
 		
+			System.out.println("QUERY: "+query);
 			res = stmt.executeQuery(query);
 			
 			while (res.next()){
@@ -903,7 +878,7 @@ public class TIGDataBase {
 		
 		return data;
 	}
-	
+
 	/**
 	 * Order.
 	 * 

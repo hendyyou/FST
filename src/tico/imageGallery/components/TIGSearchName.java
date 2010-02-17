@@ -47,6 +47,8 @@ import javax.swing.border.TitledBorder;
 import tico.components.TButton;
 import tico.configuration.TLanguage;
 import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.dialogs.TIGDeleteImagesDialog;
+import tico.imageGallery.dialogs.TIGExportDBDialog;
 
 /*
  * This class displays the panel that searches images from its name
@@ -58,6 +60,10 @@ public class TIGSearchName extends JPanel{
 	private Vector result;
 	
 	private TIGThumbnails thumbnails;
+	
+	private TIGDeleteImagesDialog deleteImages;
+	
+	private TIGExportDBDialog exportDB;
 	
 	public TIGSearchName(TIGThumbnails thumbnailsDialog){
 		thumbnails = thumbnailsDialog;
@@ -136,6 +142,219 @@ public class TIGSearchName extends JPanel{
 					}
 					else
 						thumbnails.updateThumbnailsPanel(result,0);
+				}
+			}
+		});
+		
+		// Place components
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new GridBagLayout());
+
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 0;
+		c.gridy = 0;
+		add(searchLabel, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 1;
+		c.gridy = 0;
+		add(texto, c);
+		
+		c.fill = GridBagConstraints.NONE;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 2;
+		c.gridy = 0;
+		add(searchButton, c);
+	}
+	
+	public TIGSearchName(TIGThumbnails thumbnailsDialog, TIGDeleteImagesDialog deleteImagesDialog){
+		
+		deleteImages = deleteImagesDialog;
+		
+		thumbnails = thumbnailsDialog;
+		
+		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+				Color.WHITE, new Color(165, 163, 151)), 
+				TLanguage.getString("TIGSearchNameDialog.NAME_SEARCH")));
+		
+		JLabel searchLabel = new JLabel(TLanguage.getString("TIGSearchNameDialog.SEARCH"));
+		texto = new JTextField(TLanguage.getString("TIGSearchNameDialog.TEXT"),30);
+		String text =  TLanguage.getString("TIGSearchNameDialog.TEXT");
+		texto.select(0, text.length());
+		texto.addMouseListener(new java.awt.event.MouseAdapter(){
+			public void mouseClicked(java.awt.event.MouseEvent e){
+				if (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) == 0)
+					texto.setText("");
+			}
+		});
+		
+		texto.addKeyListener(new java.awt.event.KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				System.out.println("Code"+e.getKeyChar());
+				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)
+					&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = new Vector();	
+					result = TIGDataBase.imageSearch(texto.getText());	
+					if (result.size()==0){
+						// There are no results for that search
+						deleteImages.update(result);
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						deleteImages.update(result);
+				}
+			}
+		});
+		
+		TButton searchButton = new TButton(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				result = new Vector();
+				if ((texto.getText().compareTo("") != 0) && 
+					(texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = TIGDataBase.imageSearch(texto.getText());
+					if (result.size()==0){
+						deleteImages.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						deleteImages.update(result);
+				}				
+			}
+		});
+		
+		searchButton.setText(TLanguage.getString("TIGSearchNameDialog.SEARCH_BUTTON"));
+		
+		searchButton.addKeyListener(new java.awt.event.KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)
+					&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = new Vector();	
+					result = TIGDataBase.imageSearch(texto.getText());	
+					if (result.size()==0){
+						deleteImages.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						deleteImages.update(result);
+				}
+			}
+		});
+		
+		// Place components
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new GridBagLayout());
+
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 0;
+		c.gridy = 0;
+		add(searchLabel, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 1;
+		c.gridy = 0;
+		add(texto, c);
+		
+		c.fill = GridBagConstraints.NONE;
+		c.insets = new Insets(5,5,5,5);
+		c.gridx = 2;
+		c.gridy = 0;
+		add(searchButton, c);
+	}
+	
+	public TIGSearchName(TIGThumbnails thumbnailsDialog, TIGExportDBDialog exportDBDialog){
+		
+		exportDB = exportDBDialog;
+		
+		thumbnails = thumbnailsDialog;
+		
+		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+				Color.WHITE, new Color(165, 163, 151)), 
+				TLanguage.getString("TIGSearchNameDialog.NAME_SEARCH")));
+		
+		JLabel searchLabel = new JLabel(TLanguage.getString("TIGSearchNameDialog.SEARCH"));
+		texto = new JTextField(TLanguage.getString("TIGSearchNameDialog.TEXT"),30);
+		String text =  TLanguage.getString("TIGSearchNameDialog.TEXT");
+		texto.select(0, text.length());
+		texto.addMouseListener(new java.awt.event.MouseAdapter(){
+			public void mouseClicked(java.awt.event.MouseEvent e){
+				if (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) == 0)
+					texto.setText("");
+			}
+		});
+		
+		texto.addKeyListener(new java.awt.event.KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)
+					&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = new Vector();	
+					result = TIGDataBase.imageSearch(texto.getText());	
+					if (result.size()==0){
+						// There are no results for that search
+						exportDB.update(result);
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						exportDB.update(result);
+				}
+			}
+		});
+		
+		TButton searchButton = new TButton(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				result = new Vector();
+				if ((texto.getText().compareTo("") != 0) && 
+					(texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = TIGDataBase.imageSearch(texto.getText());
+					if (result.size()==0){
+						exportDB.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						exportDB.update(result);
+				}				
+			}
+		});
+		
+		searchButton.setText(TLanguage.getString("TIGSearchNameDialog.SEARCH_BUTTON"));
+		
+		searchButton.addKeyListener(new java.awt.event.KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)
+					&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
+					result = new Vector();	
+					result = TIGDataBase.imageSearch(texto.getText());	
+					if (result.size()==0){
+						exportDB.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGSearchNameDialog.NO_RESULTS"),
+								TLanguage.getString("TIGSearchNameDialog.NAME_RESULT"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						exportDB.update(result);
 				}
 			}
 		});

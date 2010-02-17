@@ -100,7 +100,6 @@ public class TIGModifyImageDialog extends TDialog{
 		setTitle(TLanguage.getString("TIGSearchImageDialog.NAME"));
 				
 		// Create components
-		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
 		images = TIGDataBase.imageSearch("*");
@@ -123,9 +122,7 @@ public class TIGModifyImageDialog extends TDialog{
 		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
 		
 		//String keyWord1 = keyWordSearchDialog.KeyWord1();
-			
-				
-		// Fourth, create three buttons, the first one to modify the image, the second one to
+		//Fourth, create three buttons, the first one to modify the image, the second one to
 		//delete it, and the last one to exit the window
 		JPanel buttons = new JPanel();
 		TButton modifyButton = new TButton(new AbstractAction() {

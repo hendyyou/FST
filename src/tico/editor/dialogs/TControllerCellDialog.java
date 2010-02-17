@@ -1,5 +1,5 @@
 /*
- * File: TCellDialog.java
+ * File: TControllerCellDialog.java
  * 		This file is part of Tico, an application to create and	perform
  * 		interactive comunication boards to be used by people with
  * 		severe motor disabilities.
@@ -32,7 +32,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +41,6 @@ import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,15 +54,13 @@ import tico.components.TClickControllerCellActionsPanel;
 import tico.components.TFontModelChooser;
 import tico.components.TIdTextField;
 import tico.components.TTextField;
-import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.editor.TBoardContainer;
 import tico.editor.TEditor;
 import tico.editor.TFileHandler;
-import tico.editor.TProjectHandler;
 
 /**
- * Dialog to change <code>TCellDialog</code> attributes.
+ * Dialog to change <code>TControllerCellDialog</code> attributes.
  * 
  * @author Pablo Mu�oz
  * @version 1.0 Nov 20, 2006

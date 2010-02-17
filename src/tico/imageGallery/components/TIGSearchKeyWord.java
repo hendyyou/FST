@@ -49,6 +49,8 @@ import javax.swing.border.TitledBorder;
 import tico.components.TButton;
 import tico.configuration.TLanguage;
 import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.dialogs.TIGDeleteImagesDialog;
+import tico.imageGallery.dialogs.TIGExportDBDialog;
 
 /*
  * This class displays a panel for searching images in the Data Base associated and, or 
@@ -76,8 +78,6 @@ public class TIGSearchKeyWord extends JPanel{
 	
 	private final static int SEARCH_OPTIONS_OR = 2;
 	
-	private final static int SEARCH_OPTIONS_NOT = 3;
-	
 	private int searchOptions1;
 	
 	private int searchOptions2;
@@ -85,6 +85,10 @@ public class TIGSearchKeyWord extends JPanel{
 	private TIGThumbnails thumbnails;
 	
 	public Vector result;
+	
+	private TIGDeleteImagesDialog deleteImages;
+	
+	private TIGExportDBDialog exportDB;
 	
 	public TIGSearchKeyWord(TIGThumbnails thumbnailsDialog){ 
 		
@@ -145,8 +149,7 @@ public class TIGSearchKeyWord extends JPanel{
 		//Create combo box options
 		String[] optionList = { "",
 				TLanguage.getString("TIGKeyWordSearchDialog.AND"),
-				TLanguage.getString("TIGKeyWordSearchDialog.OR"), 
-				TLanguage.getString("TIGKeyWordSearchDialog.NOT")};
+				TLanguage.getString("TIGKeyWordSearchDialog.OR")};
 
 		//First combo box
         options1 = new JComboBox(optionList);
@@ -197,7 +200,14 @@ public class TIGSearchKeyWord extends JPanel{
 					keyWord2 = getKeyWord2();
 					keyWord3 = getKeyWord3();;
 					searchOptions1 = getSearchOptions1();
-					searchOptions2 = getSearchOptions2();
+					//La búsqueda se guía por la selección de los combos para saber que palabras clave
+					//debe buscar. Puede ocurrir que el segundo combo tenga valor pero esté deshabilitado.
+					//En ese caso no debería tenerse en cuenta su valor.
+					if (!options2.isEnabled()){
+						searchOptions2 = 0;
+					}else{
+						searchOptions2 = getSearchOptions2();
+					}					
 					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
 					if (result.size()==0){
 						// There are no results for that search
@@ -261,6 +271,374 @@ public class TIGSearchKeyWord extends JPanel{
 		add(searchButton, c);
 	}
 	
+	public TIGSearchKeyWord(TIGThumbnails thumbnailsDialog, TIGDeleteImagesDialog deleteImagesDialog){ 
+		
+		deleteImages = deleteImagesDialog;
+		
+		thumbnails = thumbnailsDialog;
+						
+		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+				Color.WHITE, new Color(165, 163, 151)), 
+				TLanguage.getString("TIGKeyWordSearchDialog.CATEGORY_SEARCH")));
+		
+		//First keyWord text field
+		textKeyWord1 = new JTextField();
+		textKeyWord1.setEditable(true);
+		textKeyWord1.setPreferredSize(new Dimension (125, 25));
+		textKeyWord1.addKeyListener(new KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				String text = textKeyWord1.getText().trim();
+				if (!text.equals("")){
+					options1.setEnabled(true);
+					if (options1.getSelectedIndex()!=0){
+						textKeyWord2.setEnabled(true);
+						options2.setEnabled(true);
+					}
+					if (options2.getSelectedIndex()!=0){
+						textKeyWord3.setEnabled(true);
+					}
+				}else{
+					options1.setEnabled(false);
+					textKeyWord2.setEnabled(false);
+					options2.setEnabled(false);
+					textKeyWord3.setEnabled(false);
+				}
+			}
+		});	
+		
+		//Second keyWord text field
+		textKeyWord2 = new JTextField();		
+		textKeyWord2.setEditable(true);
+		textKeyWord2.setEnabled(false);
+		textKeyWord2.setPreferredSize(new Dimension (125, 25));		
+		textKeyWord2.addKeyListener(new KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				String text = textKeyWord2.getText().trim();
+				if (!text.equals("")){
+					options2.setEnabled(true);
+				}else{
+					options2.setEnabled(false);
+					textKeyWord3.setEnabled(false);
+				}
+			}
+		});
+		
+		//Third keyWord text field
+		textKeyWord3 = new JTextField();
+		textKeyWord3.setEditable(true);
+		textKeyWord3.setEnabled(false);
+		textKeyWord3.setPreferredSize(new Dimension (125, 25));
+		
+		//Create combo box options
+		String[] optionList = { "",
+				TLanguage.getString("TIGKeyWordSearchDialog.AND"),
+				TLanguage.getString("TIGKeyWordSearchDialog.OR")};
+
+		//First combo box
+        options1 = new JComboBox(optionList);
+        options1.setSelectedIndex(0);
+		options1.setEnabled(false);
+		options1.setPreferredSize(new Dimension (50, 25));
+		options1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				 JComboBox cb = (JComboBox)arg0.getSource();
+				 if (cb.getSelectedIndex()!=0){
+					 textKeyWord2.setEnabled(true);
+					 if (!textKeyWord2.getText().trim().equals("")){
+						 options2.setEnabled(true);
+					 }
+					 if (options2.getSelectedIndex()!=0){
+						 textKeyWord3.setEnabled(true);
+					 }
+				 }else{
+					 textKeyWord2.setEnabled(false);
+					 options2.setEnabled(false);
+					 textKeyWord3.setEnabled(false);
+				 }
+			}			
+		});
+
+		//Second combo box
+		options2 = new JComboBox(optionList);
+	    options2.setSelectedIndex(0);	        
+		options2.setEnabled(false);
+		options2.setPreferredSize(new Dimension (50, 25));
+		options2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				 JComboBox cb = (JComboBox)arg0.getSource();
+				 if (cb.getSelectedIndex()!=0){
+					 textKeyWord3.setEnabled(true);
+				 }else{
+					 textKeyWord3.setEnabled(false);
+				 }
+			}			
+		});		
+		
+		//Create button
+		TButton searchButton = new TButton(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				result = new Vector();
+				keyWord1 = getKeyWord1();
+				if (!keyWord1.equals("")){
+					keyWord2 = getKeyWord2();
+					keyWord3 = getKeyWord3();;
+					searchOptions1 = getSearchOptions1();
+					//La búsqueda se guía por la selección de los combos para saber que palabras clave
+					//debe buscar. Puede ocurrir que el segundo combo tenga valor pero esté deshabilitado.
+					//En ese caso no debería tenerse en cuenta su valor.
+					if (!options2.isEnabled()){
+						searchOptions2 = 0;
+					}else{
+						searchOptions2 = getSearchOptions2();
+					}					
+					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					if (result.size()==0){
+						deleteImages.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGKeyWordSearchDialog.NO_RESULTS"),
+								TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						deleteImages.update(result);
+				}else{
+					//There are no categories to search
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGKeyWordSearchDialog.NO_CATEGORIES"),
+							TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+							JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
+		searchButton.setText(TLanguage.getString("TIGKeyWordSearchDialog.SEARCH"));
+		
+		// Place components
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new GridBagLayout());
+
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 0;
+		c.gridy = 0;
+		add(textKeyWord1, c);
+			
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 1;
+		c.gridy = 0;
+		add(options1, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 2;
+		c.gridy = 0;
+		add(textKeyWord2, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 3;
+		c.gridy = 0;
+		add(options2, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 4;
+		c.gridy = 0;
+		add(textKeyWord3, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 5;
+		c.gridy = 0;
+		add(searchButton, c);
+	}
+	
+	public TIGSearchKeyWord(TIGThumbnails thumbnailsDialog, TIGExportDBDialog exportDBDialog){ 
+		
+		exportDB = exportDBDialog;
+		
+		thumbnails = thumbnailsDialog;
+						
+		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+				Color.WHITE, new Color(165, 163, 151)), 
+				TLanguage.getString("TIGKeyWordSearchDialog.CATEGORY_SEARCH")));
+		
+		//First keyWord text field
+		textKeyWord1 = new JTextField();
+		textKeyWord1.setEditable(true);
+		textKeyWord1.setPreferredSize(new Dimension (125, 25));
+		textKeyWord1.addKeyListener(new KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				String text = textKeyWord1.getText().trim();
+				if (!text.equals("")){
+					options1.setEnabled(true);
+					if (options1.getSelectedIndex()!=0){
+						textKeyWord2.setEnabled(true);
+						options2.setEnabled(true);
+					}
+					if (options2.getSelectedIndex()!=0){
+						textKeyWord3.setEnabled(true);
+					}
+				}else{
+					options1.setEnabled(false);
+					textKeyWord2.setEnabled(false);
+					options2.setEnabled(false);
+					textKeyWord3.setEnabled(false);
+				}
+			}
+		});	
+		
+		//Second keyWord text field
+		textKeyWord2 = new JTextField();		
+		textKeyWord2.setEditable(true);
+		textKeyWord2.setEnabled(false);
+		textKeyWord2.setPreferredSize(new Dimension (125, 25));		
+		textKeyWord2.addKeyListener(new KeyAdapter(){
+			public void keyReleased(java.awt.event.KeyEvent e){
+				String text = textKeyWord2.getText().trim();
+				if (!text.equals("")){
+					options2.setEnabled(true);
+				}else{
+					options2.setEnabled(false);
+					textKeyWord3.setEnabled(false);
+				}
+			}
+		});
+		
+		//Third keyWord text field
+		textKeyWord3 = new JTextField();
+		textKeyWord3.setEditable(true);
+		textKeyWord3.setEnabled(false);
+		textKeyWord3.setPreferredSize(new Dimension (125, 25));
+		
+		//Create combo box options
+		String[] optionList = { "",
+				TLanguage.getString("TIGKeyWordSearchDialog.AND"),
+				TLanguage.getString("TIGKeyWordSearchDialog.OR")};
+
+		//First combo box
+        options1 = new JComboBox(optionList);
+        options1.setSelectedIndex(0);
+		options1.setEnabled(false);
+		options1.setPreferredSize(new Dimension (50, 25));
+		options1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				 JComboBox cb = (JComboBox)arg0.getSource();
+				 if (cb.getSelectedIndex()!=0){
+					 textKeyWord2.setEnabled(true);
+					 if (!textKeyWord2.getText().trim().equals("")){
+						 options2.setEnabled(true);
+					 }
+					 if (options2.getSelectedIndex()!=0){
+						 textKeyWord3.setEnabled(true);
+					 }
+				 }else{
+					 textKeyWord2.setEnabled(false);
+					 options2.setEnabled(false);
+					 textKeyWord3.setEnabled(false);
+				 }
+			}			
+		});
+
+		//Second combo box
+		options2 = new JComboBox(optionList);
+	    options2.setSelectedIndex(0);	        
+		options2.setEnabled(false);
+		options2.setPreferredSize(new Dimension (50, 25));
+		options2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				 JComboBox cb = (JComboBox)arg0.getSource();
+				 if (cb.getSelectedIndex()!=0){
+					 textKeyWord3.setEnabled(true);
+				 }else{
+					 textKeyWord3.setEnabled(false);
+				 }
+			}			
+		});		
+		
+		//Create button
+		TButton searchButton = new TButton(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				result = new Vector();
+				keyWord1 = getKeyWord1();
+				if (!keyWord1.equals("")){
+					keyWord2 = getKeyWord2();
+					keyWord3 = getKeyWord3();;
+					searchOptions1 = getSearchOptions1();
+					//La búsqueda se guía por la selección de los combos para saber que palabras clave
+					//debe buscar. Puede ocurrir que el segundo combo tenga valor pero esté deshabilitado.
+					//En ese caso no debería tenerse en cuenta su valor.
+					if (!options2.isEnabled()){
+						searchOptions2 = 0;
+					}else{
+						searchOptions2 = getSearchOptions2();
+					}					
+					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					if (result.size()==0){
+						exportDB.update(result);
+						// There are no results for that search
+						JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGKeyWordSearchDialog.NO_RESULTS"),
+								TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+								JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+					}
+					else
+						exportDB.update(result);
+				}else{
+					//There are no categories to search
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGKeyWordSearchDialog.NO_CATEGORIES"),
+							TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
+							JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
+		searchButton.setText(TLanguage.getString("TIGKeyWordSearchDialog.SEARCH"));
+		
+		// Place components
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(new GridBagLayout());
+
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 0;
+		c.gridy = 0;
+		add(textKeyWord1, c);
+			
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 1;
+		c.gridy = 0;
+		add(options1, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 2;
+		c.gridy = 0;
+		add(textKeyWord2, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 3;
+		c.gridy = 0;
+		add(options2, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 4;
+		c.gridy = 0;
+		add(textKeyWord3, c);
+		
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.gridx = 5;
+		c.gridy = 0;
+		add(searchButton, c);
+	}
+
 	public String getKeyWord1(){
 		return textKeyWord1.getText().trim();
 	}
@@ -281,8 +659,6 @@ public class TIGSearchKeyWord extends JPanel{
 			case 1: searchOptions1 = SEARCH_OPTIONS_AND;
 					break;
 			case 2: searchOptions1 = SEARCH_OPTIONS_OR;
-					break;
-			case 3: searchOptions1 = SEARCH_OPTIONS_NOT;
 		}		
 		return searchOptions1;
 	}	
@@ -295,10 +671,8 @@ public class TIGSearchKeyWord extends JPanel{
 			case 1: searchOptions2 = SEARCH_OPTIONS_AND;
 					break;
 			case 2: searchOptions2 = SEARCH_OPTIONS_OR;
-					break;
-			case 3: searchOptions2 = SEARCH_OPTIONS_NOT;
 		}		
 		return searchOptions2;
-	}	
+	}
 
 }

@@ -114,7 +114,7 @@ public class TIGSelectNewImage extends JPanel {
 	// Allows save the directory where you get the last image
 	private static File defaultDirectory = null;
 	
-	public static String ruta = null;
+	public static String path = null;
 
 	/**
 	 * Creates a new <code>TImageChooser</code> with <i>NO_OPTIONS_TYPE</i>
@@ -191,7 +191,7 @@ public class TIGSelectNewImage extends JPanel {
 		clearIconButton = new TButton(new AbstractAction(TLanguage.getString("TImageChooser.BUTTON_CLEAR")) {
 			public void actionPerformed(ActionEvent e) {
 				setIcon(null);
-				ruta=null;
+				path=null;
 			}
 		});
 		
@@ -200,7 +200,7 @@ public class TIGSelectNewImage extends JPanel {
 	}
 	
 	public String returnImage(){
-		return ruta;
+		return path;
 	}
 
 	/**
@@ -293,13 +293,13 @@ public class TIGSelectNewImage extends JPanel {
 						BufferedImage bufferedImage = src.getAsBufferedImage();
 						newImageIcon = new ImageIcon(bufferedImage,
 								selectedFile.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					} else {
 						// Create it as usual
 						newImageIcon = new ImageIcon(selectedFile
 								.getAbsolutePath(), selectedFile
 								.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					}
 
 					// Sets the new imageIcon to the TImageChooser

@@ -313,8 +313,8 @@ TUndoAction.NAME=Rückgängig machen
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=Über
-TAboutDialog.EDITOR_VERSION=Ticos Verleger 1.0
-TAboutDialog.INTERPRETER_VERSION=Ticos Interpret 1.0
+TAboutDialog.EDITOR_VERSION=Ticos Verleger e1.0
+TAboutDialog.INTERPRETER_VERSION=Ticos Interpret e1.0
 TAboutDialog.DEVELOPERS=Entwickler
 TAboutDialog.OTHER_DEVELOPERS=Andere...
 TAboutDialog.DIRECTOR=Direktor
@@ -383,13 +383,13 @@ TIGManageGalleryDialog.REPEATED_IMAGES_TITLE=Wenn das Bild vorhanden
 TIGManageGalleryDialog.REPLACE_IMAGE=Bild ersetzen
 TIGManageGalleryDialog.ADD_IMAGE=Bild hinzufügen
 
-TIGKeyWordManageGalleryDialog.NAME=Kategorien
+TIGKeyWordManageGalleryDialog.NAME=Stichwort
 
-TIGKeyWordInsertDialog.NAME=Kategorien
-TIGKeyWordInsertDialog.LABEL=Neue Kategorie hinzufügen:
+TIGKeyWordInsertDialog.NAME=Stichwort
+TIGKeyWordInsertDialog.LABEL=Neues Stichwort hinzufügen:
 TIGKeyWordInsertDialog.ADD=Hinzufüge
 
-TIGTableModel.FIRST_COLUMN=Kategorien
+TIGTableModel.FIRST_COLUMN=Stichwort
 TIGTableModel.SECOND_COLUMN=Verknüpfen
 
 TIGSearchImageDialog.NAME=Bild ändern
@@ -406,7 +406,7 @@ TIGSearchImageDialog.CANCEL=Abbrechen
 TIGSearchImageDialog.MESSAGE_NO_SEARCH=Sie eine Suche durchführen
 TIGSearchImageDialog.MESSAGE_NO_IMAGES_FOUND=Keine Bilder gefunden zu beseitigen
 
-TIGKeyWordGalleryDialog.NAME=Kategorien einordnen 
+TIGKeyWordGalleryDialog.NAME=Verwaltung Stichworte
 TIGKeyWordGalleryDialog.END=Annehmen
 TIGKeyWordGalleryDialog.ADD=Hinzufügen
 TIGKeyWordGalleryDialog.MODIFY=Ändern
@@ -431,13 +431,12 @@ TIGInsertImageAction.MESSAGE=Fehler beim Laden des Bildes
 TIGKeyWordSearchDialog.NO_RESULTS=Es wurde kein verknüpftes Bild gefunden
 TIGKeyWordSearchDialog.NO_CATEGORIES=Es gibt keine Kategorien für die Suche
 TIGKeyWordSearchDialog.NAME=Suchergebnisse
-TIGKeyWordSearchDialog.CATEGORY_SEARCH=Nach Kategorie 
+TIGKeyWordSearchDialog.CATEGORY_SEARCH=Nach Stichworten
 TIGKeyWordSearchDialog.SEARCH=Suchen
 TIGKeyWordSearchDialog.AND=und
 TIGKeyWordSearchDialog.OR=oder
-TIGKeyWordSearchDialog.NOT=nein
 
-TIGSearchNameDialog.NAME_SEARCH=Nach Namen
+TIGSearchNameDialog.NAME_SEARCH=Suche nach Bildnamen
 TIGSearchNameDialog.SEARCH=Suchen:
 TIGSearchNameDialog.SEARCH_BUTTON=Suchen
 TIGSearchNameDialog.TEXT=Fügen Sie den gesuchten Namen ein
@@ -448,7 +447,7 @@ TIGManageImageAction.EMPTY=In der Datenbank ist kein Bild vorhanden
 TIGManageImageAction.ERROR=Leere Datenbank
 
 TIGDeleteKeyWordAction.ASK=Wollen Sie die ausgewählte Kategorie löschen?
-TIGDeleteKeyWordAction.NAME=Kategorie löschen
+TIGDeleteKeyWordAction.NAME=Stichwort löschen
 
 TIGModifyImageAction.ERROR=Fehler beim Ändern des Bildes
 TIGModifyImageAction.NAME=Bild ändern

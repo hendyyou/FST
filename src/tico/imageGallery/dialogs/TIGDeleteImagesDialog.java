@@ -131,8 +131,10 @@ public class TIGDeleteImagesDialog extends TDialog{
 		// Create components
 		
 		//All the images in the dataBase are shown 
-		//when the window is displayed  
+		//when the window is displayed 
+		images = new Vector();
 		images = TIGDataBase.imageSearch("*");
+		myResults = null;
 		
 		// First, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
@@ -142,14 +144,13 @@ public class TIGDeleteImagesDialog extends TDialog{
 		
 		// Second, create the component that search the names of the images
 		//JPanel searchNamePanel = new JPanel();	
-		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog);
+		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog, this);
 		//searchNamePanel = searchNameDialog.createSearchNamePanelDelete(this);
 		
 		// Third, create the component that search the images from its associations
-		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog, this);
 		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
-		images = new Vector();
-		myResults = null;		
+		
 				
 		// Fourth, create three buttons, the first one to modify the image, the second one to
 		//delete it, and the last one to exit the window
@@ -194,7 +195,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 						
 						progressBar.setMaximum(myResults.size());
 						progressBar.setValue(0);
-						System.out.println("Imágenes a borrar: "+myResults.size());
+
 						task.go(myEditor,myDataBase,myResults);	
 						timer.start();
 						
@@ -382,7 +383,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,0);
 		this.myResults= (Vector) result;
 	}
-	
+
 	/*
 	 * Update the thumbnails panel when a modification has been made
 	 */

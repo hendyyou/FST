@@ -77,7 +77,7 @@ abstract public class TComponentDialog extends TPropertiesDialog {
 
 		setVisible(true);
 	}
-//sound
+
 	// Apply the values to the editing component
 	protected boolean applyValues() {
 		// If I have already applied values in this dialog I have to

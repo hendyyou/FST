@@ -149,7 +149,9 @@ public class TIGExportDBDialog extends TDialog {
 		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
+		images = new Vector();
 		images = TIGDataBase.imageSearch("*");
+		myResults = null;
 		
 		// First, create the component that shows all the images
 		thumbnailsPanel = new JPanel();		
@@ -159,19 +161,14 @@ public class TIGExportDBDialog extends TDialog {
 		
 		// Second, create the component that search the names of the images
 		//JPanel searchNamePanel = new JPanel();	
-		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog);
+		TIGSearchName searchNamePanel = new TIGSearchName(thumbnailsDialog, this);
 		//searchNamePanel = searchNameDialog.createSearchNamePanelExport(this);		
 		
 		// Third, create the component that search the images from its associations
-		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
+		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog, this);
 		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
-		images = new Vector();
-		myResults= null;
-		
 		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);		
 		//String keyWord1 = keyWordSearchDialog.getKeyWord1();		
-		
-		
 		//Fourth, create the panel that contains the file chooser for the directory
 		//that contains the images
 			
@@ -183,8 +180,8 @@ public class TIGExportDBDialog extends TDialog {
 				pathImages = createFileChooser();
 				if (pathImages.compareTo("") != 0){
 					directory.setText(pathImages);
-					File myDirectory = new File(pathImages); 
-	    			progressBar.setMaximum(numberOfImages);
+					/*File myDirectory = new File(pathImages); 
+	    			progressBar.setMaximum(numberOfImages);*/
 				}
 			}
 		});
@@ -224,6 +221,7 @@ public class TIGExportDBDialog extends TDialog {
 					exportButton.setEnabled(false);
 					progressBar.setIndeterminate(false);
 					
+					progressBar.setMaximum(myResults.size());
 					progressBar.setValue(0);
 					
 					task.go(myEditor,myDataBase,pathImages,images);	

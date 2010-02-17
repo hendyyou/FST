@@ -313,8 +313,8 @@ TUndoAction.NAME=Undo
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=About
-TAboutDialog.EDITOR_VERSION=Tico Editor 1.0
-TAboutDialog.INTERPRETER_VERSION=Tico Interpreter 1.0
+TAboutDialog.EDITOR_VERSION=Tico Editor e1.0
+TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0
 TAboutDialog.DEVELOPERS=Developers
 TAboutDialog.OTHER_DEVELOPERS=Others...
 TAboutDialog.DIRECTOR=Director
@@ -383,13 +383,13 @@ TIGManageGalleryDialog.REPEATED_IMAGES_TITLE=If the image already exists
 TIGManageGalleryDialog.REPLACE_IMAGE=Replace image
 TIGManageGalleryDialog.ADD_IMAGE=Add image
 
-TIGKeyWordManageGalleryDialog.NAME=Categories
+TIGKeyWordManageGalleryDialog.NAME=Keywords
 
-TIGKeyWordInsertDialog.NAME=Categories
-TIGKeyWordInsertDialog.LABEL=Add new category:
+TIGKeyWordInsertDialog.NAME=Keywords
+TIGKeyWordInsertDialog.LABEL=Add new keyword:
 TIGKeyWordInsertDialog.ADD=Add
 
-TIGTableModel.FIRST_COLUMN=Categories
+TIGTableModel.FIRST_COLUMN=Keywords
 TIGTableModel.SECOND_COLUMN=Associate
 
 TIGSearchImageDialog.NAME=Modify image
@@ -406,7 +406,7 @@ TIGSearchImageDialog.CANCEL=Cancel
 TIGSearchImageDialog.MESSAGE_NO_SEARCH=You must make a search
 TIGSearchImageDialog.MESSAGE_NO_IMAGES_FOUND=No images to delete
 
-TIGKeyWordGalleryDialog.NAME=Manage categories
+TIGKeyWordGalleryDialog.NAME=Manage keywords
 TIGKeyWordGalleryDialog.END=Accept
 TIGKeyWordGalleryDialog.ADD=Add
 TIGKeyWordGalleryDialog.MODIFY=Modify
@@ -431,13 +431,12 @@ TIGInsertImageAction.MESSAGE=Error loading image
 TIGKeyWordSearchDialog.NO_RESULTS=There aren't any result
 TIGKeyWordSearchDialog.NO_CATEGORIES=There are no categories for search
 TIGKeyWordSearchDialog.NAME=Search results
-TIGKeyWordSearchDialog.CATEGORY_SEARCH=By category
+TIGKeyWordSearchDialog.CATEGORY_SEARCH=By keyword
 TIGKeyWordSearchDialog.SEARCH=Search
 TIGKeyWordSearchDialog.AND=and
 TIGKeyWordSearchDialog.OR=or
-TIGKeyWordSearchDialog.NOT=not
 
-TIGSearchNameDialog.NAME_SEARCH=By name
+TIGSearchNameDialog.NAME_SEARCH=By image name
 TIGSearchNameDialog.SEARCH=Search:
 TIGSearchNameDialog.SEARCH_BUTTON=Search
 TIGSearchNameDialog.TEXT=insert the word to search
@@ -448,7 +447,7 @@ TIGManageImageAction.EMPTY=There aren't any image in the data base
 TIGManageImageAction.ERROR=Empty data base
 
 TIGDeleteKeyWordAction.ASK=Do you want to delete the selected image?
-TIGDeleteKeyWordAction.NAME=Delete category
+TIGDeleteKeyWordAction.NAME=Delete keyword
 
 TIGModifyImageAction.ERROR=Error modifying image
 TIGModifyImageAction.NAME=Modify image
