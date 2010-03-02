@@ -1,13 +1,3 @@
 entorno=Environment
-
+#Comentarios
 arrancar_firefox=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
-arrancar_firefox_2=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
-
-Prueba1=prueba1
-_aaa=aaa
-
-  b=jjjk
-
-árbol=arbol
-
-2jjj=iiii

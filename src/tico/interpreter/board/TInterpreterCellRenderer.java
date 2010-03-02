@@ -24,7 +24,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import java.awt.Color;
@@ -48,12 +48,12 @@ import tico.board.components.TComponent;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
 
-/**
+*//**
  * <code>Swing</code> which implements the <code>TCell</code> visualization.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterCellRenderer extends TComponentRenderer {
 
 	private final static int VERTICAL_ICON_MARGIN = 5;
@@ -74,9 +74,9 @@ public class TInterpreterCellRenderer extends TComponentRenderer {
 	public Color changeColor;
 	public int borderChange;
 	public Map map;
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.VertexRenderer#installAttributes(org.jgraph.graph.CellView)
-	 */
+	 
 	protected void installAttributes(CellView view) {
 		// Get the cell attributes
 		
@@ -202,11 +202,11 @@ public class TInterpreterCellRenderer extends TComponentRenderer {
 		setIcon(icon);
 	}
 
-	/*
+	
 	 * (non-Javadoc)
 	 * 
 	 * @see java.awt.Component#paint(java.awt.Graphics)
-	 */
+	 
 	public void paint(Graphics g) {
 		
 		Graphics2D g2 = (Graphics2D)g;
@@ -241,4 +241,4 @@ public class TInterpreterCellRenderer extends TComponentRenderer {
 		setIcon(AlternativeIcon);
 	}
 
-}
+}*/

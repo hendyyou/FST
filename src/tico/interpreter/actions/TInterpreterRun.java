@@ -42,6 +42,7 @@ import tico.interpreter.TInterpreterBoard;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.TInterpreterProject;
 import tico.interpreter.components.TInterpreterCell;
+import tico.interpreter.threads.TInterpreterBoardSound;
 import tico.interpreter.threads.TThreads;
 
 public class TInterpreterRun extends TInterpreterAbstractAction implements ActionListener, Runnable {
@@ -82,13 +83,20 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 	
 	public void run() {//Velocidad del
 		
-		interpreter.run = 1;
+		TInterpreter.run = 1;
+		
 		interpreter.interpreterRobot.setAutoDelay(TInterpreterConstants.interpreterDelay);
 		interpreter.TIntepreterChangeCursor();
 	
 	    TInterpreterProject project = interpreter.getProject();
 	    TInterpreterConstants.tableroActual = project.getBoard(project.getBoardToGo());
 	    project.setBoardChanged(false);
+	    
+	    //If the first board has a sound, play it when browsing is activated
+	    if (TInterpreterConstants.tableroActual.getSoundFile()!=null){
+			TInterpreterBoardSound boardSound = new TInterpreterBoardSound(TInterpreterConstants.tableroActual.getSoundFile());
+			boardSound.run();
+		}
 	    	    	
 		if (interpreter.getActivateBrowsingMode()==1){
 					

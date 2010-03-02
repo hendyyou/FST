@@ -24,7 +24,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import java.awt.event.MouseEvent;
@@ -32,41 +32,42 @@ import java.awt.event.MouseListener;
 
 import org.jgraph.graph.CellViewRenderer;
 
-/**
+*//**
  * Implementation of a <code>TCell</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterCellView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TCellRendered</code> that displays the <code>TCell</code> of this view.
-	 */
-	/*Eliminamos el STATIC*/
+	 *//*
+	Eliminamos el STATIC
 	
 	public transient TInterpreterCellRenderer renderer = new TInterpreterCellRenderer();
 	
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterCellView</code>.
-	 */
+	 *//*
 	public TInterpreterCellView() {
 		super();		
 	}
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterCellView</code> for the specified <code>cell</code>.
 	 * 
 	 * @param cell The specified <code>cell</code>
-	 */
+	 *//*
 	
 	public TInterpreterCellView(Object cell) {
 		super(cell);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.AbstractCellView#getRenderer()
-	 */
+	 
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}
 }
+*/

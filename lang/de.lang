@@ -568,6 +568,7 @@ TInterpreterReadAction.NAME=Lesen
 TInterpreterControllerAction.NAME=Treiber
 TInterpreterUndoAction.NAME=Rückgängig machen
 TInterpreterUndoAllAction.NAME=Auslöschen
+TInterpreterHomeAction.NAME=Heim
 TInterpreterValidationAction.NAME=Interpreter
 
 TInterpreterOptionDialog.NAME=Optioneinrichter

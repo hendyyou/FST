@@ -56,6 +56,7 @@ import tico.interpreter.components.TInterpreterRoundRectangle;
 import tico.interpreter.components.TInterpreterTextArea;
 import tico.interpreter.listeners.TCellListener;
 import tico.interpreter.listeners.TExitCellListener;
+import tico.interpreter.listeners.THomeCellListener;
 import tico.interpreter.listeners.TReadCellListener;
 import tico.interpreter.listeners.TReturnCellListener;
 import tico.interpreter.listeners.TStopCellListener;
@@ -110,7 +111,7 @@ public class TInterpreterProject {
 		this.positionCellToReturn = i;
 	}
 	
-	public static String getinitialBoardname() {
+	public static String getInitialBoardname() {
 		return initialBoardname;
 	}
 	
@@ -178,9 +179,10 @@ public class TInterpreterProject {
 		  Color foregroundColor = null;
 		  Color backgroundColor= null;
 		  Color borderColor = null;
+		  Color gradientColor = null;
+		  Font font = null;
 		  String id = null;
 		  String text = "";
-		  Font font = null;
 		  int ha = 0;
 		  int va = 0;
 		  int vtp=0;
@@ -211,6 +213,7 @@ public class TInterpreterProject {
 	        List boards = raiz.getChildren("board");
 	        
 	        Iterator i = boards.iterator();
+	        
 	        while (i.hasNext()){
 	        	
 	            Element board= (Element)i.next();
@@ -222,6 +225,10 @@ public class TInterpreterProject {
 	            Element attributes = model.getChild("attributes");
 	            List attributeBoard = attributes.getChildren();
 	            Iterator bcomp = attributeBoard.iterator();
+	            
+	            backgroundColor=null;
+            	gradientColor=null;
+            	
 	            while (bcomp.hasNext()){
 	            	Element attribBoardValue=  (Element)bcomp.next();
 	            	String componentType= attribBoardValue.getAttribute("key").getValue();
@@ -295,7 +302,19 @@ public class TInterpreterProject {
                 		backgroundColor = new Color(red,green,blue);
                 		myboard.setBackgroundColor(backgroundColor);
                 		
-                	}	            	
+                	}
+                	//gradientColor
+                	if (componentType.equals("gradientColor")){
+                		String micolor = attribBoardValue.getValue().trim();
+                		
+                		micolor = micolor.substring(2, micolor.length());
+                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+                		
+                		gradientColor = new Color(red,green,blue);
+                		myboard.setGradientColor(gradientColor);
+                	}
 	            	
 	            }
 	            
@@ -313,7 +332,9 @@ public class TInterpreterProject {
 					foregroundColor=null;
 	            	borderColor=null;
 	            	backgroundColor=null;
+	            	gradientColor=null;
 	            	
+	            	font = null;
 	            	transparentBorder = true;
 	            	transparentBackground = true;
 	            	
@@ -323,7 +344,7 @@ public class TInterpreterProject {
 	            	if (componentType.equals("cell")){
 	            		TInterpreterCell cell = new TInterpreterCell();
 	            		linewidth=(float) 0.0;
-	            		//TInterpreterConstants tic= new TInterpreterConstants();
+
 	            		boardToGo = initialBoardname;
 
 	            		Element attributesLabel= component.getChild("attributes");
@@ -378,6 +399,19 @@ public class TInterpreterProject {
 	                	
 	                	// backgroundColor
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("backgroundColor")){
+	                		String micolor = attribute.getValue().trim();
+	                		
+	                		micolor = micolor.substring(2, micolor.length());
+	                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+	                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+	                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+	                		
+	                		backgroundColor = new Color(red,green,blue);	             
+							transparentBackground = false;
+	                	}
+	                	
+	                	//gradientColor
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
 	                		String micolor= attribute.getValue().trim();
 	                		
 	                		micolor = micolor.substring(2, micolor.length());
@@ -385,10 +419,8 @@ public class TInterpreterProject {
 	                		int green = Integer.parseInt(micolor.substring(2,4), 16);
 	                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                		
-	                		backgroundColor = new Color(red,green,blue);
-	             
-							transparentBackground = false;
-	                	}              	
+	                		gradientColor = new Color(red,green,blue);
+	                	}
 	                	
 	                	// borderColor
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("bordercolor")){
@@ -399,8 +431,7 @@ public class TInterpreterProject {
 	                		int green = Integer.parseInt(borderColorRectangle.substring(2,4), 16);
 	                		int blue = Integer.parseInt(borderColorRectangle.substring(4,6), 16);
 	                		
-	                		borderColor = new Color(red,green,blue);
-	                		
+	                		borderColor = new Color(red,green,blue);	                		
 							transparentBorder = false;
 	                	}
 	                	
@@ -473,7 +504,6 @@ public class TInterpreterProject {
 	                	// sendText
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("sendText")){
 	                		cell.setTextToSend(attribute.getValue());
-	                		//tic.board= myboard;
 	                	}
 	                	
 	                	// alternativeIcon
@@ -534,8 +564,7 @@ public class TInterpreterProject {
 		            		}	
 	                	}
 	                	
-	                	// videoFile
-	                	
+	                	// videoFile	                	
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("videoFile")){
 		                	// Save the video to be played when mouse clicked
 		            		videoFile = attribute.getValue();
@@ -558,7 +587,7 @@ public class TInterpreterProject {
 	            	}
 	            		
 	            	            		
-	            		cell.setAttributes(id, r, text, font, foregroundColor, vtp, icon, linewidth, borderColor, backgroundColor, transparentBackground, transparentBorder, alternativeIcon);
+	            		cell.setAttributes(id, r, text, font, foregroundColor, vtp, icon, linewidth, borderColor, backgroundColor, gradientColor, transparentBackground, transparentBorder, alternativeIcon);
 	            		            		
 	            		//cell.setAlternativeAttributes(alternativeIcon);
 	            		cell.setActionsAttributes(soundFile, videoFile, command);
@@ -697,7 +726,14 @@ public class TInterpreterProject {
                    			returnCell.addMouseListener(new TReturnCellListener());
                 			myboard.insertCell(returnCell);
                 			myboard.insertComponent(returnCell);
-                		}else if (action == TBoardConstants.STOP_ACTION_CODE){//Parar
+                		}else if (action == TBoardConstants.HOME_ACTION_CODE){//Volver
+    	            		//}else if (text.equals("Volver")){
+                    			TInterpreterCell homeCell = new TInterpreterCell();
+                    			homeCell.setAttributes2(id, r, TLanguage.getString("TInterpreterHomeAction.NAME"), font, foregroundColor, icon);
+                    			homeCell.addMouseListener(new THomeCellListener());
+                    			myboard.insertCell(homeCell);
+                    			myboard.insertComponent(homeCell);
+                    		}else if (action == TBoardConstants.STOP_ACTION_CODE){//Parar
 	            		//}else if (text.equals("Parar")){
                 			TInterpreterCell stopCell = new TInterpreterCell();
                 			stopCell.setAttributes2(id, r, TLanguage.getString("TInterpreterStopAction.NAME"), font, foregroundColor, icon);
@@ -738,7 +774,6 @@ public class TInterpreterProject {
 	                    	// bounds
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("bounds")){
 	                    		
-	                    		
 	                    		float x= Float.parseFloat(attribute.getChild("x").getValue().trim());
 	                    		r.x= (int) x;
 	                    		float y= Float.parseFloat(attribute.getChild("y").getValue().trim());
@@ -768,7 +803,7 @@ public class TInterpreterProject {
 	            	
 	            	else if (componentType.equals("oval")){	            		
 	            		linewidth=(float) 0.0;
-	            		r= new Rectangle();
+	            		r = new Rectangle();
 	            		
 	            		Element attributesOval= component.getChild("attributes");
 	            		List attributesList= attributesOval.getChildren("attribute");
@@ -779,14 +814,12 @@ public class TInterpreterProject {
 	                    	
 	                    	// linewidth
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("linewidth")){
-	                    		linewidth= (Float.valueOf(attribute.getValue().trim()));
-	                    
+	                    		linewidth= (Float.valueOf(attribute.getValue().trim()));	                    
 	                    	}                    	
 	                    	
 	                    	// id
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("id")){
-	                    		id= attribute.getValue().trim();
-	                    		
+	                    		id = attribute.getValue().trim();
 	                    	}
 	                    	
 	                    	// bounds
@@ -813,8 +846,20 @@ public class TInterpreterProject {
 	                    		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                    		
 	                    		backgroundColor = new Color(red,green,blue);
+	                    		transparentBackground = false;
 	                    	}
 	                    	
+	                    	//gradientColor
+		                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
+		                		String micolor= attribute.getValue().trim();
+		                		
+		                		micolor = micolor.substring(2, micolor.length());
+		                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+		                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+		                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+		                		
+		                		gradientColor = new Color(red,green,blue);
+		                	}
 	                    	// bordercolor
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("bordercolor")){
 	                    		String borderColorRectangle= attribute.getValue().trim();
@@ -829,7 +874,7 @@ public class TInterpreterProject {
 	                    	
 	                    	
 	            		}         
-	            		TInterpreterOval oval = new TInterpreterOval(borderColor,linewidth, r, backgroundColor);
+	            		TInterpreterOval oval = new TInterpreterOval(borderColor,linewidth, r, backgroundColor, gradientColor, transparentBackground);
 	            		myboard.insertOval(oval);
 	            		myboard.insertComponent(oval);
 	            	}
@@ -857,7 +902,21 @@ public class TInterpreterProject {
 	                    		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                    		
 	                    		backgroundColor = new Color(red,green,blue);
+	                    		transparentBackground = false;
 	                    	}
+	                    	
+	                    	//gradientColor
+		                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
+		                		String micolor= attribute.getValue().trim();
+		                		
+		                		micolor = micolor.substring(2, micolor.length());
+		                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+		                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+		                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+		                		
+		                		gradientColor = new Color(red,green,blue);
+		                	}
+	                    	
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("bordercolor")){
 	                    		String borderColorRectangle= attribute.getValue().trim();
 	                    		
@@ -887,7 +946,7 @@ public class TInterpreterProject {
 	                    	
 	            		}
 	            		TInterpreterRectangle rectangle = new TInterpreterRectangle();
-	            		rectangle.setAttributes(borderColor, r,linewidth, backgroundColor);
+	            		rectangle.setAttributes(borderColor, r,linewidth, backgroundColor, gradientColor, transparentBackground);
 	            		myboard.insertRectangle(rectangle);
 	            		myboard.insertComponent(rectangle);
 	            		
@@ -903,16 +962,12 @@ public class TInterpreterProject {
 	            		foregroundColor = null;
 	            		borderColor = null;
 	            		
-	            		boolean backgroundTransparentTextArea=true;
-	            		boolean borderTransparentTextArea = true;
-	            		
 	            		while (iattributes.hasNext()){
 	                    	Element attribute= (Element)iattributes.next();
 	                    	
 	                    	// linewidth
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("linewidth")){
-	                    		linewidth= (Float.valueOf(attribute.getValue().trim()));
-	                    		
+	                    		linewidth= (Float.valueOf(attribute.getValue().trim()));	 
 	                    	}
 	                    	
 	                    	// text
@@ -949,24 +1004,40 @@ public class TInterpreterProject {
 	                    		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                    		
 	                    		backgroundColor = new Color(red,green,blue);
-	                    		backgroundTransparentTextArea = false;
-	                    		
+	                    		transparentBackground = false;
 	                    	}
 	                    	
+	                    	//gradientColor
+		                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
+		                		String micolor= attribute.getValue().trim();
+		                		
+		                		micolor = micolor.substring(2, micolor.length());
+		                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+		                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+		                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+		                		
+		                		gradientColor = new Color(red,green,blue);
+		                	}
+	                    	
 	                    	// font
-	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("font")){
-	                    		int size = Integer.parseInt(attribute.getChild("size").getValue());
-	                    		String family = attribute.getChild("family").getValue();
-	                    		if ((attribute.getChild("bold") != null)&&(attribute.getChild("italic") != null)){
-	                    			font= new Font(family,3, size);
-	                    		}
-	                    		else if (attribute.getChild("bold") != null){
-	                    			font= new Font(family,Font.BOLD, size);
-	                    		}
-	                    		else if (attribute.getChild("italic") != null){
-	                    			font= new Font(family,Font.ITALIC, size);
-	                    		}
-	                    	}
+		                	if (((attribute.getAttribute("key").getValue()).trim()).equals("font")){
+		                		int size = Integer.parseInt(attribute.getChild("size").getValue());
+		                		
+		                		String family = attribute.getChild("family").getValue();
+		                		
+		                		if ((attribute.getChild("bold") != null)&&(attribute.getChild("italic") != null)){
+		                			font= new Font(family,3, size);
+		                		}
+		                		else if (attribute.getChild("bold") != null){
+		                			font= new Font(family,Font.BOLD, size);
+		                		}
+		                		else if (attribute.getChild("italic") != null){
+		                			font= new Font(family,Font.ITALIC, size);
+		                		}
+		                		else{
+		                			font= new Font(family,0, size);
+		                		}	                		
+		                	}
 	                    	
 	                    	// bounds
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("bounds")){
@@ -992,25 +1063,22 @@ public class TInterpreterProject {
 	                    		int blue = Integer.parseInt(borderColorRectangle.substring(4,6), 16);
 	                    		
 	                    		borderColor = new Color(red,green,blue);
-	                    		borderTransparentTextArea = false;
 	                    	}
 	                    	
 	                    	// horizontal alignment
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("horizontalAlignment")){
-	                    		ha= Integer.parseInt(attribute.getValue());
+	                    		ha = Integer.parseInt(attribute.getValue());
 	                    		
 	                    	
 	                    	}
 	                    	if (((attribute.getAttribute("key").getValue()).trim()).equals("verticalAlignment")){
-	                    		va= Integer.parseInt(attribute.getValue());
+	                    		va = Integer.parseInt(attribute.getValue());
 	                    		
-	                    	}
-	                    	
-	                    	
+	                    	}                    	
 	                    	
 	            		}
 	            		TInterpreterTextArea textarea = new TInterpreterTextArea();
-	            		textarea.setAttributes(id,borderColor,linewidth, backgroundColor, r, text,font,foregroundColor, ha,va, backgroundTransparentTextArea, borderTransparentTextArea);
+	            		textarea.setAttributes(id,borderColor,linewidth, backgroundColor, gradientColor, r, text,font,foregroundColor, ha, va, transparentBackground);
 	            		myboard.insertTextarea(textarea);
 	            		myboard.insertComponent(textarea);
 	            	}
@@ -1063,18 +1131,29 @@ public class TInterpreterProject {
 	                    		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                    		
 	                    		backgroundColor = new Color(red,green,blue);
+	                    		transparentBackground = false;
 	                    	}
 	                    	
-	                    	
+	                    	//gradientColor
+		                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
+		                		String micolor= attribute.getValue().trim();
+		                		
+		                		micolor = micolor.substring(2, micolor.length());
+		                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+		                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+		                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+		                		
+		                		gradientColor = new Color(red,green,blue);
+		                	}
 	            		}
-	            		TInterpreterRoundRectangle roundRectangle = new TInterpreterRoundRectangle(borderColor, backgroundColor, linewidth, r);
+	            		TInterpreterRoundRectangle roundRectangle = new TInterpreterRoundRectangle(borderColor, backgroundColor, gradientColor, linewidth, r, transparentBackground);
 	            		myboard.insertRoundRectangle(roundRectangle);
 	            		myboard.insertComponent(roundRectangle);
 	            	}
 	            	
 	            else if (componentType.equals("label")){           	
-	            	
-	        		Element attributesLabel= component.getChild("attributes");
+
+	            	Element attributesLabel= component.getChild("attributes");
 	        		List attributesLabelList= attributesLabel.getChildren("attribute");
 	        		Iterator iattributes = attributesLabelList.iterator();
 	        		
@@ -1088,8 +1167,9 @@ public class TInterpreterProject {
 	                	
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("text")){
 	                		text= attribute.getValue().trim();
-	                		
 	                	}
+	                	
+	                	// font
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("font")){
 	                		int size = Integer.parseInt(attribute.getChild("size").getValue());
 	                		
@@ -1104,8 +1184,11 @@ public class TInterpreterProject {
 	                		else if (attribute.getChild("italic") != null){
 	                			font= new Font(family,Font.ITALIC, size);
 	                		}
-	                		
+	                		else{
+	                			font= new Font(family,0, size);
+	                		}	                		
 	                	}
+	                	
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("bordercolor")){
 	                		String borderColorRectangle= attribute.getValue().trim();
 	                		
@@ -1125,7 +1208,21 @@ public class TInterpreterProject {
 	                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
 	                		
 	                		backgroundColor = new Color(red,green,blue);
+	                		transparentBackground = false;
 	                	}
+	                	
+	                	//gradientColor
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("gradientColor")){
+	                		String micolor= attribute.getValue().trim();
+	                		
+	                		micolor = micolor.substring(2, micolor.length());
+	                		int red = Integer.parseInt(micolor.substring(0,2), 16);
+	                		int green = Integer.parseInt(micolor.substring(2,4), 16);
+	                		int blue = Integer.parseInt(micolor.substring(4,6), 16);
+	                		
+	                		gradientColor = new Color(red,green,blue);
+	                	}
+	                	
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("foregroundColor")){
 	                		String micolor= attribute.getValue().trim();
 	                		
@@ -1154,17 +1251,19 @@ public class TInterpreterProject {
 	                	
 	        		}
 	        		TInterpreterLabel label = new TInterpreterLabel();
-	        		label.setAttributes(borderColor,linewidth,backgroundColor, r,text, font, foregroundColor);
+	        		label.setAttributes(borderColor,linewidth, backgroundColor, gradientColor, r,text, font, foregroundColor, transparentBackground);
 	        		myboard.insertLabel(label);
 	        		myboard.insertComponent(label);
 	            }
 	            }
 	            project.insertBoard(myboard);
 
-	            if (myboard.getName().equals(getinitialBoardname())){
-	            	project.setCellToReturn(myboard.getOrderedCellListNames().get(0).toString());
+	            if (myboard.getName().equals(getInitialBoardname())){
+	            	//There are no cells in the board
+	            	if (!myboard.getOrderedCellListNames().isEmpty())
+	            		project.setCellToReturn(myboard.getOrderedCellListNames().get(0).toString());
 	            }
-	            }
+	       }
 
 	     }catch (Exception e){
 	        e.printStackTrace();

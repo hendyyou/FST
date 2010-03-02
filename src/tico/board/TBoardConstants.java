@@ -135,6 +135,8 @@ public class TBoardConstants extends GraphConstants {
 	
 	public final static int STOP_ACTION_CODE = 6;
 	
+	public final static int HOME_ACTION_CODE = 7;
+	
 	/**
 	 * Key for the <code>text</code> attribute. Use instances of String as
 	 * values for this key.

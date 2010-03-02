@@ -33,12 +33,13 @@ import java.awt.event.ActionEvent;
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
+import tico.interpreter.TInterpreterProject;
 
-public class TInterpreterReturnAction extends TInterpreterAbstractAction{
+public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 	
 	String nameCell;
 	
-	public TInterpreterReturnAction (TInterpreter interpreter, String name){
+	public TInterpreterHomeAction (TInterpreter interpreter, String name){
 		super(interpreter,TLanguage.getString("TInterpreterUndo"));
 		nameCell = name; 
 	}
@@ -55,12 +56,14 @@ public class TInterpreterReturnAction extends TInterpreterAbstractAction{
 		
 		}
 		
-		interpreter=getInterpreter();
+		interpreter = getInterpreter();
+		String initialBoard = TInterpreterProject.getInitialBoardname();
+		//Tablero al que debo ir porque han pulsado el botón
 		String returnBoard = interpreter.getProject().getBoardToReturn();
 		interpreter.getProject().setPositionCellToReturn(interpreter.getProject().getPositionCellToReturnByName(returnBoard, interpreter.getProject().getCellToReturn()));
 		
-		TInterpreterConstants.tableroActual = interpreter.getProject().getBoard(returnBoard);
-		TInterpreterConstants.countRun = interpreter.getProject().getPositionCellToReturn();
+		TInterpreterConstants.tableroActual = interpreter.getProject().getBoard(initialBoard);
+		TInterpreterConstants.countRun = 0;
 		TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
 		
 		interpreter.getProject().setBoardToReturn(interpreter.getProject().getCurrentBoard());					
@@ -69,12 +72,11 @@ public class TInterpreterReturnAction extends TInterpreterAbstractAction{
 		//Repinta el tablero actual para que se quede en el estado inicial
 		interpreter.repaintCurrentBoard(false);
 		
-		interpreter.changeBoard(returnBoard);
-		interpreter.getProject().setBoardToGo(returnBoard);
+		interpreter.changeBoard(initialBoard);
+		interpreter.getProject().setBoardToGo(initialBoard);
 		interpreter.getProject().setBoardChanged(true);
 
-		interpreter.getProject().setCurrentBoard(returnBoard);
-		
+		interpreter.getProject().setCurrentBoard(initialBoard);
 		
 		if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
 			//System.out.println("RELEASE CELDA");

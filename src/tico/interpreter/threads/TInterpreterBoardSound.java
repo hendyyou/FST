@@ -48,7 +48,7 @@ public class TInterpreterBoardSound implements Runnable {
 		filePath = soundFile;
 	}
 
-	public void run() {
+	public void run() { 
 		
 		// Catches the semaphore
 		try {

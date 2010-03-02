@@ -74,7 +74,11 @@ public class TFontSizeComboBox extends TComboBox {
 	 * @return The selected <code>size</code>
 	 */	
 	public int getFontSize() {
-		return ((Integer)getSelectedItem()).intValue();
+		try{
+			return ((Integer)getSelectedItem()).intValue();
+		}catch (Exception e){
+			return DEFAULT_SIZE;
+		}
 	}
 
 	/**

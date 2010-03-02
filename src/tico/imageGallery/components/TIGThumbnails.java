@@ -76,7 +76,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	
 	//Number of images displayed on the panel
 	private final int IMAGES_DISPLAYED = 4;
-	
+
 	//Number of images in the result vector
 	protected int total;
 		
@@ -130,30 +130,26 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		
 	public TIGThumbnails(boolean select){
 		
-		this.select = select;
+		select = select;
 		
-		this.addMouseListener(this);
-		this.addKeyListener(this); 
-		
-		/*this.addKeyListener(new java.awt.event.KeyAdapter(){
-			
-		});	*/
-		
+		addMouseListener(this);
+		addKeyListener(this); 
+	
 	}
 	
 	/*
 	 * Creates the thumbnail panel and all its components
 	 */
 	public JPanel createThumbnailsPanel(Vector result, Boolean enabled){
-		this.enabledSelection = enabled;
-		this.result = result;
+		enabledSelection = enabled;
+		result = result;
 		total = result.size();
 		String thumbName;
 		String pathSrc;
 		String pathTh;
 		
 		gridBag = new GridBagConstraints();
-		this.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		
 		//Create the arrows to navigate on the list of images
 		//Left Button
@@ -256,27 +252,27 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 			for (int i=0; i<IMAGES_DISPLAYED; i++){
 				gridBag.gridx = i;
 				System.out.println(thumbnails[i].getText());
-				this.add(thumbnails[i], gridBag);
+				add(thumbnails[i], gridBag);
 			}		
 		//}
 		gridBag.fill = GridBagConstraints.BOTH;
 		gridBag.insets = new Insets(10, 30, 10, 30);
 		gridBag.gridx = 0;
 		gridBag.gridy = 1;
-		this.add(leftButton, gridBag);
+		add(leftButton, gridBag);
 		
 		gridBag.fill = GridBagConstraints.CENTER;
 		gridBag.insets = new Insets(10, 30, 10, 30);
 		gridBag.gridwidth = 2;
 		gridBag.gridx = 1;
 		gridBag.gridy = 1;
-		this.add(nImagesTextField, gridBag);
+		add(nImagesTextField, gridBag);
 		
 		gridBag.fill = GridBagConstraints.BOTH;
 		gridBag.insets = new Insets(10, 30, 10, 30);
 		gridBag.gridx = 3;
 		gridBag.gridy = 1;
-		this.add(rightButton, gridBag);
+		add(rightButton, gridBag);
 		
 		return this;
 	}

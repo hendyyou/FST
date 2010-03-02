@@ -95,7 +95,7 @@ public class TInterpreter extends JFrame {
 	
 	public static ArrayList accumulatedCellsList=null;
 	
-	public int run = 0;
+	public static int run = 0;
 
 	private static TMenuItem menuItemStart;
 	private static TMenuItem menuItemStop;
@@ -115,7 +115,6 @@ public class TInterpreter extends JFrame {
 	public static JPanel accumulatedCells;
 	
 	private TInterpreterActionSet actionSet;
-   
 	
 	/**
 	 * Creates a new <code>TInterpreter</code> main application window.
@@ -181,20 +180,19 @@ public class TInterpreter extends JFrame {
 	 * @param boardName The name of the specified <code>board</code>
 	 */
 	public void changeBoard(String boardName){
-		  TInterpreterBoard board= project.getBoard(boardName);
+		  TInterpreterBoard board = project.getBoard(boardName);
 		  interpretArea.removeAll();
 		  this.setVisible(true);
-		  board.paintBoard(interpretArea);
+		  board.paintBoard(interpretArea, true);
 		  interpretArea.repaint();
 	  }	
 	
-	public void repaintCurrentBoard(){
+	public void repaintCurrentBoard(boolean playBoardSound){
 		interpretArea.removeAll();
 		getCurrentBoard().goToInitialState();
-		getCurrentBoard().paintBoard(interpretArea);
+		getCurrentBoard().paintBoard(interpretArea, playBoardSound);
 		interpretArea.repaint();
 	}
-	
 	
 	public TInterpreterProject getIntepreterProject() {
 		return project;
@@ -413,7 +411,7 @@ public class TInterpreter extends JFrame {
 			deleteProject();
 		this.project = myproject;
 		this.setTitle(TInterpreter.DEFAULT_TITLE + " - " + myproject.getName());
-		changeBoard(project.getinitialBoardname());
+		changeBoard(project.getInitialBoardname());
 		updateMenuButtons();
 	}
 	

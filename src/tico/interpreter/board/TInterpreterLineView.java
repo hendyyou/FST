@@ -23,7 +23,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import java.awt.Cursor;
@@ -46,45 +46,45 @@ import org.jgraph.graph.VertexView;
 import tico.board.TBoardConstants;
 import tico.board.componentredenerer.TLineRenderer;
 
-/**
+*//**
  * Implementation of a <code>TInterpreterLineView</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterLineView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TLineRendered</code> that displays the <code>TLine</code> of this view.
-	 */
+	 *//*
 	public static transient TLineRenderer renderer = new TLineRenderer();
 	
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterLineView</code>.
-	 */
+	 *//*
 	public TInterpreterLineView() {
 		super();
 	}
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterLineView</code> for the specified <code>line</code>.
 	 * 
 	 * @param line The specified <code>line</code>
-	 */
+	 *//*
 	public TInterpreterLineView(Object line) {
 		super(line);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.AbstractCellView#getRenderer()
-	 */
+	 
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}
 	
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.CellView#getHandle(org.jgraph.graph.GraphContext)
-	 */
+	 
 	public CellHandle getHandle(GraphContext context) {
 		if (TBoardConstants.isSizeable(getAllAttributes())
 				&& !TBoardConstants.isAutoSize(getAllAttributes())
@@ -112,13 +112,13 @@ public class TInterpreterLineView extends TInterpreterComponentView {
 			cursors = myCursors;
 		}
 		
-		/** Process mouse pressed event. */
+		*//** Process mouse pressed event. *//*
 		public void mousePressed(MouseEvent event) {
 			startCorner = TBoardConstants.getStartCorner(vertex.getAllAttributes());
 			super.mousePressed(event);
 		}
 		
-		/** Process mouse dragged event. */
+		*//** Process mouse dragged event. *//*
 		public void mouseDragged(MouseEvent event) {
 			if (firstDrag && graph.isDoubleBuffered() && cachedBounds == null) {
 				initOffscreen();
@@ -303,3 +303,4 @@ public class TInterpreterLineView extends TInterpreterComponentView {
 		return -1;
 	}
 }
+*/

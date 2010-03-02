@@ -30,6 +30,9 @@ package tico.interpreter.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -59,6 +62,7 @@ public class TInterpreterCell extends JButton{
 	public float borderSize;
 	public Color borderColor;
 	public Color backgroundColor;
+	public Color gradientColor;
 	public boolean transparentBackground;
 	public boolean transparentBorder;
 	public boolean accumulated;
@@ -226,7 +230,7 @@ public class TInterpreterCell extends JButton{
 	
 	public TInterpreterCell setAttributes(String id, Rectangle bounds, String text, Font font, Color textColor, 
 			int verticalTextPosition, ImageIcon icon, float borderSize, Color borderColor, Color backgroundColor, 
-			boolean transBackground, boolean transBorder, ImageIcon alternativeIcon){
+			Color gradientColor, boolean transBackground, boolean transBorder, ImageIcon alternativeIcon){
 		
 		this.setName(id);
 		this.setBounds(bounds);
@@ -276,6 +280,7 @@ public class TInterpreterCell extends JButton{
 		this.borderSize = borderSize;
 		this.borderColor = borderColor;
 		this.backgroundColor = backgroundColor;
+		this.gradientColor = gradientColor;
 		this.transparentBackground = transBackground;
 		this.transparentBorder = transBorder;
 		
@@ -330,165 +335,12 @@ public class TInterpreterCell extends JButton{
 		return this;
 	}
 	
-	/*public TInterpreterCell setAlternativeAttributes (ImageIcon alternativeIcon){
-
-		if (alternativeIcon != null) {
-			
-			int maxAImageWidth;
-			int maxAImageHeight;
-			
-			// The image will be centered and will fit all the cell
-			maxAImageWidth = this.getBounds().width - 2 * ((int) borderSize + HORIZONTAL_ICON_MARGIN);
-			maxAImageHeight = this.getBounds().height - 2 * ((int) borderSize + VERTICAL_ICON_MARGIN);
-			
-			if ((this.verticalTextPosition != SwingConstants.CENTER) && !this.getText().equals("")) {
-				// The image will be set with a margin
-				this.setIconTextGap(GAP_ICON_TEXT);
-
-				maxAImageWidth = this.getBounds().width - 2
-						* (HORIZONTAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT;
-				maxAImageHeight = this.getBounds().height - 2
-						* (VERTICAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT -
-						this.getFont().getSize();
-			}
-
-			if (alternativeIcon.getIconHeight() > maxAImageHeight)
-				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(-1,
-						maxAImageHeight, Image.SCALE_DEFAULT));
-			if (alternativeIcon.getIconWidth() > maxAImageWidth)
-				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(
-						maxAImageWidth, -1, Image.SCALE_DEFAULT));
-		}
-		
-		this.alternativeIcon = alternativeIcon;
-		return this;
-	}*/
-	
 	public TInterpreterCell setActionsAttributes(String soundPath, String videoPath, String command){
 		this.soundPath = soundPath;
 		this.videoPath = videoPath;
 		this.command = command;
 		return this;
 	}
-	
-	/*public TInterpreterCell setAttributes(String command, String id,Color borderColor, float borderSize, Color backgroundColor,  Rectangle bounds, String texto, Font f, Color textColor, ImageIcon icon,ImageIcon alternativeIcon,  int vtp,  TInterpreterConstants tic, boolean trans, boolean transBorder){
-		
-		this.command = command;
-		this.backgroundColor = backgroundColor;
-		this.altBorderSize = tic.lineChangeWidth;
-		this.altBorderColor = tic.changeColor;
-		this.textColor= textColor;
-		this.soundPath= tic.soundFile;
-		this.verticalTextPosition= vtp;
-		this.font=f;
-		this.text=texto;
-				
-		this.borderSize= (int) borderSize;
-		this.borderColor= borderColor;
-		transparentBackground= trans;
-		transparentBorder= transBorder;
-		
-		if (trans){
-			this.setFocusPainted(false);
-			this.setContentAreaFilled(false);
-		}
-		else{
-			this.setOpaque(true);
-			this.setBackground(backgroundColor);
-		}
-		this.setForeground(textColor);
-		if (transBorder){
-			this.setBorderPainted(false);
-		}
-		else{
-			this.setBorder(new LineBorder(borderColor, (int)borderSize));
-		}
-		this.setName(id);
-		this.setText(texto);
-		this.setBounds(bounds);
-		
-		this.setFont(f);
-		
-		
-		
-		// Apply text align properties
-		this.setVerticalAlignment(SwingConstants.CENTER);
-		this.setHorizontalAlignment(SwingConstants.CENTER);
-		this.setVerticalTextPosition(vtp);
-		this.setHorizontalTextPosition(SwingConstants.CENTER);
-		
-		// icon
-		if (icon != null) {			
-			int textPosition = vtp;
-			
-			int maxImageWidth;
-			int maxImageHeight;
-			
-			// The image will be centered and will fit all the cell
-			maxImageWidth = (int) (bounds.width - 2 * (borderSize + HORIZONTAL_ICON_MARGIN));
-			maxImageHeight = (int) (bounds.height - 2 * (borderSize + VERTICAL_ICON_MARGIN));
-			
-			if ((textPosition != SwingConstants.CENTER) && !texto.equals("")) {
-				
-				// The image will be set with a margin
-				this.setIconTextGap(GAP_ICON_TEXT);
-
-				maxImageWidth = bounds.width - 2
-						* (HORIZONTAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT;
-				maxImageHeight = bounds.height - 2
-						* (VERTICAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT -
-						f.getSize();
-			}
-
-			if (icon.getIconHeight() > maxImageHeight)
-				icon = new ImageIcon(icon.getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
-			if (icon.getIconWidth() > maxImageWidth)
-				icon = new ImageIcon(icon.getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
-			
-			
-			this.setIcon(icon);
-			tic.OriginalIcon = icon;			
-			
-		}
-		// alternativeIcon
-		if (alternativeIcon != null) {
-			int textPosition = vtp;
-			
-			int maxAImageWidth;
-			int maxAImageHeight;
-			
-			
-			// The image will be centered and will fit all the cell
-			maxAImageWidth = bounds.width - 2 * ((int) borderSize + HORIZONTAL_ICON_MARGIN);
-			maxAImageHeight = bounds.height - 2 * ((int) borderSize + VERTICAL_ICON_MARGIN);
-			
-			if ((textPosition != SwingConstants.CENTER) && !texto.equals("")) {
-				// The image will be set with a margin
-				this.setIconTextGap(GAP_ICON_TEXT);
-
-				maxAImageWidth = bounds.width - 2
-						* (HORIZONTAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT;
-				maxAImageHeight = bounds.height - 2
-						* (VERTICAL_ICON_MARGIN + (int) borderSize) - GAP_ICON_TEXT -
-						f.getSize();
-			}
-
-			if (alternativeIcon.getIconHeight() > maxAImageHeight)
-				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(-1,
-						maxAImageHeight, Image.SCALE_DEFAULT));
-			if (alternativeIcon.getIconWidth() > maxAImageWidth)
-				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(
-						maxAImageWidth, -1, Image.SCALE_DEFAULT));
-			
-			tic.AlternativeIcon = alternativeIcon;
-		}
-		
-		this.icon = icon;
-		
-		return this;
-	}*/
 	
 	public TInterpreterCell setAttributes2(String id, Rectangle bounds, String texto, Font f, Color textColor, ImageIcon icon){
 		
@@ -545,5 +397,17 @@ public class TInterpreterCell extends JButton{
 		return this;
 	}
 	
-	
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+
+		// Draw the gradient
+		if (!transparentBackground && gradientColor != null) {
+			setOpaque(false);
+			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(),
+					getHeight(), gradientColor, true));
+			g2.fillRect(0, 0, getWidth(), getHeight());
+		}
+
+		super.paint(g);
+	}
 }

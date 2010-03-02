@@ -24,42 +24,42 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.CellViewRenderer;
 
-/**
+*//**
  * Implementation of a <code>TInterpreterTextAreaView</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterTextAreaView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TTextAreaRendered</code> that displays the <code>TTextArea</code> of this view.
-	 */
+	 *//*
     public static transient TInterpreterTextAreaRenderer renderer = new TInterpreterTextAreaRenderer();
 	
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterTextAreaView</code>.
-	 */ 
+	 *//* 
     public TInterpreterTextAreaView() {
         super();
     }
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterTextAreaView</code> for the specified <code>textArea</code>.
 	 * 
 	 * @param textArea The specified <code>textArea</code>
-	 */   
+	 *//*   
     public TInterpreterTextAreaView(Object textArea) {
         super(textArea);
     }
     
-    /* (non-Javadoc)
+     (non-Javadoc)
      * @see org.jgraph.graph.AbstractCellView#getRenderer()
-     */
+     
     public TInterpreterTextAreaRenderer getmyRender()
     {
 		return renderer;
@@ -70,3 +70,4 @@ public class TInterpreterTextAreaView extends TInterpreterComponentView {
         return renderer;
     }
 }
+*/

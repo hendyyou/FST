@@ -36,7 +36,7 @@ import javax.swing.DefaultComboBoxModel;
  * @version 1.0 Nov 20, 2006
  */
 public class TBorderSizeComboBox extends TComboBox {
-	// The posible combo box list border sizes
+	// The possible combo box list border sizes
 	private static Object[] borderSizes = { new Integer(0), new Integer(1),
 			new Integer(2), new Integer(3), new Integer(4), new Integer(5),
 			new Integer(6), new Integer(7), new Integer(8), new Integer(9),
@@ -74,7 +74,11 @@ public class TBorderSizeComboBox extends TComboBox {
 	 * @return The selected <code>borderSize</code>
 	 */	
 	public int getBorderSize() {
-		return ((Integer)getSelectedItem()).intValue();
+		try{
+			return ((Integer)getSelectedItem()).intValue();
+		}catch (Exception e){
+			return DEFAULT_BORDER_SIZE;
+		}		
 	}
 
 	/**

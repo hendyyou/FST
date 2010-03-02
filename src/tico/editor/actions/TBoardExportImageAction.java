@@ -90,7 +90,7 @@ public class TBoardExportImageAction extends TEditorAbstractAction {
 				" " + fileType.toUpperCase());
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.setSelectedFile(new File(getEditor().getCurrentBoard()
-				.getName() + "." + fileType));
+				.getBoardName() + "." + fileType));
 		fileChooser.addChoosableFileFilter(new CustomFilter(fileType));
 		fileChooser.setAcceptAllFileFilterUsed(false);
 

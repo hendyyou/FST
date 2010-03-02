@@ -27,25 +27,35 @@
  */
 package tico.interpreter.components;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import javax.swing.JButton;
+
+import org.jgraph.graph.GraphConstants;
 
 public class TInterpreterOval extends JButton {
 
 	Color borderColorOval;
 	int borderSizeOval;
 	Color backgroundColorOval;
+	Color gradientColorOval;
 	int widthOval;
 	int heightOval;
+	boolean transparentBackgroundOval;
 
-  public TInterpreterOval(Color borderColor, float borderSize, Rectangle bounds, Color backgroundColor ) {
+  public TInterpreterOval(Color borderColor, float borderSize, Rectangle bounds, Color backgroundColor, Color gradientColor, boolean transparentBackground) {
     super();
     borderColorOval = borderColor;
     borderSizeOval = (int)borderSize;
     backgroundColorOval = backgroundColor;
+    gradientColorOval = gradientColor;
+    transparentBackgroundOval = transparentBackground;
     widthOval=bounds.width;
     heightOval=bounds.height;
     this.setLocation(bounds.x, bounds.y);
@@ -54,15 +64,63 @@ public class TInterpreterOval extends JButton {
     setContentAreaFilled(false);
     }
   
-  protected void paintComponent(Graphics g) {
+  public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Dimension dimension = getSize();
+				
+		if (!transparentBackgroundOval) {
+			g.setColor(backgroundColorOval);
+			if (gradientColorOval != null) {
+				setOpaque(false);
+				g2.setPaint(new GradientPaint(0, 0, backgroundColorOval,
+						getWidth(), getHeight(), gradientColorOval, true));
+			}
+			g.fillOval(borderSizeOval - 1, borderSizeOval - 1,
+					dimension.width - 2*borderSizeOval,
+					dimension.height - 2*borderSizeOval);
+		}
+		
+		setBorder(null);
+		setOpaque(false);
+		super.paint(g);
+		
+		if (borderColorOval != null) {
+			g.setColor(borderColorOval);
+			g2.setStroke(new BasicStroke(borderSizeOval));
+			g.drawOval(borderSizeOval - 1, borderSizeOval - 1,
+					dimension.width - 2*borderSizeOval,
+					dimension.height - 2*borderSizeOval);
+		}else{
+			if (gradientColorOval!=null){
+				setOpaque(false);
+				g2.setPaint(new GradientPaint(0, 0, backgroundColorOval,
+						getWidth(), getHeight(), gradientColorOval, true));
+				g.fillOval(0, 0, dimension.width, dimension.height);
+				
+			}else{
+				g.setColor(backgroundColorOval);
+				g.fillOval(0, 0, dimension.width, dimension.height);
+			}		
+		}
+		
+	}
+  
+ /* protected void paintComponent(Graphics g) {
 	  g.setColor(borderColorOval);
 	  g.fillOval(0,0,widthOval-1,heightOval-1);
 	  super.paintComponent(g);
     }
 
   protected void paintBorder(Graphics g) {
-	  g.setColor(backgroundColorOval);
+	  Graphics2D graphics2 = (Graphics2D) g;
+	  if (gradientColorOval!=null){
+		  graphics2.setPaint(new GradientPaint(0, 0, backgroundColorOval, widthOval, heightOval, gradientColorOval, true));
+	  }
+	  else{
+		  g.setColor(backgroundColorOval);
+	  }
 	  g.fillOval(borderSizeOval, borderSizeOval, widthOval-2*borderSizeOval-1,heightOval-2*borderSizeOval-1);
 	 
-    }
+    }*/
   }

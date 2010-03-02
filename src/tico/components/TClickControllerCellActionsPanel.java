@@ -114,9 +114,9 @@ public class TClickControllerCellActionsPanel extends JPanel {
 		// Place the components in the panel
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		// Place selectBoardPanel
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 0);
+		// Place selectActionPanel
+		c.fill = GridBagConstraints.CENTER;
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 0;
 		add(selectActionPanel, c);
@@ -126,7 +126,9 @@ public class TClickControllerCellActionsPanel extends JPanel {
 	// Creates the selectActionPanel and its internal components
 	private void createSelectActionPanel(ArrayList boardList) {
 		selectActionPanel = new JPanel();
-		selectActionPanel.setLayout(new GridLayout(5, 4));
+		GridLayout layoutActionPanel = new GridLayout(4,4);
+		layoutActionPanel.setHgap(10);
+		selectActionPanel.setLayout(layoutActionPanel);
 		
 		// Create icons for radio buttons
 		
@@ -156,6 +158,11 @@ public class TClickControllerCellActionsPanel extends JPanel {
 				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
 		returnIcon.setIcon(back);
 		
+		JLabel homeIcon = new JLabel();
+		ImageIcon home = new ImageIcon((TResourceManager.getImageIcon("controller-home.png")).getImage().
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+		homeIcon.setIcon(home);
+		
 		JLabel stopIcon = new JLabel();
 		ImageIcon stop = new ImageIcon((TResourceManager.getImageIcon("controller-stop.png")).getImage().
 				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
@@ -170,6 +177,7 @@ public class TClickControllerCellActionsPanel extends JPanel {
 		JRadioButton undoAllButton = null;
 		JRadioButton readButton = null;
 		JRadioButton returnButton = null;
+		JRadioButton homeButton = null;
 		JRadioButton stopButton = null;
 		
 		for (int i=0; i<boardList.size();i++){
@@ -205,6 +213,12 @@ public class TClickControllerCellActionsPanel extends JPanel {
 					public void actionPerformed(ActionEvent arg0) {
 						controllerCellText.setText(TLanguage.getString("TInterpreterReturnAction.NAME"));
 					}});
+			}else if (action.equals(TLanguage.getString("TInterpreterHomeAction.NAME"))){
+				homeButton = new JRadioButton(action, getTextField().getText().equals(TLanguage.getString("TInterpreterHomeAction.NAME")));
+				homeButton.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent arg0) {
+						controllerCellText.setText(TLanguage.getString("TInterpreterHomeAction.NAME"));
+					}});
 			}else if (action.equals(TLanguage.getString("TInterpreterStopAction.NAME"))){
 				stopButton = new JRadioButton(action, getTextField().getText().equals(TLanguage.getString("TInterpreterStopAction.NAME")));
 				stopButton.addActionListener(new ActionListener(){
@@ -219,39 +233,31 @@ public class TClickControllerCellActionsPanel extends JPanel {
 		actions.add(undoAllButton);
 		actions.add(readButton);
 		actions.add(returnButton);
+		actions.add(homeButton);
 		actions.add(stopButton);
 		
 		// Add buttons and icons to panel
-				
-		selectActionPanel.add(exitButton);
+		
 		selectActionPanel.add(exitIcon);
-		
-		selectActionPanel.add(undoButton);
 		selectActionPanel.add(undoIcon);
-		
-		selectActionPanel.add(new JLabel(""));
-		selectActionPanel.add(new JLabel(""));
-		selectActionPanel.add(new JLabel(""));
-		selectActionPanel.add(new JLabel(""));
-		
-		selectActionPanel.add(undoAllButton);
 		selectActionPanel.add(undoAllIcon);
-		
-		selectActionPanel.add(readButton);
 		selectActionPanel.add(readIcon);
 		
-		selectActionPanel.add(new JLabel(""));
-		selectActionPanel.add(new JLabel(""));
-		selectActionPanel.add(new JLabel(""));
+		selectActionPanel.add(exitButton);
+		selectActionPanel.add(undoButton);
+		selectActionPanel.add(undoAllButton);
+		selectActionPanel.add(readButton);
+		
+		selectActionPanel.add(returnIcon);
+		selectActionPanel.add(stopIcon);
+		selectActionPanel.add(homeIcon);
 		selectActionPanel.add(new JLabel(""));
 		
 		selectActionPanel.add(returnButton);
-		selectActionPanel.add(returnIcon);
-		
-		
 		selectActionPanel.add(stopButton);
-		selectActionPanel.add(stopIcon);
-
+		selectActionPanel.add(homeButton);
+		selectActionPanel.add(new JLabel(""));
+		
 	}
 	
 

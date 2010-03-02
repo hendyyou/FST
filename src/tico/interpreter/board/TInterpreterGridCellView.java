@@ -26,43 +26,44 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.CellViewRenderer;
 
-/**
+*//**
  * Implementation of a <code>TInterpreterGridCellView</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterGridCellView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TGridCellRendered</code> that displays the <code>TGridCell</code> of this view.
-	 */
+	 *//*
 	public static transient TInterpreterCellRenderer renderer = new TInterpreterCellRenderer();
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterGridCellView</code>.
-	 */
+	 *//*
 	public TInterpreterGridCellView() {
 		super();
 	}
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterGridCellView</code> for the specified <code>gridCell</code>.
 	 * 
 	 * @param gridCell The specified <code>gridCell</code>
-	 */
+	 *//*
 	public TInterpreterGridCellView(Object gridCell) {
 		super(gridCell);
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.AbstractCellView#getRenderer()
-	 */
+	 
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}
 }
+*/

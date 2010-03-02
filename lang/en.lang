@@ -311,7 +311,7 @@ TReorderGridAction.NAME=Reorder grid
 TSelectAllAction.NAME=Select all
 TUndoAction.NAME=Undo
 
-// tico.editor.dialogs
+//tico.editor.dialogs
 TAboutDialog.TITLE=About
 TAboutDialog.EDITOR_VERSION=Tico Editor e1.0
 TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0
@@ -328,8 +328,8 @@ TBoardDialog.TITLE=Board
 TBoardDialog.TAB_PROPERTIES=Properties
 TBoardDialog.TAB_BROWSE_ORDER=Browse order
 TBoardDialog.BOARD_NAME=Name
-TBoardDialog.ERROR_EMPTY_NAME=You can not asign an empty name.
-TBoardDialog.ERROR_REPEATED_NAME=You can not asign a repeated name.
+TBoardDialog.ERROR_EMPTY_NAME=You can not assign an empty name.
+TBoardDialog.ERROR_REPEATED_NAME=You can not assign a repeated name.
 
 TCellDialog.TITLE=Cell
 TCellDialog.ID=Identifier
@@ -446,7 +446,7 @@ TIGSearchNameDialog.NAME_RESULT=Search results
 TIGManageImageAction.EMPTY=There aren't any image in the data base
 TIGManageImageAction.ERROR=Empty data base
 
-TIGDeleteKeyWordAction.ASK=Do you want to delete the selected image?
+TIGDeleteKeyWordAction.ASK=Do you want to delete the selected keyword?
 TIGDeleteKeyWordAction.NAME=Delete keyword
 
 TIGModifyImageAction.ERROR=Error modifying image
@@ -568,6 +568,7 @@ TInterpreterReadAction.NAME=Read
 TInterpreterControllerAction.NAME=Controller
 TInterpreterUndoAction.NAME=Undo
 TInterpreterUndoAllAction.NAME=Undo all
+TInterpreterHomeAction.NAME=Home
 TInterpreterValidationAction.NAME=Interpreter
 
 TInterpreterOptionDialog.NAME=Options Configurator

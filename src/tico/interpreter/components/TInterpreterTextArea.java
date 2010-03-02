@@ -29,63 +29,87 @@ package tico.interpreter.components;
 
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-
-import tico.interpreter.TInterpreterConstants;
 
 
 public class TInterpreterTextArea extends JLabel{
 	
-	public boolean backgroundTextAreaTransparent;
-	public boolean borderTextAreaTransparent;	
+	boolean transparentBackgroundTextArea;
+	Color gradientColorTextArea;
 	
 	public TInterpreterTextArea (){
 		super();
-		
 	}
-	public TInterpreterTextArea setAttributes(String id,Color borderColor, float borderSize, Color backgroundColor,  Rectangle bounds, String texto, Font f, Color textColor, int ha, int va, boolean backgroundTransparent, boolean borderTransparent){
+	
+	public TInterpreterTextArea setAttributes(String id,Color borderColor, float borderSize, Color backgroundColor, Color gradientColor,  Rectangle bounds, String texto, Font f, Color textColor, int ha, int va, boolean backgroundTransparent){
 		
-		backgroundTextAreaTransparent = backgroundTransparent;
-		borderTextAreaTransparent = borderTransparent;		
+		transparentBackgroundTextArea = backgroundTransparent;
+		gradientColorTextArea = gradientColor;
 		
-		this.setFont(f);
+		setFont(f);
 		
-		if (backgroundTextAreaTransparent){
-			this.setBackground(new Color(0,0,0,0));
+		if (backgroundColor==null){
+			setBackground(new Color(0,0,0,0));
 		}
 		else{
-			this.setOpaque(true);
-			this.setBackground(backgroundColor);
+			setOpaque(true);
+			setBackground(backgroundColor);
 		}
-		this.setForeground(textColor);
-		if (borderTextAreaTransparent){
-			this.setBorder(new LineBorder(Color.white,0));
-		}
-		else{
-			this.setBorder(new LineBorder(borderColor, (int)borderSize));
+		setBorder(null);
+		if (borderColor!=null)
+			setBorder(new LineBorder(borderColor, (int)borderSize));
+			//setBorder(new LineBorder(Color.white,0));
+		
+		setForeground(textColor);
+
+		setName(id);
+		setBounds(bounds);
+		
+		// Apply text align properties
+		String htmlBegin = "<html><body>", text="", htmlEnd = "</p></body></html>";
+		
+		setHorizontalAlignment(ha);
+		setVerticalAlignment(va);
+		
+		switch (ha) {
+		case SwingConstants.CENTER:
+			htmlBegin = htmlBegin + "<p align='center'>";
+			htmlEnd = "</p>";
+			break;
+		case SwingConstants.RIGHT:
+			htmlBegin = htmlBegin + "<p align='right'>";
+			htmlEnd = "&nbsp;</p>";
 		}
 		
-		this.setForeground(textColor);
+		if (texto!=null){
+			text = texto;
+		}
 		
-		this.setName(id);
-		this.setBounds(bounds);
-		
-		this.setText(texto);
-		this.setHorizontalAlignment(ha);
-		this.setVerticalAlignment(va);
+		this.setText(htmlBegin + text + htmlEnd);		
 
 		return this;
+	}
+
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+
+		// Draw the gradient
+		if (!transparentBackgroundTextArea && gradientColorTextArea != null ) { //&& isOpaque()
+			setOpaque(false);
+			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(),
+					getHeight(), gradientColorTextArea, true));
+			g2.fillRect(0, 0, getWidth(), getHeight());
+		}
+
+		super.paint(g);
 	}
 	
 }

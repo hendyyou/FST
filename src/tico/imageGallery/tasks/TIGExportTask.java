@@ -28,21 +28,12 @@
 
 package tico.imageGallery.tasks;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.util.Vector;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -60,8 +51,7 @@ public class TIGExportTask {
     private String myDirectoryPath;
     private boolean stop = false;
     
-    private TIGExportTask myTask = this;
-	private Vector myImages;
+    private Vector myImages;
 
     public TIGExportTask () {
         //compute length of task ...

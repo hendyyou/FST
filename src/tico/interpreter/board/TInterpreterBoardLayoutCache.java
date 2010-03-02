@@ -24,24 +24,25 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.GraphLayoutCache;
 
-/**
+*//**
  * An object that defines the view of a <code>TBoardModel</code>. This object
  * maps between model components and views and provides a set of methods to
  * change these views.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterBoardLayoutCache extends GraphLayoutCache {
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterBoardLayoutCache</code>.
-	 */
+	 *//*
 	public TInterpreterBoardLayoutCache() {
 		super(null, new TInterpreterViewFactory());
 	}
 }
+*/

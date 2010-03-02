@@ -222,6 +222,11 @@ public class TEditorMenuBar extends JMenuBar {
 		menu.add(menuItem);
 
 		menu.add(new JSeparator());
+		
+		menuItem = new TMenuItem(actionSet.getAction(TActionSet.DELETE_ACTION));
+		menuItem.setMnemonic(KeyEvent.VK_B);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		menu.add(menuItem);
 
 		menuItem = new TMenuItem(actionSet
 				.getAction(TActionSet.SELECT_ALL_ACTION));
@@ -371,12 +376,6 @@ public class TEditorMenuBar extends JMenuBar {
 		menuItem.setMnemonic(KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
 				ActionEvent.SHIFT_MASK));
-		menu.add(menuItem);
-
-		menu.add(new JSeparator());
-		menuItem = new TMenuItem(actionSet.getAction(TActionSet.DELETE_ACTION));
-		menuItem.setMnemonic(KeyEvent.VK_B);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		menu.add(menuItem);
 
 		add(menu);

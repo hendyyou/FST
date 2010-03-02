@@ -28,30 +28,26 @@
 
 package tico.imageGallery.components;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.Dimension;
-import java.awt.Color;
-
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-
 import tico.components.TButton;
-import tico.components.TComboBox;
 import tico.configuration.TLanguage;
-import tico.editor.TEditor;
 import tico.imageGallery.dataBase.TIGDataBase;
 import tico.imageGallery.tasks.TIGTableModel;
 

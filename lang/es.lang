@@ -8,7 +8,7 @@ INFO=Información
 // tico
 TLauncher.LANGUAGE_ERROR=Se ha producido un error cargando el idioma.
 TLauncher.NOT_EXIST_FILE_ERROR=Error al leer el proyecto, el fichero seleccionado no existe.
-TLauncher.INVALID_FILE_ERROR=Error al leer el proyecto, el fichero seleccionado no es un fichero de projecto para Tico.
+TLauncher.INVALID_FILE_ERROR=Error al leer el proyecto, el fichero seleccionado no es un proyecto de Tico.
 
 // tico.board.components
 TCellView.INSERT_INTO=Insertar en
@@ -149,7 +149,7 @@ TEditorMenuBar.VIEW_MENU=Ver
 TEditorMenuBar.TOOLS_MENU=Herramientas
 TEditorMenuBar.BOARD_MENU=Tablero
 TEditorMenuBar.PROJECT_MENU=Proyecto
-TEditorMenuBar.GALLERY_MENU=Galería de Imágenes
+TEditorMenuBar.GALLERY_MENU=Galería de pictogramas
 TEditorMenuBar.IMAGES_MENU=Imágenes
 TEditorMenuBar.HELP_MENU=Ayuda
 TEditorMenuBar.INTERPRET=Interpretar
@@ -215,7 +215,7 @@ TChangeGridOrderAction.ROWS=filas
 
 TDeleteAction.NAME=Borrar
 TDeleteAction.DELETION=Borrado
-TDeleteAction.ASK_DELETE_GRIDS_BEGIN=Las cuadriculas con alguna celda seleccionada
+TDeleteAction.ASK_DELETE_GRIDS_BEGIN=Las cuadrículas con alguna celda seleccionada
 TDeleteAction.ASK_DELETE_GRIDS_END=también serán borradas. ¿Estás seguro?
 
 TInsertGridCellAction.CHOOSE_POSITION=Elige la posición de la nueva celda:
@@ -446,7 +446,7 @@ TIGSearchNameDialog.NAME_RESULT=Resultados de la búsqueda
 TIGManageImageAction.EMPTY=No hay imágenes en la base de datos
 TIGManageImageAction.ERROR=Base de datos vacía
 
-TIGDeleteKeyWordAction.ASK=¿Desea eliminar la categoría seleccionada?
+TIGDeleteKeyWordAction.ASK=¿Desea eliminar el término clave seleccionado?
 TIGDeleteKeyWordAction.NAME=Eliminar término clave
 
 TIGModifyImageAction.ERROR=Error al modificar la imagen
@@ -554,23 +554,24 @@ TInterpreterExitAction.NAME=Salir
 TInterpreterRunAction.NAME=Comenzar
 TInterpreterReturnAction.NAME=Volver
 TInterpreterStopAction.NAME=Parar
-TInterpreterMenuBar.VIEW_MENU=Ver
-TInterpreterLanguaje.NAME=Selección de Idioma
+TInterpreterMenuBar.VIEW_MENU=Configuración
+TInterpreterLanguaje.NAME=Preferencias
 TInterpreterMenuBar.MODE=Modo de Ratón
 TInterpreter.VALIDATION_MENU=Validación
 TEditorMenuBar.VALIDATE=Validar opciones del intérprete
 
 TInterpreterMouseMode.MOUSEBAR=Barrido
 TInterpreterMouseMode.DIRECTSELECTION=Selección Directa
-TInterpreterOptions.NAME=Opciones del Intérprete
+TInterpreterOptions.NAME=Opciones del intérprete
 TInterpreterRead.NAME=Leer
 TInterpreterReadAction.NAME=Leer
 TInterpreterControllerAction.NAME=Controlador
 TInterpreterUndoAction.NAME=Borrar celda
 TInterpreterUndoAllAction.NAME=Borrar celdas
+TInterpreterHomeAction.NAME=Inicio
 TInterpreterValidationAction.NAME=Intérprete
 
-TInterpreterOptionDialog.NAME=Configurador de Opciones
+TInterpreterOptionDialog.NAME=Opciones del intérprete
 TInterpreterOptionDialog.CURSOR_IMAGE=Imagen del cursor
 TInterpreterOptionDialog.MAX_ACCUMULATED_CELLS=Número máximo de celdas acumuladas
 TInterpreterOptionDialog.WAIT_CURSOR=Espera del cursor en segundos

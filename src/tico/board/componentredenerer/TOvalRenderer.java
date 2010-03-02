@@ -94,7 +94,7 @@ public class TOvalRenderer extends TComponentRenderer {
 				g2.setPaint(new GradientPaint(0, 0, backgroundColor,
 						getWidth(), getHeight(), gradientColor, true));
 			}
-			g.fillOval(borderWidth - 1, borderWidth - 1,
+			g.fillOval(borderWidth, borderWidth,
 					dimension.width - 2*borderWidth,
 					dimension.height - 2*borderWidth);
 		}

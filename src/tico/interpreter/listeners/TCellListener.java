@@ -62,7 +62,7 @@ public class TCellListener implements MouseListener {
 
 	public void mouseClicked(MouseEvent arg0) {
 		
-		if ((interpreter.run==1)){
+		if ((TInterpreter.run==1)){
 			
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 			
@@ -145,7 +145,7 @@ public class TCellListener implements MouseListener {
 					textArea.setText(originalText);
 					TInterpreter.interpretArea.removeAll();
 					//No vuelvo al estado inicial para que la celda que envía texto permanezca seleccionada
-					TInterpreter.getCurrentBoard().paintBoard(TInterpreter.interpretArea);
+					TInterpreter.getCurrentBoard().paintBoard(TInterpreter.interpretArea, false);
 					TInterpreter.interpretArea.repaint();
 				}
 			}
@@ -161,14 +161,15 @@ public class TCellListener implements MouseListener {
 					interpreter.getProject().setCellToReturn((((TInterpreterCell)arg0.getSource()).getName()));
 					
 					interpreter.getProject().getPositionCellToReturnByName(interpreter.getProject().getBoardToReturn(), interpreter.getProject().getCellToReturn());
-										
+					
+					//Repinta el tablero, para que se quede en el estado inicial
+					interpreter.repaintCurrentBoard(false);
+					
 					interpreter.changeBoard(cell.getBoardToGo());		
 					interpreter.getProject().setBoardChanged(true);
 					interpreter.getProject().setBoardToGo(cell.getBoardToGo());
-										
+					
 					interpreter.getProject().setCurrentBoard(cell.getBoardToGo());
-					//Repinta el tablero, para que se quede en el estado inicial
-					interpreter.repaintCurrentBoard();
 			}
 			
 			if (cell.getCommand()!=null){
@@ -195,7 +196,7 @@ public class TCellListener implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		
-		if ((interpreter.run==1)){
+		if ((TInterpreter.run==1)){
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 			//Default border attributes
 			Color colorLine = Color.red;
@@ -219,7 +220,7 @@ public class TCellListener implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		
-		if ((interpreter.run==1)){
+		if ((TInterpreter.run==1)){
 			
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 

@@ -27,33 +27,63 @@
  */
 package tico.interpreter.components;
 
-
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
 public class TInterpreterLabel extends JLabel{
+	
+	boolean transparentBackgroundLabel;
+	Color gradientColorLabel;
+	
 	public TInterpreterLabel (){
 		super();
 	}
 	
-	public TInterpreterLabel setAttributes(Color borderColor, float borderSize, Color backgroundColor, Rectangle r, String texto, Font f, Color textColor){
-		this.setLocation(r.x, r.y);
+	public TInterpreterLabel setAttributes(Color borderColor, float borderSize, 
+			Color backgroundColor, Color gradientColor, Rectangle r, String texto, Font f, 
+			Color textColor, boolean transparentBackground){
 		
-		this.setSize(r.width, r.height);
+		transparentBackgroundLabel = transparentBackground;
+		gradientColorLabel = gradientColor;
+		
+		this.setLocation(r.x, r.y);		
+		this.setSize(r.width, r.height);		
+		
+		if (backgroundColor!=null){
+			setOpaque(true);
+			setBackground(backgroundColor);
+		}
+		setBorder(null);
+		if (borderColor!=null)
+			setBorder(new LineBorder(borderColor, (int)borderSize));
+		
 		this.setForeground(textColor);
-		this.setBorder(new LineBorder(borderColor, (int)borderSize));
 		this.setHorizontalAlignment(CENTER);
 		this.setVerticalAlignment(CENTER);
-		this.setFont(f);
-		
+		this.setFont(f);		
 		this.setText(texto);
-		this.setOpaque(true);
-		this.setBackground(backgroundColor);
-		
+
 		return this;
 	}
+	
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+
+		// Draw the gradient
+		if (!transparentBackgroundLabel && gradientColorLabel != null) {
+			setOpaque(false);
+			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(),
+					getHeight(), gradientColorLabel, true));
+			g2.fillRect(0, 0, getWidth(), getHeight());
+		}
+		super.paint(g);
+	}
+
 }

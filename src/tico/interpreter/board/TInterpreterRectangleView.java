@@ -24,45 +24,46 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.CellViewRenderer;
 
 import tico.board.componentredenerer.TRectangleRenderer;
 
-/**
+*//**
  * Implementation of a <code>TInterpreterRectangleView</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterRectangleView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TRectangleRendered</code> that displays the <code>TRectangle</code> of this view.
-	 */
+	 *//*
 	public static transient TRectangleRenderer renderer = new TRectangleRenderer();
 	
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterRectangleView</code>.
-	 */
+	 *//*
 	public TInterpreterRectangleView() {
 		super();
 	}
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterRectangleView</code> for the specified <code>rectangle</code>.
 	 * 
 	 * @param rectangle The specified <code>rectangle</code>
-	 */
+	 *//*
 	public TInterpreterRectangleView(Object rectangle) {
 		super(rectangle);
 	}
 	
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.AbstractCellView#getRenderer()
-	 */
+	 
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}
 }
+*/

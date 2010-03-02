@@ -54,7 +54,7 @@ public class TInterpreterAccumulatedCell extends JButton{
 		this.setForeground(cell.getForeground());
 		this.setBorder(new LineBorder(cell.getBorderColor(), (int)cell.getBorderSize()));
 		this.sound = cell.getSoundPath();
-		this.setSize(100, 100);
+		this.setSize(90, 90);
 		//this.setPreferredSize(new Dimension(90,90));
 		this.setContentAreaFilled(false);
 		

@@ -28,23 +28,45 @@
 package tico.interpreter.components;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 public class TInterpreterRectangle extends JButton{
+	
+	boolean transparentBackgroundRectangle;
+	Color gradientColorRectangle;
+	
 	public TInterpreterRectangle (){
-		super();
+		super();		
 	}
 
-	public TInterpreterRectangle setAttributes(Color borderColor, Rectangle r, float borderSize, Color backgroundColor){
+	public TInterpreterRectangle setAttributes(Color borderColor, Rectangle r, float borderSize, Color backgroundColor, Color gradientColor, boolean transparentBackground){
 		this.setBounds(r);
 		this.setBackground(backgroundColor);
-		this.setBorder(new LineBorder(borderColor, (int)borderSize));
+		transparentBackgroundRectangle = transparentBackground;
+		gradientColorRectangle = gradientColor;
+		setBorder(null);
+		if (borderColor!=null)
+			this.setBorder(new LineBorder(borderColor, (int)borderSize));
 		this.setEnabled(false);
 		return this;
 	}
 	
-	
+	public void paint(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+
+		// Draw the gradient
+		if (!transparentBackgroundRectangle && gradientColorRectangle != null) {
+			setOpaque(false);
+			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(),
+					getHeight(), gradientColorRectangle, true));
+			g2.fillRect(0, 0, getWidth(), getHeight());
+		}
+		super.paint(g);
+	}
 }

@@ -24,47 +24,47 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.CellViewRenderer;
 
 import tico.board.componentredenerer.TRoundRectRenderer;
 
-/**
+*//**
  * Implementation of a <code>TCell</code> view.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterRoundRectView extends TInterpreterComponentView {
-	/**
+	*//**
 	 * <code>TRoundRectRendered</code> that displays the <code>TRoundRect</code> of this view.
-	 */
+	 *//*
 	public static transient TRoundRectRenderer renderer = new TRoundRectRenderer();
 	
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterRoundRectView</code>.
-	 */
+	 *//*
 	public TInterpreterRoundRectView() {
 		super();
 	}
 
-	/**
+	*//**
 	 * Creates a new <code>TInterpreterRoundRectView</code> for the specified <code>roundRect</code>.
 	 * 
 	 * @param roundRect The specified <code>roundRect</code>
-	 */
+	 *//*
 	public TInterpreterRoundRectView(Object roundRect) {
 		super(roundRect);
 	}
 
-	/**
+	*//**
 	 * Calculates an appropriate arc for the corners of the rectangle
 	 * for boundary size cases of width and height.
 	 * 
 	 * @return The calculated arc size
-	 */
+	 *//*
 	public static int getArcSize(int width, int height) {
 		int arcSize;
 
@@ -88,10 +88,10 @@ public class TInterpreterRoundRectView extends TInterpreterComponentView {
 		return arcSize;
 	}
 
-	/* (non-Javadoc)
+	 (non-Javadoc)
 	 * @see org.jgraph.graph.AbstractCellView#getRenderer()
-	 */
+	 
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}
-}
+}*/

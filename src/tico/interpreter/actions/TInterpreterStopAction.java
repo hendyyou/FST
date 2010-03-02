@@ -53,8 +53,8 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction
 		
 		interpreter=getInterpreter();
 		interpreter.TInterpreterRestoreCursor();
-		if (interpreter.run==1){
-			interpreter.run=0;
+		if (TInterpreter.run==1){
+			TInterpreter.run=0;
 			
 			//Kill All Threads
 			TInterpreterRun.fin=false;
@@ -85,7 +85,7 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction
 			
 		}
 		
-		interpreter.repaintCurrentBoard();
+		interpreter.repaintCurrentBoard(false);
 
 	}
 					

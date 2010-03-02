@@ -5,7 +5,7 @@ Name Tico
 # Defines
 !define REGKEY "SOFTWARE\$(^Name)"
 
-!define VERSION "1.0"
+!define VERSION "e1.0"
 !define TICO_HOME "C:\Tico"
 !define COMPANY "Universidad de Zaragoza - CPEE Alborada"
 !define URL ""

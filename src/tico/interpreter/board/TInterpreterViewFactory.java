@@ -24,7 +24,7 @@
  * 		You should have received a copy of the GNU General Public License
  * 		along with this program; if not, write to the Free Software Foundation,
  * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */
+ 
 package tico.interpreter.board;
 
 import org.jgraph.graph.DefaultCellViewFactory;
@@ -39,21 +39,21 @@ import tico.board.components.TRectangle;
 import tico.board.components.TRoundRect;
 import tico.board.components.TTextArea;
 
-/**
+*//**
  * Implementation of a cell view factory that returns the default view for
  * each component type.
  *
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ *//*
 public class TInterpreterViewFactory extends DefaultCellViewFactory {
-	/**
+	*//**
 	 * Constructs a <code>TInterpreterComponentView</code> view for the specified
 	 * <code>component</code>.
 	 * 
 	 * @param component The specified <code>component</code>
 	 * @return The constructed <code>TInterpreterComponentView</code>
-	 */
+	 *//*
 	protected VertexView createVertexView(Object component) {
 				
 		if (component instanceof TCell)
@@ -75,3 +75,4 @@ public class TInterpreterViewFactory extends DefaultCellViewFactory {
 		return super.createVertexView(component);
 	}
 }
+*/

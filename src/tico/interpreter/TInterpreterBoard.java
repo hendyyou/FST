@@ -31,6 +31,9 @@ package tico.interpreter;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.InputEvent;
 import java.io.BufferedReader;
@@ -81,6 +84,7 @@ public class TInterpreterBoard {
 	private String soundPath = null;
 	private String imagePath = null;
 	private Color backgroundColor = null;
+	private Color gradientColor = null;
 	private int imageResizeStyle;
 	
 	private ArrayList<TInterpreterLine> lineList;
@@ -148,6 +152,14 @@ public class TInterpreterBoard {
 
 	public void setBackgroundColor(Color backgroundColor) {
 		this.backgroundColor = backgroundColor;
+	}
+	
+	public Color getGradientColor() {
+		return gradientColor;
+	}
+
+	public void setGradientColor(Color gradientColor) {
+		this.gradientColor = gradientColor;
 	}
 
 	public int getImageResizeStyle() {
@@ -269,8 +281,8 @@ public class TInterpreterBoard {
 			cell.setIcon(cell.getDefaultIcon());
 		}
 	}
-	
-	public void paintBoard(JPanel interpreterArea){
+	//playBoardSound indica si el sonido de fondo del tablero debe sonar
+	public void paintBoard(JPanel interpreterArea, boolean playBoardSound){
 		TInterpreter.setCurrentBoard(this);
 		
 		//load board components
@@ -301,11 +313,16 @@ public class TInterpreterBoard {
 		
 		
 		// load board attributes
-		Dimension boardSize= new Dimension((int)width, (int)height);
+		Dimension boardSize = new Dimension((int)width, (int)height);
 		interpreterArea.setPreferredSize(boardSize);
 		
 		if (backgroundColor!= null){
 			interpreterArea.setBackground(backgroundColor);
+		}
+		
+		if (gradientColor!=null){
+			GradientPanel gradientPanel = new GradientPanel(backgroundColor, gradientColor);
+			interpreterArea.add(gradientPanel);
 		}
 		
 		if (this.imagePath!= null){
@@ -370,7 +387,6 @@ public class TInterpreterBoard {
 				if (getImageResizeStyle()==0){
 					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
 				}
-				
 			}	
 			
 			backgroundImageContainer.setIcon((Icon) (imageFile));
@@ -378,14 +394,17 @@ public class TInterpreterBoard {
 			backgroundImageContainer.setLocation(1, 1);
 			interpreterArea.add(backgroundImageContainer);			
 		}
+		//Return focus to interpret area for each change board in order to be able to capture escape event
 		//Devolvemos el foco al area de interpretación cada vez que cargamos un panel
 		//para poder capturar el ESC
-		TInterpreterConstants.interpreter.interpretArea.requestFocusInWindow();
-				
-		if (this.soundPath!= null){			
+		interpreterArea.updateUI();
+		TInterpreter.interpretArea.requestFocusInWindow();
+
+		if (TInterpreter.run==1 && this.soundPath!= null && playBoardSound){
 			TInterpreterBoardSound boardSound = new TInterpreterBoardSound(this.soundPath);
 			SwingUtilities.invokeLater(boardSound);
-		}
+		}	
+		
 	}
 
 	public void initializeArrays(){
@@ -443,4 +462,29 @@ public class TInterpreterBoard {
 	public void insertComponent(Object component){
 		repaintOrderedComponents.add(component);
 	}
+	
+	class GradientPanel extends JPanel{
+		private Color startColor;
+		private Color endColor;
+
+		public GradientPanel(Color startColor, Color endColor){
+			super();
+			this.startColor = startColor;
+			this.endColor = endColor;
+			this.setSize((int)width-2,(int)height-2);
+			this.setLocation(1, 1);
+		}
+
+		public void paint(Graphics g) {	
+			int panelHeight = getHeight();
+			int panelWidth = getWidth();
+			GradientPaint gradientPaint = new GradientPaint(0, 0, startColor, panelWidth, panelHeight, endColor);
+			if(g instanceof Graphics2D){
+				Graphics2D graphics2D = (Graphics2D)g;
+				graphics2D.setPaint(gradientPaint);
+				graphics2D.fillRect(0, 0, panelWidth, panelHeight);
+			}
+		}
+	}
+	
 }

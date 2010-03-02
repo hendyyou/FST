@@ -102,15 +102,15 @@ public class TTextAreaRenderer extends TComponentRenderer {
 		Color foregroundColor = TBoardConstants.getForeground(map);
 		setForeground((foregroundColor != null) ? foregroundColor
 				: TBoardConstants.DEFAULTFOREGROUND);
-
+		
 		// Apply text align properties
 		String htmlBegin = "<html><body>", text, htmlEnd = "</p></body></html>";
 
 		verticalAlignment = TBoardConstants.getVerticalAlignment(map);
 		horizontalAlignment = TBoardConstants.getHorizontalAlignment(map);
-		// TUNE Correct vertical alingment html problems
-		setVerticalAlignment(verticalAlignment);
+		// TUNE Correct vertical alignment html problems		
 		setHorizontalAlignment(horizontalAlignment);
+		setVerticalAlignment(verticalAlignment);		
 
 		switch (TBoardConstants.getHorizontalAlignment(map)) {
 		case SwingConstants.CENTER:
@@ -149,7 +149,7 @@ public class TTextAreaRenderer extends TComponentRenderer {
 		super.paint(g);
 
 		if (id != null) {
-			// Draw the id in the opposite possition of the text
+			// Draw the id in the opposite position of the text
 			if (verticalAlignment != SwingConstants.BOTTOM)
 				topIdPosition = height - (6 + borderWidth);
 			else

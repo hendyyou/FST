@@ -99,6 +99,7 @@ public class TControllerCellDialog extends TComponentDialog {
 	private ImageIcon undoAllIcon;
 	private ImageIcon readIcon;
 	private ImageIcon returnIcon;
+	private ImageIcon homeIcon;
 	private ImageIcon stopIcon;
 	
 	String exitFilePath;
@@ -106,6 +107,7 @@ public class TControllerCellDialog extends TComponentDialog {
 	String undoAllFilePath;
 	String readFilePath;
 	String returnFilePath;
+	String homeFilePath;
 	String stopFilePath;
 	
 	/**
@@ -231,6 +233,7 @@ public class TControllerCellDialog extends TComponentDialog {
 		controllerActionsList.add(TLanguage.getString("TInterpreterUndoAllAction.NAME"));
 		controllerActionsList.add(TLanguage.getString("TInterpreterReadAction.NAME"));
 		controllerActionsList.add(TLanguage.getString("TInterpreterReturnAction.NAME"));
+		controllerActionsList.add(TLanguage.getString("TInterpreterHomeAction.NAME"));
 		controllerActionsList.add(TLanguage.getString("TInterpreterStopAction.NAME"));
 		
 		//Create the icon paths
@@ -241,6 +244,7 @@ public class TControllerCellDialog extends TComponentDialog {
 		undoAllFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-undo-all.png";
 		readFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-read.png";
 		returnFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-return.png";
+		homeFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-home.png";
 		stopFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-stop.png";
 
 		clickControllerCellActionPanel = new TClickControllerCellActionsPanel(controllerActionsList, textField);
@@ -278,6 +282,8 @@ public class TControllerCellDialog extends TComponentDialog {
 				textField = new TTextField(TLanguage.getString("TInterpreterReadAction.NAME"));
 			}else if (actionCode == TBoardConstants.RETURN_ACTION_CODE){
 				textField = new TTextField(TLanguage.getString("TInterpreterReturnAction.NAME"));
+			}else if (actionCode == TBoardConstants.HOME_ACTION_CODE){
+				textField = new TTextField(TLanguage.getString("TInterpreterHomeAction.NAME"));
 			}else if (actionCode == TBoardConstants.STOP_ACTION_CODE){
 				textField = new TTextField(TLanguage.getString("TInterpreterStopAction.NAME"));
 			}
@@ -368,6 +374,16 @@ public class TControllerCellDialog extends TComponentDialog {
 			}
 			TBoardConstants.setIcon(attributeMap, returnIcon);
 			TBoardConstants.setActionCode(attributeMap, TBoardConstants.RETURN_ACTION_CODE);
+		}
+		else if (textField.getText().equals(TLanguage.getString("TInterpreterHomeAction.NAME"))){
+			try {
+				f = TFileHandler.importFile(homeFilePath);
+				homeIcon = new ImageIcon(f.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			TBoardConstants.setIcon(attributeMap, homeIcon);
+			TBoardConstants.setActionCode(attributeMap, TBoardConstants.HOME_ACTION_CODE);
 		}
 		else if (textField.getText().equals(TLanguage.getString("TInterpreterStopAction.NAME"))){
 			try {
