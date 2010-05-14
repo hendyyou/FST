@@ -163,7 +163,7 @@ public class TClickCellActionsPanel extends JPanel {
 	public void setFollowingBoard(TBoard followingBoard) {
 		followingBoardComboBox.setSelectedItem(followingBoard);		
 	}
-//Acciones
+
 	/**
 	 * Returns the selected <code>accumulated</code> value.
 	 * 

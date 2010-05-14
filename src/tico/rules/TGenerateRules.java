@@ -429,9 +429,10 @@ public class TGenerateRules{
 		attributeList.add(new TAttribute(TLanguage.getString("Rules."
 				+ "INTDELAY"), "intDelay", (Object) intDelay));
 		
-		if (interpreter.getActivateBrowsingMode()==0)
-		intMouseBar = false;
-		else intMouseBar = true;
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE))
+			intMouseBar = true;
+		else intMouseBar = false;
+
 		attributeList.add(new TAttribute(TLanguage.getString("Rules."
 				+ "INTMOUSEBAR"), "intMouseBar", (Object) intMouseBar));
 		

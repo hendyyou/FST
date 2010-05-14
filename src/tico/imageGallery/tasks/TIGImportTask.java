@@ -59,8 +59,6 @@ public class TIGImportTask {
     private boolean stop = false;
     //private File imageFile;
         
-    private TIGImportTask myTask = this;
-
     public TIGImportTask () {
         //compute length of task ...
         //in a real program, this would figure out
@@ -172,8 +170,8 @@ public class TIGImportTask {
 			        	 
 			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.REPLACE_IMAGES"))){
 		    			 //Remplace
-			        		 Vector aux = new Vector();
-				    		 aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
+			        		 //Vector aux = new Vector();
+			        		 Vector<Vector<String>> aux = TIGDataBase.imageSearchByName(name.substring(0, name.lastIndexOf('.')));
 		    			     if (aux.size()!=0){
 		    			    	 int idImage = TIGDataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
 		    			    	 TIGDataBase.deleteAsociatedOfImage(idImage);
@@ -184,12 +182,12 @@ public class TIGImportTask {
 			        	 //Rename if image exists on data base
 			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.ADD_IMAGES"))){
 			        	    Vector aux = new Vector();
-		    				aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.')));
+		    				aux = TIGDataBase.imageSearchByName(name.substring(0, name.lastIndexOf('.')));
 		    				int fileCount = 0;
 		    				if (aux.size()!=0){
 			    				while (aux.size()!=0){
 			    					fileCount++;
-			    					aux = TIGDataBase.imageSearch(name.substring(0, name.lastIndexOf('.'))+"_"+fileCount);			    					
+			    					aux = TIGDataBase.imageSearchByName(name.substring(0, name.lastIndexOf('.'))+"_"+fileCount);			    					
 			    				}
 			    				pathDst = pathDst + name.substring(0, name.lastIndexOf('.')) + '_' + fileCount + 
 	    							name.substring(name.lastIndexOf('.'),name.length());

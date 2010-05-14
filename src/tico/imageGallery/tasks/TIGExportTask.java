@@ -110,42 +110,19 @@ public class TIGExportTask {
     public class ActualTask {
     	
         public ActualTask (TEditor editor,TIGDataBase dataBase, String directoryPath, Vector images) {
-                  
-    		//Copies the images from the source directory to the directory Images
-    	
-    		File myDirectory = new File(directoryPath);
-    		
-           	int i;
-           	//dataBase.conectDB();
-           	//images = new Vector();
-           	//images = dataBase.allImageSearch();
-           	
+                      	
+    		int i;
            	lengthOfTask = images.size();
-           	
-           //	String directory = directoryPath + "images" +  File.separator;
-           //	File newDirectoryFolder = new File(directory);
-			//newDirectoryFolder.mkdirs(); 
-			
-		/*	try{
-				DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder domBuilder = domFactory.newDocumentBuilder();
-				doc = domBuilder.newDocument();
-			} catch (Exception exc) {
-				System.out.println(exc.getMessage());
-				System.out.println(exc.toString());    		
-			}*/
-			//System.out.println("Tamaño de images: " + images);
+ 
 			// Create the data base node
-			
 			Element dataBaseXML = new Element("dataBase");
-			//Element dbElement = doc.createElement("dataBase");
-    		for (i = 0; ((i < images.size()) && !stop); i++){
+
+			for (i = 0; ((i < images.size()) && !stop); i++){
     			
     			Vector imagen = new Vector(2);
     			imagen = (Vector) images.elementAt(i);
 				String element = (String)imagen.elementAt(0);
     			current = i;
-    			//String element = (String)(images.elementAt(i));
     			
     			String pathSrc = System.getProperty("user.dir")+File.separator+"images"+File.separator + 
     				element.substring(0,1).toUpperCase() + File.separator + element;
@@ -173,7 +150,6 @@ public class TIGExportTask {
 				keyWords = TIGDataBase.asociatedConceptSearch(element);
 				
 				// Create image node
-				
 				Element image = new Element("image");
 				image.setAttribute("name", name);
 				if (keyWords.size()!=0){//La imagen tiene categorías
@@ -184,21 +160,9 @@ public class TIGExportTask {
 					}
 				}
 				dataBaseXML.addContent(image);
-				//Element imageElement = doc.createElement("image");
-				//Element imageNameElement = doc.createElement("name");
-				//imageNameElement.appendChild(doc.createTextNode(name));
-				//imageElement.appendChild(imageNameElement);
-				/*for (int j = 0; j<keyWords.size();j++){
-					Element keyWordElement = doc.createElement("keyWord");
-					keyWordElement.appendChild(doc.createTextNode((String)keyWords.elementAt(j)));
-					imageElement.appendChild(keyWordElement);
-				}*/
-					
-					// Append language node
-				//dbElement.appendChild(imageElement);
     		}
     		
-    		Document doc=new Document(dataBaseXML);
+    		Document doc = new Document(dataBaseXML);
 					
     		try{
 				XMLOutputter out = new XMLOutputter();
@@ -209,7 +173,6 @@ public class TIGExportTask {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				
     		current = lengthOfTask;
         }
     	

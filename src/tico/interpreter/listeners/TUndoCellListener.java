@@ -51,8 +51,12 @@ public class TUndoCellListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if ((interpreter.run==1)){
-			TInterpreterUndoAction undo = new TInterpreterUndoAction(interpreter);
-			undo.actionPerformed(null);
+			if(arg0.getButton()==MouseEvent.BUTTON3){ //Right button
+				TInterpreter.boardListener.mouseClicked(arg0);
+			}else{
+				TInterpreterUndoAction undo = new TInterpreterUndoAction(interpreter);
+				undo.actionPerformed(null);
+			}
 		}			
 	}
 

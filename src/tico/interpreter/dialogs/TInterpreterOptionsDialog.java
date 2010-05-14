@@ -42,10 +42,13 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 
@@ -65,33 +68,31 @@ import tico.interpreter.TInterpreterConstants;
 
 public class TInterpreterOptionsDialog extends TDialog {
 
-	TInterpreter aux;
-
-	TImageChooser CursorPanel;
+	TImageChooser cursorPanel;
 
 	JPanel panelButtons;
 
-	JPanel SpeedPanel;
+	JPanel speedPanel;
 
 	JPanel cellPanel;
+	
+	JPanel mouseModePanel;
 
 	public static int value;
-
-	public static int valor;
 
 	JSpinner spinner;
 
 	SpinnerNumberModel model;
 
 	private void createCursorPanel() {
-		CursorPanel = new TImageChooser(TLanguage.getString("TInterpreterOptionDialog.CURSOR_IMAGE"));
+		cursorPanel = new TImageChooser(TLanguage.getString("TInterpreterOptionDialog.CURSOR_IMAGE"));
 		if (TInterpreterConstants.interpreterCursor != null) {
 			ImageIcon cursorIcon = new ImageIcon(
 					TInterpreterConstants.interpreterCursor);
-			CursorPanel.setIcon(cursorIcon);
+			cursorPanel.setIcon(cursorIcon);
 		}
 
-	}//Opciones del Interprete
+	}
 
 	private void createButtonPanel() {
 		panelButtons = new JPanel();
@@ -102,9 +103,7 @@ public class TInterpreterOptionsDialog extends TDialog {
 		AcceptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Accept_ActionPerformed(e);
-
 			}
-
 		});
 
 		CancelButton.addActionListener(new ActionListener() {
@@ -121,8 +120,8 @@ public class TInterpreterOptionsDialog extends TDialog {
 
 	private void createSpeedPanel() {
 
-		SpeedPanel = new JPanel();
-		SpeedPanel.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+		speedPanel = new JPanel();
+		speedPanel.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)),
 				TLanguage.getString("TInterpreterOptionDialog.WAIT_CURSOR")));
 		JSlider gros = new JSlider(JSlider.HORIZONTAL, 1000, 20000,
@@ -151,7 +150,7 @@ public class TInterpreterOptionsDialog extends TDialog {
 		gros.setMinorTickSpacing(1000);
 		gros.setPaintTicks(true);
 		gros.setPaintLabels(true);
-		SpeedPanel.add(gros);
+		speedPanel.add(gros);
 	}
 
 	private void createNumCellsPanel() {
@@ -168,57 +167,105 @@ public class TInterpreterOptionsDialog extends TDialog {
 		cellPanel.add(spinner);
 
 	}
+	
+	private void createMouseModePanel() {
+		mouseModePanel = new JPanel();
+		mouseModePanel.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
+				Color.WHITE, new Color(165, 163, 151)),
+				TLanguage.getString("TInterpreterOptionDialog.MOUSE_MODE")));
+		
+		JRadioButton automaticScanningMode = new JRadioButton(TLanguage.getString("TInterpreterMouseMode.AUTOMATIC_SCANNING"));
+		automaticScanningMode.setActionCommand(TInterpreterConstants.AUTOMATIC_SCANNING_MODE);
+		automaticScanningMode.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				TInterpreterConstants.mouseModeSelected = TInterpreterConstants.AUTOMATIC_SCANNING_MODE;
+			}});
+		if (TInterpreterConstants.mouseModeSelected.equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){
+			automaticScanningMode.setSelected(true);
+		}
+		
+		JRadioButton directSelectionMode = new JRadioButton(TLanguage.getString("TInterpreterMouseMode.DIRECT_SELECTION"));
+		directSelectionMode.setActionCommand(TInterpreterConstants.DIRECT_SELECTION_MODE);
+		
+		directSelectionMode.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				TInterpreterConstants.mouseModeSelected = TInterpreterConstants.DIRECT_SELECTION_MODE;
+			}});
+		if (TInterpreterConstants.mouseModeSelected.equals(TInterpreterConstants.DIRECT_SELECTION_MODE)){
+			directSelectionMode.setSelected(true);
+		}
+		
+		JRadioButton manualScanningMode = new JRadioButton(TLanguage.getString("TInterpreterMouseMode.MANUAL_SCANNING"));
+		manualScanningMode.setActionCommand(TInterpreterConstants.MANUAL_SCANNING_MODE);
+		
+		manualScanningMode.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				TInterpreterConstants.mouseModeSelected = TInterpreterConstants.MANUAL_SCANNING_MODE;
+			}});
+		if (TInterpreterConstants.mouseModeSelected.equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+			manualScanningMode.setSelected(true);
+		}
+				
+		ButtonGroup mouseModeOptions = new ButtonGroup();
+		mouseModeOptions.add(directSelectionMode);
+		mouseModeOptions.add(automaticScanningMode);
+		mouseModeOptions.add(manualScanningMode);
+		
+		mouseModePanel.add(directSelectionMode);
+		mouseModePanel.add(automaticScanningMode);
+		mouseModePanel.add(manualScanningMode);
+	}
 
 	public TInterpreterOptionsDialog(TInterpreter interprete) {
-		// create a non modal dialog.
-		super(interprete, TLanguage.getString("TInterpreterOptionDialog.NAME"),	true);
-		aux = interprete;
 
-		JPanel BackPanel = new JPanel();
+		super(interprete, TLanguage.getString("TInterpreterOptionDialog.NAME"),	true);
+		
+		JPanel backPanel = new JPanel();
 		createCursorPanel();
 		createButtonPanel();
 		createSpeedPanel();
 		createNumCellsPanel();
+		createMouseModePanel();
+		
 		GridBagConstraints c = new GridBagConstraints();
-		BackPanel.setLayout(new GridBagLayout());
+		backPanel.setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 20, 0, 20);
 		c.gridx = 0;
 		c.gridy = 0;
-		BackPanel.add(CursorPanel, c);
+		backPanel.add(cursorPanel, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 20, 0, 20);
 		c.gridx = 0;
 		c.gridy = 1;
-		BackPanel.add(cellPanel, c);
+		backPanel.add(cellPanel, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 20, 0, 20);
 		c.gridx = 0;
 		c.gridy = 2;
-		BackPanel.add(SpeedPanel, c);
+		backPanel.add(speedPanel, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 20, 0, 20);
 		c.gridx = 0;
 		c.gridy = 3;
-		BackPanel.add(panelButtons, c);
-		// Display it!
+		backPanel.add(mouseModePanel, c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		backPanel.add(panelButtons, c);
+
 		this.setBounds(100, 100, 380, 380);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(true);
-		this.setContentPane(BackPanel);
+		this.setContentPane(backPanel);
+		this.pack();
 		this.setVisible(true);
 	}
 
 	public void Accept_ActionPerformed(ActionEvent e) {
 
-		if (TImageChooser.ruta != null) {
-			TInterpreterConstants.interpreterCursor = TImageChooser.ruta;
-		}else if (CursorPanel.getImageGalleryButton().getPath()!=null){
-			TInterpreterConstants.interpreterCursor = CursorPanel.getImageGalleryButton().getPath();
+		if (TImageChooser.path != null) {
+			TInterpreterConstants.interpreterCursor = TImageChooser.path;
+		}else if (cursorPanel.getImageGalleryButton().getPath()!=null){
+			TInterpreterConstants.interpreterCursor = cursorPanel.getImageGalleryButton().getPath();
 		}else {
 			TInterpreterConstants.interpreterCursor = null;
 		}

@@ -22,7 +22,7 @@ import tico.configuration.TLanguage;
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
-public class TAnotherBorderSelectionPanel extends JPanel {
+public class TAlternativeBorderSelectionPanel extends JPanel {
 	// Default initial border size pameter
 	private static final int DEFAULT_BORDER_SIZE = 4;
 	// Default initial border color parameter
@@ -38,7 +38,7 @@ public class TAnotherBorderSelectionPanel extends JPanel {
 	 * <code>borderColor</code> defaults to <i>black</i> and
 	 * <code>borderSize</code> to <i>1</i>.
 	 */
-	public TAnotherBorderSelectionPanel() {
+	public TAlternativeBorderSelectionPanel() {
 		this(DEFAULT_BORDER_COLOR, DEFAULT_BORDER_SIZE);
 	}
 
@@ -49,7 +49,7 @@ public class TAnotherBorderSelectionPanel extends JPanel {
 	 * 
 	 * @param borderColor The specified initial <code>borderColor</code>
 	 */
-	public TAnotherBorderSelectionPanel(Color borderColor) {
+	public TAlternativeBorderSelectionPanel(Color borderColor) {
 		this(borderColor, DEFAULT_BORDER_SIZE);
 	}
 	
@@ -60,7 +60,7 @@ public class TAnotherBorderSelectionPanel extends JPanel {
 	 * 
 	 * @param borderSize The specified initial <code>borderSize</code> value.
 	 */
-	public TAnotherBorderSelectionPanel(int borderSize) {
+	public TAlternativeBorderSelectionPanel(int borderSize) {
 		this(DEFAULT_BORDER_COLOR, borderSize);
 	}
 	
@@ -71,7 +71,7 @@ public class TAnotherBorderSelectionPanel extends JPanel {
 	 * @param borderColor The specified initial <code>borderColor</code>
 	 * @param borderSize The specified initial <code>borderSize</code> value.
 	 */
-	public TAnotherBorderSelectionPanel(Color borderColor,int borderSize) {
+	public TAlternativeBorderSelectionPanel(Color borderColor,int borderSize) {
 		super();
 		// Creates the border of the component
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(Color.WHITE,

@@ -79,7 +79,7 @@ public class TImageGalleryButton implements TPluginIMInterface{
 	public TButton init(TEditor editor, TImageChooser chooser){
 		myEditor = editor;
 		TIGDataBase.conectDB();
-		data = TIGDataBase.imageSearch("*");
+		data = TIGDataBase.imageSearchByName("*");
 		TIGDataBase.closeDB();
 		
 		theChooser = chooser;

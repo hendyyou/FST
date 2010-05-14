@@ -31,6 +31,8 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
@@ -42,27 +44,16 @@ import tico.interpreter.TInterpreterBoard;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.TInterpreterProject;
 import tico.interpreter.components.TInterpreterCell;
+import tico.interpreter.listeners.TBoardListener;
 import tico.interpreter.threads.TInterpreterBoardSound;
 import tico.interpreter.threads.TThreads;
 
 public class TInterpreterRun extends TInterpreterAbstractAction implements ActionListener, Runnable {
- 
-	Robot Retraso;
-	
-	public static boolean fin=false;
-	private double Tancho,Talto;
-	private static int accessController=0;
-	public static boolean fina = false;
-	
-	public int actionPerformed=0;
-    public int count=0;
-
-	private TInterpreterConstants tic;
+ 	
+	//public static boolean fin=false;
 	
 	public TInterpreterRun (TInterpreter interpreter) {
-		
 		super(interpreter,TLanguage.getString("TInterpreterRunAction.NAME"),TResourceManager.getImageIcon("run.gif"));
-		tic = new TInterpreterConstants();
 	}	
 
 	public void actionPerformed(ActionEvent e) {
@@ -83,9 +74,10 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 	
 	public void run() {//Velocidad del
 		
+		String mouseMode = TInterpreter.returnMouseMode();
+		
 		TInterpreter.run = 1;
 		
-		interpreter.interpreterRobot.setAutoDelay(TInterpreterConstants.interpreterDelay);
 		interpreter.TIntepreterChangeCursor();
 	
 	    TInterpreterProject project = interpreter.getProject();
@@ -97,13 +89,21 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 			TInterpreterBoardSound boardSound = new TInterpreterBoardSound(TInterpreterConstants.tableroActual.getSoundFile());
 			boardSound.run();
 		}
-	    	    	
-		if (interpreter.getActivateBrowsingMode()==1){
-					
+	    
+	    if (mouseMode.equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+	    	interpreter.interpreterRobot.setAutoDelay(0);
+	    	TInterpreter.boardListener = new TBoardListener(interpreter);
+	  	    interpreter.interpretAreaBackground.addMouseListener(TInterpreter.boardListener);
+	  	    interpreter.accumulatedCells.addMouseListener(TInterpreter.boardListener);
+	    }
+	    
+	    //Browsing mode
+		if (mouseMode.equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){
+			
+			interpreter.interpreterRobot.setAutoDelay(TInterpreterConstants.interpreterDelay);
+			
 			if (TInterpreterConstants.tableroActual.getOrderedCellListNames().size()!=0){
-				
 				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
-				
 				int posInicioBarrido = interpreter.getProject().getPositionCellToReturn();
 				TInterpreterConstants.countRun = posInicioBarrido;
 				
@@ -137,12 +137,11 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					
 				}								
 			}
-			
-		}    
-   }
+		} //End of browsing mode    
+   
+	}
 	
  }
 

@@ -59,7 +59,7 @@ public class TIGExportDBAction extends TIGAbstractAction{
 	 */
 	public void actionPerformed(ActionEvent e) {
 		TIGDataBase.conectDB();
-		Vector data = TIGDataBase.imageSearch("*");
+		Vector<Vector<String>> data = TIGDataBase.imageSearchByName("*");
 		TIGDataBase.closeDB();
 		if (data.size() > 0){
 			new TIGExportDBDialog(getEditor(), dataBase);

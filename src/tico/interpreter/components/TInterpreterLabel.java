@@ -29,11 +29,13 @@ package tico.interpreter.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 
@@ -41,13 +43,14 @@ public class TInterpreterLabel extends JLabel{
 	
 	boolean transparentBackgroundLabel;
 	Color gradientColorLabel;
+	private final static int HORIZONTAL_MARGIN = 10;
 	
 	public TInterpreterLabel (){
 		super();
 	}
 	
 	public TInterpreterLabel setAttributes(Color borderColor, float borderSize, 
-			Color backgroundColor, Color gradientColor, Rectangle r, String texto, Font f, 
+			Color backgroundColor, Color gradientColor, Rectangle r, String text, Font font, 
 			Color textColor, boolean transparentBackground){
 		
 		transparentBackgroundLabel = transparentBackground;
@@ -67,8 +70,31 @@ public class TInterpreterLabel extends JLabel{
 		this.setForeground(textColor);
 		this.setHorizontalAlignment(CENTER);
 		this.setVerticalAlignment(CENTER);
-		this.setFont(f);		
-		this.setText(texto);
+		this.setFont(font);		
+		this.setText(text);
+		
+		// Check if the text fits in the label with the font
+		int cellTextSpace = (int) (r.width-
+							2*borderSize-2*HORIZONTAL_MARGIN);
+		JButton j = new JButton();
+		j.setSize(cellTextSpace, cellTextSpace);
+		FontMetrics fm = j.getFontMetrics(font);
+		int textWidth = fm.stringWidth(text);
+		if (textWidth > cellTextSpace){
+			int fontSize = font.getSize();
+			int fontStyle = font.getStyle();
+			String fontName = font.getFontName();
+			while ((textWidth > cellTextSpace) && fontSize>0){
+				fontSize--;
+				font = new Font(fontName, fontStyle, fontSize);
+				fm = j.getFontMetrics(font);
+				textWidth = fm.stringWidth(text);
+			}
+			if (fontSize!=0){
+				setFont(font);
+				setText(text);
+			}
+		}
 
 		return this;
 	}

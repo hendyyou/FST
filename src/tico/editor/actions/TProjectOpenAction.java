@@ -119,6 +119,7 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 						TLanguage.getString("TProjectOpenAction.OPEN_ERROR"),
 						TLanguage.getString("ERROR") + "!",
 						JOptionPane.ERROR_MESSAGE);
+				getEditor().restoreCursor();
 			}
 		}
 	}

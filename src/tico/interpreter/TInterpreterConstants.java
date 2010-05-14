@@ -65,6 +65,11 @@ public class TInterpreterConstants {
 	public final static int BORDER_SIZE = 1;
 	
 	public final static int SELECTED_BORDER_SIZE = 4;
+	
+	//Mouse modes
+	public final static String AUTOMATIC_SCANNING_MODE = "automaticScanningMode";
+	public final static String DIRECT_SELECTION_MODE = "directSelectionMode";
+	public final static String MANUAL_SCANNING_MODE = "manualScanningMode";
 
 	public static int sendTextOn=0;
 	public static String lastName;
@@ -105,9 +110,10 @@ public class TInterpreterConstants {
 	public static int ClicReleased=0;
 	
 	public static String interpreterCursor=null;
-	public static String nameCursor=null;
-	public static int interpreterDelay=1000;
+	public static String nameCursor = null;
+	public static int interpreterDelay = 1000;
 	public static int interpreterAcumulatedCells=5;
+	public static String mouseModeSelected = TInterpreterConstants.DIRECT_SELECTION_MODE;
 	public static int isGrid=0;
 	public static int undo=0;
 	

@@ -89,6 +89,7 @@ public class TFileHandler {
 	 */
 	
 	public static File importFile(File file) throws IOException {
+		
 		String directoryPath = currentDirectoryPath;
 		
 		if (TFileUtils.isImageFile(file))

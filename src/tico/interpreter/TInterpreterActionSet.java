@@ -33,11 +33,9 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import tico.interpreter.actions.TInterpreterDirectSelection;
 import tico.interpreter.actions.TInterpreterEditOptions;
 import tico.interpreter.actions.TInterpreterExitAction;
 import tico.interpreter.actions.TInterpreterLanguajes;
-import tico.interpreter.actions.TInterpreterBrowsingMouse;
 import tico.interpreter.actions.TInterpreterProjectOpenAction;
 import tico.interpreter.actions.TInterpreterProjectPrint;
 import tico.interpreter.actions.TInterpreterReadAction;
@@ -71,10 +69,6 @@ public class TInterpreterActionSet {
 	public final static String INTERPRETER_STOP = "interpreterStop";
 
 	public final static String INTERPRETER_LANGUAJES = "interpreterLanguajes";
-
-	public final static String INTERPRETER_BARRIDO = "interpreterBarrido";
-
-	public final static String INTERPRETER_DIRECT_SELECTION = "interpreterDirectSelection";
 
 	public final static String INTERPRETER_OPTIONS = "interpreterOptions";
 
@@ -117,18 +111,12 @@ public class TInterpreterActionSet {
 
 		actionSet.put(INTERPRETER_LANGUAJES, new TInterpreterLanguajes(interpreter));
 
-		actionSet.put(INTERPRETER_BARRIDO, new TInterpreterBrowsingMouse(interpreter));
-
-		actionSet.put(INTERPRETER_DIRECT_SELECTION, new TInterpreterDirectSelection(interpreter));
-
 		actionSet.put(INTERPRETER_OPTIONS, new TInterpreterEditOptions(interpreter));
 
 		actionSet.put(INTERPRETER_READ, new TInterpreterReadAction(interpreter));
 
 		actionSet.put(INTERPRETER_PRINT_ACTION, new TInterpreterProjectPrint(
 				interpreter));
-		// actionSet.put(INTERPRETER_PRINT_ACTION,new TProjectPrintAction(new
-		// TEditor(interpreter.getIntepreterProject())));
 
 		actionSet.put(INTERPRETER_UNDO, new TInterpreterUndoAction(interpreter));
 		

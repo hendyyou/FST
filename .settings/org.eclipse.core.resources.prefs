@@ -1,6 +1,7 @@
-#Wed Feb 10 19:01:50 CET 2010
+#Wed Mar 24 12:02:30 CET 2010
 eclipse.preferences.version=1
 encoding//conf/tico.conf=UTF-8
+encoding//lang/ca.lang=UTF-8
 encoding//lang/de.lang=UTF-8
 encoding//lang/es.lang=UTF-8
 encoding//src/tico/TLauncher.java=UTF-8
@@ -23,6 +24,7 @@ encoding//src/tico/editor/actions/TProjectSaveAsAction.java=UTF-8
 encoding//src/tico/editor/dialogs/TAboutDialog.java=UTF-8
 encoding//src/tico/editor/dialogs/TAboutDialogOthersListener.java=UTF-8
 encoding//src/tico/editor/dialogs/TCellDialog.java=UTF-8
+encoding//src/tico/editor/dialogs/TControllerCellDialog.java=UTF-8
 encoding//src/tico/imageGallery/TIGActionSet.java=UTF-8
 encoding//src/tico/imageGallery/actions/TIGImportDBAction.java=UTF-8
 encoding//src/tico/imageGallery/actions/TIGManageGallery.java=UTF-8
@@ -38,8 +40,6 @@ encoding//src/tico/interpreter/TInterpreterBoard.java=UTF-8
 encoding//src/tico/interpreter/TInterpreterProject.java=UTF-8
 encoding//src/tico/interpreter/TPanel.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterAbstractAction.java=UTF-8
-encoding//src/tico/interpreter/actions/TInterpreterBrowsingMouse.java=UTF-8
-encoding//src/tico/interpreter/actions/TInterpreterDirectSelection.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterEditOptions.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterExitAction.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterLanguajes.java=UTF-8

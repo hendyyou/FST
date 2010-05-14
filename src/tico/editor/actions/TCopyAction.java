@@ -66,7 +66,7 @@ public class TCopyAction extends TEditorAbstractAction {
 		// Unselect any TGridCell, each TGrid with a TGridCell selected will be copied
 		for (int i = 0; i < cells.length; i++) if (cells[i] instanceof TGridCell)
 			getEditor().getCurrentBoard().removeSelectionCell(cells[i]);
-		
+
 		TransferHandler.getCopyAction().actionPerformed(
 			new ActionEvent(getEditor().getCurrentBoard(), e.getID() , e.getActionCommand()));
 

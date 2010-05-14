@@ -124,6 +124,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 		});
 
 		loadMovie(path, 0);
+		//loadMovie("http://www.catedu.es/arasaac/repositorio/LSE_acepciones/16391.flv", 0);
 		
 	}
 

@@ -100,11 +100,11 @@ public class TIGExportDBDialog extends TDialog {
 
     private JPanel contentPane;
     
-    private int numberOfImages;
+   // private int numberOfImages;
     
     private boolean stop = false;
 	
-    private Vector images;
+    private Vector<Vector<String>> images;
 	public Vector myResults;
     
 	private TIGThumbnails thumbnailsDialog;
@@ -118,7 +118,7 @@ public class TIGExportDBDialog extends TDialog {
 		myDataBase = dataBase;
 		
 		TIGDataBase.conectDB();
-		numberOfImages = dataBase.numberOfImages();
+		//numberOfImages = TIGDataBase.numberOfImages();
 		
 		addWindowListener(new java.awt.event.WindowListener(){
 			public void windowClosing(java.awt.event.WindowEvent e){
@@ -149,8 +149,8 @@ public class TIGExportDBDialog extends TDialog {
 		
 		//All the images in the dataBase are shown 
 		//when the window is displayed  
-		images = new Vector();
-		images = TIGDataBase.imageSearch("*");
+		//images = new Vector();
+		images = TIGDataBase.imageSearchByName("*");
 		myResults = null;
 		
 		// First, create the component that shows all the images
@@ -259,13 +259,13 @@ public class TIGExportDBDialog extends TDialog {
 		c.insets = new Insets(10, 10, 10, 10);
 		c.gridx = 0;
 		c.gridy = 0;
-		getContentPane().add(searchNamePanel, c);
+		getContentPane().add(keyWordSearchPanel, c);
 
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);
 		c.gridx = 0;
 		c.gridy = 1;
-		getContentPane().add(keyWordSearchPanel, c);
+		getContentPane().add(searchNamePanel, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);
@@ -423,8 +423,8 @@ public class TIGExportDBDialog extends TDialog {
 
 	public void update(Vector result){
 		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,0);
-		this.myResults= (Vector) result;
-		images= myResults;
+		this.myResults = (Vector) result;
+		images = myResults;
 	}
 	
 }

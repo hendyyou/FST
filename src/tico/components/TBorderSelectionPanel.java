@@ -60,7 +60,6 @@ public class TBorderSelectionPanel extends JPanel {
 	// Border size combo box chooser
 	private TBorderSizeComboBox borderSizeComboBox;
 	
-	public TAnotherBorderSelectionPanel select=null;
 	/**
 	 * Creates a new <code>TBorderSelectionPanel</code> with
 	 * <code>borderColor</code> defaults to <i>black</i> and
@@ -190,9 +189,6 @@ public class TBorderSelectionPanel extends JPanel {
 		borderSizeComboBox.setBorderSize(borderSize);
 	}
 	
-	public void setSelect(TAnotherBorderSelectionPanel item){
-		this.select=item;
-	}
 	/**
 	 * Set a <i>line border</i> created with the components
 	 * <code>borderColor</code> and <code>borderSize</code>. 
@@ -237,19 +233,7 @@ public class TBorderSelectionPanel extends JPanel {
 	private class ChangeColorListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (getBorderColor() == null) borderSizeComboBox.setEnabled(false);
-			else borderSizeComboBox.setEnabled(true);
-			if (select!=null){
-				if (getBorderColor() == null) 
-				{	select.colorComboBox.setEnabled(false);
-					select.borderSizeComboBox.setEnabled(false);
-				}
-				else {
-					borderSizeComboBox.setEnabled(true);
-					select.colorComboBox.setEnabled(true);
-					select.borderSizeComboBox.setEnabled(true);
-				}
-			}
-			
+			else borderSizeComboBox.setEnabled(true);			
 		}
 	}
 }

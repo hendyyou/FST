@@ -37,8 +37,6 @@ import java.awt.Rectangle;
 
 import javax.swing.JButton;
 
-import org.jgraph.graph.GraphConstants;
-
 public class TInterpreterOval extends JButton {
 
 	Color borderColorOval;

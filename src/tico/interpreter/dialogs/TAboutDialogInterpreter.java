@@ -144,8 +144,8 @@ import tico.interpreter.TInterpreterConstants;
 				"<html><body>" +
 	            "<h2>" + TLanguage.getString("TAboutDialog.INTERPRETER_VERSION") + "</h2>" +
 	            "<p>" + TLanguage.getString("TAboutDialog.DEVELOPERS") + "</p>" +
-	            "<ul><li>Isabel González Ramírez - 2009</li>" +
-	            "	 <li>Carolina Palacio Julián - 2009</li></ul>" +
+	            "<ul><li>Carolina Palacio Julián - 2009</li>" +
+	            "	 <li>Isabel González Ramírez - 2009</li></ul>" +
 	            "</body></html>";
 			
 	        textLabel.setText(aboutText);

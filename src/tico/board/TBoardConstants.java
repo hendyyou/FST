@@ -49,12 +49,22 @@ public class TBoardConstants extends GraphConstants {
 	/**
 	 * Default background color.
 	 */
-	public final static Color DEFAULTBACKGROUND = Color.WHITE;
+	public final static Color DEFAULT_BACKGROUND = Color.WHITE;
 
 	/**
-	 * Default foregrodun color.
+	 * Default foreground color.
 	 */
-	public final static Color DEFAULTFOREGROUND = Color.BLACK;
+	public final static Color DEFAULT_FOREGROUND = Color.BLACK;
+	
+	/**
+	 * Default alternative border color.
+	 */
+	public final static Color DEFAULT_ALTERNATIVE_BORDERCOLOR = Color.RED;
+	
+	/**
+	 * Default alternative border SIZE.
+	 */
+	public final static int DEFAULT_ALTERNATIVE_LINEWIDTH = 4;
 
 	/**
 	 * Represents the fit imageResizeStyle.
@@ -281,13 +291,13 @@ public class TBoardConstants extends GraphConstants {
 	 * values for this key.
 	 */
 	
-	public final static String CHANGE_LINE_WIDTH="LineChangeWidth";
+	public final static String ALTERNATIVE_LINEWIDTH="alternativeLinewidth";
 	
 	/**
 	 * Key for the <code>ChangeColor</code> attribute. Use instances of Color as 
 	 * values for this key.
 	 */
-	public final static String CHANGE_COLOR="ChangeColor";
+	public final static String ALTERNATIVE_BORDER_COLOR="alternativeBorderColor";
 	
 	/**
 	 * Key for the <code>ChangeColorGrid</code> attribute. Use instances of Color as 
@@ -412,7 +422,6 @@ public class TBoardConstants extends GraphConstants {
      * value.
      */
     public static final void setVideoFile(Map map, String value) {
-   
         map.put(VIDEO_FILE,new File(value));
     }
 	
@@ -694,25 +703,25 @@ public class TBoardConstants extends GraphConstants {
 		return (TBoard)map.get(FOLLOWING_BOARD);
 	}
 	
-	public static final void setChangeLineWidth(Map map, int value)
+	public static final void setAlternativeLinewidth(Map map, int value)
 	{
-		map.put(CHANGE_LINE_WIDTH, new Integer(value));
+		map.put(ALTERNATIVE_LINEWIDTH, new Integer(value));
 	}
 	
-	public static final int getChangeLineWidth(Map map) {
-		Integer intObj = (Integer)map.get(CHANGE_LINE_WIDTH);
+	public static final int getAlternativeLinewidth(Map map) {
+		Integer intObj = (Integer)map.get(ALTERNATIVE_LINEWIDTH);
 		
 		if (intObj != null)
 			return intObj.intValue();
 		return 0;
 	}
 
-	public static final void setChangeColor(Map map, Color value) {
-		map.put(CHANGE_COLOR, value);
+	public static final void setAlternativeBorderColor(Map map, Color value) {
+		map.put(ALTERNATIVE_BORDER_COLOR, value);
 	}
 	
-	public static final Color getChangeColor(Map map) {
-		Color colObj = (Color)map.get(CHANGE_COLOR);
+	public static final Color getAlternativeBorderColor(Map map) {
+		Color colObj = (Color)map.get(ALTERNATIVE_BORDER_COLOR);
 		
 		if (colObj != null)
 			return colObj;

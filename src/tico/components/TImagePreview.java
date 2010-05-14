@@ -93,12 +93,12 @@ public class TImagePreview extends JLabel implements PropertyChangeListener {
 			int maxPreviewHeight = PREVIEW_HEIGHT - PREVIEW_MARGIN;
 			if (image.getIconHeight() > maxPreviewHeight)
 				image = new ImageIcon(image.getImage().getScaledInstance(-1,
-						maxPreviewHeight, Image.SCALE_DEFAULT));
+						maxPreviewHeight, Image.SCALE_SMOOTH));
 			
 			int maxPreviewWidth = PREVIEW_WIDTH - PREVIEW_MARGIN;
 			if (image.getIconWidth() > maxPreviewWidth)
 				image = new ImageIcon(image.getImage().getScaledInstance(
-						maxPreviewWidth, -1, Image.SCALE_DEFAULT));
+						maxPreviewWidth, -1, Image.SCALE_SMOOTH));
 		}
 
 		setIcon(image);

@@ -27,6 +27,7 @@
  */
 package tico.interpreter.components;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -55,7 +56,7 @@ public class TInterpreterAccumulatedCell extends JButton{
 		this.setBorder(new LineBorder(cell.getBorderColor(), (int)cell.getBorderSize()));
 		this.sound = cell.getSoundPath();
 		this.setSize(90, 90);
-		//this.setPreferredSize(new Dimension(90,90));
+		//this.setPreferredSize(new Dimension(85,85));
 		this.setContentAreaFilled(false);
 		
 		this.setText(cell.getText());
@@ -94,11 +95,11 @@ public class TInterpreterAccumulatedCell extends JButton{
 
 			if (cell.getIcon().getIconHeight() > maxImageHeight){
 				icon = new ImageIcon(cell.getDefaultIcon().getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
+						maxImageHeight, Image.SCALE_SMOOTH));
 			}
 			if (cell.getIcon().getIconWidth() > maxImageWidth){
 				icon = new ImageIcon(cell.getDefaultIcon().getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
+						maxImageWidth, -1, Image.SCALE_SMOOTH));
 			}
 			
 			this.setIcon(icon);

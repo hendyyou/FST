@@ -63,10 +63,16 @@ public class TCellListener implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 		
 		if ((TInterpreter.run==1)){
+		
+		if(arg0.getButton()==MouseEvent.BUTTON3){ //Right button
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+				TInterpreter.boardListener.click();
+			}
+		}else{		
 			
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 			
-			if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 				
 				try {						
 					TInterpreterConstants.semaforo.acquire();
@@ -170,11 +176,22 @@ public class TCellListener implements MouseListener {
 					interpreter.getProject().setBoardToGo(cell.getBoardToGo());
 					
 					interpreter.getProject().setCurrentBoard(cell.getBoardToGo());
+					
+					if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+						TInterpreter.boardListener.click();
+					}
 			}
 			
 			if (cell.getCommand()!=null){
 				try {
-					Runtime.getRuntime().exec(cell.getCommand());
+					Process p = Runtime.getRuntime().exec(cell.getCommand());
+					try {
+						// Waiting for the end of the call to environment control
+						p.waitFor();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -182,7 +199,7 @@ public class TCellListener implements MouseListener {
 				}				
 			}
 			
-			if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 				try {
 					TInterpreterConstants.semaforo.release();
 				} catch (InterruptedException e) {
@@ -190,6 +207,7 @@ public class TCellListener implements MouseListener {
 					e.printStackTrace();
 				}				
 			}
+		}
 		}			
 	}
 

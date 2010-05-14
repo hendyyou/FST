@@ -150,12 +150,12 @@ public class TIGImageInformation extends JPanel {
 			if (thumbnail.getIconWidth() > maxImageWidth) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(maxImageWidth, -1,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 			if (thumbnail.getIconHeight() > maxImageHeight) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(-1, maxImageHeight,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 			iconLabel.setText("");
 			iconLabel.setIcon(thumbnail);

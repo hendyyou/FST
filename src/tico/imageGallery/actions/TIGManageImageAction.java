@@ -59,7 +59,7 @@ public class TIGManageImageAction extends TIGAbstractAction{
 	 */
 	public void actionPerformed(ActionEvent e) {
 		TIGDataBase.conectDB();
-		Vector data = TIGDataBase.imageSearch("*");
+		Vector<Vector<String>> data = TIGDataBase.imageSearchByName("*");
 		if (data.size() > 0)
 			new TIGModifyImageDialog(getEditor(), dataBase);
 		else

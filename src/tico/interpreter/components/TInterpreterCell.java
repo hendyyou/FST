@@ -30,6 +30,7 @@ package tico.interpreter.components;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,6 +43,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import tico.board.TBoardConstants;
 import tico.interpreter.TInterpreterConstants;
 
 public class TInterpreterCell extends JButton{
@@ -244,6 +246,29 @@ public class TInterpreterCell extends JButton{
 		this.setVerticalTextPosition(verticalTextPosition);
 		this.setHorizontalTextPosition(SwingConstants.CENTER);
 		
+		// Check if the text fits in the cell with the font
+		int cellTextSpace = (int) (bounds.getWidth()-
+							2*borderSize-2*HORIZONTAL_ICON_MARGIN);
+		JButton j = new JButton();
+		j.setSize(cellTextSpace, cellTextSpace);
+		FontMetrics fm = j.getFontMetrics(font);
+		int textWidth = fm.stringWidth(text);
+		if (textWidth > cellTextSpace){
+			int fontSize = font.getSize();
+			int fontStyle = font.getStyle();
+			String fontName = font.getFontName();
+			while ((textWidth > cellTextSpace) && fontSize>0){
+				fontSize--;
+				font = new Font(fontName, fontStyle, fontSize);
+				fm = j.getFontMetrics(font);
+				textWidth = fm.stringWidth(text);
+			}
+			if (fontSize!=0){
+				setFont(font);
+				setText(text);
+			}
+		}
+		
 		if (icon != null) {			
 			
 			int maxImageWidth;
@@ -267,10 +292,10 @@ public class TInterpreterCell extends JButton{
 
 			if (icon.getIconHeight() > maxImageHeight)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
+						maxImageHeight, Image.SCALE_SMOOTH));
 			if (icon.getIconWidth() > maxImageWidth)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
+						maxImageWidth, -1, Image.SCALE_SMOOTH));
 			
 			this.setIcon(icon);
 				
@@ -324,10 +349,10 @@ public class TInterpreterCell extends JButton{
 
 			if (alternativeIcon.getIconHeight() > maxAImageHeight)
 				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(-1,
-						maxAImageHeight, Image.SCALE_DEFAULT));
+						maxAImageHeight, Image.SCALE_SMOOTH));
 			if (alternativeIcon.getIconWidth() > maxAImageWidth)
 				alternativeIcon = new ImageIcon(alternativeIcon.getImage().getScaledInstance(
-						maxAImageWidth, -1, Image.SCALE_DEFAULT));
+						maxAImageWidth, -1, Image.SCALE_SMOOTH));
 			
 			this.alternativeIcon = alternativeIcon;
 		}
@@ -382,10 +407,10 @@ public class TInterpreterCell extends JButton{
 
 			if (icon.getIconHeight() > maxImageHeight)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
+						maxImageHeight, Image.SCALE_SMOOTH));
 			if (icon.getIconWidth() > maxImageWidth)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
+						maxImageWidth, -1, Image.SCALE_SMOOTH));
 			
 			
 			this.setIcon(icon);

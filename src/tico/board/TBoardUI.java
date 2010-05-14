@@ -98,22 +98,22 @@ public class TBoardUI extends BasicGraphUI {
 			switch (TBoardConstants.getImageResizeStyle(map)) {
 			case TBoardConstants.IMAGE_FIT:
 				image = new ImageIcon(image.getImage().getScaledInstance(width,
-						height, Image.SCALE_DEFAULT));
+						height, Image.SCALE_SMOOTH));
 				break;
 			case TBoardConstants.IMAGE_SCALE:
 				image = new ImageIcon(image.getImage().getScaledInstance(width,
-						-1, Image.SCALE_DEFAULT));
+						-1, Image.SCALE_SMOOTH));
 				if (image.getIconHeight() > height)
 					image = new ImageIcon(image.getImage().getScaledInstance(
-							-1, height, Image.SCALE_DEFAULT));
+							-1, height, Image.SCALE_SMOOTH));
 				break;
 			case TBoardConstants.IMAGE_CENTER:
 				if (imageHeight > height)
 					image = new ImageIcon(image.getImage().getScaledInstance(
-							-1, height, Image.SCALE_DEFAULT));
+							-1, height, Image.SCALE_SMOOTH));
 				if (imageWidth > width)
 					image = new ImageIcon(image.getImage().getScaledInstance(
-							width, -1, Image.SCALE_DEFAULT));
+							width, -1, Image.SCALE_SMOOTH));
 				break;
 			}
 

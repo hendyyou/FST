@@ -80,7 +80,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 	
 	private String imagePath;
 	
-	private Vector images;
+	private Vector<Vector<String>> images;
 	public Vector myResults;
 	private boolean busqueda = false;
 	
@@ -132,8 +132,8 @@ public class TIGDeleteImagesDialog extends TDialog{
 		
 		//All the images in the dataBase are shown 
 		//when the window is displayed 
-		images = new Vector();
-		images = TIGDataBase.imageSearch("*");
+		//images = new Vector();
+		images = TIGDataBase.imageSearchByName("*");
 		myResults = null;
 		
 		// First, create the component that shows all the images
@@ -289,13 +289,13 @@ public class TIGDeleteImagesDialog extends TDialog{
 		c.insets = new Insets(10, 10, 10, 10);
 		c.gridx = 0;
 		c.gridy = 0;
-		getContentPane().add(searchNamePanel, c);
+		getContentPane().add(keyWordSearchPanel, c);
 
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);
 		c.gridx = 0;
 		c.gridy = 1;
-		getContentPane().add(keyWordSearchPanel, c);
+		getContentPane().add(searchNamePanel, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(10, 10, 10, 10);

@@ -43,7 +43,7 @@ public class TInterpreterReturnAction extends TInterpreterAbstractAction{
 		nameCell = name; 
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 			
 			try {						
 				TInterpreterConstants.semaforo.acquire();
@@ -75,8 +75,11 @@ public class TInterpreterReturnAction extends TInterpreterAbstractAction{
 
 		interpreter.getProject().setCurrentBoard(returnBoard);
 		
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+			TInterpreter.boardListener.click();
+		}
 		
-		if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 			//System.out.println("RELEASE CELDA");
 			try {
 				TInterpreterConstants.semaforo.release();

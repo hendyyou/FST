@@ -401,7 +401,7 @@ public class TProjectHandler {
 				continue;
 			}
 			// If the entry is a file, get it
-			File newFile = new File(dstDir, entry.getName());
+			File newFile = new File(dstDir, entry.getName().replace('\\', '/'));
 			// Check if its directory exists and create it if necessary
 			File newFileDir = newFile.getParentFile();
 			if (!newFileDir.exists())

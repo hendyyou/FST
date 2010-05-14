@@ -56,23 +56,27 @@ public class TReadCellListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if ((interpreter.run==1)){
-			if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
-				try {					
-					TInterpreterConstants.semaforo.acquire();		
-				//	System.out.println("ACQUIRE READ");
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			if(arg0.getButton()==MouseEvent.BUTTON3){ //Right button
+				TInterpreter.boardListener.mouseClicked(arg0);
+			}else{	
+				if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
+					try {					
+						TInterpreterConstants.semaforo.acquire();		
+					//	System.out.println("ACQUIRE READ");
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-			TInterpreterReadAction read = new TInterpreterReadAction(interpreter);
-			read.actionPerformed(null);
-			if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico				
-			//	System.out.println("RELEASE READ");
-				try {
-					TInterpreterConstants.semaforo.release();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				TInterpreterReadAction read = new TInterpreterReadAction(interpreter);
+				read.actionPerformed(null);
+				if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico				
+				//	System.out.println("RELEASE READ");
+					try {
+						TInterpreterConstants.semaforo.release();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}			

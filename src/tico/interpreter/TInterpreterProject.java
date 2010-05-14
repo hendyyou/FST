@@ -264,6 +264,7 @@ public class TInterpreterProject {
 	            	if (componentType.equals("soundFile")){
 	            		File soundFile = null;
 	            		String partialPath = attribBoardValue.getValue();
+	            		partialPath = partialPath.replace('\\','/');
 	            		try {
 	            			soundFile = TFileHandler.importFile(new File(TProjectHandler
         							.getTempDirectory(), partialPath));
@@ -279,7 +280,7 @@ public class TInterpreterProject {
 	            		
 	            		File imageFile= null;
 	            		String partialPath = attribBoardValue.getValue();
-	            		
+	            		partialPath = partialPath.replace('\\','/');
 	            			try {
 	        					imageFile = TFileHandler.importFile(new File(TProjectHandler
 	        							.getTempDirectory(), partialPath));
@@ -463,7 +464,7 @@ public class TInterpreterProject {
 	                	}
 	                	
 	                	// changeColor
-	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("ChangeColor")){
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("alternativeBorderColor")){
 	                		String micolor= attribute.getValue().trim();
 	                		
 	                		micolor = micolor.substring(2, micolor.length());
@@ -475,7 +476,7 @@ public class TInterpreterProject {
 	                	}
 	                	
 	                	// LineChangeWidth
-	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("LineChangeWidth")){
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("alternativeLinewidth")){
 	                		cell.setAlternativeBorderSize(Integer.parseInt(attribute.getValue()));
 	                		
 	                	}
@@ -510,7 +511,7 @@ public class TInterpreterProject {
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("alternativeIcon")){
 	                		File imageFile= null;
 		            		String partialPath = attribute.getValue();
-		            		
+		            		partialPath = partialPath.replace('\\','/');
 		            			try {
 		        					imageFile = TFileHandler.importFile(new File(TProjectHandler
 		        							.getTempDirectory(), partialPath));
@@ -518,7 +519,7 @@ public class TInterpreterProject {
 		        				} catch (IOException e) {
 		        					e.printStackTrace();
 		        				} 
-		        				alternativeIcon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + attribute.getValue());
+		        				alternativeIcon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + partialPath);
 		        				cell.setAlternativeIcon(alternativeIcon);
 	                	}
 	                	
@@ -532,7 +533,7 @@ public class TInterpreterProject {
 	                		 
 	                		File imageFile= null;
 		            		String partialPath = attribute.getValue();
-		            		
+		            		partialPath = partialPath.replace('\\','/');
 		            			try {
 		        					imageFile = TFileHandler.importFile(new File(TProjectHandler
 		        							.getTempDirectory(), partialPath));
@@ -540,7 +541,7 @@ public class TInterpreterProject {
 		        				} catch (IOException e) {
 		        					e.printStackTrace();
 		        				} 
-		        				icon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + attribute.getValue());
+		        				icon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + partialPath);
 		        			
 		        				cell.setDefaultIcon(icon);
 	                	}	    
@@ -550,10 +551,12 @@ public class TInterpreterProject {
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("soundFile")){
 		                	// Save the sound to be played when mouse clicked
 		            		soundFile = attribute.getValue();
-		            		if (soundFile != null){		            			
-		            			soundFile=TFileHandler.getCurrentDirectoryPath() + File.separator + soundFile;
-		            			File sound = null;
-			            		String partialPath = attribute.getValue();
+		            		if (soundFile != null){
+		            			String partialPath = attribute.getValue();
+		            			partialPath = partialPath.replace('\\','/');
+		            			soundFile = TFileHandler.getCurrentDirectoryPath() + File.separator + partialPath;
+		            			File sound = null;     		
+			            		
 			            		try {
 			            			sound = TFileHandler.importFile(new File(TProjectHandler
 		        							.getTempDirectory(), partialPath));
@@ -568,10 +571,11 @@ public class TInterpreterProject {
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("videoFile")){
 		                	// Save the video to be played when mouse clicked
 		            		videoFile = attribute.getValue();
-		            		if (videoFile != null){		     
-		            			videoFile=TFileHandler.getCurrentDirectoryPath() + File.separator + videoFile;
-		            			File video = null;
+		            		if (videoFile != null){		            			
 			            		String partialPath = attribute.getValue();
+			            		partialPath = partialPath.replace('\\','/');
+			            		videoFile = TFileHandler.getCurrentDirectoryPath() + File.separator + partialPath;
+		            			File video = null;
 			            		try {
 			            			video = TFileHandler.importFile(new File(TProjectHandler
 		        							.getTempDirectory(), partialPath));
@@ -672,21 +676,22 @@ public class TInterpreterProject {
 			                	}
 			                	
 			                	if (((attribute.getAttribute("key").getValue()).trim()).equals("icon")){
-			                		 
+
 			                		File imageFile= null;
 				            		String partialPath = attribute.getValue();
+				            		partialPath = partialPath.replace('\\','/');
 				            			try {
 				        					imageFile = TFileHandler.importFile(new File(TProjectHandler
 				        							.getTempDirectory(), partialPath));				        					
 				        				} catch (IOException e) {
 				        					e.printStackTrace();
 				        				}
-				        				icon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + attribute.getValue());
+				        				icon = new ImageIcon(TFileHandler.getCurrentDirectoryPath()+File.separator + partialPath);
 				        	
-			            		}	 
+			                	}
 		            			
 			            		if (((attribute.getAttribute("key").getValue()).trim()).equals("text")){
-			                		text= attribute.getValue().trim();	  				        
+			                		text = attribute.getValue().trim();	  				        
 			                	}
 			            		
 	            		}

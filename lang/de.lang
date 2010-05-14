@@ -139,7 +139,7 @@ VideoFilter.DESCRIPTION=Videodateien
 TicoFilter.DESCRIPTION=Dateien von Tico
 
 // tico.editor
-TEditor.EDITOR_WINDOW_TITLE=Ticos Verleger 
+TEditor.EDITOR_WINDOW_TITLE=Ticos Verleger
 TEditor.CELL_ORDER=Zellenanordnung 
 
 TEditorMenuBar.FILE_MENU=Datei
@@ -313,8 +313,8 @@ TUndoAction.NAME=Rückgängig machen
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=Über
-TAboutDialog.EDITOR_VERSION=Ticos Verleger e1.0
-TAboutDialog.INTERPRETER_VERSION=Ticos Interpret e1.0
+TAboutDialog.EDITOR_VERSION=Ticos Verleger e1.0 r1
+TAboutDialog.INTERPRETER_VERSION=Ticos Interpret e1.0 r1
 TAboutDialog.DEVELOPERS=Entwickler
 TAboutDialog.OTHER_DEVELOPERS=Andere...
 TAboutDialog.DIRECTOR=Direktor
@@ -560,20 +560,22 @@ TInterpreterMenuBar.MODE=Modus der Maus
 TInterpreter.VALIDATION_MENU=Validation
 TEditorMenuBar.VALIDATE=Validate interpreter options
 
-TInterpreterMouseMode.MOUSEBAR=browsing
-TInterpreterMouseMode.DIRECTSELECTION=Direkte Auswahl
+TInterpreterMouseMode.AUTOMATIC_SCANNING=Automatisches scannen
+TInterpreterMouseMode.DIRECT_SELECTION=Direkte auswahl
+TInterpreterMouseMode.MANUAL_SCANNING=Manuelle scannen
 TInterpreterOptions.NAME=Optionen des Interprets
 TInterpreterRead.NAME=Lesen
 TInterpreterReadAction.NAME=Lesen
 TInterpreterControllerAction.NAME=Treiber
-TInterpreterUndoAction.NAME=Rückgängig machen
-TInterpreterUndoAllAction.NAME=Auslöschen
+TInterpreterUndoAction.NAME=Löschen Zelle
+TInterpreterUndoAllAction.NAME=Löschen von Zellen
 TInterpreterHomeAction.NAME=Heim
 TInterpreterValidationAction.NAME=Interpreter
 
 TInterpreterOptionDialog.NAME=Optioneinrichter
 TInterpreterOptionDialog.CURSOR_IMAGE=Cursorbild
 TInterpreterOptionDialog.MAX_ACCUMULATED_CELLS=Maximale Anzahl der Zellen angesammelt
+TInterpreterOptionDialog.MOUSE_MODE=Modus der Maus
 TInterpreterOptionDialog.WAIT_CURSOR=Warten Sie den Cursor in Sekunden
 TInterpreterOptionDialog.BUTTON_ACCEPT=Annehmen
 TInterpreterOptionDialog.BUTTON_CANCEL=Abbrechen

@@ -165,7 +165,7 @@ public class TFormatToolBar extends TToolBar {
 
 	/**
 	 * Creates an <code>AttributeMap</code> with the tool bar's selected format
-	 * parameters.
+	 * parameters and the alternative border parameters.
 	 * 
 	 * @return The tool bar's format <code>AttributeMap</code>
 	 */
@@ -185,6 +185,9 @@ public class TFormatToolBar extends TToolBar {
 			TBoardConstants.setBorderColor(map, borderColor);
 
 		TBoardConstants.setLineWidth(map, borderSizeComboBox.getBorderSize());
+		
+		TBoardConstants.setAlternativeBorderColor(map, TBoardConstants.DEFAULT_ALTERNATIVE_BORDERCOLOR);
+		TBoardConstants.setAlternativeLinewidth(map, TBoardConstants.DEFAULT_ALTERNATIVE_LINEWIDTH);
 
 		return map;
 	}

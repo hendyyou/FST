@@ -6,12 +6,10 @@ import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
 import tico.imageGallery.dataBase.TIGDataBase;
 import tico.imageGallery.dialogs.TIGDeleteImagesDialog;
-import tico.imageGallery.dialogs.TIGModifyImageDialog;
 
 public class TIGDeleteImageAction extends TIGAbstractAction{
 
@@ -31,7 +29,7 @@ public class TIGDeleteImageAction extends TIGAbstractAction{
 	 */
 	public void actionPerformed(ActionEvent e) {
 		TIGDataBase.conectDB();
-		Vector data = TIGDataBase.imageSearch("*");
+		Vector<Vector<String>> data = TIGDataBase.imageSearchByName("*");
 		TIGDataBase.closeDB();
 		if (data.size() > 0){
 			new TIGDeleteImagesDialog(getEditor(), dataBase);

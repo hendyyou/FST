@@ -66,8 +66,6 @@ public class TIGInsertImageAction extends TIGAbstractAction {
 	
 	private ImageIcon image;
 	
-	private File imageFile;
-	
 	protected TIGDataBase dataBase;
 	
 	protected Vector theConcepts;
@@ -121,11 +119,10 @@ public class TIGInsertImageAction extends TIGAbstractAction {
 			
 			if (myImagesBehaviour.equals(TLanguage.getString("TIGManageGalleryDialog.REPLACE_IMAGE"))){
 				//Replace
-	       		Vector aux = new Vector();
-		    	aux = dataBase.imageSearch(name);
+				Vector<Vector<String>> aux = TIGDataBase.imageSearchByName(name);
 				if (aux.size()!=0){
-					int idImage = dataBase.imageKeySearchName(name);
-				    dataBase.deleteAsociatedOfImage(idImage);
+					int idImage = TIGDataBase.imageKeySearchName(name);
+				    TIGDataBase.deleteAsociatedOfImage(idImage);
 				}
 	       	 }
 			 if (myImagesBehaviour.equals(TLanguage.getString("TIGManageGalleryDialog.ADD_IMAGE"))){

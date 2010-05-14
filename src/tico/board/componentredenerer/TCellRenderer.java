@@ -29,6 +29,7 @@ package tico.board.componentredenerer;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -37,6 +38,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import org.jgraph.graph.CellView;
@@ -82,8 +84,8 @@ public class TCellRenderer extends TComponentRenderer {
 		} else {
 			borderWidth = 0;
 			setBorder(null);
-		}
-
+		} 
+		
 		// Apply background and gradient
 		Color backgroundColor = TBoardConstants.getBackground(map);
 		setBackground(backgroundColor);
@@ -99,7 +101,7 @@ public class TCellRenderer extends TComponentRenderer {
 
 		Color foregroundColor = TBoardConstants.getForeground(map);
 		setForeground((foregroundColor != null) ? foregroundColor
-				: TBoardConstants.DEFAULTFOREGROUND);
+				: TBoardConstants.DEFAULT_FOREGROUND);
 
 		// Apply text align properties
 		setVerticalAlignment(SwingConstants.CENTER);
@@ -112,6 +114,29 @@ public class TCellRenderer extends TComponentRenderer {
 		if (text == null)
 			text = "";
 		setText(text);
+		
+		// Check if the text fits in the cell with the font
+		int cellTextSpace = (int)TBoardConstants.getBounds(map).getWidth()-
+							2*borderWidth-2*HORIZONTAL_ICON_MARGIN;
+		JButton j = new JButton();
+		j.setSize(cellTextSpace, cellTextSpace);
+		FontMetrics fm = j.getFontMetrics(font);
+		int textWidth = fm.stringWidth(text);
+		if (textWidth > cellTextSpace){
+			int fontSize = font.getSize();
+			int fontStyle = font.getStyle();
+			String fontName = font.getFontName();
+			while ((textWidth > cellTextSpace) && fontSize>0){
+				fontSize--;
+				font = new Font(fontName, fontStyle, fontSize);
+				fm = j.getFontMetrics(font);
+				textWidth = fm.stringWidth(text);
+			}
+			if (fontSize!=0){
+				setFont(font);
+				setText(text);
+			}
+		}
 		
 		// Save the icon to be painted in the paint function
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(map);
@@ -142,10 +167,10 @@ public class TCellRenderer extends TComponentRenderer {
 
 			if (icon.getIconHeight() > maxImageHeight)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
+						maxImageHeight, Image.SCALE_SMOOTH));
 			if (icon.getIconWidth() > maxImageWidth)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
+						maxImageWidth, -1, Image.SCALE_SMOOTH));
 		}
 
 		setIcon(icon);
@@ -168,9 +193,9 @@ public class TCellRenderer extends TComponentRenderer {
 		}
 
 		super.paint(g);
-
+		
 		if (id != null) {
-			// Draw id in the top rigth corner
+			// Draw id in the top right corner
 			g2.setFont(ID_FONT);
 			if (getBackground() != Color.BLACK)
 				g2.setColor(Color.BLACK);

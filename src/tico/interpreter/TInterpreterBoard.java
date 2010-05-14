@@ -335,13 +335,13 @@ public class TInterpreterBoard {
 			
 			//Image bigger than interpretArea
 			if (imageFile.getIconHeight() >= this.getHeight() && imageFile.getIconWidth() >= this.getWidth()){
-				imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+				imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 			}
 			
 			//Image smaller than interpretArea
 			else if (imageFile.getIconHeight() < this.getHeight() && imageFile.getIconWidth() < this.getWidth()){
 				if (getImageResizeStyle()==0){  //Adjust						
-					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 				}
 				if (getImageResizeStyle()==1){  //Ampliada al tamaño del tablero
 					//Si el tablero es más ancho que alto
@@ -349,13 +349,13 @@ public class TInterpreterBoard {
 						
 						float factor = (float) (boardSize.getHeight()/imageFile.getIconHeight());
 						
-						imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)((float)imageFile.getIconWidth()*factor-2),(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+						imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)((float)imageFile.getIconWidth()*factor-2),(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 						
 					}	
 					if (this.getWidth()< this.getHeight()){ //ajustamos a la anchura
 						
 						float factor = (float) (boardSize.getWidth()/imageFile.getIconWidth());
-						imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)((float)imageFile.getIconHeight()*factor-2),Image.SCALE_DEFAULT));
+						imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)((float)imageFile.getIconHeight()*factor-2),Image.SCALE_SMOOTH));
 						
 					}
 				}				
@@ -368,10 +368,10 @@ public class TInterpreterBoard {
 				float factor = (float) (boardSize.getHeight()/imageFile.getIconHeight());
 				
 				if (getImageResizeStyle()==1 || getImageResizeStyle()==2){  //Ajustada/ampliada al tamaño del tablero							
-					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)((float)imageFile.getIconWidth()*factor-2),(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)((float)imageFile.getIconWidth()*factor-2),(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 				}
 				if (getImageResizeStyle()==0){
-					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 				}
 				
 			}	
@@ -382,10 +382,10 @@ public class TInterpreterBoard {
 				float factor = (float) (boardSize.getWidth()/imageFile.getIconWidth());
 				
 				if (getImageResizeStyle()==1 || getImageResizeStyle()==2){  //Ajustada/ampliada al tamaño del tablero							
-					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)((float)imageFile.getIconHeight()*factor-2),Image.SCALE_DEFAULT));
+					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)((float)imageFile.getIconHeight()*factor-2),Image.SCALE_SMOOTH));
 				}
 				if (getImageResizeStyle()==0){
-					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_DEFAULT));
+					imageFile = new ImageIcon(imageFile.getImage().getScaledInstance((int)boardSize.getWidth()-2,(int)boardSize.getHeight()-2,Image.SCALE_SMOOTH));
 				}
 			}	
 			

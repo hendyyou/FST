@@ -42,10 +42,13 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -63,6 +66,7 @@ import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.interpreter.actions.TInterpreterExitAction;
 import tico.interpreter.components.TInterpreterCell;
+import tico.interpreter.listeners.TBoardListener;
 import tico.interpreter.threads.TThreads;
 
 /**
@@ -90,9 +94,6 @@ public class TInterpreter extends JFrame {
 	private Dimension initLocation = new Dimension(0,0);
 	private Dimension initSize = new Dimension(1204,800);
 	
-	private int activateBrowsingMouse=0;
-	private int activateDirectSelection=1;
-	
 	public static ArrayList accumulatedCellsList=null;
 	
 	public static int run = 0;
@@ -104,18 +105,23 @@ public class TInterpreter extends JFrame {
 	private static TMenuItem menuItemUndoAll;
 	
 	//Mouse mode
-	private JRadioButtonMenuItem browsingMode;
+	private JRadioButtonMenuItem automaticScanningMode;
 	private JRadioButtonMenuItem directSelectionMode;
-	private static JMenu mouseMode;	
+	private JRadioButtonMenuItem manualScanningMode;
+	private static JMenu mouseMode;
+	private static ButtonGroup mouseModeOptions;
 	
 	//Panels
 	public JPanel backgroundPanel;
-	public static JPanel interpretArea;
+	public static TPanel interpretArea;
 	public static JPanel interpretAreaBackground;
 	public static JPanel accumulatedCells;
 	
-	private TInterpreterActionSet actionSet;
+	//Listener
+	public static TBoardListener boardListener;
 	
+	private TInterpreterActionSet actionSet;
+
 	/**
 	 * Creates a new <code>TInterpreter</code> main application window.
 	 */
@@ -143,7 +149,7 @@ public class TInterpreter extends JFrame {
 			
 		setResizable(false);
 		setVisible(true);
-		TInterpreterConstants.interpreter = this;	
+		TInterpreterConstants.interpreter = this;
 	}	
 	
 	/**
@@ -203,7 +209,6 @@ public class TInterpreter extends JFrame {
 		setIconImage(TResourceManager.getImage("interpreter-icon-24.png"));
 		setLocation(initLocation.width, initLocation.height);
 		setSize(initSize.width, initSize.height);
-		
 	}
 
 	// Creates the interpreter actions
@@ -283,23 +288,35 @@ public class TInterpreter extends JFrame {
 		menuItemUndoAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, ActionEvent.CTRL_MASK));
 		menuActions.add(menuItemUndoAll);
 		
-		mouseMode = new JMenu(TLanguage.getString("TInterpreterMenuBar.MODE"));
+		/*mouseMode = new JMenu(TLanguage.getString("TInterpreterMenuBar.MODE"));
+
+		automaticScanningMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.AUTOMATIC_SCANNING"));
+		automaticScanningMode.setActionCommand(TInterpreterConstants.AUTOMATIC_SCANNING_MODE);
+		directSelectionMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.DIRECT_SELECTION"));
+		directSelectionMode.setActionCommand(TInterpreterConstants.DIRECT_SELECTION_MODE);
+		manualScanningMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.MANUAL_SCANNING"));
+		manualScanningMode.setActionCommand(TInterpreterConstants.MANUAL_SCANNING_MODE);
 		
-		browsingMode = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_BARRIDO));
-		directSelectionMode = new JRadioButtonMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_DIRECT_SELECTION));
-		browsingMode.setSelected(false);
+		mouseModeOptions = new ButtonGroup();
+		mouseModeOptions.add(directSelectionMode);
+		mouseModeOptions.add(automaticScanningMode);
+		mouseModeOptions.add(manualScanningMode);		
+	
+		//browsingMode.setSelected(false);
 		directSelectionMode.setSelected(true);
+		//manualSelectionMode.setSelected(false);
 		
-		activateDirectSelection=1;
-		activateBrowsingMouse=0;
+		//activateDirectSelection=1;
+		//activateBrowsingMouse=0;
 		
-		mouseMode.add(browsingMode);
 		mouseMode.add(directSelectionMode);
-        menuActions.add(mouseMode); 
+		mouseMode.add(automaticScanningMode);
+		mouseMode.add(manualScanningMode);
+        menuActions.add(mouseMode);*/
         
         //Menu View        
 		JMenu menuView = new JMenu(TLanguage.getString("TInterpreterMenuBar.VIEW_MENU"));
-		menuItem= new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_OPTIONS));
+		menuItem = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_OPTIONS));
 		menuView.add(menuItem);
 		menuItem = new TMenuItem(actionSet.getAction(TInterpreterActionSet.INTERPRETER_LANGUAJES));
 		menuView.add(menuItem);
@@ -314,7 +331,7 @@ public class TInterpreter extends JFrame {
 	}
 	
 	public static void setEnabledActions(boolean enabled){
-		mouseMode.setEnabled(enabled);
+		//mouseMode.setEnabled(enabled);
         menuItemStart.setEnabled(enabled);
         menuItemUndo.setEnabled(enabled);
         menuItemUndoAll.setEnabled(enabled);
@@ -322,8 +339,7 @@ public class TInterpreter extends JFrame {
         menuItemStop.setEnabled(enabled);
 	}
 	
-	public int getActivateBrowsingMode () {
-		
+	/*public int getActivateBrowsingMode () {
 		return this.activateBrowsingMouse;
 	}
 	
@@ -337,12 +353,13 @@ public class TInterpreter extends JFrame {
 	}
 	
 	public void setBrowsingMode (boolean value){
-		browsingMode.setSelected(value);
+		automaticScanningMode.setSelected(value);
 	}
 	
 	public void setDirectSelection (boolean value){		
 		directSelectionMode.setSelected(value);
-	}
+	}*/
+	
 	public TInterpreter getInterpreter() {
 		return this;
 	}
@@ -505,9 +522,12 @@ public class TInterpreter extends JFrame {
 	
 	public void updateMenuButtons() {
 		boolean projectExists = (project != null);
-
 		// Action handlers
 		actionSet.getAction(TInterpreterActionSet.INTERPRETER_VALIDATION).setEnabled(projectExists);
+	}
+	
+	public static String returnMouseMode(){
+		return TInterpreterConstants.mouseModeSelected;
 	}
 	 
 	

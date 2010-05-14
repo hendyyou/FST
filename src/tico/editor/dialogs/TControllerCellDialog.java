@@ -322,7 +322,7 @@ public class TControllerCellDialog extends TComponentDialog {
 		TBoardConstants.setForeground(attributeMap, fontModel.getFontColor());
 		TBoardConstants.setFont(attributeMap, new Font(fontModel.getFontFace(),
 				fontModel.getFontStyle(), fontModel.getFontSize()));
-		TBoardConstants.setBackground(attributeMap, TBoardConstants.DEFAULTBACKGROUND);
+		TBoardConstants.setBackground(attributeMap, TBoardConstants.DEFAULT_BACKGROUND);
 
 		// Set cell static image and other image properties
 		if (textField.getText().equals(TLanguage.getString("TInterpreterExitAction.NAME"))){

@@ -28,8 +28,13 @@
 
 package tico.imageGallery.dataBase;
 
-import java.sql.*;
-import java.io.*;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 // TODO: Auto-generated Javadoc
@@ -108,7 +113,7 @@ public class TIGDataBase {
 			Statement stmt = conn.createStatement();
 			
 			String query = "CREATE TABLE Concept (id INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-							"word char(30) NOT NULL," +
+							"word char(30) UNIQUE NOT NULL," +
 							"noaccents char(30) NOT NULL)";
 			stmt.addBatch(query);
 
@@ -144,20 +149,20 @@ public class TIGDataBase {
 	public static int insertConceptDB(String concept){	
 		String conceptQuery;
 		String insertConceptQuery;
-		int conceptKey = -1;
-		
+		int conceptKey = -1;		
 		try {			
 			Statement stmt = conn.createStatement();
 			conceptQuery = "SELECT * FROM Concept WHERE word = \"" + concept + "\"";
-			ResultSet rsIm = stmt.executeQuery(conceptQuery);
-			if (!rsIm.next())
-			{
-				insertConceptQuery = "INSERT INTO Concept (word,noaccents) VALUES (\"" + concept + 
-									 "\", \"" + order(concept) +"\")";
+			insertConceptQuery = "INSERT INTO Concept (word,noaccents) VALUES (\"" + concept + 
+					"\", \"" + order(concept) +"\")";
+			try{
 				stmt.executeUpdate(insertConceptQuery);
-				rsIm = stmt.executeQuery(conceptQuery);
-			}
-			conceptKey = rsIm.getInt("id");
+				ResultSet rsIm = stmt.executeQuery("SELECT last_insert_rowid()");
+				conceptKey = rsIm.getInt(1);
+			}catch(SQLException e){
+				ResultSet rsIm = stmt.executeQuery(conceptQuery);
+				conceptKey = rsIm.getInt("id");
+			}			
 			stmt.close();
 		}
 		catch (Exception e) {
@@ -428,8 +433,8 @@ public class TIGDataBase {
 	 * 
 	 * @return the key words
 	 */
-	public static Vector getKeyWords(){
-		Vector data = new Vector();
+	public static Vector<String> getKeyWords(){
+		Vector<String> data = new Vector<String>();
 		try{
 			//Creamos un objeto Statement que se conectara a la BD
 			Statement stmt = conn.createStatement();
@@ -453,6 +458,8 @@ public class TIGDataBase {
 	 * 
 	 * @return the string
 	 */
+	
+	//Obtiene el nombre de una imagen a partir del path
 	public static String imageNameSearch(String path){
 		String result = "";
 		
@@ -480,27 +487,24 @@ public class TIGDataBase {
 	 * 
 	 * @return the int
 	 */
-	public static int numberOfImages(){
-		Vector result = new Vector();
+	/*public static int numberOfImages(){
+		
+		int images = -1;
 		
 		try{
 			//Creamos un objeto Statement que se conectara a la BD
 			Statement stmt = conn.createStatement();
-			String query = "SELECT * FROM Image";
+			String query = "SELECT COUNT(*) FROM Image";
 			ResultSet res = stmt.executeQuery(query);
-			while (res.next())
-			{
-				result.add(res.getString("path"));				
-			}
 			stmt.close();
+			images = res.getInt(1);
 		}
 		catch (Exception e){
 			System.out.println(e.getMessage());
 			System.out.println(e.toString());
-		}    			
-		
-		return result.size();
-	}
+		}
+		return images;
+	}*/
 			
 	/**
 	 * Image search.
@@ -509,7 +513,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the vector
 	 */
-	public static Vector imageSearch(String imagen){
+	public static Vector<Vector<String>> imageSearchByName(String imagen){
 		
 		Vector<Vector<String>> data = new Vector<Vector<String>>();
 	
@@ -533,7 +537,6 @@ public class TIGDataBase {
 			System.out.println(e.getMessage());
 			System.out.println(e.toString());
 		}    			
-		
 		return data;
 	}
 	
@@ -630,6 +633,9 @@ public class TIGDataBase {
 	}
 	
 	//Obtiene las palabras clave de una imagen
+	
+	private static PreparedStatement imageConcepts;
+	
 	/**
 	 * Asociated concept search.
 	 * 
@@ -637,6 +643,7 @@ public class TIGDataBase {
 	 * 
 	 * @return the vector< string>
 	 */
+	
 	public static Vector<String> asociatedConceptSearch(String path){
 		
 		Vector<String> data = new Vector<String>();
@@ -646,10 +653,17 @@ public class TIGDataBase {
 		try{
 			//Creamos un objeto Statement que se conectara a la BD
 			Statement stmt = conn.createStatement();
-			query = "SELECT word FROM Concept C, Asociated A, Image I " +
-				    "WHERE I.path= \"" + path + "\" AND I.id = A.image AND A.concept = C.id";
+			query = "SELECT id FROM Image WHERE path=\""+path+"\"";
 			res = stmt.executeQuery(query);
-			
+			int id = res.getInt(1);
+			if (imageConcepts == null){
+				stmt.addBatch("create index if not exists kk on Asociated (image)");
+				stmt.executeBatch();
+				imageConcepts = conn.prepareStatement("SELECT word FROM Concept C left join Asociated A " +
+					    "on C.id = A.concept WHERE A.image = ?");
+			}
+			imageConcepts.setInt(1, id);
+			res = imageConcepts.executeQuery();
 			while (res.next()){
 				data.add(res.getString("word"));
 			}
@@ -770,10 +784,10 @@ public class TIGDataBase {
 	 * 
 	 * @return the vector
 	 */
-	public static Vector search(String keyWord1,int searchOptions1,String keyWord2,
+	public static Vector<Vector<String>> imageSearchByKeyWords(String keyWord1,int searchOptions1,String keyWord2,
 									int searchOptions2,String keyWord3){
 		
-		Vector data = new Vector();
+		Vector<Vector<String>> data = new Vector<Vector<String>>();
 		ResultSet res;
 		String query;
 		

@@ -33,6 +33,8 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -45,6 +47,7 @@ import tico.board.TBoardConstants;
 import tico.board.components.TComponent;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.editor.TFileHandler;
 
 /**
  * <code>Swing</code> which implements the <code>TCell</code> visualization.
@@ -103,7 +106,7 @@ public class TControllerCellRenderer extends TComponentRenderer {
 
 		Color foregroundColor = TBoardConstants.getForeground(map);
 		setForeground((foregroundColor != null) ? foregroundColor
-				: TBoardConstants.DEFAULTFOREGROUND);
+				: TBoardConstants.DEFAULT_FOREGROUND);
 
 		// Apply text align properties
 		setVerticalAlignment(SwingConstants.CENTER);
@@ -113,9 +116,9 @@ public class TControllerCellRenderer extends TComponentRenderer {
 
 		// Apply text properties
 		String text = TBoardConstants.getText(map);
-		if (text == null)
-			//text = TLanguage.getString("TControllerCellDialog.TEXT_DEFAULT");
-			text="";
+		if (text == null){
+			text = "";
+		}
 		else {
 			actionCode = TBoardConstants.getActionCode(map);
 			if (actionCode == TBoardConstants.EXIT_ACTION_CODE){
@@ -130,6 +133,8 @@ public class TControllerCellRenderer extends TComponentRenderer {
 				text = TLanguage.getString("TInterpreterReturnAction.NAME");
 			}else if (actionCode == TBoardConstants.STOP_ACTION_CODE){
 				text = TLanguage.getString("TInterpreterStopAction.NAME");
+			}else if (actionCode == TBoardConstants.HOME_ACTION_CODE){
+				text = TLanguage.getString("TInterpreterHomeAction.NAME");
 			}
 		}
 		
@@ -137,9 +142,6 @@ public class TControllerCellRenderer extends TComponentRenderer {
 		
 		// Save the icon to be painted in the paint function
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(map);
-		
-		/*if (icon == null)
-			icon = TResourceManager.getImageIcon("controller-exit.png");*/
 
 		if (icon != null) {
 			int textPosition = TBoardConstants.getVerticalTextPosition(map);
@@ -167,10 +169,10 @@ public class TControllerCellRenderer extends TComponentRenderer {
 
 			if (icon.getIconHeight() > maxImageHeight)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(-1,
-						maxImageHeight, Image.SCALE_DEFAULT));
+						maxImageHeight, Image.SCALE_SMOOTH));
 			if (icon.getIconWidth() > maxImageWidth)
 				icon = new ImageIcon(icon.getImage().getScaledInstance(
-						maxImageWidth, -1, Image.SCALE_DEFAULT));
+						maxImageWidth, -1, Image.SCALE_SMOOTH));
 		}
 
 		setIcon(icon);

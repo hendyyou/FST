@@ -111,7 +111,7 @@ public class TIGSearchKeyWord extends JPanel{
 						textKeyWord2.setEnabled(true);
 						options2.setEnabled(true);
 					}
-					if (options2.getSelectedIndex()!=0){
+					if (options2.getSelectedIndex()!=0 && options2.isEnabled()){
 						textKeyWord3.setEnabled(true);
 					}
 				}else{
@@ -208,9 +208,10 @@ public class TIGSearchKeyWord extends JPanel{
 					}else{
 						searchOptions2 = getSearchOptions2();
 					}					
-					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					result = TIGDataBase.imageSearchByKeyWords(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
 					if (result.size()==0){
 						// There are no results for that search
+						thumbnails.updateThumbnailsPanel(result,0);
 						JOptionPane.showConfirmDialog(null,
 								TLanguage.getString("TIGKeyWordSearchDialog.NO_RESULTS"),
 								TLanguage.getString("TIGKeyWordSearchDialog.NAME"),
@@ -391,7 +392,7 @@ public class TIGSearchKeyWord extends JPanel{
 					}else{
 						searchOptions2 = getSearchOptions2();
 					}					
-					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					result = TIGDataBase.imageSearchByKeyWords(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
 					if (result.size()==0){
 						deleteImages.update(result);
 						// There are no results for that search
@@ -575,7 +576,7 @@ public class TIGSearchKeyWord extends JPanel{
 					}else{
 						searchOptions2 = getSearchOptions2();
 					}					
-					result = TIGDataBase.search(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
+					result = TIGDataBase.imageSearchByKeyWords(keyWord1,searchOptions1,keyWord2,searchOptions2,keyWord3);
 					if (result.size()==0){
 						exportDB.update(result);
 						// There are no results for that search

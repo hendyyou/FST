@@ -83,7 +83,7 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 			TInterpreter.accumulatedCells.updateUI();
 			// Get the chosen file			
 			// Set its directory as next first JFileChooser directory		
-			TInterpreterRun.fin = false;
+			//TInterpreterRun.fin = false;
 			File selectedFile = fileChooser.getSelectedFile();
 			defaultDirectory = selectedFile.getParentFile();
 			// Set the editor home directory
@@ -103,6 +103,7 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 						TLanguage.getString("TProjectOpenAction.OPEN_ERROR"),
 						TLanguage.getString("ERROR") + "!",
 						JOptionPane.ERROR_MESSAGE);
+				interpreter.TInterpreterRestoreCursor();
 			}
 						
 		}

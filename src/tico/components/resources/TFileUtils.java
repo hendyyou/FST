@@ -82,32 +82,32 @@ public class TFileUtils {
 	 * WAV sound files extension.
 	 */
 	public final static String WAV = "wav";
-
-	/**
-	 * OGG sound files extension.
-	 */
-	public final static String OGG = "ogg";
 	
 	// Video extensions
 	/**
-	 * AVI sound files extension.
+	 * AVI video files extension.
 	 */
 	public final static String AVI = "avi";
 	
 	/**
-	 * MPG sound files extension.
+	 * MPG video files extension.
 	 */
 	public final static String MPG = "mpg";
 	
 	/**
-	 * MPEG sound files extension.
+	 * MPEG video files extension.
 	 */
 	public final static String MPEG = "mpeg";
 	
 	/**
-	 * WMV sound files extension.
+	 * WMV video files extension.
 	 */
 	public final static String WMV = "wmv";
+	
+	/**
+	 * FLV video files extension.
+	 */
+	public final static String FLV = "flv";
 
 	// Tico extensions
 	/**
@@ -318,8 +318,7 @@ public class TFileUtils {
 
 		if (extension != null) {
 			if (extension.equals(TFileUtils.MP3)
-					|| extension.equals(TFileUtils.WAV)
-					|| extension.equals(TFileUtils.OGG)) {
+					|| extension.equals(TFileUtils.WAV)) {
 				return true;
 			}
 		}
@@ -357,7 +356,8 @@ public class TFileUtils {
 			if (extension.equals(TFileUtils.AVI)
 					|| extension.equals(TFileUtils.MPG)
 					|| extension.equals(TFileUtils.MPEG)
-					|| extension.equals(TFileUtils.WMV)) {
+					|| extension.equals(TFileUtils.WMV)
+					|| extension.equals(TFileUtils.FLV)) {
 				return true;
 			}
 		}

@@ -28,11 +28,17 @@
 package tico.editor.handler;
 
 import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
 
 import tico.board.TBoardConstants;
 import tico.board.components.TComponent;
 import tico.board.components.TControllerCell;
+import tico.configuration.TLanguage;
 import tico.editor.TBoardContainer;
+import tico.editor.TFileHandler;
 
 /**
  * Marquee handler which allows to insert, in a <code>boardContainer</code>
@@ -60,8 +66,22 @@ public class TControllerCellMarqueeHandler extends TComponentMarqueeHandler {
 
 		controllerCell.getAttributes().applyMap(
 				getBoardContainer().getEditor().getCurrentAttributes());
-
+		
 		TBoardConstants.setBounds(controllerCell.getAttributes(), bounds);
+		
+		//Default controller cell is Exit cell
+		TBoardConstants.setText(controllerCell.getAttributes(), TLanguage.getString("TInterpreterExitAction.NAME"));
+		TBoardConstants.setActionCode(controllerCell.getAttributes(), TBoardConstants.EXIT_ACTION_CODE);
+		String currentDirectory = System.getProperty("user.dir");
+		String exitFilePath = currentDirectory + File.separator + "controller-icons"+ File.separator + "controller-exit.png";
+		ImageIcon exitIcon = null;
+		try {
+			File f = TFileHandler.importFile(exitFilePath);
+			exitIcon = new ImageIcon(f.getAbsolutePath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		TBoardConstants.setIcon(controllerCell.getAttributes(), exitIcon);
 
 		return controllerCell;
 	}

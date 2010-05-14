@@ -134,38 +134,38 @@ public class TClickControllerCellActionsPanel extends JPanel {
 		
 		JLabel exitIcon = new JLabel();
 		ImageIcon exit = new ImageIcon((TResourceManager.getImageIcon("controller-exit.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		exitIcon.setIcon(exit);
 		exitIcon.setText("");
 		
 		JLabel undoIcon = new JLabel();
 		ImageIcon undo = new ImageIcon((TResourceManager.getImageIcon("controller-undo.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		undoIcon.setIcon(undo);
 		
 		JLabel undoAllIcon = new JLabel();
 		ImageIcon undoAll = new ImageIcon((TResourceManager.getImageIcon("controller-undo-all.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		undoAllIcon.setIcon(undoAll);
 		
 		JLabel readIcon = new JLabel();
 		ImageIcon read = new ImageIcon((TResourceManager.getImageIcon("controller-read.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		readIcon.setIcon(read);
 		
 		JLabel returnIcon = new JLabel();
 		ImageIcon back = new ImageIcon((TResourceManager.getImageIcon("controller-return.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		returnIcon.setIcon(back);
 		
 		JLabel homeIcon = new JLabel();
 		ImageIcon home = new ImageIcon((TResourceManager.getImageIcon("controller-home.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		homeIcon.setIcon(home);
 		
 		JLabel stopIcon = new JLabel();
 		ImageIcon stop = new ImageIcon((TResourceManager.getImageIcon("controller-stop.png")).getImage().
-				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_DEFAULT));
+				getScaledInstance(TBoardConstants.CONTROLLER_IMAGE_SIZE, TBoardConstants.CONTROLLER_IMAGE_SIZE, Image.SCALE_SMOOTH));
 		stopIcon.setIcon(stop);		
 		
 		// Create actions radio buttons

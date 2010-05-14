@@ -50,8 +50,12 @@ public class TReturnCellListener implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if ((interpreter.run==1)){
-			TInterpreterReturnAction back = new TInterpreterReturnAction(interpreter, (((TInterpreterCell)arg0.getSource()).getName()));
-			back.actionPerformed(null);
+			if(arg0.getButton()==MouseEvent.BUTTON3){ //Right button
+				TInterpreter.boardListener.mouseClicked(arg0);
+			}else{	
+				TInterpreterReturnAction back = new TInterpreterReturnAction(interpreter, (((TInterpreterCell)arg0.getSource()).getName()));
+				back.actionPerformed(null);
+			}
 		}			
 	}
 

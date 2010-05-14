@@ -32,8 +32,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.ImageIcon;
 
 import tico.components.resources.TResourceManager;

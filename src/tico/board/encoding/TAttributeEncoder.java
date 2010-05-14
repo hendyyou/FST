@@ -60,7 +60,7 @@ import tico.editor.TProjectHandler;
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
- */
+ */ 
 public class TAttributeEncoder {
 	// Attribute names
 	private final static String TYPE_ATTRIBUTE = "type";
@@ -371,6 +371,7 @@ public class TAttributeEncoder {
 			} else if (type.equals(ICON_TYPE)) {
 				String partialPath = element.getChildNodes().item(0)
 						.getNodeValue();
+				partialPath = partialPath.replace('\\','/');
 				File imageFile;
 				try {
 					imageFile = TFileHandler.importFile(new File(TProjectHandler
@@ -396,6 +397,8 @@ public class TAttributeEncoder {
 			} else if (type.equals(FILE_TYPE)) {
 				String partialPath = element.getChildNodes().item(0)
 						.getNodeValue();
+				partialPath = partialPath.replace('\\','/');
+				//System.out.println(System.getProperty("os.name"));
 				try {
 					value = TFileHandler.importFile(new File(TProjectHandler
 							.getTempDirectory(), partialPath));

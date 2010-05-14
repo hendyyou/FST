@@ -63,11 +63,7 @@ public class TIGImageGalleryDialog extends TDialog{
 	
 	private ImageIcon icon;
 	
-	private TEditor editor;
-	
-	private Vector images;
-	
-	private TIGDataBase dataBase;
+	private Vector<Vector<String>> images;
 	
 	private GridBagConstraints c;
 	
@@ -80,8 +76,7 @@ public class TIGImageGalleryDialog extends TDialog{
 	public TIGImageGalleryDialog(TEditor editor, int index) {
 		super(editor, true);
 		
-		this.editor = editor;
-		dataBase = new TIGDataBase();
+		new TIGDataBase();
 		TIGDataBase.conectDB();
 		
 		addWindowListener(new java.awt.event.WindowListener(){
@@ -103,7 +98,7 @@ public class TIGImageGalleryDialog extends TDialog{
 		
 		//The images associated to the first key word in the Data Base are shown 
 		//when the window is displayed  
-		images = TIGDataBase.imageSearch("*");
+		images = TIGDataBase.imageSearchByName("*");
 		
 		// Second, create the component that shows all the images
 		thumbnailsPanel = new JPanel();
@@ -202,13 +197,13 @@ public class TIGImageGalleryDialog extends TDialog{
 		c.insets = new Insets(5, 5, 5, 5);
 		c.gridx = 0;
 		c.gridy = 0;
-		getContentPane().add(searchNamePanel, c);
+		getContentPane().add(keyWordSearchPanel, c);
 
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.gridx = 0;
 		c.gridy = 1;
-		getContentPane().add(keyWordSearchPanel, c);
+		getContentPane().add(searchNamePanel, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);

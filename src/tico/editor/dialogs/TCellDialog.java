@@ -56,7 +56,7 @@ import javax.swing.event.ListSelectionListener;
 import tico.board.TBoard;
 import tico.board.TBoardConstants;
 import tico.board.components.TComponent;
-import tico.components.TAnotherBorderSelectionPanel;
+import tico.components.TAlternativeBorderSelectionPanel;
 import tico.components.TBackgroundSelectionPanel;
 import tico.components.TBorderSelectionPanel;
 import tico.components.TClickCellActionsPanel;
@@ -103,7 +103,7 @@ public class TCellDialog extends TComponentDialog {
 
 	private TBorderSelectionPanel borderSelectionPanel;
 	
-	private TAnotherBorderSelectionPanel AnotherborderSelectionPanel;
+	private TAlternativeBorderSelectionPanel alternativeBorderSelectionPanel;
 
 	private TBackgroundSelectionPanel backgroundSelectionPanel;
 
@@ -298,7 +298,7 @@ public class TCellDialog extends TComponentDialog {
 		GridBagConstraints c = new GridBagConstraints();
 
 		componentPropertiesPanel.setLayout(new GridBagLayout());
-		createAnotherBorderSelectionPanel();
+		createAlternativeBorderSelectionPanel();
 		createBorderSelectionPanel();
 		
 		createBackgroundSelectionPanel();
@@ -310,13 +310,11 @@ public class TCellDialog extends TComponentDialog {
 		c.gridy = 0;
 		componentPropertiesPanel.add(borderSelectionPanel, c);
 		
-		//add By Toty!
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 1;
-		componentPropertiesPanel.add(AnotherborderSelectionPanel, c);
+		componentPropertiesPanel.add(alternativeBorderSelectionPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
@@ -344,8 +342,6 @@ public class TCellDialog extends TComponentDialog {
 		createSendTextChooser();
 		createSoundChooser();
 		createVideoChooser();
-		//createAnotherSoundChooser();
-		
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
@@ -405,7 +401,7 @@ public class TCellDialog extends TComponentDialog {
 				.getStyle());
 	}
 	
-	// Creates the boarder selection panel
+	// Creates the border selection panel
 	private void createBorderSelectionPanel() {
 		Map map = getAttributeMap();
 
@@ -415,24 +411,22 @@ public class TCellDialog extends TComponentDialog {
 				.setBorderColor(TBoardConstants.getBorderColor(map));
 		borderSelectionPanel.setBorderSize(Math.max(1, Math
 				.round(TBoardConstants.getLineWidth(map))));
-		borderSelectionPanel.setSelect(AnotherborderSelectionPanel);
 	}
 	
-	//Creates another border selection panel
-	private void createAnotherBorderSelectionPanel() {
+	//Creates the alternative border selection panel
+	private void createAlternativeBorderSelectionPanel() {
 		Map map = getAttributeMap();
 
-		AnotherborderSelectionPanel = new TAnotherBorderSelectionPanel();
+		alternativeBorderSelectionPanel = new TAlternativeBorderSelectionPanel();
 
-		AnotherborderSelectionPanel
-				.setBorderColor(TBoardConstants.getChangeColor(map));
+		alternativeBorderSelectionPanel
+				.setBorderColor(TBoardConstants.getAlternativeBorderColor(map));
 		
-		AnotherborderSelectionPanel.setBorderSize(Math.max(4,Math
-				.round(TBoardConstants.getChangeLineWidth(map))));
-
+		alternativeBorderSelectionPanel.setBorderSize(Math.max(1,Math
+				.round(TBoardConstants.getAlternativeLinewidth(map))));
 	}	
 
-	// Creates the backgrond selection panel
+	// Creates the background selection panel
 	private void createBackgroundSelectionPanel() {
 		Map map = getAttributeMap();
 
@@ -535,18 +529,20 @@ public class TCellDialog extends TComponentDialog {
 		else
 			removalAttributes.add(TBoardConstants.BORDERCOLOR);
 		
-		Color color2=AnotherborderSelectionPanel.getBorderColor();
+		Color alternativeBorderColor = alternativeBorderSelectionPanel.getBorderColor();
 		
-		if (color2!=null){
-			
-			TBoardConstants.setChangeColor(attributeMap,color2);}
+		if (alternativeBorderColor!=null){			
+			TBoardConstants.setAlternativeBorderColor(attributeMap,alternativeBorderColor);
+		}
 		else
-			removalAttributes.add(TBoardConstants.CHANGE_COLOR);
+			removalAttributes.add(TBoardConstants.ALTERNATIVE_BORDER_COLOR);
 
 		TBoardConstants.setLineWidth(attributeMap, borderSelectionPanel
 				.getBorderSize());
 		
-		TBoardConstants.setChangeLineWidth(attributeMap,AnotherborderSelectionPanel.getBorderSize());
+		int alternativeBorderLinewidth = alternativeBorderSelectionPanel.getBorderSize();
+		
+		TBoardConstants.setAlternativeLinewidth(attributeMap,alternativeBorderLinewidth);
 	
 		Color background = backgroundSelectionPanel.getBackgroundColor();
 		if (background != null)

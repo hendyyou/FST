@@ -44,8 +44,7 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 		nameCell = name; 
 	}
 	public void actionPerformed(ActionEvent e) {
-		if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
-			
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ //barrido automatico
 			try {						
 				TInterpreterConstants.semaforo.acquire();
 			//	System.out.println("ACQUIRE CELDA");
@@ -55,7 +54,7 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 			}
 		
 		}
-		
+
 		interpreter = getInterpreter();
 		String initialBoard = TInterpreterProject.getInitialBoardname();
 		//Tablero al que debo ir porque han pulsado el botón
@@ -78,7 +77,11 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 
 		interpreter.getProject().setCurrentBoard(initialBoard);
 		
-		if (TInterpreterConstants.interpreter.getActivateBrowsingMode()==1){ // barrido automatico
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
+			TInterpreter.boardListener.click();
+		}
+		
+		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 			//System.out.println("RELEASE CELDA");
 			try {
 				TInterpreterConstants.semaforo.release();

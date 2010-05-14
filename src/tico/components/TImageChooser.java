@@ -146,7 +146,7 @@ public class TImageChooser extends JPanel {
 	// Allows save the directory where you get the last image
 	private static File defaultDirectory = null;
 	
-	public static String ruta = null;
+	public static String path = null;
 	
 	//public static final File pluginsDir = new File("./plugins");
 	
@@ -473,7 +473,7 @@ public class TImageChooser extends JPanel {
 		clearIconButton = new TButton(new AbstractAction(TLanguage.getString("TImageChooser.BUTTON_CLEAR")) {
 			public void actionPerformed(ActionEvent e) {
 				setIcon(null);
-				ruta=null;
+				path=null;
 			}
 		});
 		
@@ -514,12 +514,12 @@ public class TImageChooser extends JPanel {
 			if (thumbnail.getIconWidth() > maxImageWidth) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(maxImageWidth, -1,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 			if (thumbnail.getIconHeight() > maxImageHeight) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(-1, maxImageHeight,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 
 			iconLabel.setText("");
@@ -670,13 +670,13 @@ public class TImageChooser extends JPanel {
 						BufferedImage bufferedImage = src.getAsBufferedImage();
 						newImageIcon = new ImageIcon(bufferedImage,
 								selectedFile.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					} else {
 						// Create it as usual
 						newImageIcon = new ImageIcon(selectedFile
 								.getAbsolutePath(), selectedFile
 								.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					}
 
 					// Sets the new imageIcon to the TImageChooser

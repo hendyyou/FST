@@ -57,7 +57,7 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction
 			TInterpreter.run=0;
 			
 			//Kill All Threads
-			TInterpreterRun.fin=false;
+			//TInterpreterRun.fin=false;
 			
 			//if music on => stop it;
 			if(TInterpreterConstants.audioMp3!=null)

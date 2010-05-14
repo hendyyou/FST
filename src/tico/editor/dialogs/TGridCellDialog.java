@@ -39,7 +39,7 @@ import javax.swing.JPanel;
 import tico.board.TBoardConstants;
 import tico.board.components.TComponent;
 import tico.board.components.TGrid;
-import tico.components.TAnotherBorderSelectionPanel;
+import tico.components.TAlternativeBorderSelectionPanel;
 import tico.components.TGridOrderPanel;
 import tico.configuration.TLanguage;
 import tico.editor.TBoardContainer;
@@ -57,7 +57,7 @@ public class TGridCellDialog extends TCellDialog {
 
 	private TGridOrderPanel orderSelectionPanel;
 	
-	private TAnotherBorderSelectionPanel borderPanel;
+	private TAlternativeBorderSelectionPanel borderPanel;
 	/**
 	 * Creates a new <code>TGridCellDialog</code> to edit the <code>gridCell</code>
 	 * properties.
@@ -73,7 +73,7 @@ public class TGridCellDialog extends TCellDialog {
 	private void createAnotherBorderSelectionPanel() {
 		Map map = ((TGrid) getComponent().getParent()).getAttributes();
 
-		borderPanel = new TAnotherBorderSelectionPanel();
+		borderPanel = new TAlternativeBorderSelectionPanel();
 
 		borderPanel.setBorderColor(TBoardConstants.getChangeColorGrid(map));
 		

@@ -62,7 +62,7 @@ public class TLineRenderer extends TComponentRenderer {
 
 		borderColor = TBoardConstants.getBorderColor(map);
 		if (borderColor == null)
-			borderColor = TBoardConstants.DEFAULTFOREGROUND;
+			borderColor = TBoardConstants.DEFAULT_FOREGROUND;
 
 		lineWidth = Math.max(1, Math.round(TBoardConstants.getLineWidth(map)));
 	}

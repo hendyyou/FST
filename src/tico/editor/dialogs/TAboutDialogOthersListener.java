@@ -77,7 +77,7 @@ import tico.configuration.TLanguage;
 	            "<p>Fernando Negré y David Ramos (Tico versión 0.0) - 2005</p>" +
 	            "<p>Antonio Rodríguez (Control de entorno) - 2007</p>" +
 	            "<p>Sandra Baldassarri y Beatriz Mateo (Utilidad Validación) - 2007</p>" +
-	            "<p>Patricia Jaray e Isabel González (Utilidad Galería de Imágenes) - 2008, 2009</p>" +
+	            "<p>Patricia Jaray y Carolina Palacio (Utilidad Galería de pictogramas) - 2008, 2009</p>" +
 	            "<p>Carolina Palacio (Celdas de control) - 2009</p>" +
 	            "</body></html>";
 			othersLabel.setText(otherDevelopers);
@@ -110,7 +110,7 @@ import tico.configuration.TLanguage;
 			othersDialog.setModal(true);
 			othersDialog.setLocation(location);
 			othersDialog.setUndecorated(true);
-			othersDialog.setSize(440, 130);
+			othersDialog.setSize(500, 130);
 			othersDialog.setVisible(true);
 		}
 		public void mouseEntered(MouseEvent arg0) {

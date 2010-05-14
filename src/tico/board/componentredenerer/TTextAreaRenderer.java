@@ -101,7 +101,7 @@ public class TTextAreaRenderer extends TComponentRenderer {
 
 		Color foregroundColor = TBoardConstants.getForeground(map);
 		setForeground((foregroundColor != null) ? foregroundColor
-				: TBoardConstants.DEFAULTFOREGROUND);
+				: TBoardConstants.DEFAULT_FOREGROUND);
 		
 		// Apply text align properties
 		String htmlBegin = "<html><body>", text, htmlEnd = "</p></body></html>";

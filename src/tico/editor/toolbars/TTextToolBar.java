@@ -98,7 +98,7 @@ public class TTextToolBar extends TToolBar {
 		// TODO Add default properties to TSetup
 		textBoldButton.setSelected(false);
 		textItalicButton.setSelected(false);
-		fontColorComboBox.setColor(TBoardConstants.DEFAULTFOREGROUND);
+		fontColorComboBox.setColor(TBoardConstants.DEFAULT_FOREGROUND);
 		
 		add(applyFont);
 		addSeparator(new Dimension(3, 3));
