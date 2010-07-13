@@ -31,7 +31,6 @@ package tico.interpreter;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -42,19 +41,15 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
@@ -65,7 +60,6 @@ import tico.components.TMenuItem;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.interpreter.actions.TInterpreterExitAction;
-import tico.interpreter.components.TInterpreterCell;
 import tico.interpreter.listeners.TBoardListener;
 import tico.interpreter.threads.TThreads;
 
@@ -103,13 +97,6 @@ public class TInterpreter extends JFrame {
 	private static TMenuItem menuItemRead;
 	private static TMenuItem menuItemUndo;
 	private static TMenuItem menuItemUndoAll;
-	
-	//Mouse mode
-	private JRadioButtonMenuItem automaticScanningMode;
-	private JRadioButtonMenuItem directSelectionMode;
-	private JRadioButtonMenuItem manualScanningMode;
-	private static JMenu mouseMode;
-	private static ButtonGroup mouseModeOptions;
 	
 	//Panels
 	public JPanel backgroundPanel;
@@ -463,9 +450,8 @@ public class TInterpreter extends JFrame {
 		ImageIcon ii=TResourceManager.getImageIcon("flecha2.png");
 	
 		if (ii==null){
-			System.out.println("Error en el cursor");
 			ii=TResourceManager.getImageIcon("flecha2.png");
-			}
+		}
 		Image imageCursor=ii.getImage();
 		Cursor customCursor=getToolkit().createCustomCursor(imageCursor,new Point(),"MyCursor");
 		this.setCursor(customCursor);
@@ -475,7 +461,6 @@ public class TInterpreter extends JFrame {
 			ImageIcon ii= new ImageIcon(TInterpreterConstants.interpreterCursor);
 			
 			if (ii==null){
-				System.out.println("Error en el cursor");
 				ii=TResourceManager.getImageIcon("flecha2.png");
 			}
 			

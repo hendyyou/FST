@@ -99,12 +99,13 @@ public class TIGExportDBDialog extends TDialog {
     private TIGExportTask task;
 
     private JPanel contentPane;
-    
-   // private int numberOfImages;
-    
+        
     private boolean stop = false;
 	
+    private boolean cancel = false;
+    
     private Vector<Vector<String>> images;
+    
 	public Vector myResults;
     
 	private TIGThumbnails thumbnailsDialog;
@@ -118,10 +119,17 @@ public class TIGExportDBDialog extends TDialog {
 		myDataBase = dataBase;
 		
 		TIGDataBase.conectDB();
-		//numberOfImages = TIGDataBase.numberOfImages();
 		
 		addWindowListener(new java.awt.event.WindowListener(){
 			public void windowClosing(java.awt.event.WindowEvent e){
+				if (task.isRunning()){
+					stop = true;
+					cancel = true;
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGOperationDB.CANCELED"),
+							"",
+							JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
+				}
 				dispose();
 			}
 			
@@ -166,9 +174,7 @@ public class TIGExportDBDialog extends TDialog {
 		
 		// Third, create the component that search the images from its associations
 		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog, this);
-		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
-		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);		
-		//String keyWord1 = keyWordSearchDialog.getKeyWord1();		
+
 		//Fourth, create the panel that contains the file chooser for the directory
 		//that contains the images
 			
@@ -189,15 +195,15 @@ public class TIGExportDBDialog extends TDialog {
 		exitButton = new TButton(new AbstractAction(TLanguage.getString("TIGExportDBDialog.EXIT")) {
 			public void actionPerformed(ActionEvent e) {
 				stop = true;
+				cancel = true;
+				JOptionPane.showConfirmDialog(null,
+						TLanguage.getString("TIGOperationDB.CANCELED"),
+						"",
+						JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}
 		});
 		
-		//Create the main button
-		//aceptButton.addActionListener(new ButtonListener());
-		//aceptButton = new TButton(TLanguage.getString("TIGExportDBDialog.DB"));
-		//aceptButton.setActionCommand("start");
-		//aceptButton.addActionListener(new ButtonListener());
 		exportButton = new TButton(new AbstractAction(TLanguage.getString("TIGExportDBDialog.DB")) {
 			public void actionPerformed(ActionEvent e) {
 				if (directory.getText().compareTo("") == 0){
@@ -217,7 +223,7 @@ public class TIGExportDBDialog extends TDialog {
 							JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
 				}else{
 					pathImages = directory.getText();
-					text.setText(TLanguage.getString("TIGLoadDBDialog.PROGRESS_TASK"));
+					text.setText(TLanguage.getString("TIGImportDBDialog.PROGRESS_TASK"));
 					exportButton.setEnabled(false);
 					progressBar.setIndeterminate(false);
 					
@@ -335,7 +341,7 @@ public class TIGExportDBDialog extends TDialog {
 	
 	private String createFileTextChooser(){	
 		
-		//Displays the file chooser to select the text file tha contains the associations.
+		//Displays the file chooser to select the text file that contains the associations.
 		String path = "";
 		
 		// Open a JFileChooser
@@ -363,7 +369,6 @@ public class TIGExportDBDialog extends TDialog {
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
         progressBar.setMaximum(task.getLengthOfTask());
-        //progressBar.setIndeterminate(true);
 
         JPanel panel = new JPanel();
         text = new JTextField("",20);
@@ -387,7 +392,6 @@ public class TIGExportDBDialog extends TDialog {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.add(panel, BorderLayout.NORTH);
-        //contentPane.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
         contentPane.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)), 
 				TLanguage.getString("TIGExportDBDialog.PROGRESS")));
@@ -407,16 +411,21 @@ public class TIGExportDBDialog extends TDialog {
             if (stop){
             	task.stop();
             }
+            if (cancel){
+            	task.cancel();            	
+            }
             if (task.done()) {
                 Toolkit.getDefaultToolkit().beep();
                 timer.stop();
                 exportButton.setEnabled(true);
                 progressBar.setValue(progressBar.getMinimum());                
+                if (!cancel){
+	                JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGExportDBDialog.EXPORT_COMPLETED"),
+							"",
+							JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
+                }
                 dispose();
-                JOptionPane.showConfirmDialog(null,
-						TLanguage.getString("TIGExportDBDialog.EXPORT_COMPLETED"),
-						"",
-						JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }

@@ -59,6 +59,8 @@ public class TIGDeleteTask {
     private TIGDataBase myDataBase;
     private String myDirectoryPath;
     private boolean stop = false;
+    private boolean cancel = false;
+    private boolean running = false;
     
     private TIGDeleteTask myTask = this;
 	private Vector myImages;
@@ -73,7 +75,7 @@ public class TIGDeleteTask {
     //called from ProgressBarDemo to start the task
     public void go(TEditor editor, TIGDataBase dataBase, Vector images) {
         current = 0;
-        System.out.println("Tamaño de images: "+images.size());
+        running = true;
         this.myEditor = editor;
         this.myDataBase = dataBase;
         this.myImages = images;
@@ -102,6 +104,16 @@ public class TIGDeleteTask {
 
     public void stop() {
     	stop = true;
+    	running = false;
+    }
+    
+    public void cancel() {
+    	cancel = true;
+    	running = false;
+    }
+    
+    public boolean isRunning(){
+    	return running;
     }
 
     //called from ProgressBarDemo to find out if the task has completed
@@ -124,11 +136,10 @@ public class TIGDeleteTask {
         	File directory = null;
         	File[] directoryFiles;
         	lengthOfTask = imagenes.size();
-        	System.out.println("TAMAÑO IMAGES: "+myImages.size());
         	
         	TIGDataBase.activateTransactions();
         	
-        	for (int i=0; ((i < imagenes.size()) && !stop); i++){
+        	for (int i=0; ((i < imagenes.size()) && !stop && !cancel); i++){
         		current = i;
 				Vector data1 = new Vector(2);
 				data1 = (Vector) imagenes.elementAt(i);
@@ -136,7 +147,8 @@ public class TIGDeleteTask {
 				
 										
 				int key = TIGDataBase.imageKeySearch(pathImage);
-				TIGDataBase.deleteImageDB(key);		
+				TIGDataBase.deleteImageDB(key);
+				
 				//Delete from the directory the image and its thumbnail
 				File image = new File("images" + File.separator + pathImage.substring(0,1).toUpperCase() + File.separator + pathImage);
 				image.delete();
@@ -154,9 +166,6 @@ public class TIGDeleteTask {
         	TIGDataBase.executeQueries();
         	
         	current = lengthOfTask;    
-    		//Copies the images from the source directory to the directory Images    	
-			//Element dbElement = doc.createElement("dataBase");
-    		//for (i = 0; ((i < images.size()) && !stop); i++){
         }
     	
     }

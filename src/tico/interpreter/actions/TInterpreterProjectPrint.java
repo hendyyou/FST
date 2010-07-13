@@ -30,9 +30,7 @@ package tico.interpreter.actions;
 
 
 
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
@@ -41,7 +39,6 @@ import java.awt.print.PrinterJob;
 
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-
 import tico.interpreter.TInterpreter;
 
 /**

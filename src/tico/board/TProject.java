@@ -1,7 +1,7 @@
 /*
  * File: TProject.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -43,6 +43,7 @@ import tico.board.events.BoardChangeEvent;
 import tico.board.events.BoardChangeListener;
 import tico.board.events.ProjectChangeEvent;
 import tico.board.events.ProjectChangeListener;
+import tico.editor.TBoardContainer;
 
 /**
  * Set of <code>TBoards</code> wich can be navigated from an specified initial
@@ -68,7 +69,7 @@ public class TProject {
 	 * Creates a new empty <code>TProject</code> with no initial <code>name</code>.
 	 */
 	public TProject() {
-		// Initializate board container structures
+		// Initialized board container structures
 		boardList = new ArrayList();
 		boardTable = new Hashtable();
 	}
@@ -132,7 +133,7 @@ public class TProject {
 		// Rename the board if its name is already used
 		int boardCounter = 1;
 		while (isUsedName(board.getBoardName()))
-			if (board.getBoardName().substring(0,"board_".length()).equals("board_"))
+			if (board.getBoardName().startsWith("board_"))
 				board.setBoardName(TBoard.newBoardName());
 			else
 				board.setBoardName(boardName + "_" + boardCounter++);
@@ -243,7 +244,13 @@ public class TProject {
 	 * @return <i>true</i> if any project board has the specified <code>name</code>
 	 */
 	public boolean isUsedName(String name) {
-		return boardTable.containsKey(name);
+		boolean used = false;
+		int i = 0;
+		while (i<boardList.size() && !used){
+			used = ((TBoard)boardList.get(i)).getBoardName().equals(name);
+			i++;
+		}
+		return used;
 	}
 
 	/**
@@ -256,12 +263,16 @@ public class TProject {
 	 * <code>board</code> has the specified <code>name</code>
 	 */
 	public boolean isRepeatedName(TBoard board, String name) {
-		TBoard nameBoard = (TBoard)boardTable.get(name);
-		
-		if (nameBoard != null)
-			return !nameBoard.equals(board);
-		else
-			return false;
+		boolean isRepeated = false;
+		int i = 0;
+		String nameBoard = board.getBoardName();
+		while (i<boardList.size() && !isRepeated){
+			if (!((TBoard)boardList.get(i)).getBoardName().equals(nameBoard)){
+				isRepeated = ((TBoard)boardList.get(i)).getBoardName().equals(name);
+			}
+			i++;
+		}
+		return isRepeated;
 	}
 
 	/**
@@ -271,6 +282,13 @@ public class TProject {
 	 */
 	public ArrayList getBoardList() {
 		return (ArrayList)boardList.clone();
+	}
+	
+	public void setBoardList(ArrayList newBoardList) {
+		boardList.clear();
+		for (int i=0; i<newBoardList.size(); i++){
+			boardList.add(((TBoardContainer)newBoardList.get(i)).getBoard());
+		}
 	}
 
 	// Fired when the project or any of its boards has been changed
@@ -414,7 +432,7 @@ public class TProject {
 						.getAttributes().get(TBoardConstants.FOLLOWING_BOARD));
 				if (followingBoard != null)
 					TBoardConstants.setFollowingBoard(component
-							.getAttributes(), followingBoard);
+							.getAttributes(), followingBoard.getBoardName());
 				else new InvalidFormatException(); 
 			}
 			// Set the initial board with its initialBoardName

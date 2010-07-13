@@ -43,7 +43,6 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import tico.board.TBoardConstants;
 import tico.interpreter.TInterpreterConstants;
 
 public class TInterpreterCell extends JButton{
@@ -54,9 +53,6 @@ public class TInterpreterCell extends JButton{
 	// Default distance between the icon and the text
 	private final static int GAP_ICON_TEXT = 5;
 	
-	//private String id;
-	//private Rectangle bounds;
-	//public String text;
 	public Font font;
 	public Color textColor;
 	public int verticalTextPosition;
@@ -79,6 +75,7 @@ public class TInterpreterCell extends JButton{
 	public String boardToGo = null;
 	public String soundPath = null;
 	public String videoPath = null;
+	public String videoURL = null;
 	public int xVideo = -1;
 	public int yVideo = -1;
 	public String command = null;
@@ -88,14 +85,6 @@ public class TInterpreterCell extends JButton{
 	public TInterpreterCell (){
 		super();
 	}
-	
-	/*public ImageIcon getIcon() {
-		return icon;
-	}*/
-
-	/*public void setIcon(ImageIcon icon) {
-		this.icon = icon;
-	}*/
 
 	public float getBorderSize() {
 		return borderSize;
@@ -213,6 +202,10 @@ public class TInterpreterCell extends JButton{
 		return videoPath;
 	}
 	
+	public String getVideoURL() {
+		return videoURL;
+	}
+	
 	public int getXVideo() {
 		return xVideo;
 	}
@@ -268,7 +261,7 @@ public class TInterpreterCell extends JButton{
 				setText(text);
 			}
 		}
-		
+
 		if (icon != null) {			
 			
 			int maxImageWidth;
@@ -360,9 +353,10 @@ public class TInterpreterCell extends JButton{
 		return this;
 	}
 	
-	public TInterpreterCell setActionsAttributes(String soundPath, String videoPath, String command){
+	public TInterpreterCell setActionsAttributes(String soundPath, String videoPath, String videoURL, String command){
 		this.soundPath = soundPath;
 		this.videoPath = videoPath;
+		this.videoURL = videoURL;
 		this.command = command;
 		return this;
 	}

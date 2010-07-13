@@ -118,9 +118,15 @@ TRecordSound.EXIT=Sortir
 TRecordSound.TITLE=Guardar fitxer de so
 
 TVideoChooser.TITLE=Vídeo
-TVideoChooser.NAME=Nom
+TVideoChooser.NAME=Fitxer
+TVideoChooser.URL=URL
+TVideoChooser.BUTTON_SELECT=Seleccionar
+TVideoChooser.BUTTON_CLEAR=Esborrar
+TVideoChooser.BUTTON_INSERT_URL=Introduir
 TVideoChooser.OPEN_FILE_ERROR=Errada al llegir el fitxer de vídeo
 TVideoChooser.CHOOSE_VIDEO=Escollir un fitxer de vídeo
+TVideoChooser.INSERT_URL_VIDEO=Introduir la URL d'un vídeo
+TVideoChooser.INSERT_URL_ACCEPT=Acceptar
 
 TTextAlignSelectorPanel.TITLE=Alineació
 TTextAlignSelectorPanel.LEFT_HALIGN_TOOLTIP=Alinear a l’esquerra
@@ -314,8 +320,8 @@ TUndoAction.NAME=Desfer
 
 # tico.editor.dialogs
 TAboutDialog.TITLE=Sobre...
-TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r1
-TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r1
+TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r3
+TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r3
 TAboutDialog.DEVELOPERS=Programadors
 TAboutDialog.OTHER_DEVELOPERS=Altres...
 TAboutDialog.DIRECTOR=Director.
@@ -418,12 +424,6 @@ TIGImageDataDialog.DATANAME=Nom
 TIGImageDataDialog.END=Acceptar
 TIGImageDataDialog.CANCEL=Cancel·lar
 
-TIGNewImageDataDialog.NAME=Modificar imatge
-TIGNewImageDataDialog.DATANAME=Nom
-TIGNewImageDataDialog.NEXT=Acceptar
-TIGNewImageDataDialog.CANCEL=Cancel·lar
-TIGNewImageDataDialog.EXIT=Sortir
-
 TIGImageDialog.TEXT=Imatge no disponible
 
 TIGInsertImageAction.NAME=Errada
@@ -440,7 +440,6 @@ TIGKeyWordSearchDialog.OR=o
 TIGSearchNameDialog.NAME_SEARCH=Per nom d'imatge
 TIGSearchNameDialog.SEARCH=Buscar:
 TIGSearchNameDialog.SEARCH_BUTTON=Buscar
-TIGSearchNameDialog.TEXT=inserti el nom a buscar
 TIGSearchNameDialog.NO_RESULTS=No s'ha trobat cap imatge amb aquest nom
 TIGSearchNameDialog.NAME_RESULT=Resultats de la recerca
 
@@ -453,29 +452,31 @@ TIGDeleteKeyWordAction.NAME=Eliminar terme clau
 TIGModifyImageAction.ERROR=Errada al modificar la imatge
 TIGModifyImageAction.NAME=Modificar Imatge
 
-TIGLoadDBDialog.NAME=Importar Base de Dades
-TIGLoadDBDialog.IMAGES=Seleccionar
-TIGLoadDBDialog.EXIT=Cancel·lar
-TIGLoadDBDialog.IMAGES_SEL=Seleccioni el directori que conté la Base de Dades
-TIGLoadDBDialog.TEXT=Seleccionar
-TIGLoadDBDialog.TEXT_FILE=Seleccioni el fitxer que conté les categories (opcional)
-TIGLoadDBDialog.IMPORT_BUTTON=Importar
-TIGLoadDBDialog.DB=Importar
-TIGLoadDBDialog.IMAGES_DIRECTORY=Directori de Base de Dades
-TIGLoadDBDialog.ASSOCIATION_FILE=Fitxer amb les Associacions
-TIGLoadDBDialog.ERROR=Errada al carregar la Base de Dades
-TIGLoadDBDialog.ERROR_EMPTY_DIRECTORY=Ha de seleccionar un directori
-TIGLoadDBDialog.ERROR_FILE=Ha de seleccionar un fitxer
-TIGLoadDBDialog.PROGRESS=Progrés
-TIGLoadDBDialog.PROGRESS_TASK=Progrés de la tasca
-TIGLoadDBDialog.ERROR_FORMAT_DATABASE=Format erroni de Base de Dades
-TIGLoadDBDialog.REPEATED_IMAGES_TITLE=Si hi ha imatges repetides...
-TIGLoadDBDialog.REPLACE_IMAGES=Reemplaçar imatges
-TIGLoadDBDialog.ADD_IMAGES=Afegir imatges
-TIGLoadDBDialog.IMPORT_COMPLETED=La Base de Dades s'ha importat correctament
-TIGLoadDBDialog.IMPORT_WITH_ERRORS=La Base de Dades s'ha importat amb errors
-TIGLoadDBDialog.IMPORT_INFO=Per a més informació consulti el fitxer
-TIGLoadDBDialog.IMPORT_WITH_ERRORS_MESSAGE=Les següents imatges no s'han importat:
+TIGOperationDB.CANCELED=Operació cancel
+
+TIGImportDBDialog.NAME=Importar Base de Dades
+TIGImportDBDialog.IMAGES=Seleccionar
+TIGImportDBDialog.EXIT=Cancel·lar
+TIGImportDBDialog.IMAGES_SEL=Seleccioni el directori que conté la Base de Dades
+TIGImportDBDialog.TEXT=Seleccionar
+TIGImportDBDialog.TEXT_FILE=Seleccioni el fitxer que conté les categories (opcional)
+TIGImportDBDialog.IMPORT_BUTTON=Importar
+TIGImportDBDialog.DB=Importar
+TIGImportDBDialog.IMAGES_DIRECTORY=Directori de Base de Dades
+TIGImportDBDialog.ASSOCIATION_FILE=Fitxer amb les Associacions
+TIGImportDBDialog.ERROR=Errada al carregar la Base de Dades
+TIGImportDBDialog.ERROR_EMPTY_DIRECTORY=Ha de seleccionar un directori
+TIGImportDBDialog.ERROR_FILE=Ha de seleccionar un fitxer
+TIGImportDBDialog.PROGRESS=Progrés
+TIGImportDBDialog.PROGRESS_TASK=Progrés de la tasca
+TIGImportDBDialog.ERROR_FORMAT_DATABASE=Format erroni de Base de Dades
+TIGImportDBDialog.REPEATED_IMAGES_TITLE=Si hi ha imatges repetides...
+TIGImportDBDialog.REPLACE_IMAGES=Reemplaçar imatges
+TIGImportDBDialog.ADD_IMAGES=Afegir imatges
+TIGImportDBDialog.IMPORT_COMPLETED=La Base de Dades s'ha importat correctament
+TIGImportDBDialog.IMPORT_WITH_ERRORS=La Base de Dades s'ha importat amb errors
+TIGImportDBDialog.IMPORT_INFO=Per a més informació consulti el fitxer
+TIGImportDBDialog.IMPORT_WITH_ERRORS_MESSAGE=Les següents imatges no s'han importat:
 
 TIGExportDBDialog.NAME=Exportar Base de Dades
 TIGExportDBDialog.IMAGES=Seleccionar
@@ -830,3 +831,4 @@ TShowResults.TEXTBACKGROUND=text/fons:
 TShowResults.BORDERBACKGROUND=vora/fons:
 TShowResults.BOARDCELL=tauler/cel·les:
 TShowResults.COLORTABLE=Combinacions de color adequades:
+TShowResults.MESSAGE_26=******

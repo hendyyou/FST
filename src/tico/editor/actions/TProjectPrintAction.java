@@ -70,7 +70,7 @@ public class TProjectPrintAction extends TEditorAbstractAction {
 		int pages = getEditor().getBoardContainerCount();
 		for (int i = 0; i < pages; i++) {
 			TBoardContainer boardContainer = getEditor().getBoardContainer(i);
-			// Clear selecction
+			// Clear selection
 			boardContainer.getBoard().clearSelection();
 			Dimension boardSize = TBoardConstants.getSize(boardContainer.getBoard().getAttributes(null));
 			PageFormat page = printJob.defaultPage();

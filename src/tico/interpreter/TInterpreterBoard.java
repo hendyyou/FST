@@ -35,11 +35,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.InputEvent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.Icon;
@@ -74,7 +70,6 @@ import tico.interpreter.threads.TInterpreterBoardSound;
  * @author Isabel González y Carolina Palacio
  * @version 1.0 Nov 20, 2009
  */
-
 
 public class TInterpreterBoard {
 	
@@ -262,6 +257,16 @@ public class TInterpreterBoard {
 
 	public void setOrderedCellListNames(ArrayList<String> newOrderedCellListNames) {
 		orderedCellListNames = newOrderedCellListNames;
+	}
+	
+	public boolean isCellInOrderedCellList(String idCell){
+		int i = 0;
+		boolean found = false;
+		while(i < orderedCellListNames.size() && !found ){
+			found = orderedCellListNames.get(i).equals(idCell);
+			i++;
+		}
+		return found;
 	}
 	
 	public void goToInitialState(){

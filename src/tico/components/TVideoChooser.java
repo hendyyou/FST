@@ -35,12 +35,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
-import java.net.URL;
 
-import javax.sound.sampled.SourceDataLine;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -48,10 +44,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import tico.components.resources.TFileUtils;
-import tico.components.resources.TResourceManager;
 import tico.components.resources.VideoFilter;
 import tico.configuration.TLanguage;
 import tico.editor.TFileHandler;
@@ -63,41 +59,44 @@ import tico.editor.TFileHandler;
  * @version 4.0 Oct 22, 2009
  */
 public class TVideoChooser extends JPanel {
+	
 	// TVideoChooser default constructor parameters
 	private final static String DEFAULT_TITLE = TLanguage.getString("TVideoChooser.TITLE");
 
-	// Video file properties
-	private String videoFilePath;
-
-	// Video file player needed variables
-	private boolean stopPlayback;
-	private SourceDataLine sourceDataLine;
+	// Video Panel
+	private JPanel videoFilePanel;
 	
-	// Video name panel
-	private JPanel videoNamePane;
-	// Sound file name text field
-	private TTextField videoNameTextField;
-	// Play and stop buttons
-	//private TButton playVideoButton;
-	//private TButton stopVideoButton;
+	private JPanel videoURLPanel;
+	
+	// Video file path
+	private String videoFilePath;
+	
+	// Video URL
+	private String videoFileURL;
+	
+	// Video file text field
+	private TTextField videoFileTextField;
+	
+	// Video URL text field
+	private TTextField videoURLTextField;
+	
 	// Choose and clear buttons panel container
 	private JPanel buttonPanel;
-	// Clear sound button
+	
+	// Delete video file button
 	private TButton clearVideoButton;
-	// Open image chooser dialog button
-	private TButton selectVideoButton;
-	// Allows save the directory where you get the last sound file
+	
+	// Open video chooser dialog button
+	private TButton selectVideoFileButton;
+	
+	// Open video URL dialog button
+	private TButton insertVideoURLButton;
+	
+	// Allows save the directory where you get the last video file
 	private static File defaultDirectory = null;
 	
-	/*private URL videoURL = null;
-	private TVideoPlayer mediaPlayer = null;
-	private JDialog videoWindow = null;*/
-	
-	private URL videoURL;
-	//private TVideoPlayer mediaPlayer;
-	private JDialog videoWindow;
 	/**
-	 * Creates a new <code>TSoundChooser</code> with <i>NO_OPTIONS_TYPE</i>
+	 * Creates a new <code>TVideoChooser</code> with <i>NO_OPTIONS_TYPE</i>
 	 * <code>type</code>.
 	 */
 	public TVideoChooser() {
@@ -116,7 +115,8 @@ public class TVideoChooser extends JPanel {
 		setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)), title));
 		// Creates the components
-		createVideoNamePane();
+		createVideoFilePanel();
+		createVideoURLPanel();
 		createButtonPanel();
 		// Update the components
 		updateComponents();
@@ -126,77 +126,83 @@ public class TVideoChooser extends JPanel {
 		setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
 		c.gridy = 0;
-		add(videoNamePane, c);
-
+		add(videoFilePanel, c);
+		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
 		c.gridy = 1;
+		add(videoURLPanel, c);		
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 0, 0, 0);
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		c.gridx = 0;
+		c.gridy = 2;
 		add(buttonPanel, c);
 	}
 
-	// Creates the video name pane
-	private void createVideoNamePane() {
-		videoNamePane = new JPanel();
+	// Creates the video panel
+	private void createVideoFilePanel() {
+		videoFilePanel = new JPanel();
+		
+		videoFilePanel.setLayout(new FlowLayout());
+		
+		JLabel textFileLabel = new JLabel(TLanguage.getString("TVideoChooser.NAME"));
+		videoFilePanel.add(textFileLabel);
 
-		videoNamePane.setLayout(new FlowLayout());
-
-		JLabel textNameLabel = new JLabel(TLanguage.getString("TVideoChooser.NAME"));
-
-		videoNameTextField = new TTextField();
-		videoNameTextField.setColumns(20);
-		videoNameTextField.setEditable(false);
-
-		/*playVideoButton = new TButton(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				playVideoFile();
-			}
-		});
-		playVideoButton.setIcon(TResourceManager
-				.getImageIcon("media-start-16.png"));
-		playVideoButton.setMargin(new Insets(2, 2, 2, 2));
-		playVideoButton.setToolTipText(TLanguage.getString("TSoundChooser.PLAY_TOOLTIP"));*/
-
-		/*stopVideoButton = new TButton(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				stopVideoFile();
-			}
-		});
-		stopVideoButton.setIcon(TResourceManager
-				.getImageIcon("media-stop-16.png"));
-		stopVideoButton.setMargin(new Insets(2, 2, 2, 2));
-		stopVideoButton.setEnabled(false);
-		stopVideoButton.setToolTipText(TLanguage.getString("TSoundChooser.STOP_TOOLTIP"));*/
-
-		videoNamePane.add(textNameLabel);
-		videoNamePane.add(videoNameTextField);
-		//videoNamePane.add(playVideoButton);
-		//videoNamePane.add(stopVideoButton);
+		videoFileTextField = new TTextField();
+		videoFileTextField.setColumns(20);
+		videoFileTextField.setEditable(false);
+		videoFilePanel.add(videoFileTextField);
+		
+		selectVideoFileButton = new TButton(TLanguage.getString("TVideoChooser.BUTTON_SELECT"));
+		selectVideoFileButton.addActionListener(new ChooseVideoButtonListener());
+		videoFilePanel.add(selectVideoFileButton);
+		
 	}
-
+	
+	private void createVideoURLPanel(){
+		videoURLPanel = new JPanel();
+		
+		videoURLPanel.setLayout(new FlowLayout());
+		
+		JLabel textURLLabel = new JLabel(TLanguage.getString("TVideoChooser.URL"));
+		videoURLPanel.add(textURLLabel);
+		
+		videoURLTextField = new TTextField();
+		videoURLTextField.setColumns(20);
+		videoURLTextField.setEditable(false);
+		videoURLPanel.add(videoURLTextField);
+		
+		insertVideoURLButton = new TButton(TLanguage.getString("TVideoChooser.BUTTON_INSERT_URL"));
+		insertVideoURLButton.addActionListener(new ChooseURLVideoButtonListener());
+		videoURLPanel.add(insertVideoURLButton);
+	}
+	
 	// Creates the button panel
 	private void createButtonPanel() {
 		buttonPanel = new JPanel();
 
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));		
 
-		selectVideoButton = new TButton(TLanguage.getString("TSoundChooser.BUTTON_SELECT"));
-		selectVideoButton.addActionListener(new ChooseVideoButtonListener());
-
-		clearVideoButton = new TButton(new AbstractAction(TLanguage.getString("TSoundChooser.BUTTON_CLEAR")) {
+		clearVideoButton = new TButton(new AbstractAction(TLanguage.getString("TVideoChooser.BUTTON_CLEAR")) {
 			public void actionPerformed(ActionEvent e) {
 				setVideoFilePath(null);
+				setVideoFileURL(null);
+				selectVideoFileButton.setEnabled(true);
+				insertVideoURLButton.setEnabled(true);
 			}
 		});
 				
-		buttonPanel.add(selectVideoButton);
 		buttonPanel.add(clearVideoButton);
 	}
 
@@ -206,82 +212,34 @@ public class TVideoChooser extends JPanel {
 	public void updateComponents() {
 		
 		if (videoFilePath != null) {
-			
-			//playVideoButton.setEnabled(true);
 			clearVideoButton.setEnabled(true);
-			
-			videoNameTextField.setText(TFileUtils.getFilename(videoFilePath.toString()) + "." + TFileUtils.getExtension(videoFilePath.toString()));
-			videoNameTextField.setCaretPosition(0);
+			videoFileTextField.setText(TFileUtils.getFilename(videoFilePath.toString()) + "." + 
+					TFileUtils.getExtension(videoFilePath.toString()));
+			videoFileTextField.setCaretPosition(0);
+			insertVideoURLButton.setEnabled(false);
 		} else {
-			//playVideoButton.setEnabled(false);
-			clearVideoButton.setEnabled(false);
-
-			videoNameTextField.setText("");
+			videoFileTextField.setText("");
+		}		
+		
+		if (videoFileURL != null){
+			clearVideoButton.setEnabled(true);
+			videoURLTextField.setText(videoFileURL);
+			videoURLTextField.setCaretPosition(0);
+			selectVideoFileButton.setEnabled(false);
+		} else {
+			videoURLTextField.setText("");
 		}
 		
+		if (videoFilePath == null && videoFileURL == null){
+			clearVideoButton.setEnabled(false);
+		}
+
 	}
 
-	// Play the selected sound file
-	/*private void playVideoFile() {
-
-	      	//stopVideoButton.setEnabled(true);
-			playVideoButton.setEnabled(false);
-			clearVideoButton.setEnabled(false);
-			selectVideoButton.setEnabled(false);
-			
-			videoWindow = new JDialog();
-			videoWindow.setModal(true);
-			videoWindow.setFocusable(true);
-			videoWindow.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-			videoWindow.addWindowListener(new WindowAdapter(){
-				public void windowClosing(WindowEvent we){
-					stopVideoFile();
-				}  
-			});
-			//System.err.println("url del video: "+videoURL.toString());
-			System.err.println("PATH DEL VIDEO: "+videoFilePath);
-			
-	        mediaPlayer = new TVideoPlayer(videoFilePath);
-	        
-	        //System.out.println(videoURL.toString());
-	        videoWindow.add(mediaPlayer);
-	        
-	        /*stopVideoButton = new TButton(new AbstractAction() {
-				public void actionPerformed(ActionEvent e) {
-					stopVideoFile();
-				}
-			});
-			stopVideoButton.setIcon(TResourceManager
-					.getImageIcon("media-stop-16.png"));
-			stopVideoButton.setSize(50,50);
-			//stopVideoButton.setMargin(new Insets(2, 2, 2, 2));
-			stopVideoButton.setEnabled(true);
-			
-			videoWindow.add(stopVideoButton);*/
-			
-	        
-	        /*videoWindow.setFocusable(true);
-	        videoWindow.setSize(500,500);
-	        videoWindow.setVisible(true);
-	        
-	}*/
-
-	// Stop the current played video file
-	/*private void stopVideoFile() {
-		//Para la reproducción del video y cierra la ventana
-		mediaPlayer.stopVideoPlayer();
-		videoWindow.setVisible(false);
-		
-		//stopVideoButton.setEnabled(false);
-		playVideoButton.setEnabled(true);
-		clearVideoButton.setEnabled(true);
-		selectVideoButton.setEnabled(true);
-		
-	}*/
 	/**
-	 * Returns the selected <code>soundFilePath</code>.
+	 * Returns the selected <code>videoFilePath</code>.
 	 * 
-	 * @return The selected <code>soundFilePath</code>
+	 * @return The selected <code>videoFilePath</code>
 	 */
 	public String getVideoFilePath() {
 		
@@ -289,9 +247,9 @@ public class TVideoChooser extends JPanel {
 	}
 
 	/**
-	 * Set the <code>soundFilePath</code>.
+	 * Set the <code>videoFilePath</code>.
 	 * 
-	 * @param soundFilePath The <code>soundFilePath</code> to set
+	 * @param videoFilePath The <code>videoFilePath</code> to set
 	 */
 	public void setVideoFilePath(String videoFilePath) {
 		
@@ -300,9 +258,33 @@ public class TVideoChooser extends JPanel {
 		updateComponents();
 	}
 	
+	/**
+	 * Returns the selected <code>videoFileURL</code>.
+	 * 
+	 * @return The selected <code>videoFileURL</code>
+	 */
+	public String getVideoFileURL() {
+		
+		return videoFileURL;
+	}
+
+	/**
+	 * Set the <code>videoFileURL</code>.
+	 * 
+	 * @param videoFileURL The <code>videoFileURL</code> to set
+	 */
+	public void setVideoFileURL(String videoFileURL) {
+		
+		this.videoFileURL = videoFileURL;
+		
+		updateComponents();
+	}
+	
+	
 	// Action listener for the selectVideoButton
 	private class ChooseVideoButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
 			// Open a JFileChooser
 			JFileChooser fileChooser = new JFileChooser();
 			// Customize JFileChooser
@@ -322,10 +304,7 @@ public class TVideoChooser extends JPanel {
 				try {
 					// Import the file to the application directory
 					selectedFile = TFileHandler.importFile(selectedFile);
-					setVideoFilePath(selectedFile.getAbsolutePath());
-					//videoFilePath = "file:/"+selectedFile.getAbsolutePath();
-					
-					//videoFilePath = fileChooser.getSelectedFile().toURI().toString();
+					setVideoFilePath(selectedFile.getAbsolutePath());				
 						
 					// TUNE Find a method to keep clean the application
 					// directory
@@ -340,5 +319,54 @@ public class TVideoChooser extends JPanel {
 		}
 	}
 
-	// Video play thread which plays the selected video file
+	// Action listener for the selectVideoButton
+	private class ChooseURLVideoButtonListener implements ActionListener {
+		
+		JDialog insertURL;
+		JTextField textURL;
+	
+		public void actionPerformed(ActionEvent e) {
+			insertURL = new JDialog();
+			insertURL.setTitle(TLanguage.getString("TVideoChooser.INSERT_URL_VIDEO"));
+			insertURL.setLocationRelativeTo(((Component) e.getSource()).getParent());
+			insertURL.setModal(true);
+			
+			insertURL.setLayout(new GridBagLayout());
+			GridBagConstraints c = new GridBagConstraints();
+			
+			JLabel labelURL = new JLabel(TLanguage.getString("TVideoChooser.URL"));
+			textURL = new JTextField(40);
+			textURL.setText("http://");
+			
+			TButton acceptButton = new TButton(new AbstractAction() {
+				public void actionPerformed(ActionEvent e) {		
+					insertURL.dispose();
+					String url = textURL.getText();
+					if (url != null && !url.equals("") && !url.equals("http://"))
+						setVideoFileURL(textURL.getText());
+				}
+			});
+			
+			acceptButton.setText((TLanguage.getString("TVideoChooser.INSERT_URL_ACCEPT")));
+			
+			c.anchor = GridBagConstraints.CENTER;
+			c.insets = new Insets(10, 10, 10, 10);
+			c.gridx = 0;
+			c.gridy = 0;
+			insertURL.add(labelURL, c);
+			
+			c.gridx = 1;
+			c.gridy = 0;
+			insertURL.add(textURL, c);
+			
+			c.gridx = 0;
+			c.gridy = 1;
+			c.gridwidth = 2;
+			insertURL.add(acceptButton, c);
+			
+			insertURL.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			insertURL.pack();
+			insertURL.setVisible(true);
+		}
+	}
 }

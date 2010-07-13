@@ -73,8 +73,6 @@ public class TIGInsertKeyWord extends JPanel{
 	
 	protected Vector keyWordList;
 	
-	//private TIGDataBase myDataBase; 
-	
 	/*
 	 * This constructor displays a panel in the window that allows to introduce a new image 
 	 * into the Data Base. This panel allows to associate the new image to the words in 
@@ -89,7 +87,6 @@ public class TIGInsertKeyWord extends JPanel{
 				TLanguage.getString("TIGKeyWordInsertDialog.NAME")));
 		
 		keyWordList = new Vector();
-		//myDataBase = dataBase;
 		
 		keyWordList = (Vector)(TIGDataBase.getKeyWords()).clone();
 				
@@ -164,7 +161,6 @@ public class TIGInsertKeyWord extends JPanel{
 			TLanguage.getString("TIGKeyWordInsertDialog.NAME")));
 	
 		keyWordList = new Vector();
-		//myDataBase = dataBase;
 		
 		keyWordList = (Vector)(TIGDataBase.getKeyWords()).clone();
 		Vector keyWordAsociated = TIGDataBase.asociatedConceptSearch(path);
@@ -270,7 +266,6 @@ public class TIGInsertKeyWord extends JPanel{
 		//This button adds a new word to the Data Base and associates the word to the image
 		addButton = new TButton(new AbstractAction(TLanguage.getString("TIGKeyWordInsertDialog.ADD")) {
 			public void actionPerformed(ActionEvent e) {
-				//JTextField tf = (JTextField)text.getEditor().getEditorComponent();
 				String texto = text.getText();
 				int i;
 				if (texto.contains(",")){
@@ -313,11 +308,6 @@ public class TIGInsertKeyWord extends JPanel{
 						}
 					}
 				}				
-				/*table.setRowSelectionInterval(i,i);
-				// To the position in pixels of the selected row
-				Rectangle r = table.getCellRect(i, 1, true);
-				// Moves the scroll so that the selected cell is visible
-				scrollPaneList.getViewport().scrollRectToVisible(r);*/
 				text.setText("");
 			}
 		});

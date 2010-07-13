@@ -53,9 +53,9 @@ import tico.configuration.TLanguage;
 
 		Color defaultColor;
 		JDialog otherDialog;
-		TAboutDialogInterpreter aboutDialog;
+		TAboutDialog aboutDialog;
 		
-		public TAboutDialogOthersListener(TAboutDialogInterpreter about){
+		public TAboutDialogOthersListener(TAboutDialog about){
 			aboutDialog = about;			
 		}
 		

@@ -46,7 +46,7 @@ import tico.board.events.BoardChangeEvent;
 import tico.board.events.BoardChangeListener;
 
 /**
- * A control that displays a comunication board.
+ * A control that displays a communication board.
  * 
  * A <code>TBoard</code> object doesn't actually contain your data; it simply
  * provides a view of the data. Like any non-trivial <code>Swing</code>
@@ -77,7 +77,7 @@ public class TBoard extends JGraph {
 	public TBoard() {
 		this(new TBoardModel());
 	}
-	
+
 	/**
 	 * Creates a new empty <code>TBoard</code> with the specified initial
 	 * <code>name</code>.
@@ -169,7 +169,7 @@ public class TBoard extends JGraph {
 			}
 		});
 		setModel(model);
-		// Set minumum size
+		// Set minimum size
 		setMinimumSize(TBoardConstants.getSize(getAttributes(null)));
 	}
 	

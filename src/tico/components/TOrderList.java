@@ -84,7 +84,7 @@ public class TOrderList extends JPanel {
 		add(listScroll, BorderLayout.CENTER);
 		add(orderButtonPanel, BorderLayout.SOUTH);
 		
-		// Updaate components
+		// Update components
 		updateComponents();
 	}
 

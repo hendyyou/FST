@@ -88,7 +88,6 @@ public class TVideoListener implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		//System.err.println("CELDA VIDEO: MOUSE RELEASED");
 		running = false;
 		try{
 			if (audioPlayer != null) {

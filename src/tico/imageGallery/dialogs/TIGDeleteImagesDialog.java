@@ -81,8 +81,8 @@ public class TIGDeleteImagesDialog extends TDialog{
 	private String imagePath;
 	
 	private Vector<Vector<String>> images;
+	
 	public Vector myResults;
-	private boolean busqueda = false;
 	
 	private JTextField text;
 	
@@ -96,6 +96,8 @@ public class TIGDeleteImagesDialog extends TDialog{
     
     private boolean stop = false;
 	
+    private boolean cancel = false;
+    
 	private TIGThumbnails thumbnailsDialog;
 	
 	private JPanel thumbnailsPanel;
@@ -113,6 +115,14 @@ public class TIGDeleteImagesDialog extends TDialog{
 		
 		addWindowListener(new java.awt.event.WindowListener(){
 			public void windowClosing(java.awt.event.WindowEvent e){
+				if (task.isRunning()){
+					stop = true;
+					cancel = true;
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGOperationDB.CANCELED"),
+							"",
+							JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
+				}
 				dispose();
 			}
 			
@@ -132,7 +142,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 		
 		//All the images in the dataBase are shown 
 		//when the window is displayed 
-		//images = new Vector();
+
 		images = TIGDataBase.imageSearchByName("*");
 		myResults = null;
 		
@@ -166,9 +176,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 				File directory;
 				File[] directoryFiles;
 				
-				//icon = thumbnailsDialog.imageSelected();
 				imagePath = thumbnailsDialog.pathImageSelected();
-				//System.out.println("Tamaño result: " + myResults.size());
 				
 				if (myResults == null){
 					JOptionPane.showConfirmDialog(null,
@@ -189,7 +197,7 @@ public class TIGDeleteImagesDialog extends TDialog{
 							JOptionPane.YES_NO_CANCEL_OPTION);
 					if (choosenOption == JOptionPane.YES_OPTION) {
 						
-						text.setText(TLanguage.getString("TIGLoadDBDialog.PROGRESS_TASK"));
+						text.setText(TLanguage.getString("TIGImportDBDialog.PROGRESS_TASK"));
 						deleteButton.setEnabled(false);
 						progressBar.setIndeterminate(false);
 						
@@ -198,57 +206,9 @@ public class TIGDeleteImagesDialog extends TDialog{
 
 						task.go(myEditor,myDataBase,myResults);	
 						timer.start();
-						
-						
-					/*	for (int i=0; i< myResults.size();i++){
-							Vector data1 = new Vector(2);
-							data1 = (Vector) myResults.elementAt(i);
-							String pathImage = (String)data1.elementAt(0);
-							
-													
-						int key = TIGDataBase.imageKeySearch(pathImage);
-						TIGDataBase.deleteImageDB(key);		
-						//Delete from the directory the image and its thumbnail
-						File image = new File("images" + File.separator + pathImage.substring(0,1).toUpperCase() + File.separator + pathImage);
-						image.delete();
-						
-						File imageTh = new File("images" + File.separator + pathImage.substring(0,1).toUpperCase() + File.separator + pathImage.substring(0,pathImage.lastIndexOf('.')) + "_th.jpg");
-						imageTh.delete();
-						
-						directory = new File("images" + File.separator + pathImage.substring(0,1).toUpperCase());
-						directoryFiles = directory.listFiles();
-						if (directoryFiles.length==0){
-							directory.delete();
-						}
-						
-						//busqueda= false;
-						//thumbnailsPanel = thumbnailsDialog.deleteImage();
-						}*/
-						
 					}
-					
 				}
-				}
-				/*if (icon == null){
-					JOptionPane.showConfirmDialog(null,
-							TLanguage.getString("TIGSearchImageDialog.MESSAGE"),
-							TLanguage.getString("TIGSearchImageDialog.ERROR"),
-							JOptionPane.CLOSED_OPTION,JOptionPane.WARNING_MESSAGE);
-				}
-				else{
-					int choosenOption = JOptionPane.showConfirmDialog(null,
-							TLanguage.getString("TIGSearchImageDialog.ASK"),
-							TLanguage.getString("TIGSearchImageDialog.DELETE"),
-							JOptionPane.YES_NO_CANCEL_OPTION);
-					if (choosenOption == JOptionPane.YES_OPTION) {
-						int key = TIGDataBase.imageKeySearch(imagePath);
-						TIGDataBase.deleteImageDB(key);		
-						//Delete from the directory the image and its thumbnail
-
-						thumbnailsPanel = thumbnailsDialog.deleteImage();
-					}
-					
-				}*/
+			}
 			
 		});
 		deleteButton.setText(TLanguage.getString("TIGSearchImageDialog.DELETE_ALL"));
@@ -256,6 +216,11 @@ public class TIGDeleteImagesDialog extends TDialog{
 		TButton cancelButton = new TButton(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				stop = true;
+				cancel = true;
+				JOptionPane.showConfirmDialog(null,
+						TLanguage.getString("TIGOperationDB.CANCELED"),
+						"",
+						JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}
 		});
@@ -358,7 +323,7 @@ public class TIGDeleteImagesDialog extends TDialog{
         //contentPane.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
         contentPane.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)), 
-				TLanguage.getString("TIGLoadDBDialog.PROGRESS")));
+				TLanguage.getString("TIGImportDBDialog.PROGRESS")));
 
         //create a timer
         timer = new Timer(100, new TimerListener());
@@ -383,13 +348,6 @@ public class TIGDeleteImagesDialog extends TDialog{
 		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,0);
 		this.myResults= (Vector) result;
 	}
-
-	/*
-	 * Update the thumbnails panel when a modification has been made
-	 */
-	/*public void update_modified(Vector result,String name){
-		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,name);
-	}*/
 	
 	 class TimerListener implements ActionListener {
 	        public void actionPerformed(ActionEvent evt) {
@@ -397,18 +355,23 @@ public class TIGDeleteImagesDialog extends TDialog{
 	            if (stop){
 	            	task.stop();
 	            }
+	            if (cancel){
+	            	task.cancel();            	
+	            }
 	            if (task.done()) {
 	                Toolkit.getDefaultToolkit().beep();
 	                timer.stop();
 	                myResults.clear();
 					update(myResults);
 	                deleteButton.setEnabled(true);
-	                progressBar.setValue(progressBar.getMinimum());                
+	                progressBar.setValue(progressBar.getMinimum());               
+	                if (!cancel){
+	                	JOptionPane.showConfirmDialog(null,
+								TLanguage.getString("TIGDeleteImagesDialog.DELETE_COMPLETED"),
+								"",
+								JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
+	                }
 	                dispose();
-	                JOptionPane.showConfirmDialog(null,
-							TLanguage.getString("TIGDeleteImagesDialog.DELETE_COMPLETED"),
-							"",
-							JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
 	            }
 	        }
 	    }

@@ -91,7 +91,7 @@ public class TEditor extends JFrame {
 	private File projectFile = null;
 
 	// Board modification elements
-	private TUnorderList boardList;
+	private TOrderList boardList;
 
 	private TOrderList cellOrderList;
 
@@ -154,6 +154,7 @@ public class TEditor extends JFrame {
 			setProject(project);
 
 		setVisible(true);
+		TBoardConstants.editor = this;
 	}
 
 	// Sets the window attributes
@@ -200,7 +201,18 @@ public class TEditor extends JFrame {
 		JPanel boardListPanel = new JPanel();
 		boardListPanel.setLayout(new BorderLayout());
 
-		boardList = new TUnorderList();
+		boardList = new TOrderList();
+		boardList.addOrderChangeListener(new OrderChangeListener() {
+			public void orderChanged(OrderChangeEvent e) {
+				AttributeMap map = new AttributeMap();
+				getProject().setBoardList(boardList.getList());
+				/*TBoardConstants
+						.setOrderedCellList(map, boardList.getList());*/
+				Map nested = new Hashtable();
+				nested.put(getCurrentBoard().getModel(), map);
+				getCurrentBoard().getGraphLayoutCache().edit(nested);
+			}
+		});
 		boardList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (getCurrentBoardContainer() != null)
@@ -491,7 +503,8 @@ public class TEditor extends JFrame {
 		if (getCurrentBoardContainer() != null) {
 			boardPanel.add(getCurrentBoardContainer(), BorderLayout.CENTER);
 		}
-
+		TBoardConstants.currentBoard = getCurrentBoard();
+		
 		boardPanel.updateUI();
 		updateCellOrderList();
 	}

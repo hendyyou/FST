@@ -36,7 +36,7 @@ package tico.interpreter.actions;
 import java.awt.event.ActionEvent;
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.dialogs.TAboutDialogInterpreter;
+import tico.interpreter.dialogs.TAboutDialog;
 
 
 /**
@@ -58,7 +58,7 @@ public class TInterpreterShowAbout  extends  TInterpreterAbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		new TAboutDialogInterpreter(getInterpreter());
+		new TAboutDialog(getInterpreter());
 	}
 
 }

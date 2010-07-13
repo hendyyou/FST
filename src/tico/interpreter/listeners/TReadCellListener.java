@@ -62,7 +62,6 @@ public class TReadCellListener implements MouseListener {
 				if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 					try {					
 						TInterpreterConstants.semaforo.acquire();		
-					//	System.out.println("ACQUIRE READ");
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -70,7 +69,6 @@ public class TReadCellListener implements MouseListener {
 				TInterpreterReadAction read = new TInterpreterReadAction(interpreter);
 				read.actionPerformed(null);
 				if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico				
-				//	System.out.println("RELEASE READ");
 					try {
 						TInterpreterConstants.semaforo.release();
 					} catch (InterruptedException e) {

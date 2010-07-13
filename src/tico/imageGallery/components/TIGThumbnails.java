@@ -70,7 +70,6 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  */ 
 public class TIGThumbnails extends JPanel implements KeyListener, MouseListener {
 	
-	//1 <= index <= 4
 	//Index point to the image selected between the four displayed
 	protected int index = 0;
 	
@@ -130,7 +129,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		
 	public TIGThumbnails(boolean select){
 		
-		select = select;
+		this.select = select;
 		
 		addMouseListener(this);
 		addKeyListener(this); 
@@ -142,7 +141,7 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	 */
 	public JPanel createThumbnailsPanel(Vector result, Boolean enabled){
 		enabledSelection = enabled;
-		result = result;
+		this.result = result;
 		total = result.size();
 		String thumbName;
 		String pathSrc;
@@ -251,7 +250,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 			gridBag.gridy = 0;
 			for (int i=0; i<IMAGES_DISPLAYED; i++){
 				gridBag.gridx = i;
-				System.out.println(thumbnails[i].getText());
 				add(thumbnails[i], gridBag);
 			}		
 		//}
@@ -448,8 +446,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 	 * information about the actual selected image.
 	 */
 	public void selectThumbnail(int imageClicked){
-		System.out.println("Imagen seleccionada: "+imageClicked);
-		System.out.println("Vector de booleanos: ");
 		
 		//Saves the path of the selected image
 		path = pathImage[imageClicked];
@@ -598,7 +594,6 @@ public class TIGThumbnails extends JPanel implements KeyListener, MouseListener 
 		return result;
 	}
 	
-	 //private void createThumbnail(ImageIcon image, String path){
 	private void createThumbnail(String pathImage, String pathThumbnail){
 	    	final int PREVIEW_WIDTH = 125;
 	    	final int PREVIEW_HEIGHT = 125;	

@@ -70,7 +70,8 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
         	if (!ini){
         		System.loadLibrary("libs/dsj");
         		System.out.println("Video DLL loaded correctly");
-        		System.out.println(System.getProperty("sun.arch.data.model"));
+        		//La siguiente linea comentada devuelve el número de bits del SO
+        		//System.out.println(System.getProperty("sun.arch.data.model"));
         		ini=true;
         	}
         } catch (UnsatisfiedLinkError e) {
@@ -86,7 +87,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 	**/
 	private int xVideo, yVideo, widthVideo, heightVideo;
 	
-	public TInterpreterVideo(String path, int x, int y, int width, int height, TInterpreter interprete) {
+	public TInterpreterVideo(String videoLocation, int x, int y, int width, int height, TInterpreter interprete) {
 		super(interprete);
 		setUndecorated(true);
 		xVideo=x;
@@ -94,7 +95,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 		widthVideo=width;
 		heightVideo=height;
 		this.setModal(true);
-		
+
 		try {  
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); 
 			}catch (Exception e){}
@@ -123,8 +124,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 
 		});
 
-		loadMovie(path, 0);
-		//loadMovie("http://www.catedu.es/arasaac/repositorio/LSE_acepciones/16391.flv", 0);
+		loadMovie(videoLocation, 0);
 		
 	}
 
@@ -193,7 +193,7 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 		switch(DSJUtils.getEventType(pe)) {
 			case DSFiltergraph.ACTIVATING: System.out.print("."); break;
 			case DSFiltergraph.MOUSE_EVENT:
-				System.out.println("Evento de rat�n"); break;
+				System.out.println("Evento de ratón"); break;
 			case DSFiltergraph.DONE:
 			
 				try{
@@ -233,7 +233,6 @@ public class TInterpreterVideo extends JDialog implements java.beans.PropertyCha
 
 			try{
 				format = dsAudio.getFormat();
-				//System.out.println(format);
 				bufferSize = dsAudio.getBufferSize();
 				audioInputStrem = new AudioInputStream(dsAudio, format, -1);
 				info = new DataLine.Info(SourceDataLine.class, format);

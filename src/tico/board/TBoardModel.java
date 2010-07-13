@@ -66,7 +66,7 @@ import tico.components.resources.TFileUtils;
 import tico.editor.TFileHandler;
 
 /**
- * Custom model than does not allow <code>Conections</code> between nodes. This
+ * Custom model than does not allow <code>Connections</code> between nodes. This
  * model do not use the <code>Graph</code> structure.
  * 
  * @author Pablo Muñoz
@@ -77,7 +77,7 @@ public class TBoardModel extends DefaultGraphModel {
 	private final static int HORIZONTAL_FIT_TEXT_MARGIN = 6;
 
 	private final static int VERTICAL_FIT_TEXT_MARGIN = 4;
-
+	
 	/**
 	 * Creates a new empty <code>TBoardModel</code> and with
 	 * <code>defaultAttributes</code>.
@@ -625,12 +625,14 @@ public class TBoardModel extends DefaultGraphModel {
 				TBoardConstants.setVideoFile(attributeMap, TFileHandler
 						.importFile(videoFilePath).getAbsolutePath());
 			} catch (Exception e) {
-			}
+		}
 
-		// Delete following board property if it refers to current board
-		if (TBoardConstants.getFollowingBoard(attributeMap) != null) {
-			if ((TBoardModel) TBoardConstants.getFollowingBoard(attributeMap).getModel() == this) {
-				TBoardConstants.setRemoveAttributes(attributeMap, new Object[] { TBoardConstants.FOLLOWING_BOARD });
+			// Delete following board property if it refers to current board
+		if (TBoardConstants.getFollowingBoardName(attributeMap) != null) {
+			if (TBoardConstants.getFollowingBoardName(attributeMap).equals(TBoardConstants.currentBoard.getBoardName())){
+			//if ((TBoardModel) TBoardConstants.getFollowingBoard(attributeMap).getModel() == this) {
+				attributeMap.remove(TBoardConstants.FOLLOWING_BOARD);
+				TBoardConstants.setRemoveAttributes(attributeMap, new Object[] {TBoardConstants.FOLLOWING_BOARD});
 			}
 		}
 
@@ -649,7 +651,7 @@ public class TBoardModel extends DefaultGraphModel {
 		
 		// Insert the new cells to the TGridCell
 		ArrayList gridCellList;
-		// If is the first cell of the grid, initializate the grid
+		// If is the first cell of the grid, initialized the grid
 		// vector
 		gridCellList = TBoardConstants.getOrderedCellList(parentAttributeMap);
 		if (gridCellList.isEmpty())
@@ -791,21 +793,23 @@ public class TBoardModel extends DefaultGraphModel {
 	public void deleteBoardFromAttributes(TBoard board) {
 		if (board == null)
 			throw new NullPointerException();
-
+		TBoard followingBoard = null;
 		Object[] components = getAll(this);
 		for (int i = 0; i < components.length; i++) {
 			// Get, if exits, its following board attribute
-			TBoard followingBoard = TBoardConstants
-					.getFollowingBoard(((TComponent)components[i])
-							.getAttributes());
-			if (followingBoard != null)
+			String followingBoardName = TBoardConstants
+					.getFollowingBoardName(((TComponent)components[i])
+							.getAttributes());			
+			if (followingBoardName != null){
+				followingBoard = TBoardConstants.editor.getProject().getBoard(followingBoardName);
 				// If its the same text area remove the send text attributes
-				if (followingBoard.equals(board)) {
+				if (followingBoard!= null && followingBoard.equals(board)) {
 					AttributeMap attributeMap = new AttributeMap();
 					TBoardConstants.setRemoveAttributes(attributeMap,
 							new Object[] { TBoardConstants.FOLLOWING_BOARD });
 					getAttributes(components[i]).applyMap(attributeMap);
 				}
+			}
 		}
 	}
 

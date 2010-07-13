@@ -398,7 +398,6 @@ public class TAttributeEncoder {
 				String partialPath = element.getChildNodes().item(0)
 						.getNodeValue();
 				partialPath = partialPath.replace('\\','/');
-				//System.out.println(System.getProperty("os.name"));
 				try {
 					value = TFileHandler.importFile(new File(TProjectHandler
 							.getTempDirectory(), partialPath));

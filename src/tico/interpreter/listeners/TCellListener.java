@@ -28,14 +28,11 @@
 package tico.interpreter.listeners;
 
 import java.awt.Color;
-import java.awt.MenuBar;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -109,26 +106,34 @@ public class TCellListener implements MouseListener {
 						TInterpreterConstants.audio.join();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
-							System.err.println("Error al reproducir el sonido de la celda");
+							System.out.println("Error al reproducir el sonido de la celda");
 						}
 				}
 			}
 		
 			if (cell.getVideoPath()!=null) {
 				Point point = cell.getLocationOnScreen();
-				if (cell.getVideoPath()!=null){
-					cell.setXVideo(point.x-5);
-					cell.setYVideo(point.y-54);
-				}	
+				cell.setXVideo(point.x-5);
+				cell.setYVideo(point.y-54);
 				try {
 					TInterpreterVideo video = new TInterpreterVideo(cell.getVideoPath(), cell.getXVideo(), 
+							cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (cell.getVideoURL()!=null) {
+				Point point = cell.getLocationOnScreen();
+				cell.setXVideo(point.x-5);
+				cell.setYVideo(point.y-54);
+				try {
+					TInterpreterVideo video = new TInterpreterVideo(cell.getVideoURL(), cell.getXVideo(), 
 							cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}else{
-				//System.out.println("VIDEO NULL");
 			}
 		
 			if (cell.getTextAreaToSend()!= null){
@@ -157,7 +162,7 @@ public class TCellListener implements MouseListener {
 			}
 		
 			if (cell.getBoardToGo()!= null){
-				
+
 				TInterpreterConstants.tableroActual = interpreter.getProject().getBoard(cell.getBoardToGo());
 				TInterpreterConstants.countRun = 0;
 				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
@@ -215,23 +220,24 @@ public class TCellListener implements MouseListener {
 	public void mouseEntered(MouseEvent arg0) {
 		
 		if ((TInterpreter.run==1)){
-			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
-			//Default border attributes
-			Color colorLine = Color.red;
-			int widthLine = 1;			
 			
-			if (cell.getAlternativeIcon()!=null){
-				cell.setIcon(cell.getAlternativeIcon());
-			}
-			
-			if (cell.getAlternativeBorderSize()!= 0){
-				cell.setBorderPainted(true);
-				colorLine = cell.getAlternativeBorderColor();
-				widthLine= cell.getAlternativeBorderSize();
-			}
-			
-			Border thickBorder = new LineBorder(colorLine, widthLine);
-			cell.setBorder(thickBorder);
+				TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
+				//Default border attributes
+				Color colorLine = Color.red;
+				int widthLine = 1;			
+				
+				if (cell.getAlternativeIcon()!=null){
+					cell.setIcon(cell.getAlternativeIcon());
+				}
+				
+				if (cell.getAlternativeBorderSize()!= 0){
+					cell.setBorderPainted(true);
+					colorLine = cell.getAlternativeBorderColor();
+					widthLine= cell.getAlternativeBorderSize();
+				}
+				
+				Border thickBorder = new LineBorder(colorLine, widthLine);
+				cell.setBorder(thickBorder);
 		}
 	}
 
@@ -279,7 +285,6 @@ public class TCellListener implements MouseListener {
 		public waiting(int segundos){
 			secs = segundos;
 		}
-		
 			public void run(){
 				try {					
 		            Thread.sleep(secs*1000);		            

@@ -32,17 +32,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.Vector;
 import java.io.File;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.ButtonGroup;
 import javax.swing.WindowConstants;
-
 
 import tico.components.TButton;
 import tico.components.TDialog;
@@ -119,9 +117,7 @@ public class TIGModifyImageDialog extends TDialog{
 		TIGSearchKeyWord keyWordSearchPanel = new TIGSearchKeyWord(thumbnailsDialog);
 		//TIGSearchKeyWord keyWordSearchDialog = new TIGSearchKeyWord(this.myEditor,this.myDataBase);
 		images = new Vector();
-		//keyWordSearchPanel = keyWordSearchDialog.createKeyWordPanel(this);
 		
-		//String keyWord1 = keyWordSearchDialog.KeyWord1();
 		//Fourth, create three buttons, the first one to modify the image, the second one to
 		//delete it, and the last one to exit the window
 		JPanel buttons = new JPanel();
@@ -147,7 +143,6 @@ public class TIGModifyImageDialog extends TDialog{
 				
 				icon = thumbnailsDialog.imageSelected();
 				imagePath = thumbnailsDialog.pathImageSelected();
-				System.out.println("Imagen a borrar: "+imagePath);
 				if (icon == null)
 					JOptionPane.showConfirmDialog(null,
 							TLanguage.getString("TIGSearchImageDialog.MESSAGE"),
@@ -262,11 +257,5 @@ public class TIGModifyImageDialog extends TDialog{
 		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,0);
 	}
 	
-	/*
-	 * Update the thumbnails panel when a modification has been made
-	 */
-	/*public void update_modified(Vector result,String name){
-		thumbnailsPanel = thumbnailsDialog.updateThumbnailsPanel(result,name);
-	}*/
 	
 }

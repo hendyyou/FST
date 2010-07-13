@@ -28,19 +28,14 @@
 package tico.interpreter.actions;
 
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.TInterpreterBoard;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.TInterpreterProject;
 import tico.interpreter.components.TInterpreterCell;
@@ -72,7 +67,7 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 		
 	}
 	
-	public void run() {//Velocidad del
+	public void run() {
 		
 		String mouseMode = TInterpreter.returnMouseMode();
 		
@@ -93,8 +88,8 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 	    if (mouseMode.equals(TInterpreterConstants.MANUAL_SCANNING_MODE)){
 	    	interpreter.interpreterRobot.setAutoDelay(0);
 	    	TInterpreter.boardListener = new TBoardListener(interpreter);
-	  	    interpreter.interpretAreaBackground.addMouseListener(TInterpreter.boardListener);
-	  	    interpreter.accumulatedCells.addMouseListener(TInterpreter.boardListener);
+	  	    TInterpreter.interpretAreaBackground.addMouseListener(TInterpreter.boardListener);
+	  	    TInterpreter.accumulatedCells.addMouseListener(TInterpreter.boardListener);
 	    }
 	    
 	    //Browsing mode
@@ -107,7 +102,7 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 				int posInicioBarrido = interpreter.getProject().getPositionCellToReturn();
 				TInterpreterConstants.countRun = posInicioBarrido;
 				
-				while (TInterpreterConstants.countRun < TInterpreterConstants.tableroActual.getOrderedCellListNames().size() && interpreter.run==1){		
+				while (TInterpreterConstants.countRun < TInterpreterConstants.tableroActual.getOrderedCellListNames().size() && TInterpreter.run==1){		
 					try {
 						Thread.sleep(5);
 					} catch (InterruptedException e) {
@@ -119,18 +114,24 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 						e.printStackTrace();
 					}
 					
-					TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
-					Point point = cell.getLocation();
-					SwingUtilities.convertPointToScreen(point, interpreter.interpretArea);
-            		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
-            		
-            		TInterpreterConstants.x = cell.getCenter().x -1;
-            		TInterpreterConstants.y = cell.getCenter().y -1;
-            		interpreter.interpreterRobot.mouseMove(cell.getCenter().x,cell.getCenter().y);
-
-            		TInterpreterConstants.countRun++;
-					if (TInterpreterConstants.countRun==TInterpreterConstants.tableroActual.getOrderedCellListNames().size())
-						TInterpreterConstants.countRun=0;
+					//Si he cambiado de tablero y no tengo celdas paro el barrido
+					if (TInterpreterConstants.tableroActual.getOrderedCellListNames().size()==0){
+						TInterpreter.run = 0;
+					}else{
+					
+						TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
+						Point point = cell.getLocation();
+						SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
+	            		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
+	            		
+	            		TInterpreterConstants.x = cell.getCenter().x -1;
+	            		TInterpreterConstants.y = cell.getCenter().y -1;
+	            		interpreter.interpreterRobot.mouseMove(cell.getCenter().x,cell.getCenter().y);
+	
+	            		TInterpreterConstants.countRun++;
+						if (TInterpreterConstants.countRun==TInterpreterConstants.tableroActual.getOrderedCellListNames().size())
+							TInterpreterConstants.countRun=0;
+					}
 					
 					try {
 						TInterpreterConstants.semaforo.release();

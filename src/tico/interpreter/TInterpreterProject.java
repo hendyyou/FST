@@ -319,6 +319,8 @@ public class TInterpreterProject {
 	            	
 	            }
 	            
+	            boardToGo = initialBoardname;
+	            
 	            List components = model.getChildren("component");
 	            Iterator icomp = components.iterator();
 	            while (icomp.hasNext()){
@@ -341,12 +343,12 @@ public class TInterpreterProject {
 	            	
 	            	String soundFile = null;
 	            	String videoFile = null;
+	            	String videoURL = null;
+	            	
 					
 	            	if (componentType.equals("cell")){
 	            		TInterpreterCell cell = new TInterpreterCell();
-	            		linewidth=(float) 0.0;
-
-	            		boardToGo = initialBoardname;
+	            		linewidth=(float) 0.0;	            		
 
 	            		Element attributesLabel= component.getChild("attributes");
 	            		List attributesLabelList= attributesLabel.getChildren("attribute");
@@ -588,28 +590,20 @@ public class TInterpreterProject {
 		            		}	
 		            		
 	                	}
+	                	
+	                	// videoURL	                	
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("videoURL")){
+		                	// Save the video to be played when mouse clicked
+		            		videoURL = attribute.getValue();		            		
+	                	}
 	            	}
 	            		
 	            	            		
 	            		cell.setAttributes(id, r, text, font, foregroundColor, vtp, icon, linewidth, borderColor, backgroundColor, gradientColor, transparentBackground, transparentBorder, alternativeIcon);
 	            		            		
-	            		//cell.setAlternativeAttributes(alternativeIcon);
-	            		cell.setActionsAttributes(soundFile, videoFile, command);
-	            		/*if (tic.transparenteBorder)
-	            		 * 
-		            		cell.setAttributes(command, id, borderColor, (float)0.0, backgroundColor, r, text, font, foregroundColor, icon,alternativeIcon, vtp, tic,tic.transparente, tic.transparenteBorder);
-
-	            		else	            			
-	            		cell.setAttributes(command, id, borderColor, linewidth, backgroundColor, r, text, font, foregroundColor, icon,alternativeIcon, vtp, tic,tic.transparente, tic.transparenteBorder);
-	            		
-	            		if (videoFile!=null){	            
-	            			cell.setText(videoFile.substring(6, videoFile.length()));	
-	            		}*/
+	            		cell.setActionsAttributes(soundFile, videoFile, videoURL,  command);
 	            			            		
 	            		cell.addMouseListener(new TCellListener(cell));
-	            		/*if (tic.accumulated){
-	            			tic.cell= cell;
-	            		}*/
 	            		
 	            		myboard.insertCell(cell);
 	            		myboard.insertComponent(cell);

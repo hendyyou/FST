@@ -47,7 +47,6 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ //barrido automatico
 			try {						
 				TInterpreterConstants.semaforo.acquire();
-			//	System.out.println("ACQUIRE CELDA");
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -82,7 +81,6 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 		}
 		
 		if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
-			//System.out.println("RELEASE CELDA");
 			try {
 				TInterpreterConstants.semaforo.release();
 			} catch (InterruptedException e1) {

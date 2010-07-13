@@ -117,9 +117,15 @@ TRecordSound.EXIT=Beenden
 TRecordSound.TITLE=Tondatei speichern
 
 TVideoChooser.TITLE=Video  
-TVideoChooser.NAME=Name
+TVideoChooser.NAME=Datei
+TVideoChooser.URL=URL
+TVideoChooser.BUTTON_SELECT=Markieren
+TVideoChooser.BUTTON_INSERT_URL=Einführen
+TVideoChooser.BUTTON_CLEAR=Löschen
 TVideoChooser.OPEN_FILE_ERROR=Fehler beim Lesen der Videodatei.
 TVideoChooser.CHOOSE_VIDEO=Videodatei auswählen
+TVideoChooser.INSERT_URL_VIDEO=Geben Sie die URL eines Videos
+TVideoChooser.INSERT_URL_ACCEPT=Annehmen
 
 TTextAlignSelectorPanel.TITLE=Ausrichtung
 TTextAlignSelectorPanel.LEFT_HALIGN_TOOLTIP=Links ausrichten
@@ -313,8 +319,8 @@ TUndoAction.NAME=Rückgängig machen
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=Über
-TAboutDialog.EDITOR_VERSION=Ticos Verleger e1.0 r1
-TAboutDialog.INTERPRETER_VERSION=Ticos Interpret e1.0 r1
+TAboutDialog.EDITOR_VERSION=Ticos Verleger e1.0 r3
+TAboutDialog.INTERPRETER_VERSION=Ticos Interpret e1.0 r3
 TAboutDialog.DEVELOPERS=Entwickler
 TAboutDialog.OTHER_DEVELOPERS=Andere...
 TAboutDialog.DIRECTOR=Direktor
@@ -417,12 +423,6 @@ TIGImageDataDialog.DATANAME=Name
 TIGImageDataDialog.END=Annehmen
 TIGImageDataDialog.CANCEL=Abbrechen
 
-TIGNewImageDataDialog.NAME=Bild ändern
-TIGNewImageDataDialog.DATANAME=Name
-TIGNewImageDataDialog.NEXT=Akzeptieren
-TIGNewImageDataDialog.CANCEL=Abbrechen
-TIGNewImageDataDialog.EXIT=Programm verlassen
-
 TIGImageDialog.TEXT=Nicht vorhandenes Bild
 
 TIGInsertImageAction.NAME=Fehler
@@ -439,7 +439,6 @@ TIGKeyWordSearchDialog.OR=oder
 TIGSearchNameDialog.NAME_SEARCH=Suche nach Bildnamen
 TIGSearchNameDialog.SEARCH=Suchen:
 TIGSearchNameDialog.SEARCH_BUTTON=Suchen
-TIGSearchNameDialog.TEXT=Fügen Sie den gesuchten Namen ein
 TIGSearchNameDialog.NO_RESULTS=Es wurde kein Bild unter diesem Namen gefunden
 TIGSearchNameDialog.NAME_RESULT=Suchergebnisse
 
@@ -452,29 +451,31 @@ TIGDeleteKeyWordAction.NAME=Stichwort löschen
 TIGModifyImageAction.ERROR=Fehler beim Ändern des Bildes
 TIGModifyImageAction.NAME=Bild ändern
 
-TIGLoadDBDialog.NAME=Datenbank hochladen
-TIGLoadDBDialog.IMAGES=Auswählen
-TIGLoadDBDialog.EXIT=Programm verlassen
-TIGLoadDBDialog.IMAGES_SEL=Wählen Sie das Verzeichnis mit der Datenbank
-TIGLoadDBDialog.TEXT=Auswählen
-TIGLoadDBDialog.TEXT_FILE=Seleccione el fichero que contiene las categoría (opcional)
-TIGLoadDBDialog.IMPORT_BUTTON=Hochladen
-TIGLoadDBDialog.DB=Hochladen
-TIGLoadDBDialog.IMAGES_DIRECTORY=Verzeichnis-Datenbank
-TIGLoadDBDialog.ASSOCIATION_FILE=Fichero con las Asociaciones
-TIGLoadDBDialog.ERROR=Fehler beim Hochladen der Datenbank
-TIGLoadDBDialog.ERROR_EMPTY_DIRECTORY=Sie müssen ein Verzeichnis auswählen
-TIGLoadDBDialog.ERROR_FILE=Debe seleccionar un fichero
-TIGLoadDBDialog.PROGRESS=Status
-TIGLoadDBDialog.PROGRESS_TASK=Fortschritte aufgabe
-TIGLoadDBDialog.ERROR_FORMAT_DATABASE=Malformed Datenbank
-TIGLoadDBDialog.REPEATED_IMAGES_TITLE=Wenn wiederholt Bilder...
-TIGLoadDBDialog.REPLACE_IMAGES=Bilder ersetzen
-TIGLoadDBDialog.ADD_IMAGES=Bilder hinzufügen
-TIGLoadDBDialog.IMPORT_COMPLETED=Die Datenbank wurde korrekt importiert
-TIGLoadDBDialog.IMPORT_WITH_ERRORS=Die Datenbank wurde mit Fehlern importiert
-TIGLoadDBDialog.IMPORT_INFO=Weitere Informationen finden Sie in der Datei
-TIGLoadDBDialog.IMPORT_WITH_ERRORS_MESSAGE=Die folgenden Bilder wurden nicht importiert:
+TIGOperationDB.CANCELED=Operation abgesagt
+
+TIGImportDBDialog.NAME=Datenbank hochladen
+TIGImportDBDialog.IMAGES=Auswählen
+TIGImportDBDialog.EXIT=Programm verlassen
+TIGImportDBDialog.IMAGES_SEL=Wählen Sie das Verzeichnis mit der Datenbank
+TIGImportDBDialog.TEXT=Auswählen
+TIGImportDBDialog.TEXT_FILE=Seleccione el fichero que contiene las categoría (opcional)
+TIGImportDBDialog.IMPORT_BUTTON=Hochladen
+TIGImportDBDialog.DB=Hochladen
+TIGImportDBDialog.IMAGES_DIRECTORY=Verzeichnis-Datenbank
+TIGImportDBDialog.ASSOCIATION_FILE=Fichero con las Asociaciones
+TIGImportDBDialog.ERROR=Fehler beim Hochladen der Datenbank
+TIGImportDBDialog.ERROR_EMPTY_DIRECTORY=Sie müssen ein Verzeichnis auswählen
+TIGImportDBDialog.ERROR_FILE=Debe seleccionar un fichero
+TIGImportDBDialog.PROGRESS=Status
+TIGImportDBDialog.PROGRESS_TASK=Fortschritte aufgabe
+TIGImportDBDialog.ERROR_FORMAT_DATABASE=Malformed Datenbank
+TIGImportDBDialog.REPEATED_IMAGES_TITLE=Wenn wiederholt Bilder...
+TIGImportDBDialog.REPLACE_IMAGES=Bilder ersetzen
+TIGImportDBDialog.ADD_IMAGES=Bilder hinzufügen
+TIGImportDBDialog.IMPORT_COMPLETED=Die Datenbank wurde korrekt importiert
+TIGImportDBDialog.IMPORT_WITH_ERRORS=Die Datenbank wurde mit Fehlern importiert
+TIGImportDBDialog.IMPORT_INFO=Weitere Informationen finden Sie in der Datei
+TIGImportDBDialog.IMPORT_WITH_ERRORS_MESSAGE=Die folgenden Bilder wurden nicht importiert:
 
 TIGExportDBDialog.NAME=Datenbank exportieren
 TIGExportDBDialog.IMAGES=Auswählen
@@ -829,3 +830,4 @@ TShowResults.TEXTBACKGROUND=text/background:
 TShowResults.BORDERBACKGROUND=edge/background:
 TShowResults.BOARDCELL=board/cells:
 TShowResults.COLORTABLE=Suitable colour combinations:
+TShowResults.MESSAGE_26=******

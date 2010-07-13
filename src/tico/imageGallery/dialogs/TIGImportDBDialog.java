@@ -107,16 +107,27 @@ public class TIGImportDBDialog extends TDialog {
     private JPanel contentPane;
     
     private boolean stop = false;
-	
+    
+    private boolean cancel = false;
+    	
 	public TIGImportDBDialog(TEditor editor, TIGDataBase dataBase) {
 		
-		super(editor, TLanguage.getString("TIGLoadDBDialog.NAME"),true);
+		super(editor, TLanguage.getString("TIGImportDBDialog.NAME"),true);
 		this.myEditor = editor;
 
 		myDataBase = dataBase;
 		
 		addWindowListener(new java.awt.event.WindowListener(){
 			public void windowClosing(java.awt.event.WindowEvent e){
+				if (task.isRunning()){
+					stop = true;
+					cancel = true;
+					JOptionPane.showConfirmDialog(null,
+							TLanguage.getString("TIGOperationDB.CANCELED"),
+							"",
+							JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
+				}
+				
 				dispose();
 			}
 			
@@ -135,20 +146,20 @@ public class TIGImportDBDialog extends TDialog {
 		JPanel setDirectory = new JPanel();
 		setDirectory.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)), 
-				TLanguage.getString("TIGLoadDBDialog.IMAGES_SEL")));
+				TLanguage.getString("TIGImportDBDialog.IMAGES_SEL")));
 				
 		JPanel buttons = new JPanel();
 		
 		JPanel repeatedImages = new JPanel(new GridLayout(1, 0));
 		repeatedImages.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165,163,151)),
-				TLanguage.getString("TIGLoadDBDialog.REPEATED_IMAGES_TITLE")));
+				TLanguage.getString("TIGImportDBDialog.REPEATED_IMAGES_TITLE")));
 		
 		imagesBehaviour = new ButtonGroup();
-		JRadioButton replaceImages = new JRadioButton(TLanguage.getString("TIGLoadDBDialog.REPLACE_IMAGES"),true);
-		replaceImages.setActionCommand(TLanguage.getString("TIGLoadDBDialog.REPLACE_IMAGES"));
-		JRadioButton renameImages = new JRadioButton(TLanguage.getString("TIGLoadDBDialog.ADD_IMAGES"),false);
-		renameImages.setActionCommand(TLanguage.getString("TIGLoadDBDialog.ADD_IMAGES"));
+		JRadioButton replaceImages = new JRadioButton(TLanguage.getString("TIGImportDBDialog.REPLACE_IMAGES"),true);
+		replaceImages.setActionCommand(TLanguage.getString("TIGImportDBDialog.REPLACE_IMAGES"));
+		JRadioButton renameImages = new JRadioButton(TLanguage.getString("TIGImportDBDialog.ADD_IMAGES"),false);
+		renameImages.setActionCommand(TLanguage.getString("TIGImportDBDialog.ADD_IMAGES"));
 		imagesBehaviour.add(replaceImages);
 		imagesBehaviour.add(renameImages);
 		
@@ -162,50 +173,43 @@ public class TIGImportDBDialog extends TDialog {
 		directory = new JTextField(40);
 		directory.setEditable(false);
 		
-		openButton = new TButton(new AbstractAction(TLanguage.getString("TIGLoadDBDialog.IMAGES")) {
+		openButton = new TButton(new AbstractAction(TLanguage.getString("TIGImportDBDialog.IMAGES")) {
 			public void actionPerformed(ActionEvent e) {
 				pathImages = createFileChooser();
 				if (pathImages.compareTo("") != 0){
 					directory.setText(pathImages);
 					File myDirectory = new File(pathImages);
 					String[] list = myDirectory.list(); 
-					
-					//=====================Begin Joaquin
-	    			task.setLengthOfTask(list.length);
-	    			progressBar.setMaximum(list.length);
-	    			
-	    			//System.out.println("progressBar.setMaximum:" + list.length);
-	    			//=====================End Joaquin 
-							
+					task.setLengthOfTask(list.length);
+	    			progressBar.setMaximum(list.length);						
 				}
 			}
 		});	
 		
-		exitButton = new TButton(new AbstractAction(TLanguage.getString("TIGLoadDBDialog.EXIT")) {
+		exitButton = new TButton(new AbstractAction(TLanguage.getString("TIGImportDBDialog.EXIT")) {
 			public void actionPerformed(ActionEvent e) {
 				stop = true;
+				cancel = true;
+				JOptionPane.showConfirmDialog(null,
+						TLanguage.getString("TIGOperationDB.CANCELED"),
+						"",
+						JOptionPane.CLOSED_OPTION , JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 			}
 		});
-		//Seleccionar
-		//Create the main button
-		//aceptButton.addActionListener(new ButtonListener());
-		//importButton = new TButton(TLanguage.getString("TIGLoadDBDialog.IMPORT_BUTTON"));
-		//importButton.setActionCommand("start");
-		//aceptButton.addActionListener(new ButtonListener());
-		importButton = new TButton(new AbstractAction(TLanguage.getString("TIGLoadDBDialog.IMPORT_BUTTON")) {
+
+		importButton = new TButton(new AbstractAction(TLanguage.getString("TIGImportDBDialog.IMPORT_BUTTON")) {
 			public void actionPerformed(ActionEvent e) {
 				// Importa Imagenes
 				if (directory.getText().trim().compareTo("") == 0){
 						JOptionPane.showConfirmDialog(null,
-							TLanguage.getString("TIGLoadDBDialog.ERROR_EMPTY_DIRECTORY"),
-							TLanguage.getString("TIGLoadDBDialog.ERROR"),
+							TLanguage.getString("TIGImportDBDialog.ERROR_EMPTY_DIRECTORY"),
+							TLanguage.getString("TIGImportDBDialog.ERROR"),
 							JOptionPane.CLOSED_OPTION ,JOptionPane.WARNING_MESSAGE );
 				}else{ //Search for images.xml file
 					File myDirectory = new File(pathImages);
 					String[] list = myDirectory.list(); 
 					
-					//String nameXML = "";
 					boolean findXML = false;
 					int i = 0;
 					
@@ -213,36 +217,25 @@ public class TIGImportDBDialog extends TDialog {
 						findXML = list[i].equals("images.xml");
 						i++;
 					}
-					
-					if (findXML)
-						System.out.println("images.xml encontrado");
-					else System.out.println("images.xml NO encontrado");
 
 					if (findXML){
 						
-						myDataBase.conectDB();
+						TIGDataBase.conectDB();
 						
 						pathImages = directory.getText();							
-						text.setText(TLanguage.getString("TIGLoadDBDialog.PROGRESS_TASK"));
+						text.setText(TLanguage.getString("TIGImportDBDialog.PROGRESS_TASK"));
 						importButton.setEnabled(false);
 						
 						progressBar.setIndeterminate(false);						
 						progressBar.setValue(0);
-							
-						//If the Data Base doesn't exists, a new one is created
-						//if (!myDataBase.exists()){
-						//	System.out.println("No existe BD");
-							//myDataBase.createDB();
-						//}else System.out.println("Existe BD");
-						
-						System.out.println("Antes de task");					
+				
 						String behaviour = imagesBehaviour.getSelection().getActionCommand();
 						task.go(myEditor, myDataBase, pathImages, behaviour);	
 						timer.start();
-					}else{ //images.xml not found
+					}else{
 						JOptionPane.showConfirmDialog(null,
-								TLanguage.getString("TIGLoadDBDialog.ERROR_FORMAT_DATABASE"),
-								TLanguage.getString("TIGLoadDBDialog.ERROR"),
+								TLanguage.getString("TIGImportDBDialog.ERROR_FORMAT_DATABASE"),
+								TLanguage.getString("TIGImportDBDialog.ERROR"),
 								JOptionPane.CLOSED_OPTION ,JOptionPane.WARNING_MESSAGE );
 					}
 				}
@@ -323,7 +316,7 @@ public class TIGImportDBDialog extends TDialog {
 		JFileChooser fileChooser = new JFileChooser();
 		// Customize JFileChooser
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fileChooser.setDialogTitle(TLanguage.getString("TIGLoadDBDialog.IMAGES_DIRECTORY"));
+		fileChooser.setDialogTitle(TLanguage.getString("TIGImportDBDialog.IMAGES_DIRECTORY"));
 		fileChooser.setCurrentDirectory(defaultDirectory);
 
 		// Checks if the user has chosen a file
@@ -348,7 +341,7 @@ public class TIGImportDBDialog extends TDialog {
 		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
 		// Customize JFileChooser
-		fileChooser.setDialogTitle(TLanguage.getString("TIGLoadDBDialog.ASSOCIATION_FILE"));
+		fileChooser.setDialogTitle(TLanguage.getString("TIGImportDBDialog.ASSOCIATION_FILE"));
 		fileChooser.setCurrentDirectory(defaultDirectory);
 
 		// Checks if the user has chosen a file
@@ -396,7 +389,7 @@ public class TIGImportDBDialog extends TDialog {
         //contentPane.add(new JScrollPane(taskOutput), BorderLayout.CENTER);
         contentPane.setBorder(new TitledBorder(BorderFactory.createEtchedBorder(
 				Color.WHITE, new Color(165, 163, 151)), 
-				TLanguage.getString("TIGLoadDBDialog.PROGRESS")));
+				TLanguage.getString("TIGImportDBDialog.PROGRESS")));
 
         //create a timer
         timer = new Timer(100, new TimerListener());
@@ -413,18 +406,24 @@ public class TIGImportDBDialog extends TDialog {
             if (stop){
             	task.stop();
             }
+            if (cancel){
+            	task.cancel();            	
+            }
             if (task.done()) {
                 Toolkit.getDefaultToolkit().beep();
                 timer.stop();
                 importButton.setEnabled(true);
                 progressBar.setValue(progressBar.getMinimum());
-                dispose();
+                
                 String errors = task.getErrorImages();
                 if (errors.equals("")){
-                	JOptionPane.showConfirmDialog(null,
-    						TLanguage.getString("TIGLoadDBDialog.IMPORT_COMPLETED"),
-    						"",
-    						JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
+                	if (!cancel){
+                		JOptionPane.showConfirmDialog(null,
+        						TLanguage.getString("TIGImportDBDialog.IMPORT_COMPLETED"),
+        						"",
+        						JOptionPane.CLOSED_OPTION ,JOptionPane.INFORMATION_MESSAGE);
+                		
+                	}
                 }else{
                 	String pathFile = System.getProperty("user.dir")+File.separator+"import_failed.txt";
                 	File importFailed = new File(pathFile);
@@ -434,20 +433,22 @@ public class TIGImportDBDialog extends TDialog {
             		try {
 						BufferedWriter bw = new BufferedWriter(new FileWriter(importFailed, false));
 						bw.write(formatDateHour.format(dateNow) + System.getProperty("line.separator"));
-						bw.write(TLanguage.getString("TIGLoadDBDialog.IMPORT_WITH_ERRORS_MESSAGE"));
+						bw.write(TLanguage.getString("TIGImportDBDialog.IMPORT_WITH_ERRORS_MESSAGE"));
 						bw.write(System.getProperty("line.separator"));
 						bw.write(errors);
 						bw.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-                	System.out.println("ERRORES: "+errors);
-                	JOptionPane.showConfirmDialog(null,
-    						TLanguage.getString("TIGLoadDBDialog.IMPORT_INFO")+ 
-    						System.getProperty("line.separator") + pathFile,
-    						TLanguage.getString("TIGLoadDBDialog.IMPORT_WITH_ERRORS"),
-    						JOptionPane.CLOSED_OPTION ,JOptionPane.WARNING_MESSAGE);
+					if (!cancel){
+						JOptionPane.showConfirmDialog(null,
+	    						TLanguage.getString("TIGImportDBDialog.IMPORT_INFO")+ 
+	    						System.getProperty("line.separator") + pathFile,
+	    						TLanguage.getString("TIGImportDBDialog.IMPORT_WITH_ERRORS"),
+	    						JOptionPane.CLOSED_OPTION ,JOptionPane.WARNING_MESSAGE);
+					}                	
                 }
+                dispose();
             }
         }
     }

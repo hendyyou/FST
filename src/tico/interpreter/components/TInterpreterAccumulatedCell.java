@@ -27,15 +27,12 @@
  */
 package tico.interpreter.components;
 
-import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-
-import tico.interpreter.TInterpreterConstants;
 
 public class TInterpreterAccumulatedCell extends JButton{
 	

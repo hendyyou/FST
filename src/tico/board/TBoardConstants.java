@@ -37,6 +37,7 @@ import javax.swing.Icon;
 import org.jgraph.graph.GraphConstants;
 
 import tico.board.components.TComponent;
+import tico.editor.TEditor;
 /**
  * A collection of attribute keys and methods to apply to a <code>Map</code>
  * to get/set the properties in a typesafe manner added to the base
@@ -46,6 +47,10 @@ import tico.board.components.TComponent;
  * @version 1.0 Nov 20, 2006
  */
 public class TBoardConstants extends GraphConstants {
+	
+	public static TBoard currentBoard = null;
+	public static TEditor editor = null;
+	
 	/**
 	 * Default background color.
 	 */
@@ -189,6 +194,12 @@ public class TBoardConstants extends GraphConstants {
 	 * String as values for this key.
 	 */
 	public final static String VIDEO_FILE = "videoFile";
+	
+	/**
+	 * Key for the <code>videoURL</code> attributes. Use instances of
+	 * String as values for this key.
+	 */
+	public final static String VIDEO_URL = "videoURL";
 	
 	/**
 	 * Key for the <code>startCorner</code> attribute. Use instances of
@@ -424,8 +435,23 @@ public class TBoardConstants extends GraphConstants {
     public static final void setVideoFile(Map map, String value) {
         map.put(VIDEO_FILE,new File(value));
     }
-	
-	/**
+    
+    /**
+     * Returns the videoFile attribute from the specified map.
+     */
+    public static final String getVideoURL(Map map) {
+    	return (String)map.get(VIDEO_URL);
+    }
+
+    /**
+     * Sets the videoFile attribute in the specified map to the specified
+     * value.
+     */
+    public static final void setVideoURL(Map map, String value) {
+        map.put(VIDEO_URL, value);
+    }
+
+    /**
 	 * Returns the alternateIcon attribute from the specified map.
 	 */
 	public static final Icon getAlternativeIcon(Map map) {
@@ -692,15 +718,19 @@ public class TBoardConstants extends GraphConstants {
 	/**
 	 * Sets the followingBoard attribute in the specified map to the specified value.
 	 */
-	public static final void setFollowingBoard(Map map, TBoard value) {
+	public static final void setFollowingBoard(Map map, String value) {
 		map.put(FOLLOWING_BOARD, value);
 	}
 
 	/**
 	 * Returns the followingBoard attribute from the specified map.
 	 */
-	public static final TBoard getFollowingBoard(Map map) {
+	/*public static final TBoard getFollowingBoard(Map map) {
 		return (TBoard)map.get(FOLLOWING_BOARD);
+	}*/
+	
+	public static final String getFollowingBoardName(Map map) {
+		return (String)map.get(FOLLOWING_BOARD);
 	}
 	
 	public static final void setAlternativeLinewidth(Map map, int value)

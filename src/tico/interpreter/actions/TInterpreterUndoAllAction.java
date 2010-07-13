@@ -42,11 +42,7 @@ public class TInterpreterUndoAllAction extends TInterpreterAbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		interpreter=getInterpreter();
 		
-		if (TInterpreter.accumulatedCellsList.size()==0){
-			System.out.println("IMPOSIBLE DESHACER!");
-		}
-		else 
-		{	
+		if (TInterpreter.accumulatedCellsList.size()>0){	
 			interpreter.accumulatedCells.removeAll();
 			TInterpreter.accumulatedCellsList.removeAll(TInterpreter.accumulatedCellsList);
 			interpreter.accumulatedCells.updateUI();

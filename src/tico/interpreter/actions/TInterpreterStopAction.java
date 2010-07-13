@@ -28,15 +28,13 @@
 
 
 package tico.interpreter.actions;
-import java.awt.AWTException;
-import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 
-import tico.board.TBoardConstants;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-import tico.interpreter.*;
+import tico.interpreter.TInterpreter;
+import tico.interpreter.TInterpreterConstants;
 
 
 public class TInterpreterStopAction extends TInterpreterAbstractAction

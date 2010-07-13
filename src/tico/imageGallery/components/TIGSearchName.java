@@ -73,22 +73,11 @@ public class TIGSearchName extends JPanel{
 				TLanguage.getString("TIGSearchNameDialog.NAME_SEARCH")));
 		
 		JLabel searchLabel = new JLabel(TLanguage.getString("TIGSearchNameDialog.SEARCH"));
-		//texto = new JTextField(TLanguage.getString("TIGSearchNameDialog.TEXT"),30);
 		texto = new JTextField(30);
-		//String text =  TLanguage.getString("TIGSearchNameDialog.TEXT");
-		//texto.select(0, text.length());
-		/*texto.addMouseListener(new java.awt.event.MouseAdapter(){
-			public void mouseClicked(java.awt.event.MouseEvent e){
-				if (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) == 0)
-					texto.setText("");
-			}
-		});*/
 		
 		texto.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
-				System.out.println("Code"+e.getKeyChar());
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-					//&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	
 					result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){
@@ -109,8 +98,6 @@ public class TIGSearchName extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				result = new Vector();
 				if ((texto.getText().compareTo("") != 0)){
-						//&& 
-					//(texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = TIGDataBase.imageSearchByName(texto.getText());
 					if (result.size()==0){
 						thumbnails.updateThumbnailsPanel(result,0);
@@ -131,7 +118,6 @@ public class TIGSearchName extends JPanel{
 		searchButton.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-					//&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	
 					result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){
@@ -182,22 +168,11 @@ public class TIGSearchName extends JPanel{
 				TLanguage.getString("TIGSearchNameDialog.NAME_SEARCH")));
 		
 		JLabel searchLabel = new JLabel(TLanguage.getString("TIGSearchNameDialog.SEARCH"));
-		//texto = new JTextField(TLanguage.getString("TIGSearchNameDialog.TEXT"),30);
 		texto = new JTextField(30);
-		//String text =  TLanguage.getString("TIGSearchNameDialog.TEXT");
-		/*texto.select(0, text.length());
-		texto.addMouseListener(new java.awt.event.MouseAdapter(){
-			public void mouseClicked(java.awt.event.MouseEvent e){
-				if (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) == 0)
-					texto.setText("");
-			}
-		});*/
 		
 		texto.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
-				System.out.println("Code"+e.getKeyChar());
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-					//&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	
 					result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){
@@ -218,7 +193,6 @@ public class TIGSearchName extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				result = new Vector();
 				if ((texto.getText().compareTo("") != 0)){ //&& 
-					//(texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = TIGDataBase.imageSearchByName(texto.getText());
 					if (result.size()==0){
 						deleteImages.update(result);
@@ -239,7 +213,6 @@ public class TIGSearchName extends JPanel{
 		searchButton.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-				//	&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	
 					result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){
@@ -290,22 +263,11 @@ public class TIGSearchName extends JPanel{
 				TLanguage.getString("TIGSearchNameDialog.NAME_SEARCH")));
 		
 		JLabel searchLabel = new JLabel(TLanguage.getString("TIGSearchNameDialog.SEARCH"));
-		//texto = new JTextField(TLanguage.getString("TIGSearchNameDialog.TEXT"),30);
 		texto = new JTextField(30);
-		//String text =  TLanguage.getString("TIGSearchNameDialog.TEXT");
-		//texto.select(0, text.length());
-		/*texto.addMouseListener(new java.awt.event.MouseAdapter(){
-			public void mouseClicked(java.awt.event.MouseEvent e){
-				if (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) == 0)
-					texto.setText("");
-			}
-		});*/
 		
 		texto.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
-				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-					//&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
-					//result = new Vector();	
+				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){	
 					result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){
 						// There are no results for that search
@@ -325,7 +287,6 @@ public class TIGSearchName extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				result = new Vector();
 				if ((texto.getText().compareTo("") != 0)){ //&& 
-					//(texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = TIGDataBase.imageSearchByName(texto.getText());
 					if (result.size()==0){
 						exportDB.update(result);
@@ -346,7 +307,6 @@ public class TIGSearchName extends JPanel{
 		searchButton.addKeyListener(new java.awt.event.KeyAdapter(){
 			public void keyReleased(java.awt.event.KeyEvent e){
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER) && (texto.getText().compareTo("") != 0)){
-					//&& (texto.getText().compareTo(TLanguage.getString("TIGSearchNameDialog.TEXT")) != 0)){
 					result = new Vector();	
 					Vector<Vector<String>> result = TIGDataBase.imageSearchByName(texto.getText());	
 					if (result.size()==0){

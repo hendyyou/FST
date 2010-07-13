@@ -183,7 +183,6 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 	    selection.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    table.setSelectionModel(selection);
 	    
-	    //table.setRowSelectionAllowed(true);
 	    table.setPreferredScrollableViewportSize(new Dimension(168, 302));
 	    scrollPaneList = new JScrollPane(table);  
 	    table.addMouseListener(new java.awt.event.MouseAdapter(){
@@ -227,7 +226,6 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 			public void actionPerformed(ActionEvent e) {
 				String theText = text.getText();
 				if (theText.contains(",")){
-					System.out.println("Contiene");
 					String [] temp = null;
 				    temp = theText.split(",");
 				    for (int i = 0 ; i < temp.length ; i++) {
@@ -238,7 +236,6 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 							action.actionPerformed(e);
 						}
 				    }
-					//System.out.println("texto: " + theText);
 				}
 				else if((!myModel.isElement(theText)) &&(theText.compareToIgnoreCase("")!=0)){
 					myModel.addElement(theText);
@@ -270,15 +267,11 @@ public class TIGKeyWordGalleryDialog extends TDialog {
 			public void actionPerformed(ActionEvent e) {
 				if ((text.getText().compareTo("") != 0) &&  (text.getText().compareTo("Todas") != 0))
 				{					
-					System.out.println("text es: " + text.getText());
 					if (myModel.isElement(text.getText())){
-						//String theText = (String)myModel.getValueAt(table.getSelectedRow(),0);
 						String theText= text.getText();
-						System.out.println("theText: " + theText);
 							TIGDeleteKeyWordAction action = new TIGDeleteKeyWordAction(editor,theText,myDataBase);					
 							action.actionPerformed(e);					
 							if (action.delete()!= 0){
-								//myModel.deleteKeyWord(table.getSelectedRow());
 								myModel.deleteKeyWord2(theText);
 							}
 						

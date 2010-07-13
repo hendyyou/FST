@@ -50,6 +50,8 @@ public class TIGExportTask {
     private TIGDataBase myDataBase;
     private String myDirectoryPath;
     private boolean stop = false;
+    private boolean cancel = false;
+    private boolean running = false;
     
     private Vector myImages;
 
@@ -63,6 +65,7 @@ public class TIGExportTask {
     //called from ProgressBarDemo to start the task
     public void go(TEditor editor,TIGDataBase dataBase, String directoryPath, Vector images) {
         current = 0;
+        running = true;
         this.myEditor = editor;
         this.myDataBase = dataBase;
         this.myDirectoryPath = directoryPath;
@@ -92,6 +95,16 @@ public class TIGExportTask {
 
     public void stop() {
     	stop = true;
+    	running = false;
+    }
+    
+    public void cancel() {
+    	cancel = true;
+    	running = false;
+    }
+    
+    public boolean isRunning(){
+    	return running;
     }
 
     //called from ProgressBarDemo to find out if the task has completed
@@ -117,7 +130,7 @@ public class TIGExportTask {
 			// Create the data base node
 			Element dataBaseXML = new Element("dataBase");
 
-			for (i = 0; ((i < images.size()) && !stop); i++){
+			for (i = 0; ((i < images.size()) && !stop && !cancel); i++){
     			
     			Vector imagen = new Vector(2);
     			imagen = (Vector) images.elementAt(i);
@@ -152,7 +165,7 @@ public class TIGExportTask {
 				// Create image node
 				Element image = new Element("image");
 				image.setAttribute("name", name);
-				if (keyWords.size()!=0){//La imagen tiene categorías
+				if (keyWords.size()!=0){
 					for (int k=0; k<keyWords.size(); k++){
 						Element category = new Element("category");
 						category.setText(keyWords.get(k).trim());

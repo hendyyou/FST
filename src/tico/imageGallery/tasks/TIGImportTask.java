@@ -29,6 +29,10 @@
 
 package tico.imageGallery.tasks;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,11 +42,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import javax.media.jai.JAI;
+import javax.media.jai.RenderedOp;
+import javax.swing.ImageIcon;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
+import tico.components.resources.TFileUtils;
 import tico.configuration.TLanguage;
 import tico.editor.TEditor;
 import tico.imageGallery.dataBase.TIGDataBase;
@@ -57,8 +70,9 @@ public class TIGImportTask {
     private String myImagesBehaviour;
     private String errorImages = "";
     private boolean stop = false;
-    //private File imageFile;
-        
+    private boolean cancel = false;
+    private boolean running = false;
+    
     public TIGImportTask () {
         //compute length of task ...
         //in a real program, this would figure out
@@ -69,6 +83,7 @@ public class TIGImportTask {
     //called from ProgressBarDemo to start the task
     public void go(TEditor editor,TIGDataBase dataBase, String directoryPath, String imagesBehaviour) {
         current = 0;
+        running = true;
         this.myEditor = editor;
         this.myDataBase = dataBase;
         this.myDirectoryPath = directoryPath;
@@ -101,6 +116,16 @@ public class TIGImportTask {
 
     public void stop() {
     	stop = true;
+    	running = false;
+    }
+    
+    public void cancel() {
+    	cancel = true;
+    	running = false;
+    }
+    
+    public boolean isRunning(){
+    	return running;
     }
 
     //called from ProgressBarDemo to find out if the task has completed
@@ -126,10 +151,7 @@ public class TIGImportTask {
 	}
 
     //the actual long running task, this runs in a SwingWorker thread
-    public class ActualTask {
-    	
-    	//private final static int PREVIEW_WIDTH = 125;
-    	//private final static int PREVIEW_HEIGHT = 125;	
+    public class ActualTask {	
     	
         public ActualTask (TEditor editor, TIGDataBase dataBase, String directoryPath, String myImagesBehaviour) {
                   
@@ -150,7 +172,7 @@ public class TIGImportTask {
 				
 				TIGDataBase.activateTransactions();
 				
-				while (j.hasNext() && !stop){
+				while (j.hasNext() && !stop && !cancel){
 					 current = i;
 					 i++;
 					 Element image = (Element)j.next();
@@ -168,9 +190,7 @@ public class TIGImportTask {
 			        	 String folder = System.getProperty("user.dir") + File.separator + "images" + File.separator +
 			        	 	name.substring(0,1).toUpperCase();
 			        	 
-			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.REPLACE_IMAGES"))){
-		    			 //Remplace
-			        		 //Vector aux = new Vector();
+			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGImportDBDialog.REPLACE_IMAGES"))){
 			        		 Vector<Vector<String>> aux = TIGDataBase.imageSearchByName(name.substring(0, name.lastIndexOf('.')));
 		    			     if (aux.size()!=0){
 		    			    	 int idImage = TIGDataBase.imageKeySearchName(name.substring(0, name.lastIndexOf('.')));
@@ -180,7 +200,7 @@ public class TIGImportTask {
 			        	 }
 		    			 
 			        	 //Rename if image exists on data base
-			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGLoadDBDialog.ADD_IMAGES"))){
+			        	 if (myImagesBehaviour.equals(TLanguage.getString("TIGImportDBDialog.ADD_IMAGES"))){
 			        	    Vector aux = new Vector();
 		    				aux = TIGDataBase.imageSearchByName(name.substring(0, name.lastIndexOf('.')));
 		    				int fileCount = 0;
@@ -235,25 +255,6 @@ public class TIGImportTask {
 				        	 int idCategory = TIGDataBase.insertConceptDB(category.getValue());
 				        	 TIGDataBase.insertAsociatedDB(idCategory, idImage);
 				         }
-						//Create thumbnail
-					/*	File srcImage = new File(pathSrc);
-			        	 ImageIcon imageIcon = null;
-			        	 if (srcImage != null) {			        		 
-			        		 // Test if need to be loaded with JAI libraries (different
-		   					 // format than JPG, PNG and GIF)
-		   					 if (TFileUtils.isJAIRequired(srcImage)) {
-		   						 // Load it with JAI class
-		   						 RenderedOp src_aux = JAI.create("fileload", srcImage.getAbsolutePath());
-		   						 BufferedImage bufferedImage = src_aux.getAsBufferedImage();
-		   						 imageIcon = new ImageIcon(bufferedImage);				
-		   					 } else {
-		   						 // Create it as usual
-		   						 imageIcon = new ImageIcon(srcImage.getAbsolutePath());
-		   					 }
-			        	 }*/
-			        	
-						//createThumbnail(imageIcon, pathThumbnail);
-			        	 
 			         }
 			         else {
 			        	 errorImages = errorImages+System.getProperty("line.separator")+name;
@@ -261,7 +262,7 @@ public class TIGImportTask {
 				}
 				TIGDataBase.executeQueries();
     		
-    		current = lengthOfTask;
+				current = lengthOfTask;
     		
 	        } catch (JDOMException e) {
 				e.printStackTrace();
@@ -270,47 +271,4 @@ public class TIGImportTask {
 			}
         }
     }
-    
-    /**
-	 * Creates a thumbnail of <code>image</code> and saves it in the directory specified by <code>path</code>
-	 * 
-	 * @author Patricia M. Jaray
-	 * 
-	 * @param image The <code>image</code> to create the thumbnail
-	 * @param path  The <code>path</code> to save the thumbnail 
-	 */
-    
-   /* private void createThumbnail(ImageIcon image, String path){
-    	final int PREVIEW_WIDTH = 125;
-    	final int PREVIEW_HEIGHT = 125;	
-    	try{
-			int thumbWidth = PREVIEW_WIDTH;
-			int thumbHeight = PREVIEW_HEIGHT;
-			double thumbRatio = (double)thumbWidth / (double)thumbHeight;
-			int imageWidth = image.getIconWidth();
-			int imageHeight = image.getIconHeight();
-			double imageRatio = (double)imageWidth / (double)imageHeight;
-			if (thumbRatio < imageRatio) {
-				thumbHeight = (int)(thumbWidth / imageRatio);
-			} else {
-				thumbWidth = (int)(thumbHeight * imageRatio);
-			}
-			BufferedImage thumbImage = new BufferedImage(thumbWidth, thumbHeight, BufferedImage.TYPE_INT_RGB);
-			Graphics2D graphics2D = thumbImage.createGraphics();
-			graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			graphics2D.drawImage(image.getImage(), 0, 0, thumbWidth, thumbHeight, null);
-			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(path));
-			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(thumbImage);
-			int quality = 100;
-			quality = Math.max(0, Math.min(quality, 100));
-			param.setQuality((float)quality / 100.0f, false);
-			encoder.setJPEGEncodeParam(param);
-			encoder.encode(thumbImage);
-			out.close(); 
-			} catch (Exception ex) {
-				System.out.println("Error creating THUMBNAIL");
-				System.out.println(ex.toString());   
-			}	
-    }*/
 }

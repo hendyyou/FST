@@ -28,21 +28,21 @@
 
 package tico.imageGallery;
 
-import tico.pluginInterfaces.TPluginIMInterface;
-import tico.editor.TEditor;
-import tico.editor.TFileHandler;
-import tico.imageGallery.dataBase.TIGDataBase;
-import tico.imageGallery.dialogs.TIGImageGalleryDialog;
-import tico.components.TButton;
-import tico.components.TImageChooser;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Vector;
+
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import tico.components.TButton;
+import tico.components.TImageChooser;
 import tico.configuration.TLanguage;
+import tico.editor.TEditor;
+import tico.editor.TFileHandler;
+import tico.imageGallery.dataBase.TIGDataBase;
+import tico.imageGallery.dialogs.TIGImageGalleryDialog;
 
 /**
  * Implementation of the button that opens the image gallery
@@ -51,9 +51,7 @@ import tico.configuration.TLanguage;
  * @version 1.0 May 23, 2008
  */
 
-//TODO Esta clase está programada como un plugin porque inicialmente lo era. Actualmente no se comporta como tal, por tanto debería reprogramarse.
-
-public class TImageGalleryButton implements TPluginIMInterface{
+public class TImageGalleryButton{
 	
 	private TEditor myEditor;
 	
@@ -76,7 +74,7 @@ public class TImageGalleryButton implements TPluginIMInterface{
 	 * @return The generated <code>TButton</code> to open the image gallery
 	 */
 	
-	public TButton init(TEditor editor, TImageChooser chooser){
+	public TButton createImageGalleryButton(TEditor editor, TImageChooser chooser){
 		myEditor = editor;
 		TIGDataBase.conectDB();
 		data = TIGDataBase.imageSearchByName("*");

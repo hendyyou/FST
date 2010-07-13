@@ -37,6 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import tico.board.TBoardConstants;
 import tico.board.TProject;
 import tico.board.encoding.InvalidFormatException;
 import tico.components.resources.TFileUtils;

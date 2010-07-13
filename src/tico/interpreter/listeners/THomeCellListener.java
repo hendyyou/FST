@@ -37,7 +37,6 @@ import javax.swing.border.LineBorder;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.actions.TInterpreterHomeAction;
-import tico.interpreter.actions.TInterpreterReturnAction;
 import tico.interpreter.components.TInterpreterCell;
 
 public class THomeCellListener implements MouseListener {

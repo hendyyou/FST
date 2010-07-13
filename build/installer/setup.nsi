@@ -51,10 +51,12 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 !insertmacro MUI_LANGUAGE Spanish
 !insertmacro MUI_LANGUAGE German
+!insertmacro MUI_LANGUAGE French
 
 LicenseLangString MUILicense ${LANG_ENGLISH} en\LICENSE.txt
 LicenseLangString MUILicense ${LANG_SPANISH} es\LICENSE.txt
 LicenseLangString MUILicense ${LANG_GERMAN} de\LICENSE.txt
+LicenseLangString MUILicense ${LANG_FRENCH} fr\LICENSE.txt
 
 # Installer attributes
 OutFile ../../dist/tico-bin-w32-${VERSION}.exe
@@ -98,6 +100,9 @@ Section -Main SEC0000
         ${Case} ${LANG_GERMAN}
             File de\LICENSE.txt
             ${Break}
+        ${Case} ${LANG_FRENCH}
+            File fr\LICENSE.txt
+            ${Break}
     ${EndSwitch}
     SetOutPath $INSTDIR\libs
     File /r /x .svn ..\..\libs\*
@@ -118,6 +123,9 @@ Section -Main SEC0000
             ${Break}
         ${Case} ${LANG_GERMAN}
             File de\tico.conf
+            ${Break}
+        ${Case} ${LANG_FRENCH}
+            File fr\tico.conf
             ${Break}
     ${EndSwitch}
     SetOutPath $INSTDIR\doc
@@ -216,17 +224,21 @@ FunctionEnd
 LangString ^UninstallLink ${LANG_ENGLISH} "Uninstall $(^Name)"
 LangString ^UninstallLink ${LANG_SPANISH} "Desinstalar $(^Name)"
 LangString ^UninstallLink ${LANG_GERMAN} "Deinstallieren Sie $(^Name)"
+LangString ^UninstallLink ${LANG_FRENCH} "Désinstaller $(^Name)"
 
 LangString ^EditorExe ${LANG_ENGLISH} "Tico Editor"
 LangString ^EditorExe ${LANG_SPANISH} "Editor Tico"
 LangString ^EditorExe ${LANG_GERMAN} "Ticos Verleger"
+LangString ^EditorExe ${LANG_FRENCH} "Editeur Tico"
 
 LangString ^InterpreterExe ${LANG_ENGLISH} "Tico Interpreter"
 LangString ^InterpreterExe ${LANG_SPANISH} "Interprete Tico"
 LangString ^InterpreterExe ${LANG_GERMAN} "Ticos Interpret"
+LangString ^InterpreterExe ${LANG_FRENCH} "Interprète Tico"
 
 LangString ^UserManual ${LANG_ENGLISH} "User manual"
 LangString ^UserManual ${LANG_SPANISH} "Manual de usuario"
 LangString ^UserManual ${LANG_GERMAN} "Benutzerhandbuch"
+LangString ^UserManual ${LANG_FRENCH} "Mode d'emploi"
 
 

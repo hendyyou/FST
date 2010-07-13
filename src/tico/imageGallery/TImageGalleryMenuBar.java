@@ -29,16 +29,13 @@
 
 package tico.imageGallery;
 
-import tico.pluginInterfaces.TPluginMBInterface;
-
-import tico.editor.TEditor;
-import tico.imageGallery.TIGActionSet;
-import tico.imageGallery.dataBase.TIGDataBase;
-import tico.components.TMenuItem;
-import tico.configuration.TLanguage;
-
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
+
+import tico.components.TMenuItem;
+import tico.configuration.TLanguage;
+import tico.editor.TEditor;
+import tico.imageGallery.dataBase.TIGDataBase;
 
 /**
  * Implementation of the image gallery menu
@@ -47,9 +44,7 @@ import javax.swing.JSeparator;
  * @version 1.0 May 20, 2008
  */
 
-//TODO Esta clase está programada como un plugin porque inicialmente lo era. Actualmente no se comporta como tal, por tanto debería reprogramarse.
-
-public class TImageGalleryMenuBar implements TPluginMBInterface{
+public class TImageGalleryMenuBar {
 		
 	private TIGActionSet actionSet;
 	
@@ -63,7 +58,7 @@ public class TImageGalleryMenuBar implements TPluginMBInterface{
 	 * @return The generated <code>JMenu</code> for the <code>editor</code> menu bar
 	 */
 	
-	public JMenu init(TEditor editor){
+	public JMenu createImageGalleryMenu(TEditor editor){
 		
 		//Creates the images.db if not exists
 		createDataBase();

@@ -158,8 +158,8 @@ public class TAboutDialog extends TDialog {
             "<p>" + TLanguage.getString("TAboutDialog.ORGANIZATIONS") + "</p>" +
             "<ul><li>Universidad de Zaragoza, CPS, I3A</li>" +
             "    <li>CPEE Alborada, Zaragoza</li></ul>" +
-            "<p>" + TLanguage.getString("TAboutDialog.YEAR") + ": 2009</p>" +
-            "<p>" + TLanguage.getString("TAboutDialog.LICENSE") + ": General Public License, version 2</p>" +
+            "<p>" + TLanguage.getString("TAboutDialog.YEAR") + ": 2010</p>" +
+            "<p>" + TLanguage.getString("TAboutDialog.LICENSE") + ": General Public License, version 3</p>" +
             "</body></html>";
 		
         textLabel.setText(aboutText);

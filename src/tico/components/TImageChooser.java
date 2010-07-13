@@ -1,7 +1,7 @@
 /*
  * File: TImageChooser.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -53,8 +53,6 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-
-import org.java.plugin.PluginManager;
 
 import tico.board.TBoardConstants;
 import tico.components.resources.ImageFilter;
@@ -150,7 +148,7 @@ public class TImageChooser extends JPanel {
 	
 	//public static final File pluginsDir = new File("./plugins");
 	
-	private PluginManager pluginManager;
+	//private PluginManager pluginManager;
 
 	/**
 	 * Creates a new <code>TImageChooser</code> with <i>NO_OPTIONS_TYPE</i>
@@ -246,7 +244,7 @@ public class TImageChooser extends JPanel {
 		setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(10, 10, 10, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 0.0;
 		c.weighty = 1.0;
 		c.gridx = 0;
@@ -255,7 +253,7 @@ public class TImageChooser extends JPanel {
 		add(iconLabel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(10, 5, 0, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		c.gridx = 1;
@@ -264,7 +262,7 @@ public class TImageChooser extends JPanel {
 		add(propertiesPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 1;
@@ -418,53 +416,7 @@ public class TImageChooser extends JPanel {
 		
 		buttonPanel = new JPanel();
 		galleryButton = new TImageGalleryButton();
-		buttonPanel.add(galleryButton.init(editor,this));
-		//Define the extension point and add the existing plugins
-		
-		/*try {
-
-	    	pluginManager = ObjectFactory.newInstance().createManager();
-	    	
-			File[] plugins = pluginsDir.listFiles(new FilenameFilter() {
-	
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".zip");
-				}	    		
-	    	});
-			
-			PluginLocation[] locations = new PluginLocation[plugins.length];
-			
-			for (int i = 0; i < plugins.length; i++) {
-				locations[i] = StandardPluginLocation.create(plugins[i]);
-			}
-			
-			pluginManager.publishPlugins(locations);
-			
-			PluginDescriptor core = pluginManager.getRegistry().getPluginDescriptor("org.plugin.tico.coreButton");
-			
-			ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), "Button");
-			
-			for (Iterator it = point.getConnectedExtensions().iterator(); it.hasNext();) {
-				
-				Extension ext = (Extension) it.next();
-				
-				PluginDescriptor descr = ext.getDeclaringPluginDescriptor();
-				
-				pluginManager.activatePlugin(descr.getId());
-				
-				ClassLoader classLoader = pluginManager.getPluginClassLoader(descr);
-				Class pluginCls = classLoader.loadClass(ext.getParameter("class").valueAsString());
-				
-				TPluginIMInterface plugin = (TPluginIMInterface) pluginCls.newInstance();
-				
-		        buttonPanel.add(plugin.init(editor,this));
-		        
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Error");
-			e.printStackTrace();
-		}*/
+		buttonPanel.add(galleryButton.createImageGalleryButton(editor,this));
 		
 		openChooserDialogButton = new TButton(TLanguage.getString("TImageChooser.BUTTON_SELECT"));
 		openChooserDialogButton

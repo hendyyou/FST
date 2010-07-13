@@ -48,7 +48,7 @@ TInterpreter interprete;
 			TInterpreterConstants.countRun = posInicioBarrido;
 			TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
 			Point point = cell.getLocation();
-			SwingUtilities.convertPointToScreen(point, interpreter.interpretArea);
+			SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
     		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
     		TInterpreterConstants.x = cell.getCenter().x -1;
     		TInterpreterConstants.y = cell.getCenter().y -1;
@@ -72,7 +72,7 @@ TInterpreter interprete;
 		if (TInterpreterConstants.countRun < TInterpreterConstants.tableroActual.getOrderedCellListNames().size()){
 			TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
 			Point point = cell.getLocation();
-			SwingUtilities.convertPointToScreen(point, interprete.interpretArea);
+			SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
     		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
     		TInterpreterConstants.x = cell.getCenter().x -1;
     		TInterpreterConstants.y = cell.getCenter().y -1;

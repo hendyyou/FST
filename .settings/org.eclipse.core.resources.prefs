@@ -1,9 +1,10 @@
-#Wed Mar 24 12:02:30 CET 2010
+#Mon Jul 12 17:48:50 CEST 2010
 eclipse.preferences.version=1
 encoding//conf/tico.conf=UTF-8
 encoding//lang/ca.lang=UTF-8
 encoding//lang/de.lang=UTF-8
 encoding//lang/es.lang=UTF-8
+encoding//lang/fr.lang=UTF-8
 encoding//src/tico/TLauncher.java=UTF-8
 encoding//src/tico/board/TBoardConstants.java=UTF-8
 encoding//src/tico/board/TBoardUI.java=UTF-8
@@ -44,7 +45,7 @@ encoding//src/tico/interpreter/actions/TInterpreterEditOptions.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterExitAction.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterLanguajes.java=UTF-8
 encoding//src/tico/interpreter/actions/TInterpreterProjectOpenAction.java=UTF-8
-encoding//src/tico/interpreter/dialogs/TAboutDialogInterpreter.java=UTF-8
+encoding//src/tico/interpreter/dialogs/TAboutDialog.java=UTF-8
 encoding//src/tico/interpreter/dialogs/TAboutDialogOthersListener.java=UTF-8
 encoding//src/tico/interpreter/dialogs/TInterpreterDialog.java=UTF-8
 encoding//src/tico/interpreter/dialogs/TInterpreterOptionsDialog.java=UTF-8

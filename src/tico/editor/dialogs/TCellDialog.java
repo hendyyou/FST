@@ -79,7 +79,7 @@ import tico.environment.TEnvironment;
  * @version 1.0 Nov 20, 2006
  */
 public class TCellDialog extends TComponentDialog {
-	
+
 	private static String DEFAULT_TITLE = TLanguage.getString("TCellDialog.TITLE");
 
 	// Tabbed pane which contains all the other cell properties panes
@@ -339,36 +339,36 @@ public class TCellDialog extends TComponentDialog {
 
 		createFollowingBoardPanel();
 		createAlterntativeIconChooser();
-		createSendTextChooser();
 		createSoundChooser();
+		createSendTextChooser();
 		createVideoChooser();
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 0;
 		componentActionsPanel.add(clickCellActionPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 1;
 		componentActionsPanel.add(alternativeIconChooser, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 3;
 		componentActionsPanel.add(sendTextChooser, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 2;
 		componentActionsPanel.add(soundChooser, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 4;
 		componentActionsPanel.add(videoChooser, c);
@@ -467,13 +467,17 @@ public class TCellDialog extends TComponentDialog {
 		// Get the board list from the editor
 		ArrayList boardList = (ArrayList)getBoardContainer().getEditor()
 				.getProject().getBoardList().clone();
+		ArrayList<String> boardListName = new ArrayList<String>();
+		for (int i=0; i<boardList.size(); i++){
+			boardListName.add(((TBoard)boardList.get(i)).getBoardName());
+		}
 		// Delete the current board
-		boardList.remove(getBoard());
+		boardListName.remove(getBoard().getBoardName());
 
-		clickCellActionPanel = new TClickCellActionsPanel(boardList);
+		clickCellActionPanel = new TClickCellActionsPanel(boardListName);
 
 		clickCellActionPanel.setFollowingBoard(TBoardConstants
-				.getFollowingBoard(map));
+				.getFollowingBoardName(map));
 		clickCellActionPanel.setAccumulated(TBoardConstants.isAccumulated(map));
 	}
 
@@ -493,6 +497,7 @@ public class TCellDialog extends TComponentDialog {
 		videoChooser = new TVideoChooser();
 
 		videoChooser.setVideoFilePath(TBoardConstants.getVideoFile(map));
+		videoChooser.setVideoFileURL(TBoardConstants.getVideoURL(map));
 	}
 	
 	// Creates the send text chooser panel
@@ -588,6 +593,13 @@ public class TCellDialog extends TComponentDialog {
 		else
 			removalAttributes.add(TBoardConstants.VIDEO_FILE);
 		
+		// Set cell video URL
+		String videoURL = videoChooser.getVideoFileURL();
+		if (videoURL != null)
+			TBoardConstants.setVideoURL(attributeMap, videoURL);
+		else
+			removalAttributes.add(TBoardConstants.VIDEO_URL);
+		
 		//Set Environment Action
 		Object action = orderList.getSelectedValue();
 
@@ -617,7 +629,8 @@ public class TCellDialog extends TComponentDialog {
 		// Set click action cell attributes
 		TBoardConstants.setAccumulated(attributeMap, clickCellActionPanel
 				.getAccumulated());
-		TBoard followingBoard = clickCellActionPanel.getFollowingBoard();
+		String followingBoard = clickCellActionPanel.getFollowingBoard();
+
 		if (followingBoard != null)
 			TBoardConstants.setFollowingBoard(attributeMap, followingBoard);
 		else

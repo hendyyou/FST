@@ -42,8 +42,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.jgraph.graph.AttributeMap;
+import org.jgraph.graph.CellView;
+
 import tico.board.TBoardConstants;
 import tico.board.TBoardModel;
+import tico.board.components.TCell;
+import tico.board.componentview.TCellView;
+import tico.board.componentview.TComponentView;
 import tico.components.TBackgroundSelectionPanel;
 import tico.components.TBoardOrderPanel;
 import tico.components.TIdTextField;
@@ -279,7 +285,27 @@ public class TBoardDialog extends TPropertiesDialog {
 				return false;
 			}
 		}
+		String oldBoardName = getBoard().getBoardName();
 		getBoard().setBoardName(newName);
+		
+		// Change followingBoard attribute on cells which go to this board
+		for (int i=0; i<myEditor.getBoardContainerCount(); i++){
+			TBoardContainer boardContainer = myEditor.getBoardContainer(i);
+			CellView[] components = boardContainer.getBoard().getGraphLayoutCache().getCellViews();
+			for (int j=0; j<components.length; j++){
+				TComponentView view = (TComponentView) components[j];
+				if (view instanceof TCellView){
+					TCell cell = (TCell) view.getCell();
+					AttributeMap cellAttributes = cell.getAttributes();
+					if (TBoardConstants.getFollowingBoardName(cellAttributes)!= null){
+						if (TBoardConstants.getFollowingBoardName(cellAttributes)==oldBoardName){
+							TBoardConstants.setFollowingBoard(cellAttributes, newName);
+							cell.setAttributes(cellAttributes);
+						}
+					}
+				}
+			}
+		}
 		
 		// Set dimension
 		TBoardConstants.setSize(attributeMap, sizeChooser.getSelectedSize());
@@ -291,7 +317,7 @@ public class TBoardDialog extends TPropertiesDialog {
 		else
 			removalAttributes.add(TBoardConstants.BACKGROUND);
 		
-		//set sound Toty!
+		// Set sound
 		
 		String soundFile = soundChooser.getSoundFilePath();
 		if (soundFile != null)

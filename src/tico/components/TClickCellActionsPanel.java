@@ -100,13 +100,13 @@ public class TClickCellActionsPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		// Place selectBoardPanel
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 0;
 		add(selectBoardPanel, c);
 		// Place accumulatePanel
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		add(accumulatePanel, c);
@@ -151,8 +151,8 @@ public class TClickCellActionsPanel extends JPanel {
 	 * 
 	 * @return The selected <code>followingBoard</code>
 	 */
-	public TBoard getFollowingBoard() {
-		return (TBoard)followingBoardComboBox.getSelectedItem();
+	public String getFollowingBoard() {
+		return (String)followingBoardComboBox.getSelectedItem();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class TClickCellActionsPanel extends JPanel {
 	 * 
 	 * @param followingBoard The <code>followingBoard</code> to set
 	 */
-	public void setFollowingBoard(TBoard followingBoard) {
+	public void setFollowingBoard(String followingBoard) {
 		followingBoardComboBox.setSelectedItem(followingBoard);		
 	}
 

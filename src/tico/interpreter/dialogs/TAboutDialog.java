@@ -28,41 +28,27 @@
 
 package tico.interpreter.dialogs;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
 
 import tico.components.TButton;
 import tico.components.TDialog;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.TInterpreterConstants;
 
 
-	public class TAboutDialogInterpreter extends TDialog {
+	public class TAboutDialog extends TDialog {
 		
-		public TAboutDialogInterpreter (TInterpreter interpreter) {
+		public TAboutDialog (TInterpreter interpreter) {
 			super(null, TLanguage.getString("TAboutDialog.TITLE"), true);
 
 			// Create components
@@ -167,8 +153,8 @@ import tico.interpreter.TInterpreterConstants;
 	            "<p>" + TLanguage.getString("TAboutDialog.ORGANIZATIONS") + "</p>" +
 	            "<ul><li>Universidad de Zaragoza, CPS, I3A</li>" +
 	            "    <li>CPEE Alborada, Zaragoza</li></ul>" +
-	            "<p>" + TLanguage.getString("TAboutDialog.YEAR") + ": 2009</p>" +
-	            "<p>" + TLanguage.getString("TAboutDialog.LICENSE") + ": General Public License, version 2</p>" +
+	            "<p>" + TLanguage.getString("TAboutDialog.YEAR") + ": 2010</p>" +
+	            "<p>" + TLanguage.getString("TAboutDialog.LICENSE") + ": General Public License, version 3</p>" +
 	            "</body></html>";
 			
 	        textLabel.setText(aboutText);

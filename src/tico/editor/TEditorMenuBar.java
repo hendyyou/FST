@@ -29,15 +29,12 @@ package tico.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
-
-import org.java.plugin.PluginManager;
 
 import tico.components.TMenuItem;
 import tico.components.TToolBarContainer;
@@ -58,9 +55,9 @@ public class TEditorMenuBar extends JMenuBar {
 
 	private TActionSet actionSet;
 	
-	public static final File pluginsDir = new File("plugins");
+	//public static final File pluginsDir = new File("plugins");
 	
-	private PluginManager pluginManager;
+	//private PluginManager pluginManager;
 
 	/**
 	 * Creates a new <code>TEditorMenuBar</code> for the specified <code>editor</code>.
@@ -419,7 +416,7 @@ public class TEditorMenuBar extends JMenuBar {
 		// Create the menu
 		JMenu menu = new JMenu(TLanguage.getString("TEditorMenuBar.VALIDATION_MENU"));	
 
-		// Create de menu items
+		// Create the menu items
 		TMenuItem menuItem;
 		JMenu submenu;
 		
@@ -472,54 +469,8 @@ public class TEditorMenuBar extends JMenuBar {
 		menu.add(menuValidation);
 		menu.add(new JSeparator());
 		
-		TImageGalleryMenuBar plugin = new TImageGalleryMenuBar();
-        menu.add(plugin.init(editor));	
-	/*	try {
-			
-			pluginManager = ObjectFactory.newInstance().createManager();
-
-			File[] plugins = pluginsDir.listFiles(new FilenameFilter() {
-	
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".zip");
-				}	    		
-			});
-			PluginLocation[] locations = new PluginLocation[plugins.length];
-			
-			for (int i = 0; i < plugins.length; i++) {
-				locations[i] = StandardPluginLocation.create(plugins[i]);
-			}
-			
-			pluginManager.publishPlugins(locations);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		/*try {
-			
-			menu = new JMenu(TLanguage.getString("TEditorMenuBar.DYNAMIC_MENU"));
-			menu.add(menuValidation);
-			
-			PluginDescriptor core = pluginManager.getRegistry().getPluginDescriptor("org.plugin.tico.coreMenuBar");
-			
-			ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), "MenuBar");
-			for (Iterator it = point.getConnectedExtensions().iterator(); it.hasNext();) {
-				
-				Extension ext = (Extension) it.next();				
-				PluginDescriptor descr = ext.getDeclaringPluginDescriptor();
-				pluginManager.activatePlugin(descr.getId());
-				
-				ClassLoader classLoader = pluginManager.getPluginClassLoader(descr);				
-				Class pluginCls = classLoader.loadClass(ext.getParameter("class").valueAsString());
-				TPluginMBInterface plugin = (TPluginMBInterface) pluginCls.newInstance();
-				
-				menu.add(new JSeparator());
-		        menu.add(plugin.init(editor));		        
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+		TImageGalleryMenuBar imageGalleryMenu = new TImageGalleryMenuBar();
+        menu.add(imageGalleryMenu.createImageGalleryMenu(editor));	
 		this.add(menu);
 	}
 

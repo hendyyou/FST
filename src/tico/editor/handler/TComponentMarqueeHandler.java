@@ -44,7 +44,7 @@ import tico.editor.TBoardContainer;
  * @version 1.0 Nov 20, 2006
  */
 public abstract class TComponentMarqueeHandler extends TBasicMarqueeHandler {
-	// Detemine the minimum size of a cell that allows it to be resized.
+	// Determine the minimum size of a cell that allows it to be resized.
 	/**
 	 * Minimum new component height.
 	 */

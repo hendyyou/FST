@@ -835,7 +835,6 @@ public class TIGDataBase {
 								"WHERE C.noaccents LIKE \"" + secondKeyWord + "\" AND I.id = A.image AND A.concept = C.id) " +
 										"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
 										"WHERE C.noaccents LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id)";
-						System.out.println("AND AND");
 						break;
 						
 					case  SEARCH_OPTIONS_OR:  //(keyWord1 AND keyWord2) OR keyWord3
@@ -845,7 +844,6 @@ public class TIGDataBase {
 								"WHERE C.noaccents LIKE \"" + secondKeyWord + "\" AND I.id = A.image AND A.concept = C.id) " +
 										"UNION SELECT DISTINCT I.path path, I.name name, I.noaccents noaccents FROM Concept C, Asociated A, Image I " +
 										"WHERE C.noaccents LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id";
-						System.out.println("AND OR");
 						break;
 					}
 					break;
@@ -859,13 +857,11 @@ public class TIGDataBase {
 						query = query + "WHERE (C.noaccents LIKE \"" + firstKeyWord + "\" OR C.noaccents LIKE \"" + secondKeyWord + "\") AND I.id = A.image AND A.concept = C.id " +
 								"AND I.name IN (SELECT DISTINCT I.name name FROM Concept C, Asociated A, Image I " +
 								"WHERE C.word LIKE \"" + thirdKeyWord + "\" AND I.id = A.image AND A.concept = C.id)";
-						System.out.println("OR AND");
 						break;
 						
 					case  SEARCH_OPTIONS_OR: //keyWord1 OR keyWord2 OR keyWord3
 						
 						query = query + "WHERE (C.noaccents LIKE \"" + firstKeyWord + "\" OR C.noaccents LIKE \"" + secondKeyWord + "\" OR C.noaccents LIKE \"" + thirdKeyWord + "\") AND I.id = A.image AND A.concept = C.id";
-						System.out.println("OR OR");
 						break;
 					}
 					break;
@@ -874,7 +870,6 @@ public class TIGDataBase {
 			
 			query = query + " ORDER BY I.noaccents";
 		
-			System.out.println("QUERY: "+query);
 			res = stmt.executeQuery(query);
 			
 			while (res.next()){

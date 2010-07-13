@@ -46,8 +46,6 @@ import tico.configuration.TLanguage;
 import tico.configuration.TSetup;
 import tico.interpreter.TInterpreter;
 
-
-
 public class TInterpreterDialog extends TProjectInterpreterDialog {
 
 		private JPanel languageChooserPanel;

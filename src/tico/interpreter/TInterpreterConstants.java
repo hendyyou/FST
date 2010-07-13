@@ -42,7 +42,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import tico.components.TDialog;
 import tico.interpreter.components.TInterpreterCell;
-import tico.interpreter.dialogs.TAboutDialogInterpreter;
+import tico.interpreter.dialogs.TAboutDialog;
 import tico.interpreter.threads.TInterpreterWavSound;
 import tico.interpreter.threads.TInterpreterMp3Sound;
 

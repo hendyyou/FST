@@ -136,7 +136,7 @@ public class TSoundChooser extends JPanel {
 		setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
@@ -144,7 +144,7 @@ public class TSoundChooser extends JPanel {
 		add(soundNamePane, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
@@ -358,7 +358,7 @@ public class TSoundChooser extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			
-				TRecordSound recordSoundWindow = new TRecordSound();
+			TRecordSound recordSoundWindow = new TRecordSound();
 		        
 		        if (TRecordSound.text!=null)		        	
 		        {
@@ -382,8 +382,6 @@ public class TSoundChooser extends JPanel {
 					}
 		        	
 		        }
-		       
-				
 		}
 		
 	}
