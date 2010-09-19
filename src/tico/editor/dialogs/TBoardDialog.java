@@ -63,7 +63,7 @@ import tico.editor.TEditor;
 /**
  * Dialog to change <code>TBoard</code> properties.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TBoardDialog extends TPropertiesDialog {

@@ -1,19 +1,19 @@
 /*
- * File: TRectangle.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * File: TInterpreterHomeAction.java
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Antonio ROdriguez
+ * Authors: Carolina Palacio
  * 
- * Date: Jan, 2007
+ * Date: Feb, 2010
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter.actions;
@@ -34,6 +33,13 @@ import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.TInterpreterProject;
+
+/**
+ * 
+ * @author Carolina Palacio
+ * @version e1.0 Feb, 2010
+ *
+ */
 
 public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 	
@@ -56,13 +62,13 @@ public class TInterpreterHomeAction extends TInterpreterAbstractAction{
 
 		interpreter = getInterpreter();
 		String initialBoard = TInterpreterProject.getInitialBoardname();
-		//Tablero al que debo ir porque han pulsado el botón
+		//Tablero al que debo ir porque han pulsado el botï¿½n
 		String returnBoard = interpreter.getProject().getBoardToReturn();
 		interpreter.getProject().setPositionCellToReturn(interpreter.getProject().getPositionCellToReturnByName(returnBoard, interpreter.getProject().getCellToReturn()));
 		
-		TInterpreterConstants.tableroActual = interpreter.getProject().getBoard(initialBoard);
+		TInterpreterConstants.currentBoard = interpreter.getProject().getBoard(initialBoard);
 		TInterpreterConstants.countRun = 0;
-		TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
+		TInterpreterConstants.boardOrderedCells = TInterpreterConstants.currentBoard.getOrderedCellListNames();
 		
 		interpreter.getProject().setBoardToReturn(interpreter.getProject().getCurrentBoard());					
 		interpreter.getProject().setCellToReturn(nameCell);		

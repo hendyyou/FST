@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter.dialogs;
@@ -68,7 +67,7 @@ import tico.configuration.TLanguage;
 			backgroundPanel.setBorder(new LineBorder(new Color (99,130,191), 1));
 			backgroundPanel.setBackground(new Color(184,207,229));
 			othersDialog.setContentPane(backgroundPanel);
-			
+
 			otherDialog = othersDialog;
 			JLabel othersLabel = new JLabel();
 
@@ -77,6 +76,7 @@ import tico.configuration.TLanguage;
 	            "<p>Fernando Negré y David Ramos (Tico versión 0.0) - 2005</p>" +
 	            "<p>Antonio Rodríguez (Intérprete Tico versión 0.1) - 2007</p>" +
 	            "<p>Sandra Baldassarri y Beatriz Mateo (Utilidad Validación) - 2007</p>" +
+	            "<p>Isabel González (Tico versión e1.0) - 2009" +
 	            "</body></html>";
 			othersLabel.setText(otherDevelopers);
 			
@@ -108,7 +108,7 @@ import tico.configuration.TLanguage;
 			othersDialog.setModal(true);
 			othersDialog.setLocation(location);
 			othersDialog.setUndecorated(true);
-			othersDialog.setSize(360, 100);
+			othersDialog.setSize(360, 120);
 			othersDialog.setVisible(true);
 		}
 		public void mouseEntered(MouseEvent arg0) {

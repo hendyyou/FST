@@ -67,6 +67,13 @@ public class ProjectChangeEvent extends EventObject {
 	 */
 	public static int NAME_CHANGED = 3;
 	
+	/**
+	 * Change in the <code>TProject</code> initial board. This implies that no
+	 * <code>TBoard</code> suffers a change, so the <code>changeBoard</code>
+	 * will be <i>null</i>.
+	 */
+	public static int INITIAL_BOARD_CHANGED = 4;
+	
 	// The board suffered the change. If the change is NAME_CHANGED, the board
 	// will be null
 	private TBoard changedBoard;

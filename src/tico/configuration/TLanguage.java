@@ -132,9 +132,9 @@ public class TLanguage {
 		try {
 			return LANGUAGE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			return '!' + key + '!';
+			return '¡' + key + '!';
 		} catch (NullPointerException e) {
-			return '!' + key + '!';
+			return '¡' + key + '!';
 		}
 	}
 	

@@ -36,7 +36,7 @@ import tico.board.TBoardConstants;
 import tico.board.encoding.InvalidFormatException;
 
 /**
- * Defines a <code>TComponent</code> and its attributes. Only subclassers
+ * Defines a <code>TComponent</code> and its attributes. Only subclasses
  * of <code>TComponent</code> can be part of a <code>TBoard</code>.
  *
  * @author Pablo Muñoz

@@ -56,6 +56,7 @@ public class TBoardDeleteAction extends TEditorAbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		
 		// Check if a board is selected
 		if (getEditor().getCurrentBoard() == null) {
 			JOptionPane.showMessageDialog(null,
@@ -64,6 +65,15 @@ public class TBoardDeleteAction extends TEditorAbstractAction {
 					JOptionPane.WARNING_MESSAGE);
 			return;
 		}
+		// Check if the board to delete is the initial board
+		if (getEditor().getProject().getInitialBoard().equals(getEditor().getCurrentBoard())){
+			JOptionPane.showMessageDialog(null,
+					TLanguage.getString("TBoardDeleteAction.INITIAL_BOARD"),
+					TLanguage.getString("WARNING") + "!",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+	
 		// Check if the user really want to delete the board
 		if (!(JOptionPane.showConfirmDialog(getEditor(),
 				TLanguage.getString("TBoardDeleteAction.CONFIRM_DELETE_BEGIN")

@@ -1,7 +1,7 @@
 /*
  * File: TInterpreterProjectOpenAction.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Antonio Rodríguez
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.interpreter.actions;
 
 import java.awt.Component;
@@ -48,10 +48,13 @@ import tico.interpreter.TInterpreterProject;
  * @author Antonio Rodríguez
  * @version 1.0 Nov 20, 2006
  */
-public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
+
+public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction{
+	
 	private static File defaultDirectory = null;
+	
 	/**
-	 * Constructor for TProjectOpenAction.
+	 * Constructor for TInterpreterProjectOpenAction.
 	 * 
 	 * @param interpreter The boards' interpreter
 	 */
@@ -83,7 +86,6 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 			TInterpreter.accumulatedCells.updateUI();
 			// Get the chosen file			
 			// Set its directory as next first JFileChooser directory		
-			//TInterpreterRun.fin = false;
 			File selectedFile = fileChooser.getSelectedFile();
 			defaultDirectory = selectedFile.getParentFile();
 			// Set the editor home directory

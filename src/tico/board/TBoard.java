@@ -172,7 +172,7 @@ public class TBoard extends JGraph {
 		// Set minimum size
 		setMinimumSize(TBoardConstants.getSize(getAttributes(null)));
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

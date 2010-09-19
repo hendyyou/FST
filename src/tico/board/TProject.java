@@ -235,6 +235,7 @@ public class TProject {
 		if (!boardList.contains(initialBoard))
 			addBoard(initialBoard);
 		this.initialBoard = initialBoard;
+		fireProjectChange(null, ProjectChangeEvent.INITIAL_BOARD_CHANGED);
 	}
 
 	/**

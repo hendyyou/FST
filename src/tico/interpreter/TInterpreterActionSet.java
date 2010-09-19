@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter;
@@ -37,7 +36,7 @@ import tico.interpreter.actions.TInterpreterEditOptions;
 import tico.interpreter.actions.TInterpreterExitAction;
 import tico.interpreter.actions.TInterpreterLanguajes;
 import tico.interpreter.actions.TInterpreterProjectOpenAction;
-import tico.interpreter.actions.TInterpreterProjectPrint;
+//import tico.interpreter.actions.TInterpreterProjectPrint;
 import tico.interpreter.actions.TInterpreterReadAction;
 import tico.interpreter.actions.TInterpreterRun;
 import tico.interpreter.actions.TInterpreterShowAbout;
@@ -49,8 +48,9 @@ import tico.rules.actions.TInterpreterValidationAction;
 /**
  * Map of actions that can be done to an interpreter.
  * 
- * @author Antonio Rodriguez
+ * @author Antonio Rodríguez
  */
+
 public class TInterpreterActionSet {
 	/**
 	 * The <code>TInterpreterExitAction</code> id
@@ -58,7 +58,7 @@ public class TInterpreterActionSet {
 	public final static String INTERPRETER_EXIT_ACTION = "interpreterExitAction";
 
 	/**
-	 * The <code>TProyectOpenAction</code> id
+	 * The <code>TProjectOpenAction</code> id
 	 */
 	public final static String PROJECT_OPEN_ACTION = "proyectOpenAction";
 
@@ -90,7 +90,7 @@ public class TInterpreterActionSet {
 
 	/**
 	 * Creates a new <code>TInterpreterActionSet</code> for the specified
-	 * <code>interpreter</code> with all the posible actions.
+	 * <code>interpreter</code> with all the possible actions.
 	 * 
 	 * @param interpreter
 	 *            The specified <code>interpreter</code>
@@ -115,8 +115,8 @@ public class TInterpreterActionSet {
 
 		actionSet.put(INTERPRETER_READ, new TInterpreterReadAction(interpreter));
 
-		actionSet.put(INTERPRETER_PRINT_ACTION, new TInterpreterProjectPrint(
-				interpreter));
+		/*actionSet.put(INTERPRETER_PRINT_ACTION, new TInterpreterProjectPrint(
+				interpreter));*/
 
 		actionSet.put(INTERPRETER_UNDO, new TInterpreterUndoAction(interpreter));
 		

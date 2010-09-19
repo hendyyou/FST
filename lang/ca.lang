@@ -181,6 +181,7 @@ TAddGridCellAction.POSITION=Posició
 
 TBoardDeleteAction.NAME=Esborrar tauler
 TBoardDeleteAction.NO_BOARD_ERROR=Has de  seleccionar un tauler  per a esborrar
+TBoardDeleteAction.INITIAL_BOARD=El tauler inicial no es pot eliminar
 TBoardDeleteAction.CONFIRM_DELETE_BEGIN=Estàs a punt d’esborrar el tauler
 TBoardDeleteAction.CONFIRM_DELETE_END=aquesta operació no es pot desfer
 TBoardDeleteAction.CONFIRM_DELETE_QUESTION=N’està segur?
@@ -320,8 +321,8 @@ TUndoAction.NAME=Desfer
 
 # tico.editor.dialogs
 TAboutDialog.TITLE=Sobre...
-TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r3
-TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r3
+TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r4
+TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r4
 TAboutDialog.DEVELOPERS=Programadors
 TAboutDialog.OTHER_DEVELOPERS=Altres...
 TAboutDialog.DIRECTOR=Director.

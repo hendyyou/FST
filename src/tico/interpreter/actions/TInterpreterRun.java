@@ -1,18 +1,19 @@
 /*
  * File: TInterpreterRun.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * * Authors: Antonio Rodríguez
+ * Authors: Carolina Palacio
  * 
- * Date:	May-2006 
+ * Date:	Feb, 2010
+ * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -21,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter.actions;
@@ -43,10 +43,15 @@ import tico.interpreter.listeners.TBoardListener;
 import tico.interpreter.threads.TInterpreterBoardSound;
 import tico.interpreter.threads.TThreads;
 
+/**
+ * 
+ * @author Carolina Palacio
+ * @version e1.0 Feb, 2010
+ *
+ */
+
 public class TInterpreterRun extends TInterpreterAbstractAction implements ActionListener, Runnable {
- 	
-	//public static boolean fin=false;
-	
+ 		
 	public TInterpreterRun (TInterpreter interpreter) {
 		super(interpreter,TLanguage.getString("TInterpreterRunAction.NAME"),TResourceManager.getImageIcon("run.gif"));
 	}	
@@ -76,12 +81,12 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 		interpreter.TIntepreterChangeCursor();
 	
 	    TInterpreterProject project = interpreter.getProject();
-	    TInterpreterConstants.tableroActual = project.getBoard(project.getBoardToGo());
+	    TInterpreterConstants.currentBoard = project.getBoard(project.getBoardToGo());
 	    project.setBoardChanged(false);
 	    
 	    //If the first board has a sound, play it when browsing is activated
-	    if (TInterpreterConstants.tableroActual.getSoundFile()!=null){
-			TInterpreterBoardSound boardSound = new TInterpreterBoardSound(TInterpreterConstants.tableroActual.getSoundFile());
+	    if (TInterpreterConstants.currentBoard.getSoundFile()!=null){
+			TInterpreterBoardSound boardSound = new TInterpreterBoardSound(TInterpreterConstants.currentBoard.getSoundFile());
 			boardSound.run();
 		}
 	    
@@ -97,12 +102,12 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 			
 			interpreter.interpreterRobot.setAutoDelay(TInterpreterConstants.interpreterDelay);
 			
-			if (TInterpreterConstants.tableroActual.getOrderedCellListNames().size()!=0){
-				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
+			if (TInterpreterConstants.currentBoard.getOrderedCellListNames().size()!=0){
+				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.currentBoard.getOrderedCellListNames();
 				int posInicioBarrido = interpreter.getProject().getPositionCellToReturn();
 				TInterpreterConstants.countRun = posInicioBarrido;
 				
-				while (TInterpreterConstants.countRun < TInterpreterConstants.tableroActual.getOrderedCellListNames().size() && TInterpreter.run==1){		
+				while (TInterpreterConstants.countRun < TInterpreterConstants.currentBoard.getOrderedCellListNames().size() && TInterpreter.run==1){		
 					try {
 						Thread.sleep(5);
 					} catch (InterruptedException e) {
@@ -115,11 +120,11 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 					}
 					
 					//Si he cambiado de tablero y no tengo celdas paro el barrido
-					if (TInterpreterConstants.tableroActual.getOrderedCellListNames().size()==0){
+					if (TInterpreterConstants.currentBoard.getOrderedCellListNames().size()==0){
 						TInterpreter.run = 0;
 					}else{
 					
-						TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
+						TInterpreterCell cell = TInterpreterConstants.currentBoard.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
 						Point point = cell.getLocation();
 						SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
 	            		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
@@ -129,7 +134,7 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 	            		interpreter.interpreterRobot.mouseMove(cell.getCenter().x,cell.getCenter().y);
 	
 	            		TInterpreterConstants.countRun++;
-						if (TInterpreterConstants.countRun==TInterpreterConstants.tableroActual.getOrderedCellListNames().size())
+						if (TInterpreterConstants.countRun==TInterpreterConstants.currentBoard.getOrderedCellListNames().size())
 							TInterpreterConstants.countRun=0;
 					}
 					
@@ -140,8 +145,7 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 					}
 				}								
 			}
-		} //End of browsing mode    
-   
+		} 
 	}
 	
  }

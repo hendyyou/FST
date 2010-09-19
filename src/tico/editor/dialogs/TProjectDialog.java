@@ -116,9 +116,9 @@ public class TProjectDialog extends TPropertiesDialog {
 	/* (non-Javadoc)
 	 * @see tico.editor.dialogs.TPropertiesDialog#applyValues()
 	 */
-	protected boolean applyValues() {		
-		currentProject.setInitialBoard(initialBoardPanel.getInitialBoard());
-		
+	protected boolean applyValues() {
+		if (!currentProject.getInitialBoard().equals(initialBoardPanel.getInitialBoard()))
+			currentProject.setInitialBoard(initialBoardPanel.getInitialBoard());
 		return true;
 	}
 }

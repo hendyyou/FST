@@ -180,6 +180,7 @@ TAddGridCellAction.POSITION=Posición
 
 TBoardDeleteAction.NAME=Borrar tablero
 TBoardDeleteAction.NO_BOARD_ERROR=Debes seleccionar un tablero para borrar.
+TBoardDeleteAction.INITIAL_BOARD=No se puede borrar el tablero inicial
 TBoardDeleteAction.CONFIRM_DELETE_BEGIN=Estás a punto de borrar el tablero
 TBoardDeleteAction.CONFIRM_DELETE_END=esta operación no se puede deshacer.
 TBoardDeleteAction.CONFIRM_DELETE_QUESTION=¿Estás seguro?
@@ -319,8 +320,8 @@ TUndoAction.NAME=Deshacer
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=Acerca de...
-TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r3
-TAboutDialog.INTERPRETER_VERSION=Intérprete Tico e1.0 r3
+TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r4
+TAboutDialog.INTERPRETER_VERSION=Intérprete Tico e1.0 r4
 TAboutDialog.DEVELOPERS=Desarrolladores
 TAboutDialog.OTHER_DEVELOPERS=Otros...
 TAboutDialog.DIRECTOR=Director

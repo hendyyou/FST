@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,22 +22,18 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter.dialogs;
 
 import java.awt.Color;
-
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -48,12 +44,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-
 import javax.swing.SpinnerNumberModel;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -61,7 +54,6 @@ import javax.swing.event.ChangeListener;
 import tico.components.TButton;
 import tico.components.TDialog;
 import tico.components.TImageChooser;
-
 import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
@@ -142,7 +134,7 @@ public class TInterpreterOptionsDialog extends TDialog {
 			}
 
 		});
-		Dictionary labelTable = new Hashtable();
+		Dictionary<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(new Integer(1000), new JLabel("1"));
 		labelTable.put(new Integer(10000), new JLabel("10"));
 		labelTable.put(new Integer(20000), new JLabel("20"));
@@ -161,7 +153,8 @@ public class TInterpreterOptionsDialog extends TDialog {
 		cellPanel.add(text);
 
 		model = new SpinnerNumberModel(
-				TInterpreterConstants.interpreterAcumulatedCells, 0, 10, 1);
+				TInterpreterConstants.accumulatedCells, 0, 
+				TInterpreterConstants.maxAccumulatedCells, 1);
 		spinner = new JSpinner(model);
 
 		cellPanel.add(spinner);
@@ -270,7 +263,7 @@ public class TInterpreterOptionsDialog extends TDialog {
 			TInterpreterConstants.interpreterCursor = null;
 		}
 		TInterpreterConstants.interpreterDelay = value;
-		TInterpreterConstants.interpreterAcumulatedCells = model.getNumber().intValue();
+		TInterpreterConstants.accumulatedCells = model.getNumber().intValue();
 		setVisible(false);
 	}
 

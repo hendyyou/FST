@@ -4,16 +4,16 @@
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Isabel González y Carolina Palacio
+ * Authors: Isabel Gonzï¿½lez y Carolina Palacio
  * 
  * Date: Nov, 2009
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.interpreter.listeners;
 
 import java.awt.Color;
@@ -81,7 +81,7 @@ public class TCellListener implements MouseListener {
 			
 			if (cell.isAccumulated()){
 					
-					if (TInterpreter.accumulatedCellsList.size() < TInterpreterConstants.interpreterAcumulatedCells){
+					if (TInterpreter.accumulatedCellsList.size() < TInterpreterConstants.accumulatedCells){
 						TInterpreterAccumulatedCell accumulatedCell = new TInterpreterAccumulatedCell();
 						accumulatedCell.setAttributes(cell);
 						TInterpreter.accumulatedCellsList.add(accumulatedCell);
@@ -155,7 +155,7 @@ public class TCellListener implements MouseListener {
 					}
 					textArea.setText(originalText);
 					TInterpreter.interpretArea.removeAll();
-					//No vuelvo al estado inicial para que la celda que envía texto permanezca seleccionada
+					//No vuelvo al estado inicial para que la celda que envï¿½a texto permanezca seleccionada
 					TInterpreter.getCurrentBoard().paintBoard(TInterpreter.interpretArea, false);
 					TInterpreter.interpretArea.repaint();
 				}
@@ -163,9 +163,9 @@ public class TCellListener implements MouseListener {
 		
 			if (cell.getBoardToGo()!= null){
 
-				TInterpreterConstants.tableroActual = interpreter.getProject().getBoard(cell.getBoardToGo());
+				TInterpreterConstants.currentBoard = interpreter.getProject().getBoard(cell.getBoardToGo());
 				TInterpreterConstants.countRun = 0;
-				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
+				TInterpreterConstants.boardOrderedCells = TInterpreterConstants.currentBoard.getOrderedCellListNames();
 				interpreter.getProject().setPositionCellToReturn(0);
 
 					interpreter.getProject().setBoardToReturn(interpreter.getProject().getCurrentBoard());					

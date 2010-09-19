@@ -180,6 +180,7 @@ TAddGridCellAction.POSITION=Position
 
 TBoardDeleteAction.NAME=Delete board
 TBoardDeleteAction.NO_BOARD_ERROR=To delete a board you must select it.
+TBoardDeleteAction.INITIAL_BOARD=The initial board cannot be removed
 TBoardDeleteAction.CONFIRM_DELETE_BEGIN=You are going to delete the board
 TBoardDeleteAction.CONFIRM_DELETE_END=this action cannot be undone.
 TBoardDeleteAction.CONFIRM_DELETE_QUESTION=Are you sure?
@@ -319,8 +320,8 @@ TUndoAction.NAME=Undo
 
 #tico.editor.dialogs
 TAboutDialog.TITLE=About
-TAboutDialog.EDITOR_VERSION=Tico Editor e1.0 r3
-TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0 r3
+TAboutDialog.EDITOR_VERSION=Tico Editor e1.0 r4
+TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0 r4
 TAboutDialog.DEVELOPERS=Developers
 TAboutDialog.OTHER_DEVELOPERS=Others...
 TAboutDialog.DIRECTOR=Director

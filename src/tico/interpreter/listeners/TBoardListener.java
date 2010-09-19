@@ -1,19 +1,19 @@
 /*
- * File: TCellListener.java
+ * File: TBoardListener.java
  * 		This file is part of Tico, an application to create and	perform
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Isabel González y Carolina Palacio
+ * Authors: Isabel Gonzï¿½lez y Carolina Palacio
  * 
  * Date: Nov, 2009
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.interpreter.listeners;
 
 import java.awt.Point;
@@ -42,11 +42,11 @@ public class TBoardListener implements MouseListener {
 TInterpreter interprete;
 	public TBoardListener(TInterpreter interpreter) {
 		interprete=interpreter;
-		if (TInterpreterConstants.tableroActual.getOrderedCellListNames().size()!=0){
-			TInterpreterConstants.boardOrderedCells = TInterpreterConstants.tableroActual.getOrderedCellListNames();
+		if (TInterpreterConstants.currentBoard.getOrderedCellListNames().size()!=0){
+			TInterpreterConstants.boardOrderedCells = TInterpreterConstants.currentBoard.getOrderedCellListNames();
 			int posInicioBarrido = interpreter.getProject().getPositionCellToReturn();
 			TInterpreterConstants.countRun = posInicioBarrido;
-			TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
+			TInterpreterCell cell = TInterpreterConstants.currentBoard.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
 			Point point = cell.getLocation();
 			SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
     		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
@@ -55,7 +55,7 @@ TInterpreter interprete;
     		interpreter.interpreterRobot.mouseMove(cell.getCenter().x,cell.getCenter().y);
     		
     		TInterpreterConstants.countRun++;
-			if (TInterpreterConstants.countRun==TInterpreterConstants.tableroActual.getOrderedCellListNames().size())
+			if (TInterpreterConstants.countRun==TInterpreterConstants.currentBoard.getOrderedCellListNames().size())
 				TInterpreterConstants.countRun=0;
 		}
 	}
@@ -69,8 +69,8 @@ TInterpreter interprete;
 	}
 	
 	public void click() {
-		if (TInterpreterConstants.countRun < TInterpreterConstants.tableroActual.getOrderedCellListNames().size()){
-			TInterpreterCell cell = TInterpreterConstants.tableroActual.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
+		if (TInterpreterConstants.countRun < TInterpreterConstants.currentBoard.getOrderedCellListNames().size()){
+			TInterpreterCell cell = TInterpreterConstants.currentBoard.getCellByName(TInterpreterConstants.boardOrderedCells.get(TInterpreterConstants.countRun));
 			Point point = cell.getLocation();
 			SwingUtilities.convertPointToScreen(point, TInterpreter.interpretArea);
     		cell.setCenter(new Point(point.x+cell.getWidth()/2,point.y+cell.getHeight()/2));
@@ -79,7 +79,7 @@ TInterpreter interprete;
     		interprete.interpreterRobot.mouseMove(cell.getCenter().x,cell.getCenter().y);
     		
     		TInterpreterConstants.countRun++;
-			if (TInterpreterConstants.countRun==TInterpreterConstants.tableroActual.getOrderedCellListNames().size())
+			if (TInterpreterConstants.countRun==TInterpreterConstants.currentBoard.getOrderedCellListNames().size())
 				TInterpreterConstants.countRun=0;
 		}
 			

@@ -29,15 +29,12 @@ package tico;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import tico.board.TBoardConstants;
 import tico.board.TProject;
 import tico.board.encoding.InvalidFormatException;
 import tico.components.resources.TFileUtils;

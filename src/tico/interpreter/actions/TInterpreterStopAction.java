@@ -1,7 +1,7 @@
 /*
- * File: TInterpreterStop.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * File: TInterpreterStopAction.java
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Antonio Rodríguez
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,13 +22,12 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 
 package tico.interpreter.actions;
-import java.awt.Robot;
+
 import java.awt.event.ActionEvent;
 
 import tico.components.resources.TResourceManager;
@@ -36,16 +35,19 @@ import tico.configuration.TLanguage;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
 
+/**
+ * 
+ * @author Antonio Rodríguez
+ *
+ */
 
-public class TInterpreterStopAction extends TInterpreterAbstractAction
-
-{ Robot gest;
-
+public class TInterpreterStopAction extends TInterpreterAbstractAction{
+	
 	public  TInterpreterStopAction (TInterpreter interpreter){
 		
 		super(interpreter,TLanguage.getString("TInterpreterStopAction.NAME"),TResourceManager.getImageIcon("stopON.gif"));
 	}
-	//ESC
+
 	public void TStopAll ()
 	{
 		
@@ -55,19 +57,14 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction
 			TInterpreter.run=0;
 			
 			//Kill All Threads
-			//TInterpreterRun.fin=false;
 			
 			//if music on => stop it;
 			if(TInterpreterConstants.audioMp3!=null)
 			{
 				TInterpreterConstants.audioMp3.TStop();
 			}
-			interpreter.TStart.stop();
-			
-		
-			TInterpreterConstants.musicOn=0;
-			TInterpreterConstants.sendTextOn=0;
-			
+			interpreter.TStart.stop();			
+					
 				//Stop Current Sound
 			
 			if ( TInterpreterConstants.audio != null)
@@ -89,7 +86,6 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction
 					
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-			
 				TStopAll();
 				int posx, posy;
 				posx=600;
