@@ -104,21 +104,4 @@ public class TInterpreterOval extends JButton {
 		
 	}
   
- /* protected void paintComponent(Graphics g) {
-	  g.setColor(borderColorOval);
-	  g.fillOval(0,0,widthOval-1,heightOval-1);
-	  super.paintComponent(g);
-    }
-
-  protected void paintBorder(Graphics g) {
-	  Graphics2D graphics2 = (Graphics2D) g;
-	  if (gradientColorOval!=null){
-		  graphics2.setPaint(new GradientPaint(0, 0, backgroundColorOval, widthOval, heightOval, gradientColorOval, true));
-	  }
-	  else{
-		  g.setColor(backgroundColorOval);
-	  }
-	  g.fillOval(borderSizeOval, borderSizeOval, widthOval-2*borderSizeOval-1,heightOval-2*borderSizeOval-1);
-	 
-    }*/
   }

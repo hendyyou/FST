@@ -1,3 +1,30 @@
+/*
+ * File: TRecordSound.java
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
+ * 		severe motor disabilities.
+ * 
+ * Authors: Antonio Rodríguez
+ * 
+ * Date: Mar 6, 2007
+ * 
+ * Company: Universidad de Zaragoza, CPS, DIIS
+ * 
+ * License:
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
+ * 		of the License, or (at your option) any later version.
+ * 
+ * 		This program is distributed in the hope that it will be useful,
+ * 		but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * 		GNU General Public License for more details.
+ * 
+ * 		You should have received a copy of the GNU General Public License
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ */
+
 package tico.editor.dialogs;
 
 import java.awt.BasicStroke;
@@ -11,7 +38,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -53,7 +79,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import tico.components.TDialog;
 import tico.components.resources.SoundFilter;
 import tico.configuration.TLanguage;
 

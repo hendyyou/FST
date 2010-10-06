@@ -63,7 +63,7 @@ public class TInterpreterStopAction extends TInterpreterAbstractAction{
 			{
 				TInterpreterConstants.audioMp3.TStop();
 			}
-			interpreter.TStart.stop();			
+			interpreter.interpretationThread.stop();			
 					
 				//Stop Current Sound
 			

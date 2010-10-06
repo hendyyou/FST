@@ -67,8 +67,8 @@ public class TInterpreterRun extends TInterpreterAbstractAction implements Actio
 			e1.printStackTrace();
 		}
 		
-		TInterpreter.TStart=new TThreads(this);
-		TInterpreter.TStart.start();
+		TInterpreter.interpretationThread = new TThreads(this);
+		TInterpreter.interpretationThread.start();
 		
 	}
 	

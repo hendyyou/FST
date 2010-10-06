@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.imageGallery.dialogs;
@@ -328,30 +327,6 @@ public class TIGImportDBDialog extends TDialog {
 			defaultDirectory = selectedFile.getParentFile();
 			path = selectedFile.getPath();
 			path = path + selectedFile.separator;
-		}
-		
-		return path;		
-	}
-	
-	private String createFileTextChooser(){	
-		
-		//Displays the file chooser to select the text file tha contains the associations.
-		String path = "";
-		
-		// Open a JFileChooser
-		JFileChooser fileChooser = new JFileChooser();
-		// Customize JFileChooser
-		fileChooser.setDialogTitle(TLanguage.getString("TIGImportDBDialog.ASSOCIATION_FILE"));
-		fileChooser.setCurrentDirectory(defaultDirectory);
-
-		// Checks if the user has chosen a file
-		int returnValue = fileChooser.showOpenDialog((Component)null);
-		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			// Get the chosen file
-			File selectedFile = fileChooser.getSelectedFile();
-			// Set its directory as next first JFileChooser directory
-			defaultDirectory = selectedFile.getParentFile();
-			path = selectedFile.getPath();
 		}
 		
 		return path;		

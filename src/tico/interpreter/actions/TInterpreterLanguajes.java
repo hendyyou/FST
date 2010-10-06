@@ -1,7 +1,7 @@
 /*
  * File: TInterpreterLanguajes.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz

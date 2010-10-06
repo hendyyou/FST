@@ -4,9 +4,9 @@
  * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Antonio Rodríguez
+ * Authors: Antonio Rodríguez y Carolina Palacio
  * 
- * Date: Nov 20, 2006
+ * Date: Nov 20, 2009
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
@@ -65,63 +65,80 @@ import tico.interpreter.threads.TThreads;
 /**
  * The main window of the Tico interpreter application.
  * 
- * @author Antonio Rodríguez
- * @version 1.0 Nov 20, 2006
+ * @author Antonio Rodríguez y Carolina Palacio
+ * @version e1.0 Nov 20, 2009
  */
 
 public class TInterpreter extends JFrame {
 
 	public static String DEFAULT_TITLE = TLanguage.getString("TInterpreter.INTERPRETER_WINDOW_TITLE");
 
-	// Editing project
+	// Interpreting project
 	private TInterpreterProject project;
 	
-	// Current board of the editing project
-	private static TInterpreterBoard currentBoard = null;
-		
-	//private TBoard InterpreterBoard;
-	public static TThreads TStart;	
-	public Robot interpreterRobot;	
+	// Current board of the interpreting project
+	private static TInterpreterBoard currentBoard = null;	
 	
 	// TUNE Should be gotten from setup class
 	private Dimension initLocation = new Dimension(0,0);
+	
 	private Dimension initSize = new Dimension(1204,800);
 	
-	public static ArrayList accumulatedCellsList=null;
+	// List with the accumulated cells
+	public static ArrayList accumulatedCellsList = null;
 	
+	// Indicates if the project interpretation  has started
 	public static int run = 0;
-
+	
+	// Interpretation thread
+	public static TThreads interpretationThread;
+	
+	// Performs mouse movements when browsing modes are used
+	public Robot interpreterRobot;
+	
+	// Menu actions
 	private static TMenuItem menuItemStart;
+	
 	private static TMenuItem menuItemStop;
+	
 	private static TMenuItem menuItemRead;
+	
 	private static TMenuItem menuItemUndo;
+	
 	private static TMenuItem menuItemUndoAll;
 	
-	//Panels
+	// Panels in the main window of the Tico interpreter
 	public JPanel backgroundPanel;
+	
 	public static TPanel interpretArea;
+	
 	public static JPanel interpretAreaBackground;
+	
 	public static JPanel accumulatedCells;
 	
-	//Listener
+	// Listener for the board in interpretation
 	public static TBoardListener boardListener;
 	
+	// Actions defined for board interpretation
 	private TInterpreterActionSet actionSet;
 
 	/**
 	 * Creates a new <code>TInterpreter</code> main application window.
 	 */
 	public TInterpreter() {
+		
 		super(DEFAULT_TITLE);		
 		
-		initSize=java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		initSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		
 		accumulatedCellsList = new ArrayList();
+		
 		try {
 			interpreterRobot = new Robot();
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setWindowAtributes();
 
@@ -152,22 +169,26 @@ public class TInterpreter extends JFrame {
 	}
 	
 	/**
-	 * Creates a new <code>TInterpreter</code> main application window with the
-	 * specified initial <code>project</code>.
+	 * Returns the current interpreting <code>board</code>.
 	 * 
-	 * @param project The specified initial <code>project</code>
-	 */		
+	 * @return The current interpreting <code>board</code>
+	 */	
 	public static TInterpreterBoard getCurrentBoard() {
 		return currentBoard;
 	}
 
+	/**
+	 * Sets a new <code>board</code> to begin its interpretation
+	 * 
+	 * @param project The <code>board</code>
+	 */
 	public static void setCurrentBoard(TInterpreterBoard currentBoard) {
 		TInterpreter.currentBoard = currentBoard;
 	}
 	
 	/**
 	 * Changes the board displayed on the interpreter window with the
-	 * specified <code>board</code>.
+	 * specified <code>boardName</code>.
 	 * 
 	 * @param boardName The name of the specified <code>board</code>
 	 */
@@ -266,32 +287,6 @@ public class TInterpreter extends JFrame {
 		menuItemUndoAll.setMnemonic(KeyEvent.VK_F8);
 		menuItemUndoAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, ActionEvent.CTRL_MASK));
 		menuActions.add(menuItemUndoAll);
-		
-		/*mouseMode = new JMenu(TLanguage.getString("TInterpreterMenuBar.MODE"));
-
-		automaticScanningMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.AUTOMATIC_SCANNING"));
-		automaticScanningMode.setActionCommand(TInterpreterConstants.AUTOMATIC_SCANNING_MODE);
-		directSelectionMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.DIRECT_SELECTION"));
-		directSelectionMode.setActionCommand(TInterpreterConstants.DIRECT_SELECTION_MODE);
-		manualScanningMode = new JRadioButtonMenuItem(TLanguage.getString("TInterpreterMouseMode.MANUAL_SCANNING"));
-		manualScanningMode.setActionCommand(TInterpreterConstants.MANUAL_SCANNING_MODE);
-		
-		mouseModeOptions = new ButtonGroup();
-		mouseModeOptions.add(directSelectionMode);
-		mouseModeOptions.add(automaticScanningMode);
-		mouseModeOptions.add(manualScanningMode);		
-	
-		//browsingMode.setSelected(false);
-		directSelectionMode.setSelected(true);
-		//manualSelectionMode.setSelected(false);
-		
-		//activateDirectSelection=1;
-		//activateBrowsingMouse=0;
-		
-		mouseMode.add(directSelectionMode);
-		mouseMode.add(automaticScanningMode);
-		mouseMode.add(manualScanningMode);
-        menuActions.add(mouseMode);*/
         
         //Menu View        
 		JMenu menuView = new JMenu(TLanguage.getString("TInterpreterMenuBar.VIEW_MENU"));
@@ -310,34 +305,12 @@ public class TInterpreter extends JFrame {
 	}
 	
 	public static void setEnabledActions(boolean enabled){
-		//mouseMode.setEnabled(enabled);
         menuItemStart.setEnabled(enabled);
         menuItemUndo.setEnabled(enabled);
         menuItemUndoAll.setEnabled(enabled);
         menuItemRead.setEnabled(enabled);
         menuItemStop.setEnabled(enabled);
 	}
-	
-	/*public int getActivateBrowsingMode () {
-		return this.activateBrowsingMouse;
-	}
-	
-	public void setActivateDirectSelection (int value){
-		this.activateDirectSelection=value;
-	}
-	
-	public void setActivateBrowsingMode (int value){
-		
-		this.activateBrowsingMouse=value;
-	}
-	
-	public void setBrowsingMode (boolean value){
-		automaticScanningMode.setSelected(value);
-	}
-	
-	public void setDirectSelection (boolean value){		
-		directSelectionMode.setSelected(value);
-	}*/
 	
 	public TInterpreter getInterpreter() {
 		return this;

@@ -1,7 +1,7 @@
 /*
  * File: VideoFilter.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Carolina Palacio
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components.resources;
 
 import java.io.File;
@@ -35,10 +35,10 @@ import tico.configuration.TLanguage;
 
 /**
  * Filter that can be set on a <code>JFileChooser</code> to display only
- * video files (avi and mov) and directories.
+ * video files (avi, mpg, wmv and flv) and directories.
  * 
  * @author Carolina Palacio
- * @version 4.0 Oct 22, 2009
+ * @version e1.0 Oct 22, 2009
  */
 public class VideoFilter extends FileFilter {
     // Accept all directories and all avi and mov

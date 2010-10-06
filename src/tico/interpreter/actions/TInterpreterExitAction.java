@@ -65,11 +65,11 @@ public class TInterpreterExitAction extends TInterpreterAbstractAction {
 		}
 		getInterpreter().dispose();
 		
-		if (interpreter.TStart!=null)
+		if (interpreter.interpretationThread!=null)
 		{
-			if (interpreter.TStart.isAlive())
+			if (interpreter.interpretationThread.isAlive())
 			{		
-			interpreter.TStart.stop();
+			interpreter.interpretationThread.stop();
 			
 			};
 		}

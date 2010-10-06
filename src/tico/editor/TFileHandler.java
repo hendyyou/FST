@@ -1,7 +1,7 @@
 /*
  * File: TFileHandler.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo MuÃ±oz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor;
 
 import java.io.File;
@@ -280,8 +280,8 @@ public class TFileHandler {
 	}
 
 	private static String replace(String word){
-		String result = word.replace(' ', '_').replace(',', '-').replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').
-		replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U').replace("ñ", "ny").replace("Ñ", "NY").toLowerCase();
+		String result = word.replace(' ', '_').replace(',', '-').replace('ï¿½', 'a').replace('ï¿½', 'e').replace('ï¿½', 'i').replace('ï¿½', 'o').replace('ï¿½', 'u').
+		replace('ï¿½', 'A').replace('ï¿½', 'E').replace('ï¿½', 'I').replace('ï¿½', 'O').replace('ï¿½', 'U').replace("ï¿½", "ny").replace("ï¿½", "NY").toLowerCase();
 		return result;
 	}
 	

@@ -80,7 +80,7 @@ public class TInterpreterConstants {
 	
 	public static int accumulatedCells = 5;
 	
-	public static int maxAccumulatedCells = 25;
+	public static int maxAccumulatedCells = 30;
 	
 	public static TInterpreterBoard currentBoard;
 	

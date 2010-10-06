@@ -1,19 +1,19 @@
 /*
- * File: TCell.java
+ * File: TControllerCell.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
- * Authors: Pablo Muñoz
+ * Authors: Carolina Palacio
  * 
- * Date:	16-Nov-2005 
+ * Date:	Dec, 2009
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board.components;
 
 import org.jgraph.graph.AttributeMap;
@@ -37,10 +37,10 @@ import tico.board.encoding.InvalidFormatException;
 import tico.board.encoding.TAttributeEncoder;
 
 /**
- * Defines a <code>TCell</code> and its attributes.
+ * Defines a <code>TControllerCell</code> and its attributes.
  *
- * @author Pablo Muñoz
- * @version 1.0 Nov 20, 2006
+ * @author Carolina Palacio
+ * @version e1.0 Dec, 2009
  */
 public class TControllerCell extends TComponent {
 	/**
