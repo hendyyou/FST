@@ -321,8 +321,8 @@ TUndoAction.NAME=Desfer
 
 # tico.editor.dialogs
 TAboutDialog.TITLE=Sobre...
-TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r4
-TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r4
+TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r5
+TAboutDialog.INTERPRETER_VERSION=Intèrpret Tico e1.0 r5
 TAboutDialog.DEVELOPERS=Programadors
 TAboutDialog.OTHER_DEVELOPERS=Altres...
 TAboutDialog.DIRECTOR=Director.

@@ -320,8 +320,8 @@ TUndoAction.NAME=Undo
 
 #tico.editor.dialogs
 TAboutDialog.TITLE=About
-TAboutDialog.EDITOR_VERSION=Tico Editor e1.0 r4
-TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0 r4
+TAboutDialog.EDITOR_VERSION=Tico Editor e1.0 r5
+TAboutDialog.INTERPRETER_VERSION=Tico Interpreter e1.0 r5
 TAboutDialog.DEVELOPERS=Developers
 TAboutDialog.OTHER_DEVELOPERS=Others...
 TAboutDialog.DIRECTOR=Director

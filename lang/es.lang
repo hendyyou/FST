@@ -320,8 +320,8 @@ TUndoAction.NAME=Deshacer
 
 // tico.editor.dialogs
 TAboutDialog.TITLE=Acerca de...
-TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r4
-TAboutDialog.INTERPRETER_VERSION=Intérprete Tico e1.0 r4
+TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r5
+TAboutDialog.INTERPRETER_VERSION=Intérprete Tico e1.0 r5
 TAboutDialog.DEVELOPERS=Desarrolladores
 TAboutDialog.OTHER_DEVELOPERS=Otros...
 TAboutDialog.DIRECTOR=Director
