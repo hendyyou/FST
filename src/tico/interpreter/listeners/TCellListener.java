@@ -33,12 +33,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.JDialog;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import javazoom.jl.player.Player;
+import javazoom.jl.player.ThreadedPlayer;
 
 import tico.components.resources.TFileUtils;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
+import tico.interpreter.actions.TInterpreterRun;
 import tico.interpreter.components.TInterpreterAccumulatedCell;
 import tico.interpreter.components.TInterpreterCell;
 import tico.interpreter.components.TInterpreterTextArea;
@@ -66,10 +71,11 @@ public class TCellListener implements MouseListener {
 				TInterpreter.boardListener.click();
 			}
 		}else{		
+
 			
-			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
+			//TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 			
-			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
+			/*if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 				
 				try {						
 					TInterpreterConstants.semaforo.acquire();
@@ -77,7 +83,7 @@ public class TCellListener implements MouseListener {
 					e.printStackTrace();
 				}
 			
-			}	
+			}*/
 			
 			if (cell.isAccumulated()){
 					
@@ -91,27 +97,130 @@ public class TCellListener implements MouseListener {
 					}
 			}
 			
+			/* ADRIAN: If there is an alternative audio playing it will
+			 * be stopped to play another audio file
+			 */
+			 
+			if(cell.getAlternativeSoundPath() != null){
+				
+				String extension = TFileUtils.getExtension(cell.alternativeSoundPath);
+				if(extension.equals("mp3")){
+					if(TInterpreterConstants.alternativeAudioMp3.TIsAlive()){
+						TInterpreterConstants.alternativeAudioMp3.TStop();
+						try {
+							TInterpreterConstants.semaforo.release();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else{
+					if(TInterpreterConstants.alternativeAudio.isAlive()){
+						TInterpreterConstants.alternativeAudio.stop();
+						try {
+							TInterpreterConstants.semaforo.release();
+							wait(500);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			
 			if (cell.getSoundPath()!= null){
 				
-				String extension= TFileUtils.getExtension(cell.getSoundPath());
+				String extension = TFileUtils.getExtension(cell.getSoundPath());
 				if (extension.equals("mp3")){
-					TInterpreterConstants.audioMp3 = new TInterpreterMp3Sound(cell.getSoundPath());
-					TInterpreterConstants.audioMp3.TPlay();			 
-					TInterpreterConstants.audioMp3.TJoin();
+					/* ADRIAN: If there is a music playing it will be stopped with one click
+					 * otherwise a sound will be played
+					 */
+					if(TInterpreterConstants.audioMp3 == null){
+						TInterpreterConstants.audioMp3 = new TInterpreterMp3Sound(cell.getSoundPath());
+						try {
+							TInterpreterConstants.semaforo.acquire();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TInterpreterConstants.audioMp3.TPlay();
+					}else{
+						if(TInterpreterConstants.audioMp3.TIsAlive()){
+							TInterpreterConstants.audioMp3.TStop();
+							try {
+								TInterpreterConstants.semaforo.release();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}else{
+							TInterpreterConstants.audioMp3 = new TInterpreterMp3Sound(cell.getSoundPath());
+							try {
+								TInterpreterConstants.semaforo.acquire();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							TInterpreterConstants.audioMp3.TPlay();
+						}
+					}
 				}
 				else {
-					TInterpreterConstants.audio=new TInterpreterWavSound(cell.getSoundPath());	
-					TInterpreterConstants.audio.start();
-					try {
+					/* ADRIAN: If there is a music playing it will be stopped with one click
+					 * otherwise a sound will be played
+					 */
+					if(TInterpreterConstants.audio == null){
+						TInterpreterConstants.audio = new TInterpreterWavSound(cell.getSoundPath());
+						try {
+							TInterpreterConstants.semaforo.acquire();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TInterpreterConstants.audio.start();
+					}else{
+						if(TInterpreterConstants.audio.isAlive()){
+							TInterpreterConstants.audio.stop();
+							try {
+								TInterpreterConstants.semaforo.release();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}else{
+							TInterpreterConstants.audio = new TInterpreterWavSound(cell.getSoundPath());
+							try {
+								TInterpreterConstants.semaforo.acquire();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							TInterpreterConstants.audio.start();
+						}
+					}
+					/* ADRIAN: Deleted because is not necessary */
+					/*try {
 						TInterpreterConstants.audio.join();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 							System.out.println("Error al reproducir el sonido de la celda");
-						}
+						}*/
 				}
 			}
 		
 			if (cell.getVideoPath()!=null) {
+				
+				/* [ADRIAN] If there is an audio playing it will be stopped */
+				if(TInterpreterConstants.audio != null)
+					if(TInterpreterConstants.audio.isAlive()) TInterpreterConstants.audio.stop();
+				if(TInterpreterConstants.audioMp3 != null)
+					if(TInterpreterConstants.audioMp3.TIsAlive()) TInterpreterConstants.audioMp3.TStop();
+				if(TInterpreterConstants.alternativeAudio != null)
+					if(TInterpreterConstants.alternativeAudio.isAlive()) TInterpreterConstants.alternativeAudio.stop();
+				if(TInterpreterConstants.alternativeAudioMp3 != null)
+					if(TInterpreterConstants.alternativeAudioMp3.TIsAlive()) TInterpreterConstants.alternativeAudioMp3.TStop();
+				
+					
 				Point point = cell.getLocationOnScreen();
 				cell.setXVideo(point.x-5);
 				cell.setYVideo(point.y-54);
@@ -124,6 +233,17 @@ public class TCellListener implements MouseListener {
 			}
 
 			if (cell.getVideoURL()!=null) {
+				
+				/* [ADRIAN] If there is an audio playing it will be stopped */
+				if(TInterpreterConstants.audio != null)
+					if(TInterpreterConstants.audio.isAlive()) TInterpreterConstants.audio.stop();
+				if(TInterpreterConstants.audioMp3 != null)
+					if(TInterpreterConstants.audioMp3.TIsAlive()) TInterpreterConstants.audioMp3.TStop();
+				if(TInterpreterConstants.alternativeAudio != null)
+					if(TInterpreterConstants.alternativeAudio.isAlive()) TInterpreterConstants.alternativeAudio.stop();
+				if(TInterpreterConstants.alternativeAudioMp3 != null)
+					if(TInterpreterConstants.alternativeAudioMp3.TIsAlive()) TInterpreterConstants.alternativeAudioMp3.TStop();
+				
 				Point point = cell.getLocationOnScreen();
 				cell.setXVideo(point.x-5);
 				cell.setYVideo(point.y-54);
@@ -204,14 +324,15 @@ public class TCellListener implements MouseListener {
 				}				
 			}
 			
-			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
+			
+			/*if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico
 				try {
 					TInterpreterConstants.semaforo.release();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
-			}
+			}*/
 		}
 		}			
 	}
@@ -228,6 +349,39 @@ public class TCellListener implements MouseListener {
 				
 				if (cell.getAlternativeIcon()!=null){
 					cell.setIcon(cell.getAlternativeIcon());
+				}
+				
+				/* [ADRIAN]: Adding alternative sound */
+				if (cell.getAlternativeSoundPath()!= null){
+					
+					String extension= TFileUtils.getExtension(cell.getAlternativeSoundPath());
+					if (extension.equals("mp3")){
+						try {
+							TInterpreterConstants.semaforo.acquire();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TInterpreterConstants.alternativeAudioMp3 = new TInterpreterMp3Sound(cell.getAlternativeSoundPath());
+						TInterpreterConstants.alternativeAudioMp3.TPlay();
+						//TInterpreterConstants.audioMp3.TJoin();
+					}
+					else {
+						try {
+							TInterpreterConstants.semaforo.acquire();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						TInterpreterConstants.alternativeAudio = new TInterpreterWavSound(cell.getAlternativeSoundPath());	
+						TInterpreterConstants.alternativeAudio.start();
+						/*try {
+							TInterpreterConstants.audio.join();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+								System.out.println("Error al reproducir el sonido alternativo de la celda");
+							}*/
+					}
 				}
 				
 				if (cell.getAlternativeBorderSize()!= 0){
@@ -250,6 +404,35 @@ public class TCellListener implements MouseListener {
 
 			// Sets the original icon
 			cell.setIcon(cell.getDefaultIcon());
+			
+			//Adding alternative sound
+			// Stops the alternative sound
+			if (cell.getAlternativeSoundPath()!= null){
+				
+				String extension = TFileUtils.getExtension(cell.getAlternativeSoundPath());
+				if (extension.equals("mp3")){
+					if(TInterpreterConstants.alternativeAudioMp3.TIsAlive()){
+						TInterpreterConstants.alternativeAudioMp3.TStop();
+						try {
+							TInterpreterConstants.semaforo.release();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				else {
+					if(TInterpreterConstants.alternativeAudio.isAlive()){
+						TInterpreterConstants.alternativeAudio.interrupt();
+						try {
+							TInterpreterConstants.semaforo.release();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 
 			
 			if (cell.isTransparentBorder()){

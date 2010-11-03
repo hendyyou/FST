@@ -72,6 +72,12 @@ public class TInterpreterConstants {
 	
 	public static TInterpreterWavSound audio = null;
 	
+	/* [ADRIAN]: Adding alternative audio constants */
+	
+	public static TInterpreterMp3Sound alternativeAudioMp3 = null;
+	
+	public static TInterpreterWavSound alternativeAudio = null;
+	
 	//Interpreter configuration
 		
 	public static String interpreterCursor = null;

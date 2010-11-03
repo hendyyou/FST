@@ -345,6 +345,8 @@ TCellDialog.TAB_PROPERTIES=Propiedades
 TCellDialog.TAB_ACTIONS=Acciones
 TCellDialog.TEXT_FILED=Texto
 TCellDialog.ALTERNATIVE_IMAGE=Imagen alternativa
+/* [ADRIAN]: Adding alternative sound */
+TCellDialog.ALTERNATIVE_SOUND=Sonido alternativo
 TCellDialog.ENVIRONMENT=Entorno
 
 TControllerCellDialog.TITLE=Celda de control

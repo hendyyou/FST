@@ -183,6 +183,12 @@ public class TBoardConstants extends GraphConstants {
 	 */
 	public final static String SOUND_FILE = "soundFile";
 	
+	//Adding alternative sound
+	/**
+	 * Key for the <code>alternativeSoundFile</code> attributes. Use
+	 * instances of String as values for this key.
+	 */
+	public final static String ALTERNATIVE_SOUND_FILE = "alternativeSoundFile";
 	
 	/**
 	 * Key for the <code>browsingsoundFile</code> attributes. Use instances of
@@ -408,6 +414,27 @@ public class TBoardConstants extends GraphConstants {
 		map.put(SOUND_FILE,new File(value));
 	}
 	
+	/* [ADRIAN]: Adding alternative sound */
+	/**
+	 * Sets the alternativeSoundFile attribute in the specified map to
+	 * the specified value.
+	 */
+	public static void setAlternativeSoundFile(Map map,
+			String value) {
+		map.put(ALTERNATIVE_SOUND_FILE, new File(value));
+		
+	}
+	
+	/* [ADRIAN]: Adding alternative sound */
+	/**
+	 * Returns the alternativeSoundFile attribute from the specified map.
+	 */
+	public static final String getAlternativeSoundFile(Map map) {
+		File fichero=(File)map.get(ALTERNATIVE_SOUND_FILE);
+		if (fichero!=null)
+		return fichero.getPath();
+		else return null;
+	}
 	
 	public static final String getBrowsingSoundFile (Map map)
 	{

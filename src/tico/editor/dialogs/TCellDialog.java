@@ -118,6 +118,9 @@ public class TCellDialog extends TComponentDialog {
 
 	private TSoundChooser soundChooser;
 	
+	/* ADRIAN: Adding alternative sound */
+	private TSoundChooser alternativeSoundChooser;
+	
 	private TSendTextChooser sendTextChooser;
 	
 	private TVideoChooser videoChooser;
@@ -340,6 +343,8 @@ public class TCellDialog extends TComponentDialog {
 		createFollowingBoardPanel();
 		createAlterntativeIconChooser();
 		createSoundChooser();
+		/* ADRIAN: Adding alternative sound */
+		createAlternativeSoundChooser();
 		createSendTextChooser();
 		createVideoChooser();
 
@@ -358,19 +363,26 @@ public class TCellDialog extends TComponentDialog {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 2;
 		componentActionsPanel.add(sendTextChooser, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		componentActionsPanel.add(soundChooser, c);
-
+		
+		/* ADRIAN: Adding alternative sound */
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 4;
+		componentActionsPanel.add(alternativeSoundChooser, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 10, 0, 10);
+		c.gridx = 0;
+		c.gridy = 5;
 		componentActionsPanel.add(videoChooser, c);
 	}
 	
@@ -490,6 +502,16 @@ public class TCellDialog extends TComponentDialog {
 		soundChooser.setSoundFilePath(TBoardConstants.getSoundFile(map));
 	}
 	
+	/* ADRIAN: Adding alternative sound */
+	// Creates the alternative chooser panel
+	private void createAlternativeSoundChooser(){
+		Map map = getAttributeMap();
+		
+		alternativeSoundChooser = new TSoundChooser(TLanguage.getString("TCellDialog.ALTERNATIVE_SOUND"));
+		
+		alternativeSoundChooser.setSoundFilePath(TBoardConstants.getAlternativeSoundFile(map));
+	}
+	
 	// Creates the video chooser panel
 	private void createVideoChooser() {
 		Map map = getAttributeMap();
@@ -585,6 +607,14 @@ public class TCellDialog extends TComponentDialog {
 			TBoardConstants.setSoundFile(attributeMap, soundFile);
 		else
 			removalAttributes.add(TBoardConstants.SOUND_FILE);
+		
+		/* [ADRIAN]: Adding alternative sound */
+		// Set cell alternative sound file
+		String alternativeSoundFile = alternativeSoundChooser.getSoundFilePath();
+		if(alternativeSoundFile != null)
+			TBoardConstants.setAlternativeSoundFile(attributeMap, alternativeSoundFile);
+		else
+			removalAttributes.add(TBoardConstants.ALTERNATIVE_SOUND_FILE);
 		
 		// Set cell video file
 		String videoFile = videoChooser.getVideoFilePath();

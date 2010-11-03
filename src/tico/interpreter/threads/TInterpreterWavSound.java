@@ -39,6 +39,8 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.text.Position;
 
+import tico.interpreter.TInterpreterConstants;
+
 /**
  * The audio thread (WAV format)
  * 
@@ -105,6 +107,13 @@ public class TInterpreterWavSound extends Thread {
 				nBytesRead = audioInputStream.read(abData, 0, abData.length);
 				if (nBytesRead >= 0)
 					auline.write(abData, 0, nBytesRead);
+				else
+					try {
+						TInterpreterConstants.semaforo.release();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -113,6 +122,5 @@ public class TInterpreterWavSound extends Thread {
 			auline.drain();
 			auline.close();
 		}
-
 	}
 }

@@ -618,6 +618,17 @@ public class TBoardModel extends DefaultGraphModel {
 						.importFile(soundFilePath).getAbsolutePath());
 			} catch (Exception e) {
 			}
+			
+		//[ADRIAN]: Reviewing alternative sound
+		String alternativeSoundFilePath = TBoardConstants.getAlternativeSoundFile(attributeMap);
+		if(alternativeSoundFilePath != null){
+			try{
+				TBoardConstants.setAlternativeSoundFile(attributeMap, TFileHandler
+						.importFile(alternativeSoundFilePath).getAbsolutePath());
+			}catch (Exception e) {
+				
+			}
+		}
 		
 		String videoFilePath = TBoardConstants.getVideoFile(attributeMap);
 		if (videoFilePath != null)

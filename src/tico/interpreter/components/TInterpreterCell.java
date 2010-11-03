@@ -74,6 +74,8 @@ public class TInterpreterCell extends JButton{
 
 	public String boardToGo = null;
 	public String soundPath = null;
+	/* [ADRIAN]: Adding alternative sound */
+	public String alternativeSoundPath = null;
 	public String videoPath = null;
 	public String videoURL = null;
 	public int xVideo = -1;
@@ -196,6 +198,11 @@ public class TInterpreterCell extends JButton{
 	
 	public String getSoundPath() {
 		return soundPath;
+	}
+	
+	/* [ADRIAN]: Adding alternative sound */
+	public String getAlternativeSoundPath() {
+		return alternativeSoundPath;
 	}
 	
 	public String getVideoPath() {
@@ -353,8 +360,10 @@ public class TInterpreterCell extends JButton{
 		return this;
 	}
 	
-	public TInterpreterCell setActionsAttributes(String soundPath, String videoPath, String videoURL, String command){
+	//Adding alternative sound
+	public TInterpreterCell setActionsAttributes(String soundPath, String alternativeSoundPath, String videoPath, String videoURL, String command){
 		this.soundPath = soundPath;
+		this.alternativeSoundPath = alternativeSoundPath;
 		this.videoPath = videoPath;
 		this.videoURL = videoURL;
 		this.command = command;

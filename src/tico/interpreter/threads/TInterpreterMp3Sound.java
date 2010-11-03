@@ -28,7 +28,31 @@
 package tico.interpreter.threads;
 
 import javazoom.jl.player.*;
+
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.spi.AudioFileReader;
+import javax.swing.CellEditor;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+
+import org.ibex.nestedvm.Interpreter;
+import org.tritonus.share.sampled.AudioUtils;
+
+import sun.audio.AudioData;
+import sun.audio.AudioDataStream;
+import sun.jkernel.BackgroundDownloader;
+import tico.interpreter.TInterpreter;
+import tico.interpreter.TInterpreterConstants;
+import tico.interpreter.components.TInterpreterCell;
 
 /**
  * The audio thread (MP3 format)
@@ -37,14 +61,14 @@ import java.io.*;
  * @version 1.0 Aug 22, 2007
  */
 
-public class TInterpreterMp3Sound {
+public class TInterpreterMp3Sound{
 
 	private Player player;
 
 	private InputStream is;
 
 	private TPlayerThread pt;
-
+	
 	/** Creates a new instance of MP3Player */
 	public TInterpreterMp3Sound(String filename) {
 		try {
@@ -54,12 +78,11 @@ public class TInterpreterMp3Sound {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/* [ADRIAN] trying to keep playing the alternative sound */
 	public void TPlay() {
-
 		try {
 			player = new Player(is);
-
 			pt = new TPlayerThread();
 			pt.start();
 		} catch (Exception e) {
@@ -84,11 +107,23 @@ public class TInterpreterMp3Sound {
 		}
 
 	}
+	
+	/* [ADRIAN]: It returns a boolean with thread's state */
+	public boolean TIsAlive(){
+		return pt.isAlive();
+	}
 
 	class TPlayerThread extends Thread {
 		public void run() {
 			try {
 				player.play();
+				boolean stop = false;
+				while(!stop){
+					if(player.isComplete()){
+						TInterpreterConstants.semaforo.release();
+						stop = true;
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -348,6 +348,8 @@ public class TInterpreterProject {
 	            	transparentBackground = true;
 	            	
 	            	String soundFile = null;
+	            	/* [ADRIAN]: Adding alternative sound */
+	            	String alternativeSoundFile = null;
 	            	String videoFile = null;
 	            	String videoURL = null;
 	            	
@@ -575,6 +577,27 @@ public class TInterpreterProject {
 		            		}	
 	                	}
 	                	
+	                	/* [ADRIAN]: Adding alternative sound */
+	                	// alternativeSoundFile
+	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("alternativeSoundFile")){
+		                	// Save the sound to be played when mouse entered
+		            		alternativeSoundFile = attribute.getValue();
+		            		if (alternativeSoundFile != null){
+		            			String partialPath = attribute.getValue();
+		            			partialPath = partialPath.replace('\\','/');
+		            			alternativeSoundFile = TFileHandler.getCurrentDirectoryPath() + File.separator + partialPath;
+		            			File alternativeSound = null;     		
+			            		
+			            		try {
+			            			alternativeSound = TFileHandler.importFile(new File(TProjectHandler
+		        							.getTempDirectory(), partialPath));
+		        					
+		        				} catch (IOException e) {
+		        					e.printStackTrace();
+		        				} 
+		            		}	
+	                	}
+	                	
 	                	// videoFile	                	
 	                	if (((attribute.getAttribute("key").getValue()).trim()).equals("videoFile")){
 		                	// Save the video to be played when mouse clicked
@@ -606,8 +629,9 @@ public class TInterpreterProject {
 	            		
 	            	            		
 	            		cell.setAttributes(id, r, text, font, foregroundColor, vtp, icon, linewidth, borderColor, backgroundColor, gradientColor, transparentBackground, transparentBorder, alternativeIcon);
-	            		            		
-	            		cell.setActionsAttributes(soundFile, videoFile, videoURL,  command);
+	            		      
+	            		//Adding alternative sound
+	            		cell.setActionsAttributes(soundFile, alternativeSoundFile, videoFile, videoURL,  command);
 	            		
 	            		if (myboard.isCellInOrderedCellList(cell.getName())){
 	            			cell.addMouseListener(new TCellListener(cell));
