@@ -60,6 +60,9 @@ public class TInterpreterConstants {
 	
 	public final static String MANUAL_SCANNING_MODE = "manualScanningMode";
 
+	/* [ADRIAN] Semaphore added to control the audio */
+	public static final TSemaphore semaforoAudio = new TSemaphore(1);
+
 	//Mouse mode selected
 	
 	public static String mouseModeSelected = TInterpreterConstants.DIRECT_SELECTION_MODE;
