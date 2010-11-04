@@ -29,6 +29,7 @@ package tico.interpreter.listeners;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -41,8 +42,10 @@ import javax.swing.border.LineBorder;
 import javazoom.jl.player.Player;
 import javazoom.jl.player.ThreadedPlayer;
 
+import sun.misc.Launcher;
 import tico.components.resources.TFileUtils;
 import tico.interpreter.TInterpreter;
+import tico.interpreter.TInterpreterBoard;
 import tico.interpreter.TInterpreterConstants;
 import tico.interpreter.actions.TInterpreterRun;
 import tico.interpreter.components.TInterpreterAccumulatedCell;
@@ -63,6 +66,8 @@ public class TCellListener implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
+		
+		boolean changeCell = false;
 
 		if ((TInterpreter.run == 1)) {
 
@@ -143,7 +148,8 @@ public class TCellListener implements MouseListener {
 								try {
 									TInterpreterConstants.semaforoAudio.release();
 									if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
-										TInterpreterConstants.semaforo.release();
+										//TInterpreterConstants.semaforo.release();
+										changeCell = true;
 									}
 								} catch (InterruptedException e) {
 									e.printStackTrace();
@@ -181,7 +187,8 @@ public class TCellListener implements MouseListener {
 									TInterpreterConstants.semaforoAudio.release();
 									if (TInterpreter.returnMouseMode().equals(
 											TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
-										TInterpreterConstants.semaforo.release();
+										//TInterpreterConstants.semaforo.release();
+										changeCell = true;
 									}
 								} catch (InterruptedException e) {
 									e.printStackTrace();
@@ -352,14 +359,15 @@ public class TCellListener implements MouseListener {
 					}
 				}
 
-				/*
-				 * if
-				 * (TInterpreter.returnMouseMode().equals(TInterpreterConstants
-				 * .AUTOMATIC_SCANNING_MODE)){ // barrido automatico try {
-				 * TInterpreterConstants.semaforoAudio.release(); } catch
-				 * (InterruptedException e) { 
-				 * e.printStackTrace(); } }
-				 */
+				
+				  if(TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE) && changeCell){ // barrido automatico try {
+					  try{
+						  TInterpreterConstants.semaforo.release(); 
+					  } catch (InterruptedException e) { 
+						  e.printStackTrace(); 
+					  }
+				  }
+				 
 			}
 		}
 	}
@@ -516,13 +524,13 @@ public class TCellListener implements MouseListener {
 				cell.setBackground(cell.getBackground());
 			}
 			
-			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+			/*if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
 				try {		
 						TInterpreterConstants.semaforo.release();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
+			}*/
 		}
 	}
 
