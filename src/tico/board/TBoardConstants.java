@@ -36,6 +36,7 @@ import javax.swing.Icon;
 
 import org.jgraph.graph.GraphConstants;
 
+import tico.arabard.TAraboard;
 import tico.board.components.TComponent;
 import tico.editor.TEditor;
 
@@ -51,6 +52,11 @@ public class TBoardConstants extends GraphConstants {
 	
 	public static TBoard currentBoard = null;
 	public static TEditor editor = null;
+	
+	/**
+	 * [ADRIAN] Handling araboard into a constant
+	 */
+	public static TAraboard araboard = null;
 	
 	/**
 	 * Default background color.
