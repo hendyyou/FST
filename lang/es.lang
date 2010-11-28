@@ -318,6 +318,10 @@ TReorderGridAction.NAME=Reordenar cuadricula
 TSelectAllAction.NAME=Seleccionar todo
 TUndoAction.NAME=Deshacer
 
+// [ADRIAN] Adding new names
+TSeparateObjectsAction.NAME=Separar
+TGroupObjectsAction.NAME=Agrupar
+
 // tico.editor.dialogs
 TAboutDialog.TITLE=Acerca de...
 TAboutDialog.EDITOR_VERSION=Editor Tico e1.0 r5

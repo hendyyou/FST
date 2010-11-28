@@ -118,8 +118,10 @@ public class TBoardDialog extends TPropertiesDialog {
 
 		tabbedPane.addTab(TLanguage.getString("TBoardDialog.TAB_PROPERTIES"),
 				createPropertiesPanel());
-		tabbedPane.addTab(TLanguage.getString("TBoardDialog.TAB_BROWSE_ORDER"),
-				createOrderPanel());
+		
+		/* [ADRIAN] Deleting unused options from Board dialog */
+		JPanel orderPanel = this.createOrderPanel();
+		//tabbedPane.addTab(TLanguage.getString("TBoardDialog.TAB_BROWSE_ORDER"),createOrderPanel());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
@@ -159,6 +161,7 @@ public class TBoardDialog extends TPropertiesDialog {
 		createSizeChooser();
 		createBackgroundSelectionPanel();
 		createIconChooser();
+		
 		createSoundChooser();
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -173,11 +176,12 @@ public class TBoardDialog extends TPropertiesDialog {
 		c.gridy = 1;
 		propertiesPanel.add(backgroundSelectionPanel, c);
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		/* [ADRIAN] Deleting unused options from Board dialog */
+		/*c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 2;
-		propertiesPanel.add(soundChooser, c);
+		propertiesPanel.add(soundChooser, c);*/
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 10, 10);

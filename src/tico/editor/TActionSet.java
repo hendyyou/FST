@@ -58,12 +58,14 @@ import tico.editor.actions.TFitWidthAction;
 import tico.editor.actions.TFrontAction;
 import tico.editor.actions.THandlerCellAction;
 import tico.editor.actions.THandlerControllerCellAction;
+import tico.editor.actions.THandlerGroupObjects;
 import tico.editor.actions.THandlerLabelAction;
 import tico.editor.actions.THandlerLineAction;
 import tico.editor.actions.THandlerOvalAction;
 import tico.editor.actions.THandlerRectangleAction;
 import tico.editor.actions.THandlerRoundRectAction;
 import tico.editor.actions.THandlerSelectionAction;
+import tico.editor.actions.THandlerSeparateObjects;
 import tico.editor.actions.THandlerTextAreaAction;
 import tico.editor.actions.TPasteAction;
 import tico.editor.actions.TProjectImportAction;
@@ -349,6 +351,12 @@ public class TActionSet {
 	 * The <code>TUsersAdminAction</code> id
 	 */
 	public final static String RULES_ADMIN_ACTION = "rulesAdminAction";
+
+	/* [ADRIAN] Adding new buttons to the menu */
+	
+	public static final String GROUP_OBJECTS_HANDLER = "groupObjectsAction";
+
+	public static final String SEPARATE_OBJECTS_HANDLER = "separateObjectsAction";
 	
 	
 
@@ -430,6 +438,8 @@ public class TActionSet {
 		actionSet.put(SELECTION_HANDLER, new THandlerSelectionAction(editor));
 		actionSet.put(OVAL_HANDLER, new THandlerOvalAction(editor));
 		actionSet.put(TEXT_AREA_HANDLER, new THandlerTextAreaAction(editor));
+		actionSet.put(GROUP_OBJECTS_HANDLER, new THandlerGroupObjects(editor));
+		actionSet.put(SEPARATE_OBJECTS_HANDLER, new THandlerSeparateObjects(editor));
 		
 		// Administration actions
 		actionSet.put(USERS_ADMIN_ACTION, new TUsersAdminAction(editor));

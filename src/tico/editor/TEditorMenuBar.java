@@ -78,9 +78,8 @@ public class TEditorMenuBar extends JMenuBar {
 		createToolsMenu();
 		createBoardMenu();
 		createProjectMenu();
-		
-		createDynamicToolsMenu();
-		
+		/* [ADRIAN] Deleting utility menu option */
+		//createDynamicToolsMenu();
 		createHelpMenu();
 	}
 

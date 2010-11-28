@@ -35,7 +35,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import tico.arabard.TAraboard;
 import tico.board.TProject;
 import tico.board.encoding.InvalidFormatException;
 import tico.components.resources.TFileUtils;
@@ -103,9 +102,7 @@ public class TLauncher {
 		switch (args.length) {
 		case 0:
 			new TEditor();
-			new TInterpreter();
-			// [ADRIAN] Executing Araboard
-			new TAraboard();
+			//new TInterpreter();
 			break;
 		case 1:
 			if (args[0].equals("-i"))

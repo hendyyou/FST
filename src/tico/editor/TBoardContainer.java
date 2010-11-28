@@ -239,8 +239,9 @@ public class TBoardContainer extends JPanel implements GraphSelectionListener,
 					updateCellList = true;
 			}
 
-		if (updateCellList)
-			editor.updateCellOrderList();
+		/* [ADRIAN] Cell ordering deleted */
+		//if (updateCellList)
+			//editor.updateCellOrderList();
 
 		editor.updateUI();
 	}

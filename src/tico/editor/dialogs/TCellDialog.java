@@ -214,10 +214,10 @@ public class TCellDialog extends TComponentDialog {
 		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_TEXT"), textPropertiesPanel);
 		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_PROPERTIES"),
 				componentPropertiesPanel);
-		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_ACTIONS"),
-				componentActionsPanel);
 		
-		tabbedPane.addTab(TLanguage.getString("TCellDialog.ENVIRONMENT"),environmentPanel);
+		/* [ADRIAN] Deleting unused options in Cell Dialog */
+		//tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_ACTIONS"), componentActionsPanel);
+		//tabbedPane.addTab(TLanguage.getString("TCellDialog.ENVIRONMENT"),environmentPanel);
 	}
 	public void createEnvironmentPanel()
 	{
@@ -310,11 +310,12 @@ public class TCellDialog extends TComponentDialog {
 		c.gridy = 0;
 		componentPropertiesPanel.add(borderSelectionPanel, c);
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		/* [ADRIAN] Deleting unused options in Cell Dialog */
+		/*c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 1;
-		componentPropertiesPanel.add(alternativeBorderSelectionPanel, c);
+		componentPropertiesPanel.add(alternativeBorderSelectionPanel, c);*/
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);

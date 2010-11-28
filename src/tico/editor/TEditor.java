@@ -244,8 +244,9 @@ public class TEditor extends JFrame {
 		boardListPanel.add(buttonPanel, BorderLayout.NORTH);
 		boardListPanel.add(boardList, BorderLayout.CENTER);
 
+		/* [ADRIAN] Deleting cell ordering */
 		// Create cell order list
-		JPanel cellOrderListPane = new JPanel();
+		/*JPanel cellOrderListPane = new JPanel();
 		cellOrderListPane.setLayout(new BorderLayout());
 
 		JLabel cellOrderListLabel = new JLabel(TLanguage.getString("TEditor.CELL_ORDER"));
@@ -270,6 +271,7 @@ public class TEditor extends JFrame {
 
 		cellOrderListPane.add(cellOrderListLabel, BorderLayout.NORTH);
 		cellOrderListPane.add(cellOrderList, BorderLayout.CENTER);
+		*/		
 
 		// Create board container
 		boardPanel = new JPanel();
@@ -278,7 +280,7 @@ public class TEditor extends JFrame {
 
 		// Create split panes
 		JSplitPane verticalSplitPane = new JSplitPane(
-				JSplitPane.VERTICAL_SPLIT, boardListPanel, cellOrderListPane);
+				JSplitPane.VERTICAL_SPLIT, boardListPanel,null);
 		verticalSplitPane.setResizeWeight(0.8);
 		verticalSplitPane.setDividerSize(7);
 		verticalSplitPane.setDividerLocation(0.8);
@@ -506,7 +508,8 @@ public class TEditor extends JFrame {
 		TBoardConstants.currentBoard = getCurrentBoard();
 		
 		boardPanel.updateUI();
-		updateCellOrderList();
+		/* [ADRIAN] Cell ordering deleted */
+		//updateCellOrderList();
 	}
 
 	/**
@@ -584,7 +587,8 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.PROJECT_VALIDATION_ACTION).setEnabled(
 				projectExists);
 		boardList.setEnabled(projectExists);
-		cellOrderList.setEnabled(projectExists);
+		/* [ADRIAN] Deleting cell ordering */
+		//cellOrderList.setEnabled(projectExists);
 		
 		updateBoardButtons();
 	}
@@ -659,7 +663,8 @@ public class TEditor extends JFrame {
 	/**
 	 * Updates de editor's cell list component
 	 */
-	public void updateCellOrderList() {
+	/* [ADRIAN] Cell ordering deleted */
+	/*public void updateCellOrderList() {
 		TBoard board = getCurrentBoard();
 
 		if (board != null) {
@@ -669,7 +674,7 @@ public class TEditor extends JFrame {
 							.getModel()).getAttributes()));
 			cellOrderList.setSelectedValue(selectedObject);
 		}
-	}
+	}*/
 	
 	/**
 	 * Change Editor's Cursor into a waiting clock

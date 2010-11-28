@@ -70,6 +70,10 @@ public class THandlersToolBar extends TToolBar {
 	private TToolBarToggleButton rectangleButton;
 	private TToolBarToggleButton roundRectangleButton;
 	
+	/* [ADRIAN] Adding new buttons to the menu */
+	private TToolBarToggleButton groupObjectsButton;
+	private TToolBarToggleButton separateObjetcsButton;
+	
 	/**
 	 * Creates a new <code>THandlersToolBar</code>.
 	 * 
@@ -86,8 +90,10 @@ public class THandlersToolBar extends TToolBar {
 				.getAction(TActionSet.SELECTION_HANDLER));
 		cellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.CELL_HANDLER));
-		controllerCellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
-				TActionSet.CELL_CONTROLLER_HANDLER));
+		
+		/* [ADRIAN] Deleting control cell button */
+		/*controllerCellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.CELL_CONTROLLER_HANDLER));*/
 		/*gridButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.GRID_HANDLER));*/
 		textAreaButton = new TToolBarToggleButton(editor.getActionSet()
@@ -102,6 +108,13 @@ public class THandlersToolBar extends TToolBar {
 				.getAction(TActionSet.RECTANGLE_HANDLER));
 		roundRectangleButton = new TToolBarToggleButton(editor.getActionSet()
 				.getAction(TActionSet.ROUND_RECT_HANDLER));
+		
+		/* [ADRIAN] Adding new buttons to the menu */
+		// TODO Create buttons for new 
+		groupObjectsButton = new TToolBarToggleButton(editor.getActionSet()
+				.getAction(TActionSet.GROUP_OBJECTS_HANDLER));
+		separateObjetcsButton = new TToolBarToggleButton(editor.getActionSet()
+				.getAction(TActionSet.SEPARATE_OBJECTS_HANDLER));
 
 		handlersButtonGroup.add(selectButton);
 		handlersButtonGroup.add(cellButton);
@@ -113,11 +126,17 @@ public class THandlersToolBar extends TToolBar {
 		handlersButtonGroup.add(ovalButton);
 		handlersButtonGroup.add(rectangleButton);
 		handlersButtonGroup.add(roundRectangleButton);
+		
+		/* [ADRIAN] Adding new buttons to the menu */
+		handlersButtonGroup.add(groupObjectsButton);
+		handlersButtonGroup.add(separateObjetcsButton);
 
 		add(selectButton);
 		addSeparator();
 		add(cellButton);
-		add(controllerCellButton);
+		
+		/* [ADRIAN] Deleting control cell button */
+		//add(controllerCellButton);
 		//add(gridButton);
 		addSeparator();
 		add(textAreaButton);
@@ -127,6 +146,10 @@ public class THandlersToolBar extends TToolBar {
 		add(ovalButton);
 		add(rectangleButton);
 		add(roundRectangleButton);
+		
+		/* [ADRIAN] Adding new buttons to the menu */
+		add(groupObjectsButton);
+		add(separateObjetcsButton);
 
 		selectButton.setSelected(true);
 	}
@@ -161,6 +184,12 @@ public class THandlersToolBar extends TToolBar {
 				rectangleButton.setSelected(true);
 			else if (handler instanceof TRoundRectMarqueeHandler)
 				roundRectangleButton.setSelected(true);
+			/* [ADRIAN] Adding new buttons to the menu */
+			// TODO handling
+			else if (handler instanceof TRectangleMarqueeHandler)
+				groupObjectsButton.setSelected(true);
+			else if (handler instanceof TRectangleMarqueeHandler)
+				separateObjetcsButton.setSelected(true);
 			else
 				selectButton.setSelected(true);
 		}
