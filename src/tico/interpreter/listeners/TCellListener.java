@@ -127,23 +127,23 @@ public class TCellListener implements MouseListener {
 
 					String extension = TFileUtils.getExtension(cell
 							.getSoundPath());
-					if (extension.equals("mp3")) {
+					if (extension.equals("mp3")) { //MP3
 						/*
 						 * ADRIAN: If there is a music playing it will be
 						 * stopped with one click otherwise a sound will be
 						 * played
 						 */
-						if (TInterpreterConstants.audioMp3 == null) {
+						if (TInterpreterConstants.audioMp3 == null) { // Sound not playing, playing first time
 							TInterpreterConstants.audioMp3 = new TInterpreterMp3Sound(
 									cell.getSoundPath());
 							try {
-								TInterpreterConstants.semaforoAudio.acquire();
+								TInterpreterConstants.semaforoAudio.acquire(); 
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
 							TInterpreterConstants.audioMp3.TPlay();
 						} else {
-							if (TInterpreterConstants.audioMp3.TIsAlive()) {
+							if (TInterpreterConstants.audioMp3.TIsAlive()) { //Sound already playing
 								TInterpreterConstants.audioMp3.TStop();
 								try {
 									TInterpreterConstants.semaforoAudio.release();
@@ -154,7 +154,7 @@ public class TCellListener implements MouseListener {
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
-							} else {
+							} else { //Sound not playing
 								TInterpreterConstants.audioMp3 = new TInterpreterMp3Sound(
 										cell.getSoundPath());
 								try {
@@ -165,13 +165,13 @@ public class TCellListener implements MouseListener {
 								TInterpreterConstants.audioMp3.TPlay();
 							}
 						}
-					} else {
+					} else { //WAV
 						/*
 						 * ADRIAN: If there is a music playing it will be
 						 * stopped with one click otherwise a sound will be
 						 * played
 						 */
-						if (TInterpreterConstants.audio == null) {
+						if (TInterpreterConstants.audio == null) { //Audio not playing, first time playing.
 							TInterpreterConstants.audio = new TInterpreterWavSound(
 									cell.getSoundPath());
 							try {
@@ -180,12 +180,12 @@ public class TCellListener implements MouseListener {
 								e.printStackTrace();
 							}
 							TInterpreterConstants.audio.start();
-						} else {
-							if (TInterpreterConstants.audio.isAlive()) {
+						} else { 
+							if (TInterpreterConstants.audio.isAlive()) { //Sound already playing
 								TInterpreterConstants.audio.stop();
 								try {
 									TInterpreterConstants.semaforoAudio.release();
-									if (TInterpreter.returnMouseMode().equals(
+									if (TInterpreter.returnMouseMode().equals( //Trying to change the cell
 											TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
 										//TInterpreterConstants.semaforo.release();
 										changeCell = true;
@@ -194,7 +194,7 @@ public class TCellListener implements MouseListener {
 									e.printStackTrace();
 								}
 							} else {
-								TInterpreterConstants.audio = new TInterpreterWavSound(
+								TInterpreterConstants.audio = new TInterpreterWavSound( //Sound not playing
 										cell.getSoundPath());
 								try {
 									TInterpreterConstants.semaforoAudio.acquire();
@@ -204,20 +204,13 @@ public class TCellListener implements MouseListener {
 								TInterpreterConstants.audio.start();
 							}
 						}
-						/* ADRIAN: Deleted because is not necessary */
-						/*
-						 * try { TInterpreterConstants.audio.join(); } catch
-						 * (InterruptedException e) { e.printStackTrace();
-						 * System
-						 * .out.println("Error al reproducir el sonido de la celda"
-						 * ); }
-						 */
 					}
 				}
 
 				if (cell.getVideoPath() != null) {
 
-					/* [ADRIAN] If there is an audio playing it will be stopped */
+					/* [ADRIAN] If there is an audio playing it will be stopped. */
+					// TODO Semaphores must be stopped
 					if (TInterpreterConstants.audio != null)
 						if (TInterpreterConstants.audio.isAlive())
 							TInterpreterConstants.audio.stop();
@@ -248,6 +241,7 @@ public class TCellListener implements MouseListener {
 				if (cell.getVideoURL() != null) {
 
 					/* [ADRIAN] If there is an audio playing it will be stopped */
+					// TODO Semaphores must be stopped
 					if (TInterpreterConstants.audio != null)
 						if (TInterpreterConstants.audio.isAlive())
 							TInterpreterConstants.audio.stop();
