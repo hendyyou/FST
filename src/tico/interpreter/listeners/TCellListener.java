@@ -71,6 +71,14 @@ public class TCellListener implements MouseListener {
 
 		if ((TInterpreter.run == 1)) {
 
+			  if(TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico try {
+				  try{
+					  TInterpreterConstants.semaforo.acquire(); 
+				  } catch (InterruptedException e) { 
+					  e.printStackTrace(); 
+				  }
+			  }
+			
 			if (arg0.getButton() == MouseEvent.BUTTON3) { // Right button
 				if (TInterpreter.returnMouseMode().equals(
 						TInterpreterConstants.MANUAL_SCANNING_MODE)) {
@@ -373,7 +381,7 @@ public class TCellListener implements MouseListener {
 				}
 
 				
-				  if(TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE) && changeCell){ // barrido automatico try {
+				  if(TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)){ // barrido automatico try {
 					  try{
 						  TInterpreterConstants.semaforo.release(); 
 					  } catch (InterruptedException e) { 
@@ -388,15 +396,18 @@ public class TCellListener implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 
+		
 		if ((TInterpreter.run == 1)) {
 			
 			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
 				try {
-						TInterpreterConstants.semaforo.acquire();
+					TInterpreterConstants.semaforo.acquire();
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
 			}
+			
+			System.out.println("Cojo semáforo");
 
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 			// Default border attributes
@@ -422,25 +433,22 @@ public class TCellListener implements MouseListener {
 				String extension = TFileUtils.getExtension(cell
 						.getAlternativeSoundPath());
 				if (extension.equals("mp3")) {
-					try {
-						TInterpreterConstants.semaforoAudio.acquire();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					TInterpreterConstants.alternativeAudioMp3 = new TInterpreterMp3Sound(
 							cell.getAlternativeSoundPath());
 					TInterpreterConstants.alternativeAudioMp3.TPlay();
+					TInterpreterConstants.alternativeAudioMp3.TJoin();
 					System.out.println("Play alternative audio");
 					// TInterpreterConstants.audioMp3.TJoin();
 				} else {
-					try {
-						TInterpreterConstants.semaforoAudio.acquire();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					TInterpreterConstants.alternativeAudio = new TInterpreterWavSound(
 							cell.getAlternativeSoundPath());
 					TInterpreterConstants.alternativeAudio.start();
+					try {
+						TInterpreterConstants.alternativeAudio.join();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println("Play alternative audio");
 					/*
 					 * try { TInterpreterConstants.audio.join(); } catch
@@ -452,6 +460,14 @@ public class TCellListener implements MouseListener {
 				}
 			}
 		
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+				try {
+						TInterpreterConstants.semaforo.release();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+			System.out.println("Suelto semáforo");
 		}
 	}
 
@@ -459,7 +475,13 @@ public class TCellListener implements MouseListener {
 	public void mouseExited(MouseEvent arg0) {
 
 		if ((TInterpreter.run == 1)) {
-
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+				try {
+						TInterpreterConstants.semaforo.acquire();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
 			TInterpreterCell cell = (TInterpreterCell) arg0.getSource();
 
 			// Sets the original icon
@@ -485,7 +507,7 @@ public class TCellListener implements MouseListener {
 					}
 				} else {
 					if (TInterpreterConstants.alternativeAudio.isAlive()) {
-						TInterpreterConstants.alternativeAudio.interrupt();
+						TInterpreterConstants.alternativeAudio.stop();
 						try {
 							TInterpreterConstants.semaforoAudio.release();
 						} catch (InterruptedException e) {
@@ -513,7 +535,7 @@ public class TCellListener implements MouseListener {
 				} else {
 					if(TInterpreterConstants.audio != null){
 						if (TInterpreterConstants.audio.isAlive()) {
-							TInterpreterConstants.audio.interrupt();
+							TInterpreterConstants.audio.stop();
 							try {
 								TInterpreterConstants.semaforoAudio.release();
 							} catch (InterruptedException e) {
@@ -538,7 +560,7 @@ public class TCellListener implements MouseListener {
 				cell.setFocusPainted(true);
 				cell.setBackground(cell.getBackground());
 			}
-		
+			
 			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
 				try {
 						TInterpreterConstants.semaforo.release();

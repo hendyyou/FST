@@ -107,13 +107,6 @@ public class TInterpreterWavSound extends Thread {
 				nBytesRead = audioInputStream.read(abData, 0, abData.length);
 				if (nBytesRead > 0)
 					auline.write(abData, 0, nBytesRead);
-				else
-					try {
-						TInterpreterConstants.semaforo.release();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

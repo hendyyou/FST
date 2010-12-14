@@ -117,13 +117,6 @@ public class TInterpreterMp3Sound{
 		public void run() {
 			try {
 				player.play();
-				boolean stop = false;
-				while(!stop){
-					if(player.isComplete()){
-						TInterpreterConstants.semaforo.release();
-						stop = true;
-					}
-				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
