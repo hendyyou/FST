@@ -107,18 +107,33 @@ public class TCellListener implements MouseListener {
 							TInterpreterConstants.alternativeAudioMp3.TStop();
 							try {
 								TInterpreterConstants.semaforoAudio.release();
+								
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
+							if(cell.getSoundPath() == null){
+								if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+									//TInterpreterConstants.semaforo.release();
+									changeCell = true;
+								}
+							}
+							System.out.println("Stop alternative sound");
 						}
 					} else {
 						if (TInterpreterConstants.alternativeAudio.isAlive()) {
-							TInterpreterConstants.alternativeAudio.stop();
+							TInterpreterConstants.alternativeAudio.interrupt();
 							try {
 								TInterpreterConstants.semaforoAudio.release();
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
+							if(cell.getSoundPath() == null){
+								if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+									//TInterpreterConstants.semaforo.release();
+									changeCell = true;
+								}
+							}
+							System.out.println("Stop alternative sound");
 						}
 					}
 				}
@@ -142,11 +157,13 @@ public class TCellListener implements MouseListener {
 								e.printStackTrace();
 							}
 							TInterpreterConstants.audioMp3.TPlay();
+							System.out.println("Play sound first time");
 						} else {
 							if (TInterpreterConstants.audioMp3.TIsAlive()) { //Sound already playing
 								TInterpreterConstants.audioMp3.TStop();
 								try {
 									TInterpreterConstants.semaforoAudio.release();
+									System.out.println("Stop audio");
 									if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
 										//TInterpreterConstants.semaforo.release();
 										changeCell = true;
@@ -163,6 +180,7 @@ public class TCellListener implements MouseListener {
 									e.printStackTrace();
 								}
 								TInterpreterConstants.audioMp3.TPlay();
+								System.out.println("Play audio");
 							}
 						}
 					} else { //WAV
@@ -180,9 +198,10 @@ public class TCellListener implements MouseListener {
 								e.printStackTrace();
 							}
 							TInterpreterConstants.audio.start();
+							System.out.println("Play sound first time");
 						} else { 
 							if (TInterpreterConstants.audio.isAlive()) { //Sound already playing
-								TInterpreterConstants.audio.stop();
+								TInterpreterConstants.audio.interrupt();
 								try {
 									TInterpreterConstants.semaforoAudio.release();
 									if (TInterpreter.returnMouseMode().equals( //Trying to change the cell
@@ -213,13 +232,13 @@ public class TCellListener implements MouseListener {
 					// TODO Semaphores must be stopped
 					if (TInterpreterConstants.audio != null)
 						if (TInterpreterConstants.audio.isAlive())
-							TInterpreterConstants.audio.stop();
+							TInterpreterConstants.audio.interrupt();
 					if (TInterpreterConstants.audioMp3 != null)
 						if (TInterpreterConstants.audioMp3.TIsAlive())
 							TInterpreterConstants.audioMp3.TStop();
 					if (TInterpreterConstants.alternativeAudio != null)
 						if (TInterpreterConstants.alternativeAudio.isAlive())
-							TInterpreterConstants.alternativeAudio.stop();
+							TInterpreterConstants.alternativeAudio.interrupt();
 					if (TInterpreterConstants.alternativeAudioMp3 != null)
 						if (TInterpreterConstants.alternativeAudioMp3
 								.TIsAlive())
@@ -244,13 +263,13 @@ public class TCellListener implements MouseListener {
 					// TODO Semaphores must be stopped
 					if (TInterpreterConstants.audio != null)
 						if (TInterpreterConstants.audio.isAlive())
-							TInterpreterConstants.audio.stop();
+							TInterpreterConstants.audio.interrupt();
 					if (TInterpreterConstants.audioMp3 != null)
 						if (TInterpreterConstants.audioMp3.TIsAlive())
 							TInterpreterConstants.audioMp3.TStop();
 					if (TInterpreterConstants.alternativeAudio != null)
 						if (TInterpreterConstants.alternativeAudio.isAlive())
-							TInterpreterConstants.alternativeAudio.stop();
+							TInterpreterConstants.alternativeAudio.interrupt();
 					if (TInterpreterConstants.alternativeAudioMp3 != null)
 						if (TInterpreterConstants.alternativeAudioMp3
 								.TIsAlive())
@@ -383,6 +402,15 @@ public class TCellListener implements MouseListener {
 			// Default border attributes
 			Color colorLine = Color.red;
 			int widthLine = 1;
+			
+			if (cell.getAlternativeBorderSize() != 0) {
+				cell.setBorderPainted(true);
+				colorLine = cell.getAlternativeBorderColor();
+				widthLine = cell.getAlternativeBorderSize();
+			}
+
+			Border thickBorder = new LineBorder(colorLine, widthLine);
+			cell.setBorder(thickBorder);
 
 			if (cell.getAlternativeIcon() != null) {
 				cell.setIcon(cell.getAlternativeIcon());
@@ -402,6 +430,7 @@ public class TCellListener implements MouseListener {
 					TInterpreterConstants.alternativeAudioMp3 = new TInterpreterMp3Sound(
 							cell.getAlternativeSoundPath());
 					TInterpreterConstants.alternativeAudioMp3.TPlay();
+					System.out.println("Play alternative audio");
 					// TInterpreterConstants.audioMp3.TJoin();
 				} else {
 					try {
@@ -412,6 +441,7 @@ public class TCellListener implements MouseListener {
 					TInterpreterConstants.alternativeAudio = new TInterpreterWavSound(
 							cell.getAlternativeSoundPath());
 					TInterpreterConstants.alternativeAudio.start();
+					System.out.println("Play alternative audio");
 					/*
 					 * try { TInterpreterConstants.audio.join(); } catch
 					 * (InterruptedException e) { e.printStackTrace();
@@ -421,16 +451,7 @@ public class TCellListener implements MouseListener {
 					 */
 				}
 			}
-
-			if (cell.getAlternativeBorderSize() != 0) {
-				cell.setBorderPainted(true);
-				colorLine = cell.getAlternativeBorderColor();
-				widthLine = cell.getAlternativeBorderSize();
-			}
-
-			Border thickBorder = new LineBorder(colorLine, widthLine);
-			cell.setBorder(thickBorder);
-			
+		
 		}
 	}
 
@@ -464,7 +485,7 @@ public class TCellListener implements MouseListener {
 					}
 				} else {
 					if (TInterpreterConstants.alternativeAudio.isAlive()) {
-						TInterpreterConstants.alternativeAudio.stop();
+						TInterpreterConstants.alternativeAudio.interrupt();
 						try {
 							TInterpreterConstants.semaforoAudio.release();
 						} catch (InterruptedException e) {
@@ -492,7 +513,7 @@ public class TCellListener implements MouseListener {
 				} else {
 					if(TInterpreterConstants.audio != null){
 						if (TInterpreterConstants.audio.isAlive()) {
-							TInterpreterConstants.audio.stop();
+							TInterpreterConstants.audio.interrupt();
 							try {
 								TInterpreterConstants.semaforoAudio.release();
 							} catch (InterruptedException e) {
@@ -517,14 +538,14 @@ public class TCellListener implements MouseListener {
 				cell.setFocusPainted(true);
 				cell.setBackground(cell.getBackground());
 			}
-			
-			/*if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
-				try {		
+		
+			if (TInterpreter.returnMouseMode().equals(TInterpreterConstants.AUTOMATIC_SCANNING_MODE)) { // barrido automático
+				try {
 						TInterpreterConstants.semaforo.release();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
 				}
-			}*/
+			}
 		}
 	}
 

@@ -105,7 +105,7 @@ public class TInterpreterWavSound extends Thread {
 		try {
 			while (nBytesRead != -1) {
 				nBytesRead = audioInputStream.read(abData, 0, abData.length);
-				if (nBytesRead >= 0)
+				if (nBytesRead > 0)
 					auline.write(abData, 0, nBytesRead);
 				else
 					try {
