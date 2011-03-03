@@ -52,6 +52,14 @@ public class TInterpreterConstants {
 	
 	public final static int SELECTED_BORDER_SIZE = 4;
 	
+	public final static String OS_WINDOWS = "windows";
+	
+	public final static String OS_LINUX = "linux";
+	
+	//OS
+	
+	public static String operatingSystem=""; 
+	
 	//Mouse modes
 	
 	public final static String AUTOMATIC_SCANNING_MODE = "automaticScanningMode";

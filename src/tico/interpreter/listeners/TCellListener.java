@@ -110,32 +110,35 @@ public class TCellListener implements MouseListener {
 						}
 				}
 			}
+			
+			if (TInterpreterConstants.operatingSystem == TInterpreterConstants.OS_WINDOWS) {
 		
-			if (cell.getVideoPath()!=null) {
-				Point point = cell.getLocationOnScreen();
-				cell.setXVideo(point.x-5);
-				cell.setYVideo(point.y-54);
-				try {
-					TInterpreterVideo video = new TInterpreterVideo(cell.getVideoPath(), cell.getXVideo(), 
-							cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);					
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (cell.getVideoPath()!= null) {
+					Point point = cell.getLocationOnScreen();
+					cell.setXVideo(point.x-5);
+					cell.setYVideo(point.y-54);
+					try {
+						TInterpreterVideo video = new TInterpreterVideo(cell.getVideoPath(), cell.getXVideo(), 
+								cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);					
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+	
+				if (cell.getVideoURL()!=null) {
+					Point point = cell.getLocationOnScreen();
+					cell.setXVideo(point.x-5);
+					cell.setYVideo(point.y-54);
+					try {
+						TInterpreterVideo video = new TInterpreterVideo(cell.getVideoURL(), cell.getXVideo(), 
+								cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);
+						
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
-
-			if (cell.getVideoURL()!=null) {
-				Point point = cell.getLocationOnScreen();
-				cell.setXVideo(point.x-5);
-				cell.setYVideo(point.y-54);
-				try {
-					TInterpreterVideo video = new TInterpreterVideo(cell.getVideoURL(), cell.getXVideo(), 
-							cell.getYVideo(), cell.getWidth(), cell.getHeight(), interpreter);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		
+				
 			if (cell.getTextAreaToSend()!= null){
 				TInterpreterTextArea textArea = TInterpreter.getCurrentBoard().getTextAreaByName(cell.getTextAreaToSend());
 

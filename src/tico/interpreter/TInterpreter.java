@@ -127,7 +127,7 @@ public class TInterpreter extends JFrame {
 	 */
 	public TInterpreter() {
 		
-		super(DEFAULT_TITLE);		
+		super(DEFAULT_TITLE);
 		
 		initSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -153,6 +153,14 @@ public class TInterpreter extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		TInterpreterConstants.interpreter = this;
+		
+		String os = System.getProperty("os.name");
+		if(os.startsWith("Windows")){
+			TInterpreterConstants.operatingSystem = TInterpreterConstants.OS_WINDOWS;
+		}
+		if(os.startsWith("Linux")){
+			TInterpreterConstants.operatingSystem = TInterpreterConstants.OS_LINUX;
+		}
 	}	
 	
 	/**
