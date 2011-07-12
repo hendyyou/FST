@@ -1,7 +1,7 @@
 /*
  * File: TEditorMenuBar.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,17 +22,13 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.FileWriter;
-import java.util.Iterator;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -44,20 +40,12 @@ import tico.components.TMenuItem;
 import tico.components.TToolBarContainer;
 import tico.configuration.TLanguage;
 import tico.editor.actions.THideToolBarAction;
-
-import tico.pluginInterfaces.TPluginMBInterface;
-import org.java.plugin.ObjectFactory;
-import org.java.plugin.PluginManager;
-import org.java.plugin.PluginManager.PluginLocation;
-import org.java.plugin.registry.Extension;
-import org.java.plugin.registry.ExtensionPoint;
-import org.java.plugin.registry.PluginDescriptor;
-import org.java.plugin.standard.StandardPluginLocation;
+import tico.imageGallery.TImageGalleryMenuBar;
 
 /**
  * Editor's menu bar.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TEditorMenuBar extends JMenuBar {
@@ -67,9 +55,9 @@ public class TEditorMenuBar extends JMenuBar {
 
 	private TActionSet actionSet;
 	
-	public static final File pluginsDir = new File("plugins");
+	//public static final File pluginsDir = new File("plugins");
 	
-	private PluginManager pluginManager;
+	//private PluginManager pluginManager;
 
 	/**
 	 * Creates a new <code>TEditorMenuBar</code> for the specified <code>editor</code>.
@@ -231,6 +219,11 @@ public class TEditorMenuBar extends JMenuBar {
 		menu.add(menuItem);
 
 		menu.add(new JSeparator());
+		
+		menuItem = new TMenuItem(actionSet.getAction(TActionSet.DELETE_ACTION));
+		menuItem.setMnemonic(KeyEvent.VK_B);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		menu.add(menuItem);
 
 		menuItem = new TMenuItem(actionSet
 				.getAction(TActionSet.SELECT_ALL_ACTION));
@@ -328,12 +321,18 @@ public class TEditorMenuBar extends JMenuBar {
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				ActionEvent.SHIFT_MASK));
 		menu.add(menuItem);
+		
+		menuItem = new TMenuItem(actionSet.getAction(TActionSet.CELL_CONTROLLER_HANDLER));
+		menuItem.setMnemonic(KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
 
-		menuItem = new TMenuItem(actionSet.getAction(TActionSet.GRID_HANDLER));
+		/*menuItem = new TMenuItem(actionSet.getAction(TActionSet.GRID_HANDLER));
 		menuItem.setMnemonic(KeyEvent.VK_U);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U,
 				ActionEvent.SHIFT_MASK));
-		menu.add(menuItem);
+		menu.add(menuItem);*/
 
 		menu.add(new JSeparator());
 		menuItem = new TMenuItem(actionSet.getAction(TActionSet.LINE_HANDLER));
@@ -374,12 +373,6 @@ public class TEditorMenuBar extends JMenuBar {
 		menuItem.setMnemonic(KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
 				ActionEvent.SHIFT_MASK));
-		menu.add(menuItem);
-
-		menu.add(new JSeparator());
-		menuItem = new TMenuItem(actionSet.getAction(TActionSet.DELETE_ACTION));
-		menuItem.setMnemonic(KeyEvent.VK_B);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 		menu.add(menuItem);
 
 		add(menu);
@@ -423,7 +416,7 @@ public class TEditorMenuBar extends JMenuBar {
 		// Create the menu
 		JMenu menu = new JMenu(TLanguage.getString("TEditorMenuBar.VALIDATION_MENU"));	
 
-		// Create de menu items
+		// Create the menu items
 		TMenuItem menuItem;
 		JMenu submenu;
 		
@@ -471,54 +464,13 @@ public class TEditorMenuBar extends JMenuBar {
 		//Define the extension point and add the existing plugins
 		
 		JMenu menuValidation = createValidationMenu();
-		JMenu menu = new JMenu();	
+		JMenu menu = new JMenu(TLanguage.getString("TEditorMenuBar.DYNAMIC_MENU"));
 		
-		try {
-			
-			pluginManager = ObjectFactory.newInstance().createManager();
-
-			File[] plugins = pluginsDir.listFiles(new FilenameFilter() {
-	
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".zip");
-				}	    		
-			});
-			PluginLocation[] locations = new PluginLocation[plugins.length];
-			
-			for (int i = 0; i < plugins.length; i++) {
-				locations[i] = StandardPluginLocation.create(plugins[i]);
-			}
-			
-			pluginManager.publishPlugins(locations);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			
-			menu = new JMenu(TLanguage.getString("TEditorMenuBar.DYNAMIC_MENU"));
-			menu.add(menuValidation);
-			
-			PluginDescriptor core = pluginManager.getRegistry().getPluginDescriptor("org.plugin.tico.coreMenuBar");
-			
-			ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), "MenuBar");
-			for (Iterator it = point.getConnectedExtensions().iterator(); it.hasNext();) {
-				
-				Extension ext = (Extension) it.next();				
-				PluginDescriptor descr = ext.getDeclaringPluginDescriptor();
-				pluginManager.activatePlugin(descr.getId());
-				
-				ClassLoader classLoader = pluginManager.getPluginClassLoader(descr);				
-				Class pluginCls = classLoader.loadClass(ext.getParameter("class").valueAsString());
-				TPluginMBInterface plugin = (TPluginMBInterface) pluginCls.newInstance();
-				
-				menu.add(new JSeparator());
-		        menu.add(plugin.init(editor));		        
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		menu.add(menuValidation);
+		menu.add(new JSeparator());
+		
+		TImageGalleryMenuBar imageGalleryMenu = new TImageGalleryMenuBar();
+        menu.add(imageGalleryMenu.createImageGalleryMenu(editor));	
 		this.add(menu);
 	}
 

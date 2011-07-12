@@ -1,7 +1,7 @@
 /*
  * File: TProjectOpenAction.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.actions;
 
 import java.awt.Component;
@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import tico.components.resources.ProjectFilter;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 
@@ -81,8 +82,11 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 		// Open the project
 		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
-		// Customoze JFileChooser
+		// Customize JFileChooser
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectOpenAction.OPEN_PROJECT"));
+		if (!TSetup.getEditorHome().equals("")){
+			defaultDirectory = new File(TSetup.getEditorHome());
+		}
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.addChoosableFileFilter(new ProjectFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
@@ -90,10 +94,16 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 		// Checks if the user has chosen a file
 		int returnValue = fileChooser.showOpenDialog((Component)null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			
+			// Waiting cursor while the project is being opened
+			getEditor().changeToWaitingCursor();
+			
 			// Get the chosen file
 			File selectedFile = fileChooser.getSelectedFile();
 			// Set its directory as next first JFileChooser directory
 			defaultDirectory = selectedFile.getParentFile();
+			// Set the editor home directory
+			TSetup.setEditorHome(selectedFile.getParent().toString());
 
 			try {
 				getEditor().deleteProject();
@@ -101,12 +111,15 @@ public class TProjectOpenAction extends TEditorAbstractAction {
 				getEditor().setProject(TProjectHandler.loadProject(selectedFile));
 				// Set selectedFile as the project file
 				getEditor().setProjectFile(selectedFile);
+				// Set the default cursor
+				getEditor().restoreCursor();
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,
 						TLanguage.getString("TProjectOpenAction.OPEN_ERROR"),
 						TLanguage.getString("ERROR") + "!",
 						JOptionPane.ERROR_MESSAGE);
+				getEditor().restoreCursor();
 			}
 		}
 	}

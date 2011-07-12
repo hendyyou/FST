@@ -1,7 +1,7 @@
 /*
  * File: TProjectSaveAsAction.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.actions;
 
 import java.awt.Component;
@@ -39,11 +39,12 @@ import tico.components.resources.ProjectFilter;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TEditor;
 import tico.editor.TProjectHandler;
 
 /**
- * Action wich saves the current editor project into a file with the specified
+ * Action which saves the current editor project into a file with the specified
  * name.
  * 
  * @author Pablo Muñoz
@@ -55,8 +56,7 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 	/**
 	 * Constructor for TProjectSaveAsAction.
 	 * 
-	 * @param editor
-	 *            The boards' editor
+	 * @param editor The boards' editor
 	 */
 	public TProjectSaveAsAction(TEditor editor) {
 		super(editor, TLanguage.getString("TProjectSaveAsAction.NAME"),
@@ -69,7 +69,7 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
-		// Customoze JFileChooser
+		// Customize JFileChooser
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectSaveAsAction.SAVE_PROJECT"));
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.setSelectedFile(new File(getEditor().getProject()
@@ -107,6 +107,8 @@ public class TProjectSaveAsAction extends TEditorAbstractAction {
 				getEditor().setModified(false);
 				// Set the selected file as the base file for the project
 				getEditor().setProjectFile(selectedFile);
+				// Set the editor home directory
+				TSetup.setEditorHome(selectedFile.getParent().toString());
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,

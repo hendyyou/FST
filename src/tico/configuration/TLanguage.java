@@ -1,7 +1,7 @@
 /*
  * File: TLanguage.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.configuration;
 
 import java.io.File;
@@ -119,7 +119,7 @@ public class TLanguage {
 		}
 
 		return languagesMap;
-	}
+	}	
 
 	/**
 	 * Returns the string of the specified <code>key</code> in the current
@@ -132,9 +132,32 @@ public class TLanguage {
 		try {
 			return LANGUAGE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			return '!' + key + '!';
+			return '¡' + key + '!';
 		} catch (NullPointerException e) {
-			return '!' + key + '!';
+			return '¡' + key + '!';
 		}
+	}
+	
+	public static String getString(String language, String key){
+		
+		String keyValue = null;
+		
+		File languageDirectory = new File(LANGUAGE_DIRECTORY);
+		File[] fileList = languageDirectory.listFiles();
+		
+		for (int i = 0; i < fileList.length; i++) {
+			try {
+				if (TFileUtils.getExtension(fileList[i]).equals("lang")) {
+					TResourceBundle currentLanguageBundle = new TResourceBundle(
+							new FileInputStream(fileList[i]));
+					if (language.equals(currentLanguageBundle.getString("LANG_NAME"))){
+						keyValue = currentLanguageBundle.getString(key);
+					}
+				}
+			} catch (IOException e) {
+			}
+		}
+		return keyValue;
+		
 	}
 }

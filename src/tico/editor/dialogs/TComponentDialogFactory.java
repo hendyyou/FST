@@ -1,7 +1,7 @@
 /*
  * File: TComponentDialogFactory.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,13 +22,14 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.dialogs;
 
 import tico.board.components.TCell;
 import tico.board.components.TComponent;
+import tico.board.components.TControllerCell;
 import tico.board.components.TGridCell;
 import tico.board.components.TLabel;
 import tico.board.components.TLine;
@@ -66,6 +67,8 @@ public class TComponentDialogFactory {
 	public void createComponentDialog(TComponent component) {
 		if (component instanceof TCell)
 			new TCellDialog(boardContainer, component);
+		if (component instanceof TControllerCell)
+			new TControllerCellDialog(boardContainer, component);
 		if (component instanceof TGridCell)
 			new TGridCellDialog(boardContainer, component);
 		if (component instanceof TTextArea)

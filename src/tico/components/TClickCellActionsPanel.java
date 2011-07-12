@@ -1,7 +1,7 @@
 /*
  * File: TClickCellActionsPanel.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import java.awt.Color;
@@ -66,6 +66,8 @@ public class TClickCellActionsPanel extends JPanel {
 	private JPanel accumulatePanel;
 	// The accumulate check box
 	private JCheckBox accumulateCheckBox;
+	// The show controller check box
+	private JCheckBox showController;
 
 	/**
 	 * Creates a new <code>TClickCellActionsPanel</code> with the elements of
@@ -98,13 +100,13 @@ public class TClickCellActionsPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		// Place selectBoardPanel
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 0;
 		add(selectBoardPanel, c);
 		// Place accumulatePanel
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 1;
 		c.gridy = 0;
 		add(accumulatePanel, c);
@@ -149,8 +151,8 @@ public class TClickCellActionsPanel extends JPanel {
 	 * 
 	 * @return The selected <code>followingBoard</code>
 	 */
-	public TBoard getFollowingBoard() {
-		return (TBoard)followingBoardComboBox.getSelectedItem();
+	public String getFollowingBoard() {
+		return (String)followingBoardComboBox.getSelectedItem();
 	}
 
 	/**
@@ -158,7 +160,7 @@ public class TClickCellActionsPanel extends JPanel {
 	 * 
 	 * @param followingBoard The <code>followingBoard</code> to set
 	 */
-	public void setFollowingBoard(TBoard followingBoard) {
+	public void setFollowingBoard(String followingBoard) {
 		followingBoardComboBox.setSelectedItem(followingBoard);		
 	}
 

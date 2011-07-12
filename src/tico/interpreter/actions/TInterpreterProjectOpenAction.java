@@ -1,7 +1,7 @@
 /*
  * File: TInterpreterProjectOpenAction.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Antonio Rodríguez
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,15 +22,14 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.interpreter.actions;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -38,22 +37,24 @@ import javax.swing.JOptionPane;
 import tico.components.resources.ProjectFilter;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
+import tico.configuration.TSetup;
 import tico.editor.TProjectHandler;
 import tico.interpreter.TInterpreter;
-import tico.interpreter.TInterpreterConstants;
-import tico.interpreter.TPanel;
+import tico.interpreter.TInterpreterProject;
 
 /**
- * Action wich opens a project from a file and set it to the interpreter.
+ * Action which opens a project from a file and set it to the interpreter.
  * 
- * @author Pablo Muñoz
+ * @author Antonio Rodríguez
  * @version 1.0 Nov 20, 2006
  */
-public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
-	private static File defaultDirectory = null;
 
+public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction{
+	
+	private static File defaultDirectory = null;
+	
 	/**
-	 * Constructor for TProjectOpenAction.
+	 * Constructor for TInterpreterProjectOpenAction.
 	 * 
 	 * @param interpreter The boards' interpreter
 	 */
@@ -66,11 +67,11 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
-		// Open the project
-		// Open a JFileChooser
 		JFileChooser fileChooser = new JFileChooser();
-		// Customoze JFileChooser
 		fileChooser.setDialogTitle(TLanguage.getString("TProjectOpenAction.OPEN_PROJECT"));
+		if (!TSetup.getInterpreterHome().equals("")){
+			defaultDirectory = new File(TSetup.getInterpreterHome());
+		}
 		fileChooser.setCurrentDirectory(defaultDirectory);
 		fileChooser.addChoosableFileFilter(new ProjectFilter());
 		fileChooser.setAcceptAllFileFilterUsed(false);
@@ -78,41 +79,35 @@ public class TInterpreterProjectOpenAction extends TInterpreterAbstractAction {
 		// Checks if the user has chosen a file
 		int returnValue = fileChooser.showOpenDialog((Component)null);
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
-			// Get the chosen file
-			
-			// Set its directory as next first JFileChooser directory
-			
-			TInterpreterConstants.vmap=null;
-			TInterpreterConstants.map2=null;
-			interpreter.BrowseGrid=0;
-			TInterpreterConstants.SecondClic=0;
-			TInterpreterConstants.ClicReleased=0;
-			TInterpreterRun.fin=false;
+			// Waiting cursor while the project is being opened
+			interpreter.TIntepreterWaitingCursor();
+			// Delete accumulated cells
+			TInterpreter.accumulatedCells.removeAll();
+			TInterpreter.accumulatedCells.updateUI();
+			// Get the chosen file			
+			// Set its directory as next first JFileChooser directory		
 			File selectedFile = fileChooser.getSelectedFile();
 			defaultDirectory = selectedFile.getParentFile();
+			// Set the editor home directory
+			TSetup.setInterpreterHome(selectedFile.getParent().toString());
 			try {
-				//Update Maps
-				
 				getInterpreter().deleteProject();
-				// Load the project
-				
-				getInterpreter().setProject(TProjectHandler.loadProject(selectedFile));
-				
-				
+				// Load the project				
+				TInterpreterProject project = TProjectHandler.loadProjectInterpreter(selectedFile);
+				getInterpreter().setProject(project);
+				TInterpreter.setEnabledActions(true);
+				getInterpreter().setTitle(TInterpreter.DEFAULT_TITLE + " - " + project.getName());
+				// Set the default cursor
+				interpreter.TInterpreterRestoreCursor();
 			} catch (Exception ex) {
 				// If the import fails show an error message
 				JOptionPane.showMessageDialog(null,
 						TLanguage.getString("TProjectOpenAction.OPEN_ERROR"),
 						TLanguage.getString("ERROR") + "!",
 						JOptionPane.ERROR_MESSAGE);
+				interpreter.TInterpreterRestoreCursor();
 			}
-			
-			getInterpreter().accumulatedArea.removeAll();
-			
-				
-			getInterpreter().AccumulatedList = new ArrayList();
-			getInterpreter().accumulatedArea.updateUI();
-			TInterpreterRun.i=0;
+						
 		}
 	}
 }

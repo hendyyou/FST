@@ -1,9 +1,9 @@
 Tico - Universidad de Zaragoza, CPS, DIIS
 
-An application to create and perfom interactive comunication boards
+An application to create and perform interactive communication boards
 to be used by people with severe motor disabilities.
 
-By Pablo MuÃ±oz, Fernando Negre & David Ramos
+By Pablo Muñoz, Fernando Negre & David Ramos, Antonio Rodríguez, Beatriz Mateo, Patricia Martínez, Carolina Palacio
 
 
 TABLE OF CONTENTS
@@ -16,12 +16,10 @@ TABLE OF CONTENTS
 5. License
 6. Contact Email
 
-
 1. Requirements
 ----------------
-o  Tico requires a Java 1.4 or later compatible virtual 
-   machine for your operating system. (Java 1.4.2 is recommended.)
-   Java 1.5.x is known to work correctly.
+o  Tico requires a Java 1.6 or later compatible virtual 
+   machine for your operating system.
    
 The most recent version of Java can be obtained from http://java.sun.com/j2se/
 Compiling Tico requires Ant. To obtain Ant go to http://ant.apache.org/
@@ -33,7 +31,7 @@ selected directory path for the Ant binaries.
 2. What is it?
 --------------
 The intention of this project is to provide a freely available application
-to create and perfom interactive comunication boards to be used by people
+to create and perform interactive communication boards to be used by people
 with severe motor disabilities.
 
 3. Getting Help
@@ -50,7 +48,9 @@ For legal and licensing issues, please read the LICENSE.txt file.
 
 6. Contact Email
 ----------------
-Feed and comments: cpeealborada@gmail.com
+Feed and comments: ticoproyecto@gmail.com, cpeealborada@gmail.com
 
 For more information please visit
+
+http://www.proyectotico.es
 http://centros6.pntic.mec.es/alborada/cps/

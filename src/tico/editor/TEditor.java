@@ -1,7 +1,7 @@
 /*
  * File: TEditor.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,13 +22,14 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -90,7 +91,7 @@ public class TEditor extends JFrame {
 	private File projectFile = null;
 
 	// Board modification elements
-	private TUnorderList boardList;
+	private TOrderList boardList;
 
 	private TOrderList cellOrderList;
 
@@ -153,6 +154,7 @@ public class TEditor extends JFrame {
 			setProject(project);
 
 		setVisible(true);
+		TBoardConstants.editor = this;
 	}
 
 	// Sets the window attributes
@@ -193,13 +195,24 @@ public class TEditor extends JFrame {
 		setJMenuBar(new TEditorMenuBar(this, toolBarContainer));
 	}
 
-	// Creates de board edition area
+	// Creates the board edition area
 	private void createBoardEditor() {
 		// Create board list
 		JPanel boardListPanel = new JPanel();
 		boardListPanel.setLayout(new BorderLayout());
 
-		boardList = new TUnorderList();
+		boardList = new TOrderList();
+		boardList.addOrderChangeListener(new OrderChangeListener() {
+			public void orderChanged(OrderChangeEvent e) {
+				AttributeMap map = new AttributeMap();
+				getProject().setBoardList(boardList.getList());
+				/*TBoardConstants
+						.setOrderedCellList(map, boardList.getList());*/
+				Map nested = new Hashtable();
+				nested.put(getCurrentBoard().getModel(), map);
+				getCurrentBoard().getGraphLayoutCache().edit(nested);
+			}
+		});
 		boardList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (getCurrentBoardContainer() != null)
@@ -490,7 +503,8 @@ public class TEditor extends JFrame {
 		if (getCurrentBoardContainer() != null) {
 			boardPanel.add(getCurrentBoardContainer(), BorderLayout.CENTER);
 		}
-
+		TBoardConstants.currentBoard = getCurrentBoard();
+		
 		boardPanel.updateUI();
 		updateCellOrderList();
 	}
@@ -563,8 +577,8 @@ public class TEditor extends JFrame {
 				projectExists);
 		actionSet.getAction(TActionSet.PROJECT_IMPORT_ACTION).setEnabled(
 				projectExists);
-		actionSet.getAction(TActionSet.PROJECT_INTERPRET_ACTION).setEnabled(
-				projectExists);
+		/*actionSet.getAction(TActionSet.PROJECT_INTERPRET_ACTION).setEnabled(
+				projectExists);*/
 		actionSet.getAction(TActionSet.PROJECT_PROPERTIES_ACTION).setEnabled(
 				projectExists);
 		actionSet.getAction(TActionSet.PROJECT_VALIDATION_ACTION).setEnabled(
@@ -585,7 +599,8 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.SELECTION_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.CELL_HANDLER).setEnabled(boardExists);
-		actionSet.getAction(TActionSet.GRID_HANDLER).setEnabled(boardExists);
+		actionSet.getAction(TActionSet.CELL_CONTROLLER_HANDLER).setEnabled(boardExists);
+		//actionSet.getAction(TActionSet.GRID_HANDLER).setEnabled(boardExists);
 		actionSet.getAction(TActionSet.TEXT_AREA_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.LABEL_HANDLER).setEnabled(boardExists);
@@ -606,8 +621,6 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.BOARD_PROPERTIES_ACTION).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.BOARD_DELETE_ACTION).setEnabled(
-				boardExists);
-		actionSet.getAction(TActionSet.BOARD_INTERPRET_ACTION).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.BOARD_EXPORT_ACTION).setEnabled(
 				boardExists);
@@ -657,6 +670,26 @@ public class TEditor extends JFrame {
 			cellOrderList.setSelectedValue(selectedObject);
 		}
 	}
+	
+	/**
+	 * Change Editor's Cursor into a waiting clock
+	 * 
+	 */
+	
+	public void changeToWaitingCursor(){			
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+  	}
+	
+	/**
+	 * Restore Default Cursor. 
+	 * 
+	 */
+	
+	public void restoreCursor(){
+		Cursor cursorBar = new Cursor(Cursor.DEFAULT_CURSOR);
+		this.setCursor(cursorBar);
+	}
+	
 
 	/**
 	 * Enables and disables the selection depending actions.

@@ -1,7 +1,7 @@
 /*
  * File: TBoardConstants.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board;
 
 import java.awt.Color;
@@ -37,6 +37,8 @@ import javax.swing.Icon;
 import org.jgraph.graph.GraphConstants;
 
 import tico.board.components.TComponent;
+import tico.editor.TEditor;
+
 /**
  * A collection of attribute keys and methods to apply to a <code>Map</code>
  * to get/set the properties in a typesafe manner added to the base
@@ -46,15 +48,29 @@ import tico.board.components.TComponent;
  * @version 1.0 Nov 20, 2006
  */
 public class TBoardConstants extends GraphConstants {
+	
+	public static TBoard currentBoard = null;
+	public static TEditor editor = null;
+	
 	/**
 	 * Default background color.
 	 */
-	public final static Color DEFAULTBACKGROUND = Color.WHITE;
+	public final static Color DEFAULT_BACKGROUND = Color.WHITE;
 
 	/**
-	 * Default foregrodun color.
+	 * Default foreground color.
 	 */
-	public final static Color DEFAULTFOREGROUND = Color.BLACK;
+	public final static Color DEFAULT_FOREGROUND = Color.BLACK;
+	
+	/**
+	 * Default alternative border color.
+	 */
+	public final static Color DEFAULT_ALTERNATIVE_BORDERCOLOR = Color.RED;
+	
+	/**
+	 * Default alternative border SIZE.
+	 */
+	public final static int DEFAULT_ALTERNATIVE_LINEWIDTH = 4;
 
 	/**
 	 * Represents the fit imageResizeStyle.
@@ -111,7 +127,32 @@ public class TBoardConstants extends GraphConstants {
 	 * @see #setStartCorner(Map, int)
 	 */
 	public final static int BOTTOM_RIGHT_CORNER = 7;
-
+	
+	/**
+	 * Represents the size of the image controller in the controller cell menu.
+	 */
+	public final static int CONTROLLER_IMAGE_SIZE = 70;
+	
+	/**
+	 * Represents the action of a controller cell.
+	 * 
+	 * @see #getActionCode(Map)
+	 * @see #setActionCode(Map, int)
+	 */
+	public final static int EXIT_ACTION_CODE = 1;
+	
+	public final static int UNDO_ACTION_CODE = 2;
+	
+	public final static int UNDO_ALL_ACTION_CODE = 3;
+	
+	public final static int READ_ACTION_CODE = 4;
+	
+	public final static int RETURN_ACTION_CODE = 5;
+	
+	public final static int STOP_ACTION_CODE = 6;
+	
+	public final static int HOME_ACTION_CODE = 7;
+	
 	/**
 	 * Key for the <code>text</code> attribute. Use instances of String as
 	 * values for this key.
@@ -150,10 +191,28 @@ public class TBoardConstants extends GraphConstants {
 	public final static String BROWSING_SOUND_FILE ="browsingSound";
 	
 	/**
+	 * Key for the <code>videoFile</code> attributes. Use instances of
+	 * String as values for this key.
+	 */
+	public final static String VIDEO_FILE = "videoFile";
+	
+	/**
+	 * Key for the <code>videoURL</code> attributes. Use instances of
+	 * String as values for this key.
+	 */
+	public final static String VIDEO_URL = "videoURL";
+	
+	/**
 	 * Key for the <code>startCorner</code> attribute. Use instances of
 	 * Integer as values for this key.
 	 */
 	public final static String START_CORNER = "startCorner";
+	
+	/**
+	 * Key for the <code>actionCode</code> attribute. Use instances of
+	 * Integer as values for this key.
+	 */
+	public final static String ACTION_CODE = "actionCode";
 
 	/**
 	 * Key for the <code>column</code> attribute. Use instances of Integer as
@@ -244,13 +303,13 @@ public class TBoardConstants extends GraphConstants {
 	 * values for this key.
 	 */
 	
-	public final static String CHANGE_LINE_WIDTH="LineChangeWidth";
+	public final static String ALTERNATIVE_LINEWIDTH="alternativeLinewidth";
 	
 	/**
 	 * Key for the <code>ChangeColor</code> attribute. Use instances of Color as 
 	 * values for this key.
 	 */
-	public final static String CHANGE_COLOR="ChangeColor";
+	public final static String ALTERNATIVE_BORDER_COLOR="alternativeBorderColor";
 	
 	/**
 	 * Key for the <code>ChangeColorGrid</code> attribute. Use instances of Color as 
@@ -268,13 +327,13 @@ public class TBoardConstants extends GraphConstants {
 	 * Key for the <code>EnvironmentAction</code> attribute. Use instances of String as 
 	 * values for this key.
 	 */
-	public final static String ENVIRONMENT_ACTION="EnvironmentAction";
+	public final static String ENVIRONMENT_ACTION="environmentAction";
 	
 	/**
 	 * Key for the <code>ActionPosition</code> attribute. Use instances of Integer as 
 	 * values for this key.
 	 */
-	public final static String ACTION_POSITION="ActionPosition";
+	public final static String ACTION_POSITION="actionPosition";
 	
 
 	/**
@@ -359,7 +418,41 @@ public class TBoardConstants extends GraphConstants {
 	{
 		map.put(BROWSING_SOUND_FILE, value);
 	}
+	
 	/**
+     * Returns the videoFile attribute from the specified map.
+     */
+    public static final String getVideoFile(Map map) {
+        File fichero=(File)map.get(VIDEO_FILE);
+        if (fichero!=null)
+        return fichero.getPath();
+        else return null;
+    }
+
+    /**
+     * Sets the videoFile attribute in the specified map to the specified
+     * value.
+     */
+    public static final void setVideoFile(Map map, String value) {
+        map.put(VIDEO_FILE,new File(value));
+    }
+    
+    /**
+     * Returns the videoFile attribute from the specified map.
+     */
+    public static final String getVideoURL(Map map) {
+    	return (String)map.get(VIDEO_URL);
+    }
+
+    /**
+     * Sets the videoFile attribute in the specified map to the specified
+     * value.
+     */
+    public static final void setVideoURL(Map map, String value) {
+        map.put(VIDEO_URL, value);
+    }
+
+    /**
 	 * Returns the alternateIcon attribute from the specified map.
 	 */
 	public static final Icon getAlternativeIcon(Map map) {
@@ -379,6 +472,24 @@ public class TBoardConstants extends GraphConstants {
 	 */
 	public static final int getStartCorner(Map map) {
 		Integer intObj = (Integer)map.get(START_CORNER);
+		if (intObj != null)
+			return intObj.intValue();
+		return 0;
+	}
+	
+	/**
+	 * Sets the actionCode attribute in the specified map to the specified
+	 * value.
+	 */
+	public static final void setActionCode(Map map, int value) {
+		map.put(ACTION_CODE, new Integer(value));
+	}
+
+	/**
+	 * Returns the actionCode attribute from the specified map.
+	 */
+	public static final int getActionCode(Map map) {
+		Integer intObj = (Integer)map.get(ACTION_CODE);
 		if (intObj != null)
 			return intObj.intValue();
 		return 0;
@@ -608,36 +719,40 @@ public class TBoardConstants extends GraphConstants {
 	/**
 	 * Sets the followingBoard attribute in the specified map to the specified value.
 	 */
-	public static final void setFollowingBoard(Map map, TBoard value) {
+	public static final void setFollowingBoard(Map map, String value) {
 		map.put(FOLLOWING_BOARD, value);
 	}
 
 	/**
 	 * Returns the followingBoard attribute from the specified map.
 	 */
-	public static final TBoard getFollowingBoard(Map map) {
+	/*public static final TBoard getFollowingBoard(Map map) {
 		return (TBoard)map.get(FOLLOWING_BOARD);
+	}*/
+	
+	public static final String getFollowingBoardName(Map map) {
+		return (String)map.get(FOLLOWING_BOARD);
 	}
 	
-	public static final void setChangeLineWidth(Map map, int value)
+	public static final void setAlternativeLinewidth(Map map, int value)
 	{
-		map.put(CHANGE_LINE_WIDTH, new Integer(value));
+		map.put(ALTERNATIVE_LINEWIDTH, new Integer(value));
 	}
 	
-	public static final int getChangeLineWidth(Map map) {
-		Integer intObj = (Integer)map.get(CHANGE_LINE_WIDTH);
+	public static final int getAlternativeLinewidth(Map map) {
+		Integer intObj = (Integer)map.get(ALTERNATIVE_LINEWIDTH);
 		
 		if (intObj != null)
 			return intObj.intValue();
 		return 0;
 	}
 
-	public static final void setChangeColor(Map map, Color value) {
-		map.put(CHANGE_COLOR, value);
+	public static final void setAlternativeBorderColor(Map map, Color value) {
+		map.put(ALTERNATIVE_BORDER_COLOR, value);
 	}
 	
-	public static final Color getChangeColor(Map map) {
-		Color colObj = (Color)map.get(CHANGE_COLOR);
+	public static final Color getAlternativeBorderColor(Map map) {
+		Color colObj = (Color)map.get(ALTERNATIVE_BORDER_COLOR);
 		
 		if (colObj != null)
 			return colObj;

@@ -1,7 +1,7 @@
 /*
  * File: TFileHandler.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor;
 
 import java.io.File;
@@ -87,14 +87,21 @@ public class TFileHandler {
 	 * @return The new internal file
 	 * @throws IOException If there is any problem importing the file
 	 */
+	
 	public static File importFile(File file) throws IOException {
+		
 		String directoryPath = currentDirectoryPath;
 		
 		if (TFileUtils.isImageFile(file))
 		{
 			directoryPath += File.separator + "image";}
+		
 		if (TFileUtils.isSoundFile(file)){
 			directoryPath += File.separator + "sound";
+			}
+		
+		if (TFileUtils.isVideoFile(file)){
+			directoryPath += File.separator + "video";
 			}
 
 		File directory = new File(directoryPath);
@@ -120,9 +127,19 @@ public class TFileHandler {
 	// Import an external file to an internal file
 	private static File importFile(File srcFile, File dstDir)
 			throws IOException {
-		File newFile = new File(dstDir, srcFile.getName());
-		String baseFilename = srcFile.getName();
-
+		String baseFilename;
+		File newFile;
+		
+		String name = getFilename(srcFile.getName());
+		String extension = getExtension(srcFile.getName());
+		String nameRenamed = replace(name);
+		if (!nameRenamed.equals(name)){
+			newFile = new File(dstDir,nameRenamed+"."+extension);
+			baseFilename = nameRenamed+"."+extension;
+		}else{
+			newFile = new File(dstDir, srcFile.getName());
+			baseFilename = srcFile.getName();
+		}
 		if ((!dstDir.exists()) || (!dstDir.canWrite()))
 			throw new IOException("Invalid destination directory");
 		if ((!srcFile.exists()) || (srcFile.isDirectory()))
@@ -260,5 +277,34 @@ public class TFileHandler {
 
 		sourceChannel.close();
 		destinationChannel.close();
+	}
+
+	private static String replace(String word){
+		String result = word.replace(' ', '_').replace(',', '-').replace('�', 'a').replace('�', 'e').replace('�', 'i').replace('�', 'o').replace('�', 'u').
+		replace('�', 'A').replace('�', 'E').replace('�', 'I').replace('�', 'O').replace('�', 'U').replace("�", "ny").replace("�", "NY").toLowerCase();
+		return result;
+	}
+	
+	public static String getFilename(String filePath) {
+		String fileName = null;
+		
+		int ini = -1;
+		int end = filePath.lastIndexOf('.');
+
+		if ((ini < end) && (ini >= -1 && ini < filePath.length() - 1)
+				&& (end >= 0 && end < filePath.length()))
+			fileName = filePath.substring(ini + 1, end);
+		
+		return fileName;
+	}
+	
+	public static String getExtension(String filePath) {
+		String extension = null;
+		int i = filePath.lastIndexOf('.');
+
+		if (i > 0 && i < filePath.length() - 1)
+			extension = filePath.substring(i + 1).toLowerCase();
+
+		return extension;
 	}
 }

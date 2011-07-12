@@ -1,7 +1,7 @@
 /*
  * File: TSoundChooser.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import java.awt.Color;
@@ -64,7 +64,7 @@ import tico.configuration.TLanguage;
 import tico.editor.TFileHandler;
 
 import tico.editor.dialogs.TRecordSound;
-import tico.interpreter.threads.TMp3Sound;
+import tico.interpreter.threads.TInterpreterMp3Sound;
 
 /**
  * Components to a sound file.
@@ -85,7 +85,7 @@ public class TSoundChooser extends JPanel {
 	private AudioFormat audioFormat;
 	private AudioInputStream audioInputStream;
 	private AudioPlayThread audioPlayThread;
-	private TMp3Sound prueba=null;
+	private TInterpreterMp3Sound prueba=null;
 
 	// Sound name panel
 	private JPanel soundNamePane;
@@ -136,7 +136,7 @@ public class TSoundChooser extends JPanel {
 		setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
@@ -144,7 +144,7 @@ public class TSoundChooser extends JPanel {
 		add(soundNamePane, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 0;
@@ -241,7 +241,7 @@ public class TSoundChooser extends JPanel {
 		String extension=TFileUtils.getExtension(soundFilePath);
 		if (extension.equals("mp3"))
 		{
-			 prueba= new TMp3Sound(soundFilePath);
+			 prueba= new TInterpreterMp3Sound(soundFilePath);
 			 prueba.TPlay();
 			 
 			 stopSoundButton.setEnabled(true);
@@ -356,26 +356,11 @@ public class TSoundChooser extends JPanel {
 	
 	private class RecordSoundButtonListener implements ActionListener {
 		
-
 		public void actionPerformed(ActionEvent e) {
 			
-				TRecordSound capturePlayback = new TRecordSound();
-				TRecordSound.text=null;
-		        capturePlayback.open();
-		        TDialog f = new TDialog(null,TLanguage.getString("TSoundChooser.RECORD"),true);
+			TRecordSound recordSoundWindow = new TRecordSound();
 		        
-		        f.setEnabled(true);
-		        f.getContentPane().add("Center", capturePlayback);
-		        
-		        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		        int w = 720;
-		        int h = 340;
-		        f.setLocation(screenSize.width/2 - w/2, screenSize.height/2 - h/2);
-		        f.setSize(w, h);
-		        f.setVisible(true);
-		        
-		        if (TRecordSound.text!=null)
-		        	
+		        if (TRecordSound.text!=null)		        	
 		        {
 		        	File selectedFile = TRecordSound.text;
 					// Set its directory as next first JFileChooser directory
@@ -397,8 +382,6 @@ public class TSoundChooser extends JPanel {
 					}
 		        	
 		        }
-		       
-				
 		}
 		
 	}

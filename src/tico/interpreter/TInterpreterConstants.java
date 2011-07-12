@@ -1,19 +1,19 @@
 /*
- * File: TSoundChooser.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * File: TInterpreterConstants.java
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Pablo Muñoz
+ * Authors: Carolina Palacio
  * 
- * Date: Aug 22, 2006
+ * Date: Dec, 2009
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,84 +22,80 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-
-
-import org.jgraph.graph.AttributeMap;
-
-
-import tico.components.TDialog;
-
-import tico.interpreter.board.TInterpreterTextAreaRenderer;
-import tico.interpreter.threads.TInterpreterSound;
-import tico.interpreter.threads.TMp3Sound;
+import tico.interpreter.threads.TInterpreterMp3Sound;
+import tico.interpreter.threads.TInterpreterWavSound;
 
 /**
  * 
- * @author Antonio Rodriguez
+ * @author Carolina Palacio
  *
  */
 public class TInterpreterConstants {
 	
+	public static TInterpreter interpreter;
+		
+	public final static Color BACKGROUND_COLOR = Color.WHITE;
 	
-	//Constants avalaibles to send text to an Area Text
+	public final static Color BORDER_COLOR = Color.BLACK;
 	
-	public static TInterpreterTextAreaRenderer textRender;
-	public static int sendTextOn=0;
-	public static int positionReceiver=0;
-	public static AttributeMap map2;
-	public static String lastName;
-	public static int time;
-	public static String textToSend;
-	public static int Tejex=0;
-	public static int Tejey=0;
-	public static int Talt=0;
-	public static int Tanch=0;
+	public final static Color SELECTED_BORDER_COLOR = Color.RED;
 	
+	public final static int BORDER_SIZE = 1;
 	
-	//Constants avalaibles to play sound when the mouse is released in a cell
+	public final static int SELECTED_BORDER_SIZE = 4;
+	
+	public final static String OS_WINDOWS = "windows";
+	
+	public final static String OS_LINUX = "linux";
+	
+	//OS
+	
+	public static String operatingSystem=""; 
+	
+	//Mouse modes
+	
+	public final static String AUTOMATIC_SCANNING_MODE = "automaticScanningMode";
+	
+	public final static String DIRECT_SELECTION_MODE = "directSelectionMode";
+	
+	public final static String MANUAL_SCANNING_MODE = "manualScanningMode";
 
-	public static int musicOn=0;
-	public static String ruta;
-	public static TMp3Sound audioMp3=null;
-	public static TInterpreterSound audio=null;
+	//Mouse mode selected
 	
-	//To Resize the cell and update the cell
-	public static int Flag_Resize_Border=0;
-	public static int Original_border=0;
-	public static int New_Border;
-	public static AttributeMap vmap;
-	public static Color Original_Color;
-	public static int ejex=0;
-	public static int ejey=0;
-	public static int alt=0;
-	public static int anch=0;
+	public static String mouseModeSelected = TInterpreterConstants.DIRECT_SELECTION_MODE;
 	
+	//Semáforo que controla la sincronización entre el barrido y las acciones de las celdas
 	
+	public static TSemaphore semaforo = new TSemaphore(1);
 	
-	//sincronize cell Browsing
-	public static int SecondClic=0;
-	public static int ClicReleased=0;
+	public static TInterpreterMp3Sound audioMp3 = null;
 	
-	//Window Finale
-	public static int WindowController=0;
-	public static TDialog FinalWindow=null;
+	public static TInterpreterWavSound audio = null;
 	
-	public static String interpreterCursor=null;
-	public static String nameCursor=null;
-	public static int interpreterDelay=1000;
-	public static int interpreterAcumulatedCells=5;
-	public static int isGrid=0;
-	public static int undo=0;
-	public static ImageIcon OriginalImage=null;
-	public static int environmentOn=0;
+	//Interpreter configuration
+		
+	public static String interpreterCursor = null;
 	
+	public static int interpreterDelay = 1000;
+	
+	public static int accumulatedCells = 5;
+	
+	public static int maxAccumulatedCells = 30;
+	
+	public static TInterpreterBoard currentBoard;
+	
+	public static int countRun = 0;
+	
+	public static ArrayList<String> boardOrderedCells;
+	
+	public static int x,y;
+		
 }

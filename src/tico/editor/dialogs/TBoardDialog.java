@@ -1,7 +1,7 @@
 /*
  * File: TBoardDialog.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.dialogs;
 
 import java.awt.Color;
@@ -42,8 +42,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.jgraph.graph.AttributeMap;
+import org.jgraph.graph.CellView;
+
 import tico.board.TBoardConstants;
 import tico.board.TBoardModel;
+import tico.board.components.TCell;
+import tico.board.componentview.TCellView;
+import tico.board.componentview.TComponentView;
 import tico.components.TBackgroundSelectionPanel;
 import tico.components.TBoardOrderPanel;
 import tico.components.TIdTextField;
@@ -57,7 +63,7 @@ import tico.editor.TEditor;
 /**
  * Dialog to change <code>TBoard</code> properties.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TBoardDialog extends TPropertiesDialog {
@@ -279,7 +285,27 @@ public class TBoardDialog extends TPropertiesDialog {
 				return false;
 			}
 		}
+		String oldBoardName = getBoard().getBoardName();
 		getBoard().setBoardName(newName);
+		
+		// Change followingBoard attribute on cells which go to this board
+		for (int i=0; i<myEditor.getBoardContainerCount(); i++){
+			TBoardContainer boardContainer = myEditor.getBoardContainer(i);
+			CellView[] components = boardContainer.getBoard().getGraphLayoutCache().getCellViews();
+			for (int j=0; j<components.length; j++){
+				TComponentView view = (TComponentView) components[j];
+				if (view instanceof TCellView){
+					TCell cell = (TCell) view.getCell();
+					AttributeMap cellAttributes = cell.getAttributes();
+					if (TBoardConstants.getFollowingBoardName(cellAttributes)!= null){
+						if (TBoardConstants.getFollowingBoardName(cellAttributes)==oldBoardName){
+							TBoardConstants.setFollowingBoard(cellAttributes, newName);
+							cell.setAttributes(cellAttributes);
+						}
+					}
+				}
+			}
+		}
 		
 		// Set dimension
 		TBoardConstants.setSize(attributeMap, sizeChooser.getSelectedSize());
@@ -291,7 +317,7 @@ public class TBoardDialog extends TPropertiesDialog {
 		else
 			removalAttributes.add(TBoardConstants.BACKGROUND);
 		
-		//set sound Toty!
+		// Set sound
 		
 		String soundFile = soundChooser.getSoundFilePath();
 		if (soundFile != null)

@@ -1,7 +1,7 @@
 /*
  * File: TBoardModel
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board;
 
 import java.awt.Color;
@@ -66,7 +66,7 @@ import tico.components.resources.TFileUtils;
 import tico.editor.TFileHandler;
 
 /**
- * Custom model than does not allow <code>Conections</code> between nodes. This
+ * Custom model than does not allow <code>Connections</code> between nodes. This
  * model do not use the <code>Graph</code> structure.
  * 
  * @author Pablo Muñoz
@@ -77,7 +77,7 @@ public class TBoardModel extends DefaultGraphModel {
 	private final static int HORIZONTAL_FIT_TEXT_MARGIN = 6;
 
 	private final static int VERTICAL_FIT_TEXT_MARGIN = 4;
-
+	
 	/**
 	 * Creates a new empty <code>TBoardModel</code> and with
 	 * <code>defaultAttributes</code>.
@@ -448,7 +448,7 @@ public class TBoardModel extends DefaultGraphModel {
 	 * @param insert The <code>components</code> to insert
 	 * @param removed The <code>components</code> to remove
 	 * @param attributes Pairs <code>component</code> - <code>attributeMap</code>
-	 * that determines wich objects will receive wich attribute map modifications
+	 * that determines which objects will receive which attribute map modifications
 	 */	
 	public void removeInsertAndEdit(Object[] insert, Object[] removed,
 			Map attributes) {
@@ -478,10 +478,10 @@ public class TBoardModel extends DefaultGraphModel {
 	}
 
 	//
-	// Colateral modification functions
+	// Collateral modification functions
 	//
 	
-	// Funtion executed when any component has been inserted
+	// Function executed when any component has been inserted
 	private Map insertUpdateAttributes(TComponent component, Map attributeMap, Map attributes) {
 		Map nested = new Hashtable();
 		
@@ -535,7 +535,7 @@ public class TBoardModel extends DefaultGraphModel {
 			TBoardConstants.setOrderedCellList(attributeMap, newOrderedCells);
 		}
 
-		// Asign an unused id to the component. This is not applicable to
+		// Assign an unused id to the component. This is not applicable to
 		// grid cells because its Id is made with its grid id and its
 		// position
 		if (!(component instanceof TGridCell)) {
@@ -559,7 +559,7 @@ public class TBoardModel extends DefaultGraphModel {
 									Math.round(TBoardConstants
 											.getLineWidth(attributeMap)))));
 		}
-
+		
 		// TUNE Apply these following methods directly to needed attributes without using TBoardConstants
 		// Import an icon or file when copying a component
 		ImageIcon icon = (ImageIcon)TBoardConstants.getIcon(attributeMap);
@@ -618,13 +618,30 @@ public class TBoardModel extends DefaultGraphModel {
 						.importFile(soundFilePath).getAbsolutePath());
 			} catch (Exception e) {
 			}
+		
+		String videoFilePath = TBoardConstants.getVideoFile(attributeMap);
+		if (videoFilePath != null)
+			try {
+				TBoardConstants.setVideoFile(attributeMap, TFileHandler
+						.importFile(videoFilePath).getAbsolutePath());
+			} catch (Exception e) {
+		}
+
+			// Delete following board property if it refers to current board
+		if (TBoardConstants.getFollowingBoardName(attributeMap) != null) {
+			if (TBoardConstants.getFollowingBoardName(attributeMap).equals(TBoardConstants.currentBoard.getBoardName())){
+			//if ((TBoardModel) TBoardConstants.getFollowingBoard(attributeMap).getModel() == this) {
+				attributeMap.remove(TBoardConstants.FOLLOWING_BOARD);
+				TBoardConstants.setRemoveAttributes(attributeMap, new Object[] {TBoardConstants.FOLLOWING_BOARD});
+			}
+		}
 
 		nested.put(component, attributeMap);
 
 		return nested;
 	}
 	
-	// Funtion executed when any component has change its parent
+	// Function executed when any component has change its parent
 	private Map parentUpdateAttributes(TGridCell child, TGrid parent,
 			Map parentAttributeMap) {
 		Map nested = new Hashtable();
@@ -634,7 +651,7 @@ public class TBoardModel extends DefaultGraphModel {
 		
 		// Insert the new cells to the TGridCell
 		ArrayList gridCellList;
-		// If is the first cell of the grid, initializate the grid
+		// If is the first cell of the grid, initialized the grid
 		// vector
 		gridCellList = TBoardConstants.getOrderedCellList(parentAttributeMap);
 		if (gridCellList.isEmpty())
@@ -652,7 +669,7 @@ public class TBoardModel extends DefaultGraphModel {
 		return nested;
 	}
 	
-	// Funtion executed when any component has been removed
+	// Function executed when any component has been removed
 	private Map removeUpdateAttributes(TComponent component, Map attributes) {
 		Map nested = new Hashtable();
 		
@@ -706,7 +723,7 @@ public class TBoardModel extends DefaultGraphModel {
 			nested.put(grid, attributeMap);
 		}
 
-		// If the component is a text receiver remove all the apearances of that
+		// If the component is a text receiver remove all the appearances of that
 		// component in text sender component attributes
 		if (TBoardConstants.isTextReceiver(component.getAttributes())) {
 			// For each text sender
@@ -736,7 +753,7 @@ public class TBoardModel extends DefaultGraphModel {
 		return nested;
 	}
 	
-	// Funtion executed when any component has been edited
+	// Function executed when any component has been edited
 	private Map editUpdateAttributes(TComponent component, Map attributeMap) {
 		// Create an empty component changes map
 		Map nested = new Hashtable();
@@ -776,21 +793,23 @@ public class TBoardModel extends DefaultGraphModel {
 	public void deleteBoardFromAttributes(TBoard board) {
 		if (board == null)
 			throw new NullPointerException();
-
+		TBoard followingBoard = null;
 		Object[] components = getAll(this);
 		for (int i = 0; i < components.length; i++) {
 			// Get, if exits, its following board attribute
-			TBoard followingBoard = TBoardConstants
-					.getFollowingBoard(((TComponent)components[i])
-							.getAttributes());
-			if (followingBoard != null)
+			String followingBoardName = TBoardConstants
+					.getFollowingBoardName(((TComponent)components[i])
+							.getAttributes());			
+			if (followingBoardName != null){
+				followingBoard = TBoardConstants.editor.getProject().getBoard(followingBoardName);
 				// If its the same text area remove the send text attributes
-				if (followingBoard.equals(board)) {
+				if (followingBoard!= null && followingBoard.equals(board)) {
 					AttributeMap attributeMap = new AttributeMap();
 					TBoardConstants.setRemoveAttributes(attributeMap,
 							new Object[] { TBoardConstants.FOLLOWING_BOARD });
 					getAttributes(components[i]).applyMap(attributeMap);
 				}
+			}
 		}
 	}
 

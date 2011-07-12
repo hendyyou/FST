@@ -1,7 +1,7 @@
 /*
  * File: TLabelRenderer.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,19 +22,21 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board.componentredenerer;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import org.jgraph.graph.CellView;
@@ -48,6 +50,7 @@ import tico.board.TBoardConstants;
  * @version 1.0 Nov 20, 2006
  */
 public class TLabelRenderer extends TComponentRenderer {
+	private final static int HORIZONTAL_MARGIN = 10;
 	/* (non-Javadoc)
 	 * @see org.jgraph.graph.VertexRenderer#installAttributes(org.jgraph.graph.CellView)
 	 */
@@ -57,9 +60,10 @@ public class TLabelRenderer extends TComponentRenderer {
 
 		// Apply all the component properties
 		// Apply border
+		int borderWidth = 0;
 		Color borderColor = TBoardConstants.getBorderColor(map);
 		if (borderColor != null) {
-			int borderWidth = Math.max(1, Math.round(TBoardConstants
+			borderWidth = Math.max(1, Math.round(TBoardConstants
 					.getLineWidth(map)));
 			setBorder(BorderFactory.createLineBorder(borderColor, borderWidth));
 		} else setBorder(null);
@@ -79,7 +83,7 @@ public class TLabelRenderer extends TComponentRenderer {
 
 		Color foregroundColor = TBoardConstants.getForeground(map);
 		setForeground((foregroundColor != null) ? foregroundColor
-				: TBoardConstants.DEFAULTFOREGROUND);
+				: TBoardConstants.DEFAULT_FOREGROUND);
 
 		// Apply text align properties
 		setVerticalAlignment(SwingConstants.CENTER);
@@ -90,6 +94,29 @@ public class TLabelRenderer extends TComponentRenderer {
 		if (text == null)
 			text = "";
 		setText(text);
+		
+		// Check if the text fits in the cell with the font
+		int cellTextSpace = (int)TBoardConstants.getBounds(map).getWidth()-
+							2*borderWidth-2*HORIZONTAL_MARGIN;
+		JButton j = new JButton();
+		j.setSize(cellTextSpace, cellTextSpace);
+		FontMetrics fm = j.getFontMetrics(font);
+		int textWidth = fm.stringWidth(text);
+		if (textWidth > cellTextSpace){
+			int fontSize = font.getSize();
+			int fontStyle = font.getStyle();
+			String fontName = font.getFontName();
+			while ((textWidth > cellTextSpace) && fontSize>0){
+				fontSize--;
+				font = new Font(fontName, fontStyle, fontSize);
+				fm = j.getFontMetrics(font);
+				textWidth = fm.stringWidth(text);
+			}
+			if (fontSize!=0){
+				setFont(font);
+				setText(text);
+			}
+		}
 	}
 
 	/* (non-Javadoc)

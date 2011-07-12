@@ -1,12 +1,12 @@
 #XenoageJavaExeStarter_2
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\tico.jar
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\executable\editor.ico
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\executable\editor.ico
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\tico.jar
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\icons\tico-editor-icon.ico
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\icons\tico-editor-icon.ico
 0
--Xmx256m
+-Xmx1024m
 -e %args%
 1
-1.4.2
+1.4
 1
 0
 0

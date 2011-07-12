@@ -1,7 +1,7 @@
 /*
  * File: TSetup.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.configuration;
 
 import java.io.BufferedWriter;
@@ -61,6 +61,10 @@ public class TSetup {
 	private static File CONFIGURATION_FILE = new File(CONFIGURATION_FILE_PATH);
 
 	private static String language = "Español";
+	
+	private static String editorHomeDirectory = "";
+	
+	private static String interpreterHomeDirectory = "";
 
 	/**
 	 * Loads the configuration file <i>conf/tico.conf</i>
@@ -87,6 +91,20 @@ public class TSetup {
 					if (TLanguage.languageExists(language))
 					setLanguage(language);
 			}
+			NodeList editorNodeList = preferencesElement.getElementsByTagName("editorHomeDirectory");
+			if (editorNodeList.getLength() > 0) {
+				String editorHomeDirectory = editorNodeList.item(0).getChildNodes().item(0).getNodeValue();
+				if (editorHomeDirectory != null)
+					if (directoryExists(editorHomeDirectory))
+					setEditorHome(editorHomeDirectory);
+			}
+			NodeList interpreterNodeList = preferencesElement.getElementsByTagName("interpreterHomeDirectory");
+			if (interpreterNodeList.getLength() > 0) {
+				String interpreterHomeDirectory = interpreterNodeList.item(0).getChildNodes().item(0).getNodeValue();
+				if (interpreterHomeDirectory != null)
+					if (directoryExists(interpreterHomeDirectory))
+					setInterpreterHome(interpreterHomeDirectory);
+			}
 		}
 	}
 	
@@ -112,6 +130,20 @@ public class TSetup {
 		languageElement.appendChild(doc.createTextNode(getLanguage()));
 		// Append language node
 		projectElement.appendChild(languageElement);
+		// Create editor home node
+		if (!getEditorHome().equals("")){
+			Element editorHomeElement = doc.createElement("editorHomeDirectory");
+			editorHomeElement.appendChild(doc.createTextNode(getEditorHome()));
+			// Append editor home node
+			projectElement.appendChild(editorHomeElement);
+		}
+		// Create interpreter home node
+		if (!getInterpreterHome().equals("")){
+			Element interpreterHomeElement = doc.createElement("interpreterHomeDirectory");
+			interpreterHomeElement.appendChild(doc.createTextNode(getInterpreterHome()));
+			// Append interpreter home node
+			projectElement.appendChild(interpreterHomeElement);
+		}
 		// Append preferences node
 		doc.appendChild(projectElement);
 
@@ -147,4 +179,46 @@ public class TSetup {
 	public static void setLanguage(String language) {
 		TSetup.language = language;
 	}
+	
+	/**
+	 * Returns the editor home directory.
+	 * 
+	 * @return The editor current home directory
+	 */
+	public static String getEditorHome() {
+		return editorHomeDirectory;
+	}
+	
+	/**
+	 * Sets the editor home directory.
+	 * 
+	 * @param pathEditor The editor current home directory to set
+	 */
+	public static void setEditorHome(String pathEditor) {
+		TSetup.editorHomeDirectory = pathEditor;
+	}
+	
+	/**
+	 * Returns the interpreter home directory.
+	 * 
+	 * @return The interpreter current home directory
+	 */
+	public static String getInterpreterHome() {
+		return interpreterHomeDirectory;
+	}
+	
+	/**
+	 * Sets the interpreter home directory.
+	 * 
+	 * @param pathInterpreter The interpreter current home directory to set
+	 */
+	public static void setInterpreterHome(String pathInterpreter) {
+		TSetup.interpreterHomeDirectory = pathInterpreter;
+	}
+	
+	private static boolean directoryExists(String directoryPath){
+		File file = new File(directoryPath);
+		return file.exists();
+	}
+
 }

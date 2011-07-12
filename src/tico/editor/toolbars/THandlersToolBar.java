@@ -1,7 +1,7 @@
 /*
  * File: THandlersToolBar.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.toolbars;
 
 import javax.swing.ButtonGroup;
@@ -38,6 +38,7 @@ import tico.configuration.TLanguage;
 import tico.editor.TActionSet;
 import tico.editor.TEditor;
 import tico.editor.handler.TCellMarqueeHandler;
+import tico.editor.handler.TControllerCellMarqueeHandler;
 import tico.editor.handler.TGridMarqueeHandler;
 import tico.editor.handler.TLabelMarqueeHandler;
 import tico.editor.handler.TLineMarqueeHandler;
@@ -60,6 +61,7 @@ public class THandlersToolBar extends TToolBar {
 	// Handler buttons
 	private TToolBarToggleButton selectButton;
 	private TToolBarToggleButton cellButton;
+	private TToolBarToggleButton controllerCellButton;
 	private TToolBarToggleButton gridButton;
 	private TToolBarToggleButton textAreaButton;
 	private TToolBarToggleButton labelButton;
@@ -84,8 +86,10 @@ public class THandlersToolBar extends TToolBar {
 				.getAction(TActionSet.SELECTION_HANDLER));
 		cellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.CELL_HANDLER));
-		gridButton = new TToolBarToggleButton(editor.getActionSet().getAction(
-				TActionSet.GRID_HANDLER));
+		controllerCellButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.CELL_CONTROLLER_HANDLER));
+		/*gridButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.GRID_HANDLER));*/
 		textAreaButton = new TToolBarToggleButton(editor.getActionSet()
 				.getAction(TActionSet.TEXT_AREA_HANDLER));
 		labelButton = new TToolBarToggleButton(editor.getActionSet().getAction(
@@ -101,7 +105,8 @@ public class THandlersToolBar extends TToolBar {
 
 		handlersButtonGroup.add(selectButton);
 		handlersButtonGroup.add(cellButton);
-		handlersButtonGroup.add(gridButton);
+		handlersButtonGroup.add(controllerCellButton);
+		//handlersButtonGroup.add(gridButton);
 		handlersButtonGroup.add(textAreaButton);
 		handlersButtonGroup.add(labelButton);
 		handlersButtonGroup.add(lineButton);
@@ -112,7 +117,8 @@ public class THandlersToolBar extends TToolBar {
 		add(selectButton);
 		addSeparator();
 		add(cellButton);
-		add(gridButton);
+		add(controllerCellButton);
+		//add(gridButton);
 		addSeparator();
 		add(textAreaButton);
 		add(labelButton);
@@ -139,8 +145,10 @@ public class THandlersToolBar extends TToolBar {
 
 			if (handler instanceof TCellMarqueeHandler)
 				cellButton.setSelected(true);
-			else if (handler instanceof TGridMarqueeHandler)
-				gridButton.setSelected(true);
+			else if (handler instanceof TControllerCellMarqueeHandler)
+				controllerCellButton.setSelected(true);
+		/*	else if (handler instanceof TGridMarqueeHandler)
+				gridButton.setSelected(true);*/
 			else if (handler instanceof TTextAreaMarqueeHandler)
 				textAreaButton.setSelected(true);
 			else if (handler instanceof TLabelMarqueeHandler)

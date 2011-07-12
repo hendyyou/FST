@@ -1,7 +1,7 @@
 /*
  * File: TFileUtils.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components.resources;
 
 import java.io.File;
@@ -55,12 +55,12 @@ public class TFileUtils {
 	/**
 	 * TIFF image files extension.
 	 */
-	public final static String TIFF = "tiff";
+	//public final static String TIFF = "tiff";
 
 	/**
 	 * TIF image files extension.
 	 */
-	public final static String TIF = "tif";
+	//public final static String TIF = "tif";
 
 	/**
 	 * PNG image files extension.
@@ -70,7 +70,7 @@ public class TFileUtils {
 	/**
 	 * BMP image files extension.
 	 */
-	public final static String BMP = "bmp";
+	//public final static String BMP = "bmp";
 
 	// Sound extensions
 	/**
@@ -82,11 +82,32 @@ public class TFileUtils {
 	 * WAV sound files extension.
 	 */
 	public final static String WAV = "wav";
-
+	
+	// Video extensions
 	/**
-	 * OGG sound files extension.
+	 * AVI video files extension.
 	 */
-	public final static String OGG = "ogg";
+	public final static String AVI = "avi";
+	
+	/**
+	 * MPG video files extension.
+	 */
+	public final static String MPG = "mpg";
+	
+	/**
+	 * MPEG video files extension.
+	 */
+	public final static String MPEG = "mpeg";
+	
+	/**
+	 * WMV video files extension.
+	 */
+	public final static String WMV = "wmv";
+	
+	/**
+	 * FLV video files extension.
+	 */
+	public final static String FLV = "flv";
 
 	// Tico extensions
 	/**
@@ -224,13 +245,13 @@ public class TFileUtils {
 		String extension = TFileUtils.getExtension(filePath);
 
 		if (extension != null) {
-			if (extension.equals(TFileUtils.TIFF)
-					|| extension.equals(TFileUtils.TIF)
-					|| extension.equals(TFileUtils.GIF)
+			if (extension.equals(TFileUtils.GIF)
+					//|| extension.equals(TFileUtils.TIF)
+					//|| extension.equals(TFileUtils.TIFF)
 					|| extension.equals(TFileUtils.JPEG)
 					|| extension.equals(TFileUtils.JPG)
-					|| extension.equals(TFileUtils.PNG)
-					|| extension.equals(TFileUtils.BMP)) {
+					|| extension.equals(TFileUtils.PNG)){
+					//|| extension.equals(TFileUtils.BMP)) {
 				return true;
 			}
 		}
@@ -297,8 +318,7 @@ public class TFileUtils {
 
 		if (extension != null) {
 			if (extension.equals(TFileUtils.MP3)
-					|| extension.equals(TFileUtils.WAV)
-					|| extension.equals(TFileUtils.OGG)) {
+					|| extension.equals(TFileUtils.WAV)) {
 				return true;
 			}
 		}
@@ -319,6 +339,44 @@ public class TFileUtils {
 		String filePath = file.getAbsolutePath();
 
 		return TFileUtils.isSoundFile(filePath);
+	}
+	
+	/**
+	 * Determines if the specified <code>filePath</code> extension is a video
+	 * file extension.
+	 * 
+	 * @param filePath The specified <code>filePath</code>
+	 * @return <i>true</i> if the specified <code>filePath</code> extension is
+	 * a video file extension
+	 */
+	public static boolean isVideoFile(String filePath) {
+		String extension = TFileUtils.getExtension(filePath);
+
+		if (extension != null) {
+			if (extension.equals(TFileUtils.AVI)
+					|| extension.equals(TFileUtils.MPG)
+					|| extension.equals(TFileUtils.MPEG)
+					|| extension.equals(TFileUtils.WMV)
+					|| extension.equals(TFileUtils.FLV)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Determines if the specified <code>file</code> extension is a video
+	 * file extension.
+	 * 
+	 * @param file The specified <code>file</code>
+	 * @return <i>true</i> if the specified <code>file</code> extension is
+	 * a video file extension
+	 */
+	public static boolean isVideoFile(File file) {
+		String filePath = file.getAbsolutePath();
+
+		return TFileUtils.isVideoFile(filePath);
 	}
 
 	/**

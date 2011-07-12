@@ -1,7 +1,7 @@
 /*
  * File: TBorderSelectionPanel.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import java.awt.Color;
@@ -60,7 +60,6 @@ public class TBorderSelectionPanel extends JPanel {
 	// Border size combo box chooser
 	private TBorderSizeComboBox borderSizeComboBox;
 	
-	public TAnotherBorderSelectionPanel select=null;
 	/**
 	 * Creates a new <code>TBorderSelectionPanel</code> with
 	 * <code>borderColor</code> defaults to <i>black</i> and
@@ -190,9 +189,6 @@ public class TBorderSelectionPanel extends JPanel {
 		borderSizeComboBox.setBorderSize(borderSize);
 	}
 	
-	public void setSelect(TAnotherBorderSelectionPanel item){
-		this.select=item;
-	}
 	/**
 	 * Set a <i>line border</i> created with the components
 	 * <code>borderColor</code> and <code>borderSize</code>. 
@@ -237,19 +233,7 @@ public class TBorderSelectionPanel extends JPanel {
 	private class ChangeColorListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if (getBorderColor() == null) borderSizeComboBox.setEnabled(false);
-			else borderSizeComboBox.setEnabled(true);
-			if (select!=null){
-				if (getBorderColor() == null) 
-				{	select.colorComboBox.setEnabled(false);
-					select.borderSizeComboBox.setEnabled(false);
-				}
-				else {
-					borderSizeComboBox.setEnabled(true);
-					select.colorComboBox.setEnabled(true);
-					select.borderSizeComboBox.setEnabled(true);
-				}
-			}
-			
+			else borderSizeComboBox.setEnabled(true);			
 		}
 	}
 }

@@ -1,19 +1,19 @@
 /*
- * File: TSoundChooser.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * File: TPanel.java
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
- * Authors: Pablo Muñoz
+ * Authors: Antonio Rodríguez
  * 
  * Date: Aug 22, 2006
  * 
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,8 +22,7 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
 
 package tico.interpreter;
@@ -39,7 +38,7 @@ import javax.swing.JPanel;
 
 /**
  * 
- * @author Antonio Rodriguez
+ * @author Antonio Rodríguez
  *
  */
 public class TPanel extends JPanel implements Printable{
@@ -47,22 +46,21 @@ public class TPanel extends JPanel implements Printable{
 	public TPanel(){
 		super();
 	}
-	// TODO Auto-generated method stub
-		public int print( Graphics g,PageFormat pf,int pi ) 
+		public int print(Graphics g,PageFormat pf,int pi) 
 	      throws PrinterException {
 	      if( pi >= 1 ) {
-	        return( Printable.NO_SUCH_PAGE );
+	        return( Printable.NO_SUCH_PAGE);
 	        }
 	      Graphics2D g2 = (Graphics2D)g;
 	      g2.translate( pf.getImageableX(),pf.getImageableY() );
 	      pf.setOrientation(PageFormat.LANDSCAPE);
-	      Font f = Font.getFont( "Courier" );
+	      Font f = Font.getFont("Courier");
 	     
-	      g2.setFont( f );
+	      g2.setFont(f);
 	      // En este caso, se envía directamente el objeto Graphics2D a 
 	      // la impresora
-	      paint( g2 );
-	      return( Printable.PAGE_EXISTS );
+	      paint(g2);
+	      return(Printable.PAGE_EXISTS);
 	      }
 }
 	

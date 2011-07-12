@@ -1,7 +1,7 @@
 /*
  * File: TBoard.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board;
 
 import java.awt.Color;
@@ -46,7 +46,7 @@ import tico.board.events.BoardChangeEvent;
 import tico.board.events.BoardChangeListener;
 
 /**
- * A control that displays a comunication board.
+ * A control that displays a communication board.
  * 
  * A <code>TBoard</code> object doesn't actually contain your data; it simply
  * provides a view of the data. Like any non-trivial <code>Swing</code>
@@ -77,7 +77,7 @@ public class TBoard extends JGraph {
 	public TBoard() {
 		this(new TBoardModel());
 	}
-	
+
 	/**
 	 * Creates a new empty <code>TBoard</code> with the specified initial
 	 * <code>name</code>.
@@ -169,10 +169,10 @@ public class TBoard extends JGraph {
 			}
 		});
 		setModel(model);
-		// Set minumum size
+		// Set minimum size
 		setMinimumSize(TBoardConstants.getSize(getAttributes(null)));
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -1,7 +1,7 @@
 /*
  * File: TImagePreview.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import java.awt.Dimension;
@@ -93,12 +93,12 @@ public class TImagePreview extends JLabel implements PropertyChangeListener {
 			int maxPreviewHeight = PREVIEW_HEIGHT - PREVIEW_MARGIN;
 			if (image.getIconHeight() > maxPreviewHeight)
 				image = new ImageIcon(image.getImage().getScaledInstance(-1,
-						maxPreviewHeight, Image.SCALE_DEFAULT));
+						maxPreviewHeight, Image.SCALE_SMOOTH));
 			
 			int maxPreviewWidth = PREVIEW_WIDTH - PREVIEW_MARGIN;
 			if (image.getIconWidth() > maxPreviewWidth)
 				image = new ImageIcon(image.getImage().getScaledInstance(
-						maxPreviewWidth, -1, Image.SCALE_DEFAULT));
+						maxPreviewWidth, -1, Image.SCALE_SMOOTH));
 		}
 
 		setIcon(image);

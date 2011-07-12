@@ -1,7 +1,7 @@
 /*
  * File: TCellDialog.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.dialogs;
 
 import java.awt.Color;
@@ -34,7 +34,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
@@ -47,6 +48,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -54,8 +56,7 @@ import javax.swing.event.ListSelectionListener;
 import tico.board.TBoard;
 import tico.board.TBoardConstants;
 import tico.board.components.TComponent;
-import tico.components.TAnotherBorderSelectionPanel;
-import tico.components.TAnotherSoundChooser;
+import tico.components.TAlternativeBorderSelectionPanel;
 import tico.components.TBackgroundSelectionPanel;
 import tico.components.TBorderSelectionPanel;
 import tico.components.TClickCellActionsPanel;
@@ -65,6 +66,7 @@ import tico.components.TImageChooser;
 import tico.components.TSendTextChooser;
 import tico.components.TSoundChooser;
 import tico.components.TTextField;
+import tico.components.TVideoChooser;
 import tico.configuration.TLanguage;
 import tico.editor.TBoardContainer;
 import tico.editor.TEditor;
@@ -73,11 +75,11 @@ import tico.environment.TEnvironment;
 /**
  * Dialog to change <code>TCellDialog</code> attributes.
  * 
- * @author Pablo Mu�oz
+ * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
 public class TCellDialog extends TComponentDialog {
-	
+
 	private static String DEFAULT_TITLE = TLanguage.getString("TCellDialog.TITLE");
 
 	// Tabbed pane which contains all the other cell properties panes
@@ -101,7 +103,7 @@ public class TCellDialog extends TComponentDialog {
 
 	private TBorderSelectionPanel borderSelectionPanel;
 	
-	private TAnotherBorderSelectionPanel AnotherborderSelectionPanel;
+	private TAlternativeBorderSelectionPanel alternativeBorderSelectionPanel;
 
 	private TBackgroundSelectionPanel backgroundSelectionPanel;
 
@@ -116,9 +118,9 @@ public class TCellDialog extends TComponentDialog {
 
 	private TSoundChooser soundChooser;
 	
-	private TAnotherSoundChooser browsingSoundChooser;
-
 	private TSendTextChooser sendTextChooser;
+	
+	private TVideoChooser videoChooser;
 	
 	private JPanel environmentPanel;
 	
@@ -209,8 +211,7 @@ public class TCellDialog extends TComponentDialog {
 		createActionsPanel();
 		createEnvironmentPanel();
 		// Add properties panels to the tabbed pane
-		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_TEXT"),
-				textPropertiesPanel);
+		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_TEXT"), textPropertiesPanel);
 		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_PROPERTIES"),
 				componentPropertiesPanel);
 		tabbedPane.addTab(TLanguage.getString("TCellDialog.TAB_ACTIONS"),
@@ -220,7 +221,7 @@ public class TCellDialog extends TComponentDialog {
 	}
 	public void createEnvironmentPanel()
 	{
-		environmentPanel =new JPanel();
+		environmentPanel = new JPanel();
 		GridBagConstraints c = new GridBagConstraints();
 		environmentPanel.setLayout(new GridBagLayout());
 		createOrderList();
@@ -242,27 +243,29 @@ public class TCellDialog extends TComponentDialog {
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		listScroll
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
 		// Create the list
 		Vector environmentAction=TEnvironment.getAllKeys();
 		
 		orderList = new JList(environmentAction);
+		orderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		orderList.setMinimumSize(new Dimension(300, 500));
+		orderList.addListSelectionListener(new ListSelectionListener(){
+			public void valueChanged(ListSelectionEvent arg0) {
+				orderList.repaint();
+			}
+		});
 
-		int position=TBoardConstants.getPositionAction(map);
-		int tam=environmentAction.size();
-		if (position!=-1)
-		{		
-		if(position<tam){
-			orderList.setSelectedIndex(position);
-		}
+		int position = TBoardConstants.getPositionAction(map);
+		int tam = environmentAction.size();
+		if (position!=-1){
+			if(position<tam){
+				orderList.setSelectedIndex(position);
+			}
 		}
 		
 		listScroll.setViewportView(orderList);
 		
 	}
-
-	
 
 	// Creates the text properties panel for the tabbed pane
 	private void createTextPropertiesPanel() {
@@ -295,7 +298,7 @@ public class TCellDialog extends TComponentDialog {
 		GridBagConstraints c = new GridBagConstraints();
 
 		componentPropertiesPanel.setLayout(new GridBagLayout());
-		createAnotherBorderSelectionPanel();
+		createAlternativeBorderSelectionPanel();
 		createBorderSelectionPanel();
 		
 		createBackgroundSelectionPanel();
@@ -307,14 +310,11 @@ public class TCellDialog extends TComponentDialog {
 		c.gridy = 0;
 		componentPropertiesPanel.add(borderSelectionPanel, c);
 		
-		//add By Toty!
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 1;
-		componentPropertiesPanel.add(AnotherborderSelectionPanel, c);
-
+		componentPropertiesPanel.add(alternativeBorderSelectionPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5, 10, 0, 10);
@@ -340,32 +340,38 @@ public class TCellDialog extends TComponentDialog {
 		createFollowingBoardPanel();
 		createAlterntativeIconChooser();
 		createSoundChooser();
-		//createAnotherSoundChooser();
 		createSendTextChooser();
+		createVideoChooser();
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 0;
 		componentActionsPanel.add(clickCellActionPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 1;
 		componentActionsPanel.add(alternativeIconChooser, c);
-				
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 0, 10);
-		c.gridx = 0;
-		c.gridy = 2;
-		componentActionsPanel.add(soundChooser, c);
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 10, 10, 10);
+		c.insets = new Insets(0, 10, 0, 10);
 		c.gridx = 0;
 		c.gridy = 3;
 		componentActionsPanel.add(sendTextChooser, c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 10, 0, 10);
+		c.gridx = 0;
+		c.gridy = 2;
+		componentActionsPanel.add(soundChooser, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(0, 10, 0, 10);
+		c.gridx = 0;
+		c.gridy = 4;
+		componentActionsPanel.add(videoChooser, c);
 	}
 	
 	
@@ -395,7 +401,7 @@ public class TCellDialog extends TComponentDialog {
 				.getStyle());
 	}
 	
-	// Creates the boarder selection panel
+	// Creates the border selection panel
 	private void createBorderSelectionPanel() {
 		Map map = getAttributeMap();
 
@@ -405,26 +411,22 @@ public class TCellDialog extends TComponentDialog {
 				.setBorderColor(TBoardConstants.getBorderColor(map));
 		borderSelectionPanel.setBorderSize(Math.max(1, Math
 				.round(TBoardConstants.getLineWidth(map))));
-		borderSelectionPanel.setSelect(AnotherborderSelectionPanel);
 	}
 	
-	private void createAnotherBorderSelectionPanel() {
+	//Creates the alternative border selection panel
+	private void createAlternativeBorderSelectionPanel() {
 		Map map = getAttributeMap();
 
-		AnotherborderSelectionPanel = new TAnotherBorderSelectionPanel();
+		alternativeBorderSelectionPanel = new TAlternativeBorderSelectionPanel();
 
-		AnotherborderSelectionPanel
-				.setBorderColor(TBoardConstants.getChangeColor(map));
+		alternativeBorderSelectionPanel
+				.setBorderColor(TBoardConstants.getAlternativeBorderColor(map));
 		
-		AnotherborderSelectionPanel.setBorderSize(Math.max(4,Math
-				.round(TBoardConstants.getChangeLineWidth(map))));
+		alternativeBorderSelectionPanel.setBorderSize(Math.max(1,Math
+				.round(TBoardConstants.getAlternativeLinewidth(map))));
+	}	
 
-	}
-	
-	//Creates another border selection panel.
-	
-
-	// Creates the backgrond selection panel
+	// Creates the background selection panel
 	private void createBackgroundSelectionPanel() {
 		Map map = getAttributeMap();
 
@@ -465,13 +467,17 @@ public class TCellDialog extends TComponentDialog {
 		// Get the board list from the editor
 		ArrayList boardList = (ArrayList)getBoardContainer().getEditor()
 				.getProject().getBoardList().clone();
+		ArrayList<String> boardListName = new ArrayList<String>();
+		for (int i=0; i<boardList.size(); i++){
+			boardListName.add(((TBoard)boardList.get(i)).getBoardName());
+		}
 		// Delete the current board
-		boardList.remove(getBoard());
+		boardListName.remove(getBoard().getBoardName());
 
-		clickCellActionPanel = new TClickCellActionsPanel(boardList);
+		clickCellActionPanel = new TClickCellActionsPanel(boardListName);
 
 		clickCellActionPanel.setFollowingBoard(TBoardConstants
-				.getFollowingBoard(map));
+				.getFollowingBoardName(map));
 		clickCellActionPanel.setAccumulated(TBoardConstants.isAccumulated(map));
 	}
 
@@ -484,11 +490,16 @@ public class TCellDialog extends TComponentDialog {
 		soundChooser.setSoundFilePath(TBoardConstants.getSoundFile(map));
 	}
 	
-//	private void createAnotherSoundChooser(){
-//		Map map=getAttributeMap();
-//		browsingSoundChooser =new TAnotherSoundChooser();
-//		browsingSoundChooser.setSoundFilePath(TBoardConstants.getBrowsingSoundFile(map));
-//	}
+	// Creates the video chooser panel
+	private void createVideoChooser() {
+		Map map = getAttributeMap();
+
+		videoChooser = new TVideoChooser();
+
+		videoChooser.setVideoFilePath(TBoardConstants.getVideoFile(map));
+		videoChooser.setVideoFileURL(TBoardConstants.getVideoURL(map));
+	}
+	
 	// Creates the send text chooser panel
 	private void createSendTextChooser() {
 		Map map = getAttributeMap();
@@ -523,18 +534,20 @@ public class TCellDialog extends TComponentDialog {
 		else
 			removalAttributes.add(TBoardConstants.BORDERCOLOR);
 		
-		Color color2=AnotherborderSelectionPanel.getBorderColor();
+		Color alternativeBorderColor = alternativeBorderSelectionPanel.getBorderColor();
 		
-		if (color2!=null){
-			
-			TBoardConstants.setChangeColor(attributeMap,color2);}
+		if (alternativeBorderColor!=null){			
+			TBoardConstants.setAlternativeBorderColor(attributeMap,alternativeBorderColor);
+		}
 		else
-			removalAttributes.add(TBoardConstants.CHANGE_COLOR);
+			removalAttributes.add(TBoardConstants.ALTERNATIVE_BORDER_COLOR);
 
 		TBoardConstants.setLineWidth(attributeMap, borderSelectionPanel
 				.getBorderSize());
 		
-		TBoardConstants.setChangeLineWidth(attributeMap,AnotherborderSelectionPanel.getBorderSize());
+		int alternativeBorderLinewidth = alternativeBorderSelectionPanel.getBorderSize();
+		
+		TBoardConstants.setAlternativeLinewidth(attributeMap,alternativeBorderLinewidth);
 	
 		Color background = backgroundSelectionPanel.getBackgroundColor();
 		if (background != null)
@@ -573,10 +586,24 @@ public class TCellDialog extends TComponentDialog {
 		else
 			removalAttributes.add(TBoardConstants.SOUND_FILE);
 		
-		//Set Environment Action
-		Object action=orderList.getSelectedValue();
+		// Set cell video file
+		String videoFile = videoChooser.getVideoFilePath();
+		if (videoFile != null)
+			TBoardConstants.setVideoFile(attributeMap, videoFile);
+		else
+			removalAttributes.add(TBoardConstants.VIDEO_FILE);
 		
-		if (action!=null)
+		// Set cell video URL
+		String videoURL = videoChooser.getVideoFileURL();
+		if (videoURL != null)
+			TBoardConstants.setVideoURL(attributeMap, videoURL);
+		else
+			removalAttributes.add(TBoardConstants.VIDEO_URL);
+		
+		//Set Environment Action
+		Object action = orderList.getSelectedValue();
+
+		if (action!=null && !action.toString().trim().equals(""))
 		{	int pos=orderList.getSelectedIndex();
 			TBoardConstants.setEnvironmentAction(attributeMap,TEnvironment.getCode(action.toString()));
 			TBoardConstants.setPositionAction(attributeMap, pos);
@@ -602,7 +629,8 @@ public class TCellDialog extends TComponentDialog {
 		// Set click action cell attributes
 		TBoardConstants.setAccumulated(attributeMap, clickCellActionPanel
 				.getAccumulated());
-		TBoard followingBoard = clickCellActionPanel.getFollowingBoard();
+		String followingBoard = clickCellActionPanel.getFollowingBoard();
+
 		if (followingBoard != null)
 			TBoardConstants.setFollowingBoard(attributeMap, followingBoard);
 		else

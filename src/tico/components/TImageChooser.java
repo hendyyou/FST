@@ -1,7 +1,7 @@
 /*
  * File: TImageChooser.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import java.awt.Color;
@@ -38,8 +38,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Iterator;
 
 import javax.media.jai.JAI;
 import javax.media.jai.RenderedOp;
@@ -61,21 +59,13 @@ import tico.components.resources.ImageFilter;
 import tico.components.resources.TFileUtils;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
-import tico.editor.TFileHandler;
 import tico.editor.TEditor;
-
-import tico.pluginInterfaces.TPluginIMInterface;
-import org.java.plugin.ObjectFactory;
-import org.java.plugin.PluginManager;
-import org.java.plugin.PluginManager.PluginLocation;
-import org.java.plugin.registry.Extension;
-import org.java.plugin.registry.ExtensionPoint;
-import org.java.plugin.registry.PluginDescriptor;
-import org.java.plugin.standard.StandardPluginLocation;
+import tico.editor.TFileHandler;
+import tico.imageGallery.TImageGalleryButton;
 
 
 /**
- * Components to to choose an image file.
+ * Components to choose an image file.
  * 
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
@@ -145,7 +135,7 @@ public class TImageChooser extends JPanel {
 	
 	// Open Image Gallery button
 	//private TButton openGalleryButton;
-
+	private TImageGalleryButton galleryButton;
 	// Open image chooser dialog button
 	private TButton openChooserDialogButton;
 	
@@ -154,11 +144,11 @@ public class TImageChooser extends JPanel {
 	// Allows save the directory where you get the last image
 	private static File defaultDirectory = null;
 	
-	public static String ruta = null;
+	public static String path = null;
 	
-	public static final File pluginsDir = new File("./plugins");
+	//public static final File pluginsDir = new File("./plugins");
 	
-	private PluginManager pluginManager;
+	//private PluginManager pluginManager;
 
 	/**
 	 * Creates a new <code>TImageChooser</code> with <i>NO_OPTIONS_TYPE</i>
@@ -205,7 +195,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 * 			  <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(int type, TEditor editor) {
 		this(DEFAULT_TITLE, type, editor);
@@ -218,7 +208,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 *            <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(int type) {
 		this(DEFAULT_TITLE, type);
@@ -233,7 +223,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 *            <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(String title, int type, TEditor editor) {
 		super();
@@ -254,7 +244,7 @@ public class TImageChooser extends JPanel {
 		setLayout(new GridBagLayout());
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(10, 10, 10, 0);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 0.0;
 		c.weighty = 1.0;
 		c.gridx = 0;
@@ -263,7 +253,7 @@ public class TImageChooser extends JPanel {
 		add(iconLabel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(10, 5, 0, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		c.gridx = 1;
@@ -272,12 +262,13 @@ public class TImageChooser extends JPanel {
 		add(propertiesPanel, c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = new Insets(5, 5, 10, 10);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		c.gridx = 1;
 		c.gridy = 1;
 		add(buttonPanel, c);
+
 	}
 	
 	/**
@@ -289,7 +280,7 @@ public class TImageChooser extends JPanel {
 	 * @param type
 	 *            The specified <code>type</code>. The possible values are
 	 *            <code>NO_OPTIONS_TYPE</code>, <code>TEXT_POSITION_TYPE or
-	 * 			  <code>RESIZE_STYLE_TYPE</code>
+	 * <code>RESIZE_STYLE_TYPE</code>
 	 */
 	public TImageChooser(String title, int type) {
 		super();
@@ -332,6 +323,7 @@ public class TImageChooser extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		add(buttonPanel, c);
+
 	}
 
 	// Create preview icon label
@@ -423,53 +415,8 @@ public class TImageChooser extends JPanel {
 	private void createButtonPanel() {
 		
 		buttonPanel = new JPanel();
-
-		// Define the extension point and add the existing plugins
-		
-		try {
-
-	    	pluginManager = ObjectFactory.newInstance().createManager();
-	    	
-			File[] plugins = pluginsDir.listFiles(new FilenameFilter() {
-	
-				public boolean accept(File dir, String name) {
-					return name.toLowerCase().endsWith(".zip");
-				}	    		
-	    	});
-			
-			PluginLocation[] locations = new PluginLocation[plugins.length];
-			
-			for (int i = 0; i < plugins.length; i++) {
-				locations[i] = StandardPluginLocation.create(plugins[i]);
-			}
-			
-			pluginManager.publishPlugins(locations);
-			
-			PluginDescriptor core = pluginManager.getRegistry().getPluginDescriptor("org.plugin.tico.coreButton");
-			
-			ExtensionPoint point = pluginManager.getRegistry().getExtensionPoint(core.getId(), "Button");
-			
-			for (Iterator it = point.getConnectedExtensions().iterator(); it.hasNext();) {
-				
-				Extension ext = (Extension) it.next();
-				
-				PluginDescriptor descr = ext.getDeclaringPluginDescriptor();
-				
-				pluginManager.activatePlugin(descr.getId());
-				
-				ClassLoader classLoader = pluginManager.getPluginClassLoader(descr);
-				Class pluginCls = classLoader.loadClass(ext.getParameter("class").valueAsString());
-				
-				TPluginIMInterface plugin = (TPluginIMInterface) pluginCls.newInstance();
-				
-		        buttonPanel.add(plugin.init(editor,this));
-		        
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Error");
-			e.printStackTrace();
-		}
+		galleryButton = new TImageGalleryButton();
+		buttonPanel.add(galleryButton.createImageGalleryButton(editor,this));
 		
 		openChooserDialogButton = new TButton(TLanguage.getString("TImageChooser.BUTTON_SELECT"));
 		openChooserDialogButton
@@ -478,7 +425,7 @@ public class TImageChooser extends JPanel {
 		clearIconButton = new TButton(new AbstractAction(TLanguage.getString("TImageChooser.BUTTON_CLEAR")) {
 			public void actionPerformed(ActionEvent e) {
 				setIcon(null);
-				ruta=null;
+				path=null;
 			}
 		});
 		
@@ -498,6 +445,7 @@ public class TImageChooser extends JPanel {
 	 * Update all the components. Updates the preview icon label and enables or
 	 * disables the buttons.
 	 */
+	
 	public void updateComponents() {
 		if (icon != null) {
 			clearIconButton.setEnabled(true);
@@ -518,12 +466,12 @@ public class TImageChooser extends JPanel {
 			if (thumbnail.getIconWidth() > maxImageWidth) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(maxImageWidth, -1,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 			if (thumbnail.getIconHeight() > maxImageHeight) {
 				thumbnail = new ImageIcon(thumbnail.getImage()
 						.getScaledInstance(-1, maxImageHeight,
-								Image.SCALE_DEFAULT));
+								Image.SCALE_SMOOTH));
 			}
 
 			iconLabel.setText("");
@@ -635,6 +583,10 @@ public class TImageChooser extends JPanel {
 		else
 			scaleResizeStyleToggleButton.setSelected(true);
 	}
+	
+	public TImageGalleryButton getImageGalleryButton(){
+		return galleryButton;
+	}
 
 	// Action listener for the openChooserDialogButton
 	private class ChooseIconButtonListener implements ActionListener {
@@ -670,13 +622,13 @@ public class TImageChooser extends JPanel {
 						BufferedImage bufferedImage = src.getAsBufferedImage();
 						newImageIcon = new ImageIcon(bufferedImage,
 								selectedFile.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					} else {
 						// Create it as usual
 						newImageIcon = new ImageIcon(selectedFile
 								.getAbsolutePath(), selectedFile
 								.getAbsolutePath());
-						ruta = selectedFile.getAbsolutePath();
+						path = selectedFile.getAbsolutePath();
 					}
 
 					// Sets the new imageIcon to the TImageChooser

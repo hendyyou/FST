@@ -1,7 +1,7 @@
 /*
  * File: TCopyAction.java
  * 		This file is part of Tico, an application
- * 		to create and perfom interactive comunication boards to be
+ * 		to create and perform interactive communication boards to be
  * 		used by people with severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -15,9 +15,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -26,9 +26,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor.actions;
 
 import java.awt.event.ActionEvent;
@@ -66,7 +66,7 @@ public class TCopyAction extends TEditorAbstractAction {
 		// Unselect any TGridCell, each TGrid with a TGridCell selected will be copied
 		for (int i = 0; i < cells.length; i++) if (cells[i] instanceof TGridCell)
 			getEditor().getCurrentBoard().removeSelectionCell(cells[i]);
-		
+
 		TransferHandler.getCopyAction().actionPerformed(
 			new ActionEvent(getEditor().getCurrentBoard(), e.getID() , e.getActionCommand()));
 

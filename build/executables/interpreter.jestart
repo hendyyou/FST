@@ -1,12 +1,12 @@
 #XenoageJavaExeStarter_2
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\tico.jar
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\executable\interprete.ico
-D:\Documents and Settings\Pablo.TUBORG\Mis documentos\Mis builds\eclipse\tico-local\extra\executable\interprete.ico
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\tico.jar
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\icons\tico-interpreter-icon.ico
+C:\Documents and Settings\Carola\workspace\tico-branch-1\build\icons\tico-interpreter-icon.ico
 0
 
 -i %args%
 1
-1.4.2
+1.4
 1
 0
 0

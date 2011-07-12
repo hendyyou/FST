@@ -1,7 +1,7 @@
 /*
  * File: TBorderSizeComboBox.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.components;
 
 import javax.swing.DefaultComboBoxModel;
@@ -36,7 +36,7 @@ import javax.swing.DefaultComboBoxModel;
  * @version 1.0 Nov 20, 2006
  */
 public class TBorderSizeComboBox extends TComboBox {
-	// The posible combo box list border sizes
+	// The possible combo box list border sizes
 	private static Object[] borderSizes = { new Integer(0), new Integer(1),
 			new Integer(2), new Integer(3), new Integer(4), new Integer(5),
 			new Integer(6), new Integer(7), new Integer(8), new Integer(9),
@@ -74,7 +74,11 @@ public class TBorderSizeComboBox extends TComboBox {
 	 * @return The selected <code>borderSize</code>
 	 */	
 	public int getBorderSize() {
-		return ((Integer)getSelectedItem()).intValue();
+		try{
+			return ((Integer)getSelectedItem()).intValue();
+		}catch (Exception e){
+			return DEFAULT_BORDER_SIZE;
+		}		
 	}
 
 	/**

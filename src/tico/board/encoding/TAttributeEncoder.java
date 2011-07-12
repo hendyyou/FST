@@ -1,7 +1,7 @@
 /*
  * File: TAttributeEncoder.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.board.encoding;
 
 import java.awt.Color;
@@ -58,9 +58,9 @@ import tico.editor.TProjectHandler;
  * Static class which implements functions to encode and decode attibute maps
  * to XML.
  * 
- * @author Pablo Muñoz
+ * @author Pablo Mu�oz
  * @version 1.0 Nov 20, 2006
- */
+ */ 
 public class TAttributeEncoder {
 	// Attribute names
 	private final static String TYPE_ATTRIBUTE = "type";
@@ -371,6 +371,7 @@ public class TAttributeEncoder {
 			} else if (type.equals(ICON_TYPE)) {
 				String partialPath = element.getChildNodes().item(0)
 						.getNodeValue();
+				partialPath = partialPath.replace('\\','/');
 				File imageFile;
 				try {
 					imageFile = TFileHandler.importFile(new File(TProjectHandler
@@ -396,6 +397,7 @@ public class TAttributeEncoder {
 			} else if (type.equals(FILE_TYPE)) {
 				String partialPath = element.getChildNodes().item(0)
 						.getNodeValue();
+				partialPath = partialPath.replace('\\','/');
 				try {
 					value = TFileHandler.importFile(new File(TProjectHandler
 							.getTempDirectory(), partialPath));

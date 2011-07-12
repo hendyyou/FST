@@ -20,3 +20,8 @@ Change-log file
 2.3.0 11-2008
     * Added plug-ins interface.
     * Added image gallery plug-in.
+    
+e1.0  05-2010
+    * Full revision of previous version.
+    * Added video visualization.
+    * Major Interpreter code substitution.

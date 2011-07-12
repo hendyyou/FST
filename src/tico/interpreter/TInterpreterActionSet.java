@@ -1,7 +1,7 @@
 /*
  * File: TInterpreterActionSet.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Antonio Rodríguez
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.interpreter;
 
 import java.util.Hashtable;
@@ -32,29 +32,25 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import tico.editor.TEditor;
-import tico.editor.actions.TProjectPrintAction;
-import tico.interpreter.actions.TInterpreterDirectSelection;
-import tico.interpreter.actions.TInterpreterMouseBar;
-import tico.interpreter.actions.TInterpreterLanguajes;
-
-import tico.interpreter.actions.TInterpreterControllerAction;
 import tico.interpreter.actions.TInterpreterEditOptions;
-import tico.interpreter.actions.TInterpreterProjectPrint;
-import tico.interpreter.actions.TInterpreterReadAccumulatedArea;
-import tico.interpreter.actions.TInterpreterShowAbout;
 import tico.interpreter.actions.TInterpreterExitAction;
+import tico.interpreter.actions.TInterpreterLanguajes;
 import tico.interpreter.actions.TInterpreterProjectOpenAction;
-import tico.interpreter.actions.TInterpreterStop;
+//import tico.interpreter.actions.TInterpreterProjectPrint;
+import tico.interpreter.actions.TInterpreterReadAction;
 import tico.interpreter.actions.TInterpreterRun;
-import tico.interpreter.actions.TInterpreterUndo;
+import tico.interpreter.actions.TInterpreterShowAbout;
+import tico.interpreter.actions.TInterpreterStopAction;
+import tico.interpreter.actions.TInterpreterUndoAction;
+import tico.interpreter.actions.TInterpreterUndoAllAction;
 import tico.rules.actions.TInterpreterValidationAction;
 
 /**
  * Map of actions that can be done to an interpreter.
  * 
- * @author Antonio Rodriguez
+ * @author Antonio Rodríguez
  */
+
 public class TInterpreterActionSet {
 	/**
 	 * The <code>TInterpreterExitAction</code> id
@@ -62,7 +58,7 @@ public class TInterpreterActionSet {
 	public final static String INTERPRETER_EXIT_ACTION = "interpreterExitAction";
 
 	/**
-	 * The <code>TProyectOpenAction</code> id
+	 * The <code>TProjectOpenAction</code> id
 	 */
 	public final static String PROJECT_OPEN_ACTION = "proyectOpenAction";
 
@@ -74,10 +70,6 @@ public class TInterpreterActionSet {
 
 	public final static String INTERPRETER_LANGUAJES = "interpreterLanguajes";
 
-	public final static String INTERPRETER_BARRIDO = "interpreterBarrido";
-
-	public final static String INTERPRETER_DIRECT_SELECTION = "interpreterDirectSelection";
-
 	public final static String INTERPRETER_OPTIONS = "interpreterOptions";
 
 	public final static String INTERPRETER_READ = "interpreterRead";
@@ -88,6 +80,8 @@ public class TInterpreterActionSet {
 
 	public final static String INTERPRETER_UNDO = "interpreterUndo";
 	
+	public final static String INTERPRETER_UNDO_ALL = "interpreterUndoAll";
+	
 	public final static String INTERPRETER_VALIDATION = "interpreterValidation";
 
 	// Map which contains the actionName-action pairs
@@ -96,7 +90,7 @@ public class TInterpreterActionSet {
 
 	/**
 	 * Creates a new <code>TInterpreterActionSet</code> for the specified
-	 * <code>interpreter</code> with all the posible actions.
+	 * <code>interpreter</code> with all the possible actions.
 	 * 
 	 * @param interpreter
 	 *            The specified <code>interpreter</code>
@@ -105,43 +99,28 @@ public class TInterpreterActionSet {
 
 		actionSet = new Hashtable();
 
-		actionSet.put(INTERPRETER_EXIT_ACTION, new TInterpreterExitAction(
-				interpreter));
+		actionSet.put(INTERPRETER_EXIT_ACTION, new TInterpreterExitAction(interpreter));
 
-		actionSet.put(PROJECT_OPEN_ACTION, new TInterpreterProjectOpenAction(
-				interpreter));
+		actionSet.put(PROJECT_OPEN_ACTION, new TInterpreterProjectOpenAction(interpreter));
 
-		actionSet
-				.put(INTERPRETER_ABOUT, new TInterpreterShowAbout(interpreter));
+		actionSet.put(INTERPRETER_ABOUT, new TInterpreterShowAbout(interpreter));
 
 		actionSet.put(INTERPRETER_RUN, new TInterpreterRun(interpreter));
 
-		actionSet.put(INTERPRETER_STOP, new TInterpreterStop(interpreter));
+		actionSet.put(INTERPRETER_STOP, new TInterpreterStopAction(interpreter));
 
-		actionSet.put(INTERPRETER_LANGUAJES, new TInterpreterLanguajes(
-				interpreter));
+		actionSet.put(INTERPRETER_LANGUAJES, new TInterpreterLanguajes(interpreter));
 
-		actionSet.put(INTERPRETER_BARRIDO,
-				new TInterpreterMouseBar(interpreter));
+		actionSet.put(INTERPRETER_OPTIONS, new TInterpreterEditOptions(interpreter));
 
-		actionSet.put(INTERPRETER_DIRECT_SELECTION,
-				new TInterpreterDirectSelection(interpreter));
+		actionSet.put(INTERPRETER_READ, new TInterpreterReadAction(interpreter));
 
-		actionSet.put(INTERPRETER_OPTIONS, new TInterpreterEditOptions(
-				interpreter));
+		/*actionSet.put(INTERPRETER_PRINT_ACTION, new TInterpreterProjectPrint(
+				interpreter));*/
 
-		actionSet.put(INTERPRETER_READ, new TInterpreterReadAccumulatedArea(
-				interpreter));
-
-		actionSet.put(INTERPRETER_PRINT_ACTION, new TInterpreterProjectPrint(
-				interpreter));
-		// actionSet.put(INTERPRETER_PRINT_ACTION,new TProjectPrintAction(new
-		// TEditor(interpreter.getIntepreterProject())));
-
-		actionSet.put(CONTROLLER_BUTTON_ACTION,
-				new TInterpreterControllerAction(interpreter));
-
-		actionSet.put(INTERPRETER_UNDO, new TInterpreterUndo(interpreter));
+		actionSet.put(INTERPRETER_UNDO, new TInterpreterUndoAction(interpreter));
+		
+		actionSet.put(INTERPRETER_UNDO_ALL, new TInterpreterUndoAllAction(interpreter));
 		
 		actionSet.put(INTERPRETER_VALIDATION, new TInterpreterValidationAction(interpreter));
 

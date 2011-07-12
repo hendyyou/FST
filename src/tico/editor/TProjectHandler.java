@@ -1,7 +1,7 @@
 /*
  * File: TProjectHandler.java
- * 		This file is part of Tico, an application to create and	perfom
- * 		interactive comunication boards to be used by people with
+ * 		This file is part of Tico, an application to create and	perform
+ * 		interactive communication boards to be used by people with
  * 		severe motor disabilities.
  * 
  * Authors: Pablo Muñoz
@@ -11,9 +11,9 @@
  * Company: Universidad de Zaragoza, CPS, DIIS
  * 
  * License:
- * 		This program is free software; you can redistribute it and/or
- * 		modify it under the terms of the GNU General Public License
- * 		as published by the Free Software Foundation; either version 2
+ * 		This program is free software: you can redistribute it and/or 
+ * 		modify it under the terms of the GNU General Public License 
+ * 		as published by the Free Software Foundation, either version 3
  * 		of the License, or (at your option) any later version.
  * 
  * 		This program is distributed in the hope that it will be useful,
@@ -22,9 +22,9 @@
  * 		GNU General Public License for more details.
  * 
  * 		You should have received a copy of the GNU General Public License
- * 		along with this program; if not, write to the Free Software Foundation,
- * 		Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *     	along with this program.  If not, see <http://www.gnu.org/licenses/>. 
  */
+
 package tico.editor;
 
 import java.io.BufferedOutputStream;
@@ -57,6 +57,7 @@ import tico.board.TBoard;
 import tico.board.TProject;
 import tico.board.encoding.InvalidFormatException;
 import tico.board.encoding.TAttributeEncoder;
+import tico.interpreter.TInterpreterProject;
 
 /**
  * Static class that manages the current editing project files.
@@ -64,6 +65,7 @@ import tico.board.encoding.TAttributeEncoder;
  * @author Pablo Muñoz
  * @version 1.0 Nov 20, 2006
  */
+
 public class TProjectHandler {
 	private final static int ZIP_BUFFER_SIZE = 2048;
 
@@ -144,7 +146,7 @@ public class TProjectHandler {
 	}
 
 	/**
-	 * Loads the current termporal directory with the contents of the specified
+	 * Loads the current temporal directory with the contents of the specified
 	 * <code>zipFile</code>.
 	 * 
 	 * @param zipFile The specified <code>zipFile</code>
@@ -238,7 +240,7 @@ public class TProjectHandler {
 	}
 
 	/**
-	 * Creates a <code>project</code> using the information contained in a
+	 * Creates an <code>editor project</code> using the information contained in a
 	 * <code>zipFile</code>.
 	 * 
 	 * @param zipFile The source <code>zipFile</code>
@@ -251,20 +253,18 @@ public class TProjectHandler {
 	 * text to a XML document
 	 */
 	public static TProject loadProject(File zipFile) throws IOException,
-			ParserConfigurationException, InvalidFormatException, SAXException {
+		ParserConfigurationException, InvalidFormatException, SAXException {
 		// Create XML Parsing objects
 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 				.newInstance();
 		DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-
 		// Load project file contents
 		TProjectHandler.cleanTempDirectory();
 		TProjectHandler.loadZip(zipFile);
-
 		// Get project name
 		String projectName = zipFile.getName();
 		projectName = projectName.substring(0, projectName.lastIndexOf('.'));
-
+		
 		// Load project
 		File file = new File(TProjectHandler.getTempDirectory(), "project.xml");
 		Document doc = docBuilder.parse(file);
@@ -272,6 +272,37 @@ public class TProjectHandler {
 		
 		TProjectHandler.cleanTempDirectory();
 		
+		return project;
+	}
+	
+	/**
+	 * Creates an <code>interpreter project</code> using the information contained in a
+	 * <code>zipFile</code>.
+	 * 
+	 * @param zipFile The source <code>zipFile</code>
+	 * @return The created <code>project</code>
+	 * @throws IOException If there are file problems with the <code>zipFile</code>
+	 * @throws ParserConfigurationException If there are syntactic error
+	 * in the XML document
+	 * @throws InvalidFormatException If the XML document has an invalid format
+	 * @throws SAXException If there are problems transforming the
+	 * text to a XML document
+	 */
+	public static TInterpreterProject loadProjectInterpreter(File zipFile) throws IOException,
+	ParserConfigurationException, InvalidFormatException, SAXException {
+		
+		TProjectHandler.cleanTempDirectory();
+		TProjectHandler.loadZip(zipFile);
+		
+		// Get project name
+		String projectName = zipFile.getName();
+		projectName = projectName.substring(0, projectName.lastIndexOf('.'));
+
+		// Load project
+		File file = new File(TProjectHandler.getTempDirectory(), "project.xml");
+		TInterpreterProject project= TInterpreterProject.XMLDecode(file, projectName);
+		
+		TProjectHandler.cleanTempDirectory();
 		return project;
 	}
 
@@ -370,7 +401,7 @@ public class TProjectHandler {
 				continue;
 			}
 			// If the entry is a file, get it
-			File newFile = new File(dstDir, entry.getName());
+			File newFile = new File(dstDir, entry.getName().replace('\\', '/'));
 			// Check if its directory exists and create it if necessary
 			File newFileDir = newFile.getParentFile();
 			if (!newFileDir.exists())
