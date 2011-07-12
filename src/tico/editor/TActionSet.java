@@ -60,6 +60,7 @@ import tico.editor.actions.THandlerCellAction;
 import tico.editor.actions.THandlerControllerCellAction;
 import tico.editor.actions.THandlerLabelAction;
 import tico.editor.actions.THandlerLineAction;
+import tico.editor.actions.THandlerMonitorAction;
 import tico.editor.actions.THandlerOvalAction;
 import tico.editor.actions.THandlerRectangleAction;
 import tico.editor.actions.THandlerRoundRectAction;
@@ -306,6 +307,11 @@ public class TActionSet {
 	public final static String LABEL_HANDLER = "labelHandlerAction";
 
 	/**
+	 * The <code>TMonitorHandlerAction</code> id
+	 */
+	public final static String MONITOR_HANDLER = "monitorHandlerAction";
+	
+	/**
 	 * The <code>TLineHandlerAction</code> id
 	 */
 	public final static String LINE_HANDLER = "lineHandlerAction";
@@ -424,6 +430,7 @@ public class TActionSet {
 		actionSet.put(CELL_CONTROLLER_HANDLER, new THandlerControllerCellAction(editor));
 		//actionSet.put(GRID_HANDLER, new THandlerGridAction(editor));
 		actionSet.put(LABEL_HANDLER, new THandlerLabelAction(editor));
+		actionSet.put(MONITOR_HANDLER, new THandlerMonitorAction(editor));
 		actionSet.put(LINE_HANDLER, new THandlerLineAction(editor));
 		actionSet.put(RECTANGLE_HANDLER, new THandlerRectangleAction(editor));
 		actionSet.put(ROUND_RECT_HANDLER, new THandlerRoundRectAction(editor));

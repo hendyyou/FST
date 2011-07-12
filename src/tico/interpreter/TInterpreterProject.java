@@ -49,6 +49,7 @@ import tico.editor.TProjectHandler;
 import tico.interpreter.components.TInterpreterCell;
 import tico.interpreter.components.TInterpreterLabel;
 import tico.interpreter.components.TInterpreterLine;
+import tico.interpreter.components.TInterpreterMonitor;
 import tico.interpreter.components.TInterpreterOval;
 import tico.interpreter.components.TInterpreterRectangle;
 import tico.interpreter.components.TInterpreterRoundRectangle;
@@ -1158,7 +1159,7 @@ public class TInterpreterProject {
 	            		myboard.insertComponent(roundRectangle);
 	            	}
 	            	
-	            else if (componentType.equals("label")){           	
+	            else if (componentType.equals("label") || componentType.equals("monitor")){           	
 
 	            	Element attributesLabel= component.getChild("attributes");
 	        		List attributesLabelList= attributesLabel.getChildren("attribute");
@@ -1257,7 +1258,15 @@ public class TInterpreterProject {
 	                	}                	
 	                	
 	        		}
-	        		TInterpreterLabel label = new TInterpreterLabel();
+	        		TInterpreterLabel label;
+	        		if (componentType.equals("label")) {
+	        			label = new TInterpreterLabel();
+	        		} else if (componentType.equals("monitor")) {
+	        			label = new TInterpreterMonitor();
+	        		} else {
+	        			label = new TInterpreterLabel();
+	        		}
+	        		
 	        		label.setAttributes(borderColor,linewidth, backgroundColor, gradientColor, r,text, font, foregroundColor, transparentBackground);
 	        		myboard.insertLabel(label);
 	        		myboard.insertComponent(label);

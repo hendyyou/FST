@@ -604,6 +604,7 @@ public class TEditor extends JFrame {
 		actionSet.getAction(TActionSet.TEXT_AREA_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.LABEL_HANDLER).setEnabled(boardExists);
+		actionSet.getAction(TActionSet.MONITOR_HANDLER).setEnabled(boardExists);
 		actionSet.getAction(TActionSet.RECTANGLE_HANDLER).setEnabled(
 				boardExists);
 		actionSet.getAction(TActionSet.ROUND_RECT_HANDLER).setEnabled(

@@ -136,6 +136,8 @@ abstract public class TComponent extends DefaultGraphCell {
 				return TGrid.XMLDecode(element);
 			} else if (type.equals(TLabel.TYPE)) {
 				return TLabel.XMLDecode(element);
+			} else if (type.equals(TMonitor.TYPE)) {
+				return TMonitor.XMLDecode(element);
 			} else if (type.equals(TLine.TYPE)) {
 				return TLine.XMLDecode(element);
 			} else if (type.equals(TOval.TYPE)) {

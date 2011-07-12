@@ -59,6 +59,7 @@ import tico.components.TMenuItem;
 import tico.components.resources.TResourceManager;
 import tico.configuration.TLanguage;
 import tico.interpreter.actions.TInterpreterExitAction;
+import tico.interpreter.components.TInterpreterMonitor;
 import tico.interpreter.listeners.TBoardListener;
 import tico.interpreter.threads.TThreads;
 
@@ -400,6 +401,8 @@ public class TInterpreter extends JFrame {
 		accumulatedCellsList.removeAll(accumulatedCellsList);
 		accumulatedCells.removeAll();
 		updateMenuButtons();
+		// TODO Kill all monitorThreads
+		TInterpreterMonitor.stopAllThreads();
 	}
 
 	/**

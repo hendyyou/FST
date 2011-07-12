@@ -45,6 +45,7 @@ import tico.editor.TProjectHandler;
 import tico.environment.TEnvironment;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterProject;
+import tico.interpreter.components.TInterpreterMonitor;
 
 /**
  * TEditor launcher class. It shows the <code>TEditor</code> window. If the
@@ -184,6 +185,7 @@ public class TLauncher {
 			displayUsage();
 			System.exit(-1);
 		}
+		TInterpreterMonitor.stopAllThreads();
 	}
 
 	// Diplay the usage of the application

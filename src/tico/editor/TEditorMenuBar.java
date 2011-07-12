@@ -374,6 +374,12 @@ public class TEditorMenuBar extends JMenuBar {
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T,
 				ActionEvent.SHIFT_MASK));
 		menu.add(menuItem);
+		
+		menuItem = new TMenuItem(actionSet.getAction(TActionSet.MONITOR_HANDLER));
+		menuItem.setMnemonic(KeyEvent.VK_M);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+				ActionEvent.SHIFT_MASK));
+		menu.add(menuItem);
 
 		add(menu);
 	}

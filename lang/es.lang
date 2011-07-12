@@ -13,6 +13,7 @@ TLauncher.INVALID_FILE_ERROR=Error al leer el proyecto, el fichero seleccionado 
 // tico.board.components
 TCellView.INSERT_INTO=Insertar en
 TLabel.DEFAULT_TEXT=Etiqueta
+TMonitor.DEFAULT_TEXT=Monitor
 TTextArea.DEFAULT_TEXT=Area de texto
 
 // tico.components
@@ -305,6 +306,7 @@ THandlerCellAction.NAME=Celda
 THandlerControllerCellAction.NAME=Celda de control
 THandlerGridAction.NAME=Cuadricula
 THandlerLabelAction.NAME=Etiqueta
+THandlerMonitorAction.NAME=Monitor
 THandlerLineAction.NAME=Línea
 THandlerOvalAction.NAME=Círculo
 THandlerRectangleAction.NAME=Rectángulo
@@ -511,6 +513,11 @@ TLabelDialog.TITLE=Etiqueta
 TLabelDialog.TAB_TEXT=Texto
 TLabelDialog.TAB_PROPERTIES=Propiedades
 TLabelDialog.TEXT=Texto
+
+TMonitorDialog.TITLE=Monitor
+TMonitorDialog.TAB_TEXT=Texto
+TMonitorDialog.TAB_PROPERTIES=Propiedades
+TMonitorDialog.TEXT=Texto
 
 TLineDialog.TITLE=Línea
 TLineDialog.TAB_PROPERTIES=Propiedades

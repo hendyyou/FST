@@ -28,11 +28,14 @@
 package tico.interpreter.actions;
 
 import java.awt.event.ActionEvent;
+
+import tico.board.components.TMonitor;
 import tico.configuration.TLanguage;
 import tico.configuration.TSetup;
 import tico.editor.TFileHandler;
 import tico.interpreter.TInterpreter;
 import tico.interpreter.TInterpreterConstants;
+import tico.interpreter.components.TInterpreterMonitor;
 
 
 /**
@@ -56,6 +59,8 @@ public class TInterpreterExitAction extends TInterpreterAbstractAction {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void actionPerformed(ActionEvent e) {
+		// Stop All Monitor Threads
+		TInterpreterMonitor.stopAllThreads();
 		// Delete the project
 		getInterpreter().deleteProject();
 		TFileHandler.deleteCurrentDirectory();

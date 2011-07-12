@@ -42,6 +42,7 @@ import tico.editor.handler.TControllerCellMarqueeHandler;
 import tico.editor.handler.TGridMarqueeHandler;
 import tico.editor.handler.TLabelMarqueeHandler;
 import tico.editor.handler.TLineMarqueeHandler;
+import tico.editor.handler.TMonitorMarqueeHandler;
 import tico.editor.handler.TOvalMarqueeHandler;
 import tico.editor.handler.TRectangleMarqueeHandler;
 import tico.editor.handler.TRoundRectMarqueeHandler;
@@ -65,6 +66,7 @@ public class THandlersToolBar extends TToolBar {
 	private TToolBarToggleButton gridButton;
 	private TToolBarToggleButton textAreaButton;
 	private TToolBarToggleButton labelButton;
+	private TToolBarToggleButton monitorButton;
 	private TToolBarToggleButton lineButton;
 	private TToolBarToggleButton ovalButton;
 	private TToolBarToggleButton rectangleButton;
@@ -94,6 +96,8 @@ public class THandlersToolBar extends TToolBar {
 				.getAction(TActionSet.TEXT_AREA_HANDLER));
 		labelButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.LABEL_HANDLER));
+		monitorButton = new TToolBarToggleButton(editor.getActionSet().getAction(
+				TActionSet.MONITOR_HANDLER));
 		lineButton = new TToolBarToggleButton(editor.getActionSet().getAction(
 				TActionSet.LINE_HANDLER));
 		ovalButton = new TToolBarToggleButton(editor.getActionSet().getAction(
@@ -109,6 +113,7 @@ public class THandlersToolBar extends TToolBar {
 		//handlersButtonGroup.add(gridButton);
 		handlersButtonGroup.add(textAreaButton);
 		handlersButtonGroup.add(labelButton);
+		handlersButtonGroup.add(monitorButton);
 		handlersButtonGroup.add(lineButton);
 		handlersButtonGroup.add(ovalButton);
 		handlersButtonGroup.add(rectangleButton);
@@ -122,6 +127,8 @@ public class THandlersToolBar extends TToolBar {
 		addSeparator();
 		add(textAreaButton);
 		add(labelButton);
+		addSeparator();
+		add(monitorButton);
 		addSeparator();
 		add(lineButton);
 		add(ovalButton);
@@ -153,6 +160,8 @@ public class THandlersToolBar extends TToolBar {
 				textAreaButton.setSelected(true);
 			else if (handler instanceof TLabelMarqueeHandler)
 				labelButton.setSelected(true);
+			else if (handler instanceof TMonitorMarqueeHandler)
+				monitorButton.setSelected(true);
 			else if (handler instanceof TLineMarqueeHandler)
 				lineButton.setSelected(true);
 			else if (handler instanceof TOvalMarqueeHandler)

@@ -1,3 +1,11 @@
 entorno=Environment
 #Comentarios
 arrancar_firefox=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
+Tecnodiscap_test1_on=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 doorActuator01 es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.DoorActuator open
+Tecnodiscap_test1_off=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 doorActuator01 es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.DoorActuator close
+Tecnodiscap_test2_on=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 doorActuator02 es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.DoorActuator open
+Tecnodiscap_test2_off=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 doorActuator02 es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.DoorActuator close
+Tecnodiscap_actuator01_on=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 Zigbee@000D6F00002239EA es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.OutletActuator turnON
+Tecnodiscap_actuator01_off=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 Zigbee@000D6F00002239EA es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.OutletActuator turnOFF
+Tecnodiscap_actuator02_on=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 Zigbee@0021ED0000034F1E es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.OutletActuator turnON
+Tecnodiscap_actuator02_off=java -jar es.unizar.tecnodiscap.util.sockets.tcp_1.0.0.0.jar localhost 9760 Zigbee@0021ED0000034F1E es.unizar.tecnodiscap.osgi4ami.device.actuator.extended.OutletActuator turnOFF

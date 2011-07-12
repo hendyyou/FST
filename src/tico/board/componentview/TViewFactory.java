@@ -35,6 +35,7 @@ import tico.board.components.TControllerCell;
 import tico.board.components.TGridCell;
 import tico.board.components.TLabel;
 import tico.board.components.TLine;
+import tico.board.components.TMonitor;
 import tico.board.components.TOval;
 import tico.board.components.TRectangle;
 import tico.board.components.TRoundRect;
@@ -74,6 +75,8 @@ public class TViewFactory extends DefaultCellViewFactory {
 			return new TLineView(component);
 		if (component instanceof TLabel)
 			return new TLabelView(component);
+		if (component instanceof TMonitor)
+			return new TMonitorView(component);
 		return super.createVertexView(component);
 	}
 }

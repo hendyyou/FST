@@ -33,6 +33,7 @@ import tico.board.components.TControllerCell;
 import tico.board.components.TGridCell;
 import tico.board.components.TLabel;
 import tico.board.components.TLine;
+import tico.board.components.TMonitor;
 import tico.board.components.TOval;
 import tico.board.components.TRectangle;
 import tico.board.components.TRoundRect;
@@ -75,6 +76,8 @@ public class TComponentDialogFactory {
 			new TTextAreaDialog(boardContainer, component);
 		if (component instanceof TLabel)
 			new TLabelDialog(boardContainer, component);
+		if (component instanceof TMonitor)
+			new TMonitorDialog(boardContainer, component);
 		if (component instanceof TRectangle)
 			new TPolygonDialog(boardContainer, component);
 		if (component instanceof TRoundRect)
