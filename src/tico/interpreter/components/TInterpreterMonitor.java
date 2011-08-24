@@ -35,6 +35,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -96,63 +97,86 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 		}
 		
 		@Override
+		public synchronized void start() {
+			this.stop = false;
+			super.start();
+		}
+		
+		@Override
 		public void run() {
 			String line;
-		    String text = "";
-		    SAXBuilder builder=new SAXBuilder(false);
-		    Document doc;
-		    Element rootElement;
-		    Element textElement;
-		    Element valueElement;
-		    Element unitsElement;
-		    InputSource is;
-		    try {
-		        p = Runtime.getRuntime().exec(command);
-		        input = p.getInputStream();
-		        inputReader = new BufferedReader
-		           (new InputStreamReader(input));
-		        while (!stop) {
-		        	boolean completeLine = false;
-		        	line = "";
-		        	while (!completeLine) {
-		        		if (inputReader.ready() && !completeLine) {
-		        			char c = (char) inputReader.read();
-		        			if (c == '\n') {
-		        				completeLine = true;
-		        			}
-		        			line = line.concat(String.valueOf(c));
-		        		} else {
-		        			Thread.sleep(300);
-		        		}
-		        	}
-		        	System.out.println("Command working");
-		        	try {
-		        		is = new InputSource();
-		                is.setCharacterStream(new StringReader(line));
-		        		doc= builder.build(is);
-		        		rootElement=doc.getRootElement();
-		        		textElement = rootElement.getChild("text");
-		        		valueElement = rootElement.getChild("value");
-		        		unitsElement = rootElement.getChild("units");
-		        		if (textElement != null) {
-		        			text = textElement.getText();
-		        		}
-		        	} catch (JDOMException e) {
-		        		e.printStackTrace();
-		        	} catch (IOException e) {
-		        		e.printStackTrace();
-		        	}
-		        	_instanceLabel.setText(text);
-		        	
-		        }
-		        inputReader.close();
-		        }
-		    catch (InterruptedException e) {
-		    	
-		    }
-		    catch (Exception ex) {
-		        ex.printStackTrace();
-		    }
+			String text = "";
+			SAXBuilder builder = new SAXBuilder(false);
+			Document doc;
+			Element rootElement;
+			Element textElement;
+			Element valueElement;
+			Element unitsElement;
+			InputSource is;
+			try {
+				ProcessBuilder pbuilder = new ProcessBuilder(command.split(" ", 0));
+				pbuilder.directory(new File(System.getProperty("user.dir")));
+				p = pbuilder.start();
+				//p = Runtime.getRuntime().exec(command);
+				input = p.getInputStream();
+				inputReader = new BufferedReader(new InputStreamReader(input));
+				boolean finishedCommand = false;
+				while (!stop && !finishedCommand) {
+					boolean completeLine = false;
+					line = "";
+					try {
+						while (!completeLine) {
+							//System.out.println("Reading line...");
+							if (inputReader.ready() && !completeLine) {
+								char c = (char) inputReader.read();
+								if (c == '\n') {
+									completeLine = true;
+									System.out.println("complete line");
+								} else if (c == -1) {
+									finishedCommand = true;
+									System.out.println("finished command");
+									completeLine = true;
+								}
+								line = line.concat(String.valueOf(c));
+							} else {
+								Thread.sleep(300);
+							}
+						}
+						System.out.println("Command working");
+						try {
+							is = new InputSource();
+							is.setCharacterStream(new StringReader(line));
+							doc = builder.build(is);
+							rootElement = doc.getRootElement();
+							textElement = rootElement.getChild("text");
+							valueElement = rootElement.getChild("value");
+							unitsElement = rootElement.getChild("units");
+							if (textElement != null) {
+								text = textElement.getText();
+							}
+						} catch (JDOMException e) {
+							System.out.println("JDOMException: "+e.toString());
+							e.printStackTrace();
+						} catch (IOException e) {
+							System.out.println("IOException: "+e.toString());
+							e.printStackTrace();
+						} catch (Exception e) {
+							System.out.println("Exception1: "+e.toString());
+							e.printStackTrace();
+						}
+						if (text != null) {
+							_instanceLabel.setText(text);
+						}
+					} catch (Exception e) {
+						System.out.println("Exception2: "+e.toString());
+						e.printStackTrace();
+					}
+				}
+				inputReader.close();
+			} catch (Exception ex) {
+				System.out.println("Exception3: "+ex.toString());
+				ex.printStackTrace();
+			}
 		}
 	}
 	
