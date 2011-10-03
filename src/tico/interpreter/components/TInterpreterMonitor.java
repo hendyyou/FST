@@ -44,6 +44,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,6 +63,8 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 	
 	private static ArrayList<MonitorThread> listMonitorThreads = new ArrayList<MonitorThread>();
 	
+	private static Logger logger = Logger.getLogger(TInterpreterMonitor.class.getName());
+	
 	public static void stopAllThreads() {
 		Iterator<MonitorThread> it = listMonitorThreads.iterator();
 		while (it.hasNext()) {
@@ -71,7 +74,6 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 				item.p.destroy();
 				item.interrupt();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -87,8 +89,10 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 		private String command;
 		private TInterpreterMonitor _instanceLabel;
 		public InputStream input;
+		public InputStream errorInput;
 		public boolean stop = false;
 		public BufferedReader inputReader;
+		public BufferedReader errorReader;
 		
 		public MonitorThread(String command, TInterpreterMonitor label) {
 			super();
@@ -105,6 +109,7 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 		@Override
 		public void run() {
 			String line;
+			String errorLine = "";
 			String text = "";
 			SAXBuilder builder = new SAXBuilder(false);
 			Document doc;
@@ -114,35 +119,54 @@ public class TInterpreterMonitor extends TInterpreterLabel {
 			Element unitsElement;
 			InputSource is;
 			try {
+				logger.info("Thread: "+this.getId()+" Starting execution of process: "+command);
 				ProcessBuilder pbuilder = new ProcessBuilder(command.split(" ", 0));
 				pbuilder.directory(new File(System.getProperty("user.dir")));
 				p = pbuilder.start();
 				//p = Runtime.getRuntime().exec(command);
 				input = p.getInputStream();
+				errorInput = p.getErrorStream();
 				inputReader = new BufferedReader(new InputStreamReader(input));
+				errorReader = new BufferedReader(new InputStreamReader(errorInput));
 				boolean finishedCommand = false;
 				while (!stop && !finishedCommand) {
 					boolean completeLine = false;
 					line = "";
 					try {
+						boolean gotData = false;
 						while (!completeLine) {
 							//System.out.println("Reading line...");
 							if (inputReader.ready() && !completeLine) {
+								gotData = true;
 								char c = (char) inputReader.read();
 								if (c == '\n') {
 									completeLine = true;
-									System.out.println("complete line");
+									//System.out.println("complete line");
 								} else if (c == -1) {
 									finishedCommand = true;
-									System.out.println("finished command");
+									//System.out.println("finished command");
 									completeLine = true;
 								}
 								line = line.concat(String.valueOf(c));
-							} else {
+							}
+							if (errorReader.ready()) {
+								gotData = true;
+								char c = (char) errorReader.read();
+								if ( c == '\n') {
+									logger.warning("Thread: "+this.getId()+" error: "+errorLine);
+									errorLine = "";
+								} else {
+									errorLine = errorLine.concat(String.valueOf(c));
+								}
+							}
+							if (!gotData) {
 								Thread.sleep(300);
+							} else {
+								gotData = false;
 							}
 						}
-						System.out.println("Command working");
+						logger.info("Thread: "+this.getId()+" line: "+line); // TODO
+						//System.out.println("Command working");
 						try {
 							is = new InputSource();
 							is.setCharacterStream(new StringReader(line));
