@@ -1,3 +1,0 @@
-entorno=Environment
-#Comentarios
-arrancar_firefox=C:\\Archivos de programa\\Mozilla Firefox\\firefox.exe
